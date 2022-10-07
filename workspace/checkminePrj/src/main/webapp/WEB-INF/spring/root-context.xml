@@ -8,6 +8,9 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 
+<!-- DB properties -->		
+<context:property-placeholder location="classpath:config/database.properties" />
+
 <!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- DB 연결을 위한 Bean 등록 -->
@@ -20,16 +23,16 @@
 	<!-- 팩토리 -->
 	<bean id="ssfb" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="bds" />
-		<!-- <property name="configLocation" value="경로"/>
-		<property name="mapperLocations" value="경로"/> -->
+		<property name="configLocation" value="classpath:/mybatis/conf.xml"/>
+		<property name="mapperLocations" value="classpath:/mybatis/**/*-mapper.xml"/>
 	</bean>
 	
 	<!-- 데이터소스 -->
 	<bean id="bds" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
-		<property name="username" value="C##SPRING"/>
-		<property name="password" value="SPRING"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${username}"/>
+		<property name="password" value="${password}"/>
 	</bean>
 
 	<!-- 트랜잭션 관리 bean 등록 (id는 고정) -->
