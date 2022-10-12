@@ -23,7 +23,7 @@
             border: none;
         }
    
-        body{
+        #pageWrap{
             width: 1920px;
             height: 1080px;
             background-color: #91b3ac;
@@ -115,21 +115,23 @@
     </style>
 </head>
 <body>
-    <div id="background">
-        <div id="logo">
-            <img src="${root}/resources/img/admin/checkLogo.png" alt="로고" width="250px">
-        </div>
-        <div id="login-form">
-            <div id="mainText">CHECKMINE</div>
-            <form action="" method="post">
-                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="adminId" placeholder="아이디" required></div>
-                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="adminPwd" placeholder="비밀번호" required></div>
-                <input type="submit" value="로그인">
-            </form>
-            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="" id="findIdPwd">아이디/비밀번호 찾기</a></div>
-           
-
-        </div>
+   <div id="pageWrap">
+	    <div id="background">
+	        <div id="logo">
+	            <img src="${root}/resources/img/admin/checkLogo.png" alt="로고" width="250px">
+	        </div>
+	        <div id="login-form">
+	            <div id="mainText">CHECKMINE</div>
+	            <form action="" method="post">
+	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="adminId" placeholder="아이디" required></div>
+	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="adminPwd" placeholder="비밀번호" required></div>
+	                <input type="submit" value="로그인">
+	            </form>
+	            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="" id="findIdPwd">아이디/비밀번호 찾기</a></div>
+	           
+	
+	        </div>
+	    </div>
     </div>
     
 

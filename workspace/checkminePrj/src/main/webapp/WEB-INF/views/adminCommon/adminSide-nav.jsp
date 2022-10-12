@@ -5,19 +5,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    #profile{
+        width: 175px;
+        height: 175px;
+    }
+    #profile > img{
+        width: 100%;
+        border-radius: 50%;
+    }
+    #adminName{
+        font-size: 20px;
+        font-weight: bolder;
+        margin: 15px 0;
+    }
+    #logout{
+        font-size: 15px;
+        text-decoration: underline;
+        margin-bottom: 5rem;
+        
+    }
+</style>
 </head>
 <body>
 
 	<!-- 사이드 네비게이션 TODO: 경로설정 -->
         <nav class="d-flex flex-column align-items-center">
+            <div id="profile"><img src="${root}/resources/img/admin/adminProfile.png" alt=""></div>
+            <div id="adminName">테스트 관리자</div>
+            <a href="로그아웃" id="logout">로그아웃</a>
             <a href="홈경로" id="side-nav-home">HOME</a>
-            <a href="근태경로">근태관리</a>
-            <a href="전자결재">전자결재</a>
-            <a href="업무">업무</a>
-            <a href="인사관리">인사관리</a>
-            <a href="예약">예약</a>
-            <a href="게시판">게시판</a>
-            <a href="일정">일정</a>
+            <a href="사원관리">사원관리</a>
+            <a href="게시판관리">게시판관리</a>
+            <a href="공유물관리">공유물관리</a>
+            <a href="조직도">조직도</a>
         </nav>
 </body>
 </html>
