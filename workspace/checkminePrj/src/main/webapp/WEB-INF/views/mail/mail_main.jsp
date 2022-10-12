@@ -78,6 +78,9 @@
         text-decoration: none;
         color: #000000;
     }
+    #container-nav li a:hover{
+        color: cadetblue;
+    }
     #container-nav li span{
         margin-left: 28px;
         color: #494949;
@@ -127,6 +130,9 @@
         border-bottom: 1px solid #cdcdcd;
         color: #000;
     }
+    .dropdown-content a:hover{
+        background-color: #f0f0f0;
+    }
     .dropdown-content>a:last-child{
         border: none;
     }
@@ -139,8 +145,29 @@
     }
     #mid-nav>input[type="checkbox"]{
         margin-top: 4px;
+        width: 20px;
+        height: 20px;
     }
 
+    /* 메일리스트 아이템 */
+    .mail-list-item{
+        display: flex;
+        align-items: center;
+        height: 40px;
+        border-bottom: 1px solid #9a9a9a;
+        text-decoration: none;
+        color: #000000;
+    }
+    .mail-list-item:hover{
+        color: #000000;
+        background-color: #f0f0f0;
+    }
+    .mail-list-item>input[type="checkbox"]{
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+        margin-right: 25px;
+    }
 	
 </style>
 
@@ -183,9 +210,9 @@
                 <div>
                     <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
 
-                    <div class="d-flex" style="width: 1258px;" id="mid-nav">
+                    <div id="mid-nav" class="d-flex" style="width: 1258px;">
                         <!-- 전체 체크박스 -->
-                        <input type="checkbox" name="checkbox-all" class="align-self-center" style="width: 20px; height: 20px;">
+                        <input type="checkbox" name="checkbox-all" class="align-self-center">
                         
                         <!-- 드롭다운 -->
                         <div class="dropdown">
@@ -205,9 +232,39 @@
                         <a href="메일 리스트 이전 페이지"><img src="${imgPath}/mail_arrow_pre.png"></a>
                         <a href="메일 리스트 다음 페이지"><img src="${imgPath}/mail_arrow_next.png"></a>
                     </div>
+
+                    <div id="mail-list" style="width: 1258px; margin-top: 19px;">
+                        <div class="d-flex" style="padding-bottom: 10px; border-bottom: 1px solid #9a9a9a;">
+                            <span style="margin-left: 59px; width: 207px;">보낸이</span>
+                            <span style="width: 785px;">제목/내용</span>
+                            <span style="width: 150px;">시간</span>
+                            <span>중요도</span> 
+                        </div>
+                        <!-- 리스트 여기부터 받아오기 -->
+                        <a href="메일_상세보기" class="mail-list-item">
+                            <input type="checkbox" name="네임은_메일_번호로">
+                            <span style="width: 207px;">chan0966@gmail.com</span>
+                            <span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>
+                            <span style="width: 150px;">2022-10-12 12:12</span>
+                            <span class="d-flex justify-content-center"><img src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;"></span> 
+                        </a>
+                        <a href="메일_상세보기" class="mail-list-item">
+                            <input type="checkbox" name="네임은_메일_번호로">
+                            <span style="width: 207px;">chan0966@gmail.com</span>
+                            <span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>
+                            <span style="width: 150px;">2022-10-12 12:12</span>
+                            <span class="d-flex justify-content-center"><img src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;"></span> 
+                        </a>
+                        <a href="메일_상세보기" class="mail-list-item">
+                            <input type="checkbox" name="네임은_메일_번호로">
+                            <span style="width: 207px;">chan0966@gmail.com</span>
+                            <span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>
+                            <span style="width: 150px;">2022-10-12 12:12</span>
+                            <span class="d-flex justify-content-center"><img src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;"></span> 
+                        </a>
+                    </div>
                 </div>
             </div>
-        </main> 
     </div>
 </body>
 </html>
