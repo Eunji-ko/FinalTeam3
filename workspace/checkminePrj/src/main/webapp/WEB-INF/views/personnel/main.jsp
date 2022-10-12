@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>인사관리</title>
+<c:set var="imgPath" value="/checkmine/resources/img/personnel"/>
 </head>
 <body>
 	<div class="d-flex">
