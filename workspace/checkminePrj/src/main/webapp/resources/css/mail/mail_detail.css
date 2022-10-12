@@ -1,0 +1,79 @@
+@charset "UTF-8";
+#detail-container{
+        width: 1249px;
+        height: 691px;
+        border: 1px solid #8d8d8d;
+        border-radius: 20px;
+        margin: 24px 0 0 13px;
+        padding: 20px 40px 15px 24px;
+    }
+    /* 상단 아이콘들 */
+    #detail-container>div:nth-child(1){
+        margin-bottom: 9px;
+    }
+    #detail-container>div:nth-child(1) a{
+        margin-right: 20px;
+    }
+    /* 제목 */
+    #detail-container>div:nth-child(2){
+        font-size: 18px;
+        margin-bottom: 7px;
+    }
+    /* 작성자/주소록버튼 */
+    #detail-container>div:nth-child(3){
+        margin-bottom: 8px;
+    }
+    #detail-container>div:nth-child(3) button{
+        display: inline-flex;
+        align-items:center;
+        justify-content: center;
+        background-color: #d9d9d9;
+        width: 102px;
+        height: 17px;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        margin-left: 24px;
+    }
+    #detail-container>div:nth-child(3) span[id="time"]{
+        font-size: 13px;
+        float: right;
+    }
+
+    /* 내용 */
+    #detail-container>#content{
+        padding-top: 15px;
+        height: 501px;
+        border-top: 1px solid black;
+        overflow-y: scroll;
+    }
+    #detail-container>#content::-webkit-scrollbar {
+        width: 14px;  /* 스크롤바의 너비 */
+    }
+    #detail-container>#content::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #5d786f; /* 스크롤바의 색상 */
+        border-radius: 10px;
+    }
+    #detail-container>#content::-webkit-scrollbar-track {
+        margin-top: 15px;
+        border-radius: 10px;
+        background: #d9d9d9;  /*스크롤바 뒷 배경 색상*/
+    }
+
+    /* 답장버튼 */
+    #detail-container>button{
+        margin-top: 10px;
+        width: 130px;
+        height: 39px;
+        border: none;
+        border-radius: 5px;
+        background-color: #b0d9d1;
+        float: right;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    #detail-container>button:active{
+        background-color: #91b3aC;
+    }

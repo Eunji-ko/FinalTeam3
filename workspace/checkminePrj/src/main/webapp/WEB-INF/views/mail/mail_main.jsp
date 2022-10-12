@@ -7,172 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CheckMine - mail</title>
-
-
-<style type="text/css">
-    
-	main{
-		padding: 25px 18px 40px 51px;
-	}
-
-    #container-header>span{
-        font-size: 30px;
-        font-weight: 400;
-    }
-    #container-header>div{
-        width: 510px;
-        height: 36px;
-        border: 1px solid #cdcdcd;
-        border-radius: 18px;
-        display: flex;
-        align-items: center;
-        padding: 3px 10px 0px 10px;
-        margin-left: 100px;
-    }
-    #container-header>div>input{
-        margin-left: 7px;
-        flex-grow: 1;
-        border: none;
-        outline: none;
-    }
-
-    #container-nav{
-        width: 170px;
-        height: 740px;
-        border: none;
-        background-color: #c4f2ea;
-        border-radius: 5px;
-        margin-right: 20px;
-    }
-
-    /* 메일쓰기 버튼 */
-    #container-nav>div{
-        width: 104px;
-        height: 46px;
-        background-color: #cffff6;
-        border-radius: 10px;
-        margin: 19px 33px 29px 33px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 4px 5px 0px rgb(141, 161, 155);
-    }
-    #container-nav>div:active{
-        box-shadow: 0px 1px 5px 0px rgb(141, 161, 155);
-    }
-    #container-nav>div>span{
-        font-size: 15px;
-    }
-
-    /* 메일네비 목록 */
-    #container-nav>ul{
-        list-style: none;
-        padding-left: 22px;
-    }
-    #container-nav li{
-        font-size: 15px;
-        margin-bottom: 16px;
-    }
-    #container-nav li a{
-        text-decoration: none;
-        color: #000000;
-    }
-    #container-nav li a:hover{
-        color: cadetblue;
-    }
-    #container-nav li span{
-        margin-left: 28px;
-        color: #494949;
-    }
-
-    /* 선택된 목록 */
-    .container-nav-selected{
-        width: 163px;
-        height: 24px;
-        border-radius: 12px;
-        background-color: #b0d9d1;
-        margin-left: -31px;
-        box-shadow: 0px 4px 5px 0px rgb(141, 161, 155);
-    }
-    .container-nav-selected>a{
-        margin-left: 31px;
-    }
-   
-    /* 메일 체크박스 옆 드롭다운 */
-    .dropdown{
-        position : relative;
-        display : inline-block;
-    }
-    .dropbtn{
-        display: inline-block;
-        display: flex;
-        width: 20px;
-        height: 20px;
-        margin-top: 5px;
-    }
-    .dropbtn>img{
-        margin: auto;
-    }
-    .dropdown-content{
-        display : none;
-        position : absolute;
-        z-index : 1; /*다른 요소들보다 앞에 배치*/
-        width: 100px;
-        height: 75px;
-        border: 1px solid #cdcdcd;
-        border-radius: 5px;
-        background-color: white;
-    }
-    .dropdown-content a{
-        display : block;
-        text-decoration: none;
-        border-bottom: 1px solid #cdcdcd;
-        color: #000;
-    }
-    .dropdown-content a:hover{
-        background-color: #f0f0f0;
-    }
-    .dropdown-content>a:last-child{
-        border: none;
-    }
-    
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-    #mid-nav>*{
-        margin-left: 14px;
-    }
-    #mid-nav>input[type="checkbox"]{
-        margin-top: 4px;
-        width: 20px;
-        height: 20px;
-    }
-
-    /* 메일리스트 아이템 */
-    .mail-list-item{
-        display: flex;
-        align-items: center;
-        height: 40px;
-        border-bottom: 1px solid #9a9a9a;
-        text-decoration: none;
-        color: #000000;
-    }
-    .mail-list-item:hover{
-        color: #000000;
-        background-color: #f0f0f0;
-    }
-    .mail-list-item>input[type="checkbox"]{
-        width: 20px;
-        height: 20px;
-        margin-left: 15px;
-        margin-right: 25px;
-    }
-	
-</style>
+<title>CheckMine - 메일</title>
+<link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_basic.css">
+<link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_main.css">
 
 <c:set var="imgPath" value="/checkmine/resources/img/mail"/>
-
 </head>
 <body>
 	<div class="d-flex">
@@ -240,6 +79,7 @@
                             <span style="width: 150px;">시간</span>
                             <span>중요도</span> 
                         </div>
+                        
                         <!-- 리스트 여기부터 받아오기 -->
                         <a href="메일_상세보기" class="mail-list-item">
                             <input type="checkbox" name="네임은_메일_번호로">
@@ -265,6 +105,7 @@
                     </div>
                 </div>
             </div>
+		</main>
     </div>
 </body>
 </html>
