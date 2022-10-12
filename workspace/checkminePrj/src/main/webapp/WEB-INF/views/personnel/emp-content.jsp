@@ -16,6 +16,7 @@
         padding-left: 8px;
         font-weight: bold;
         color: #767676;
+        outline: none;
     }
     .align-right {
         float: right;
@@ -27,10 +28,29 @@
         font-weight: bold;
         color: #767676;
         margin-right: 20px;
+        outline: none;
     }
     .emp-search {
         width: 200px;
         height: 35px;
+        border: 1px black solid;
+    }
+    .emp-search input{
+        vertical-align: top;
+        margin: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: transparent;
+        outline: none;
+    }
+    #emp-search-text {
+        border: none;
+        width: 170px;
+        padding-left: 10px;
+    }
+    #emp-search-submit {
+        width: 24px;
+        border: none;
     }
 </style>
 </head>
@@ -42,7 +62,10 @@
             <option value="N">재직</option>
             <option value="Y">퇴직</option>
         </select>
-        <input type="text" class="align-right emp-search">
+        <form class="align-right emp-search" action="" method="post">
+            <input id="emp-search-text" type="text" placeholder="검색">
+            <button id="emp-search-submit" type="submit"><img src="../../../resources/img/personnel/search_icon.png"></button>
+        </form>
         <select name="searchType" class="search-type-select align-right">
             <option value="name">이름</option>
             <option value="deptName">부서</option>
