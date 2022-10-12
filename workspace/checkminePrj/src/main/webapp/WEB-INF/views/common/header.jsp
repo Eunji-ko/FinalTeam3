@@ -99,7 +99,7 @@
             <!-- 사용자 TODO: 프로필 이미지 처리, 사용자 이름 처리-->
             <div class="d-flex align-items-center justify-content-between" style="width: 110px; margin-left: 30px;">
                 <div style="width: 40px; height: 40px;">
-                    <img src="/checkmine/resources/header/img/profile.png">
+                    <img src="/checkmine/resources/img/header/profile.png">
                 </div>
                 <span class="fs-5 fw-bold">테스트</span>
             </div>
