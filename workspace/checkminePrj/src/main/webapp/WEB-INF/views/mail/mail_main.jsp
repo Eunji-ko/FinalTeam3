@@ -43,6 +43,7 @@
         border: none;
         background-color: #c4f2ea;
         border-radius: 5px;
+        margin-right: 20px;
     }
 
     /* 메일쓰기 버튼 */
@@ -95,6 +96,50 @@
         margin-left: 31px;
     }
    
+    /* 메일 체크박스 옆 드롭다운 */
+    .dropdown{
+        position : relative;
+        display : inline-block;
+    }
+    .dropbtn{
+        display: inline-block;
+        display: flex;
+        width: 20px;
+        height: 20px;
+        margin-top: 5px;
+    }
+    .dropbtn>img{
+        margin: auto;
+    }
+    .dropdown-content{
+        display : none;
+        position : absolute;
+        z-index : 1; /*다른 요소들보다 앞에 배치*/
+        width: 100px;
+        height: 75px;
+        border: 1px solid #cdcdcd;
+        border-radius: 5px;
+        background-color: white;
+    }
+    .dropdown-content a{
+        display : block;
+        text-decoration: none;
+        border-bottom: 1px solid #cdcdcd;
+        color: #000;
+    }
+    .dropdown-content>a:last-child{
+        border: none;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    #mid-nav>*{
+        margin-left: 14px;
+    }
+    #mid-nav>input[type="checkbox"]{
+        margin-top: 4px;
+    }
 
 	
 </style>
@@ -135,8 +180,31 @@
                     </ul>
                 </div>
 
-                <div id="">
-                    <p>받은편지함</p>
+                <div>
+                    <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
+
+                    <div class="d-flex" style="width: 1258px;" id="mid-nav">
+                        <!-- 전체 체크박스 -->
+                        <input type="checkbox" name="checkbox-all" class="align-self-center" style="width: 20px; height: 20px;">
+                        
+                        <!-- 드롭다운 -->
+                        <div class="dropdown">
+                            <span class="dropbtn"><img src="${imgPath}/mail_arrow.png"></span>
+                            <div class="dropdown-content">
+                                <a href="읽은메일 조회">읽은메일</a>
+                                <a href="안읽은메일 조회">안읽은메일</a>
+                                <a href="중요메일 조회">중요메일</a>
+                            </div>
+                        </div> 
+
+                        <!-- 휴지통으로 보내기 -->
+                        <a href="메일 삭제" class="flex-grow-1"><img src="${imgPath}/trash_icon.png"></a>
+                        
+                        <!-- 페이지네이션 -->
+                        <span>1 page</span>
+                        <a href="메일 리스트 이전 페이지"><img src="${imgPath}/mail_arrow_pre.png"></a>
+                        <a href="메일 리스트 다음 페이지"><img src="${imgPath}/mail_arrow_next.png"></a>
+                    </div>
                 </div>
             </div>
         </main> 
