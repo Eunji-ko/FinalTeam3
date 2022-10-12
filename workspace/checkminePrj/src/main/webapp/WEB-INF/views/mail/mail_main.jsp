@@ -181,7 +181,7 @@
                 </div>
 
                 <div>
-                    <div>받은편지함</div>
+                    <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
 
                     <div class="d-flex" style="width: 1258px;" id="mid-nav">
                         <!-- 전체 체크박스 -->
