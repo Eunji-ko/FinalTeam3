@@ -11,6 +11,8 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <style>
+        @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+        * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
     	
         nav{
             background-color: #B0D9D1;
@@ -81,7 +83,7 @@
             <!-- 사용자 TODO: 프로필 이미지 처리, 사용자 이름 처리-->
             <div class="d-flex align-items-center justify-content-between" style="width: 110px; margin-left: 30px;">
                 <div style="width: 40px; height: 40px; border-radius: 50%;" id="profileImg">
-                    <img src="${root}/resources/img/admin/adminProfile.png">
+                    <img src="${root}/resources/img/header/adminProfile.png">
                 </div>
                 <span class="fs-5 fw-bold">테스트</span>
             </div>

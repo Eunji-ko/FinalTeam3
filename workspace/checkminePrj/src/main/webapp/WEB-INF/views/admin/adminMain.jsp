@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 관리자 홈</title>
+<title>Insert title here</title>
+<link href='${root}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+	<script src='${root}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 </head>
 <style>
 
@@ -37,10 +39,11 @@
         margin : 10px 60px;
     }
     .summaryItem{
-        margin: 0 auto;
+        margin: auto;
         font-size: 15px;
         text-align: center;
         line-height: 30px;
+        
         
     }
     .summaryItem > img{
@@ -49,9 +52,9 @@
     }
 
     .area{
-        width: 450px;
+        width: 490px;
         height: 490px;
-        margin: 0 auto;
+        margin: 0 8px;
         display: flex;
         flex-direction: column;
     }
@@ -66,13 +69,13 @@
         font-size: 20px;
         font-weight: bolder;
         grid-column: span 6;
-        margin : 15px 20px;
+        margin : 15px 13px;
         margin-bottom: 30px;
         display: inline-block;
     }
     .list{
         font-size: 13px;
-        margin: 15px 20px;
+        margin: 18px 20px;
         width: 90%;
         border-bottom: 1px solid lightgray;
        
@@ -97,6 +100,7 @@
         float: right;
         margin: 16px 15px;
         color: gray;
+        font-size: 13px;
     }
 
     #currentTime{
@@ -105,7 +109,24 @@
         height: 150px;
         border: none;
     }
+    #calendar-area{
+        border: none;
+    }
+
+    #calendar{
+        width: 350px;
+        height: 345px;
+        margin: 0 auto;
+    }
    
+    .modal-content{
+        width: 700px;
+        height: 500px;
+        padding: 20px;
+    }
+    .list-header{
+        text-align: left;
+    }
 
 </style>
 <body>
@@ -145,7 +166,7 @@
                 </div>
     
                 <div id="bookArea">
-                    <div class="header">예약 현황</div><a href="" id="more">더보기</a>
+                    <div class="header">예약 현황</div><a href="" id="more" data-bs-toggle="modal" data-bs-target="#myModal">더보기</a>
                     <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
                     <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
                     <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
@@ -179,17 +200,60 @@
                 <div id="currentTime" style="font-size: 20px;">
                     현재 시간 <b style="font-size: 30px;" id="clock"></b>
                 </div>
-                <div id="calender">
-
+                <div id="calendar-area">
+                    <div id="calendar"></div>
                     
                 </div>
             </div>
 
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                    <h4 class="modal-title">예약 현황</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body" align="center">
+                    <div class="list-header">[회의실A]000님의 예약 내역입니다.</div><hr>
+                    <table>
+                        <tr>
+                            <th>예약자</th>
+                            <td>000 사원</td>
+                        </tr>
+                        <tr>
+                            <th>예약일자</th>
+                            <td>2022.10.12 21:42</td>
+                        </tr>
+                        <tr>
+                            <th>종료일자</th>
+                            <td>2022.10.12 21:42</td>
+                        </tr>
+
+                    </table>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn" style="background-color: #5D736F; color: white;" data-bs-dismiss="modal">닫기</button>
+            </div>
+            
+      </div>
+    </div>
+  </div>
+                
+            
+            
+            
         </main>
     </div>
 
     <script>
-        // 현재 시간 실시간으로 보여주기
+        // 현재 시간 표시
         var Target = document.getElementById("clock");
         function clock() {
             var time = new Date().toTimeString().split(" ")[0];
@@ -197,7 +261,19 @@
         }
 
         clock();
-        setInterval(clock, 1000); // 1초마다 실행
+        setInterval(clock, 1000); // 1초마다 실행하여 실시간으로 보여주기
+
+       
+        //풀캘린더 라이브러리 적용
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+        });
+        calendar.render();
+        });
+
+
     </script>
 </body>
 </html>
