@@ -9,7 +9,9 @@
 <meta charset="UTF-8">
 <title>CheckMine - mail</title>
 
+
 <style type="text/css">
+    
 	main{
 		padding: 25px 18px 40px 51px;
 	}
@@ -60,7 +62,6 @@
     }
     #container-nav>div>span{
         font-size: 15px;
-        font-weight: 500;
     }
 
     /* 메일네비 목록 */
@@ -135,7 +136,7 @@
                 </div>
 
                 <div id="">
-                    
+                    <p>받은편지함</p>
                 </div>
             </div>
         </main> 
