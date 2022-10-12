@@ -6,6 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	#wrap{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr 1fr;
+		
+		border: 1px solid black;
+	}
+	
+	#wrap>div{
+		border: 1px solid black;
+	}
+
+    #title{
+        grid-column-start: 2;
+        grid-column-end: 4;
+    }
+	
+</style>
 </head>
 <body>
 	<div class="d-flex">
@@ -20,10 +38,28 @@
                 </div>
 
                 <!--작성 칸-->
-                <div>제목</div><div><input type="text"></div>
-                <div>수신처</div><div></div>
-                <div>참조</div>
-                <div>첨부파일</div><div><input type="file"></div>
+                <div id="wrap">
+	                <div>제목</div><div id="title"><input type="text"></div>
+	                <div>수신처</div>
+                    <div>
+                        <select>
+                            <option value="1">부장님</option>
+                            <option value="2">대리님</option>
+                            <option value="3">사장님</option>
+                            <option value="4">이사님</option>
+                        </select>
+                    </div>
+	                <div>참조</div>
+                    <div>
+                        <select>
+                            <option value="1">부장님</option>
+                            <option value="2">대리님</option>
+                            <option value="3">사장님</option>
+                            <option value="4">이사님</option>
+                        </select>
+                    </div>
+	                <div>첨부파일</div><div><input type="file"></div>
+                </div>
             </div>
         </main>
     </div>
