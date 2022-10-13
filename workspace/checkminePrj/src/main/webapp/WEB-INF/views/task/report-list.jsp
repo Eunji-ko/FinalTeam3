@@ -1,31 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>업무</title>
 <style>
 
-    #category-wrap{
+    /*카테고리*/
+    .nav-tabs{
         margin-top: 40px;
-        border-bottom: 2px solid #B0D9D1;
-        height: 40px;
-        display: flex;
+        border-bottom: 1px solid #B0D9D1;
     }
-
-    .category{
-        text-decoration: none;
-        
-        text-align: center;
-        font-size: large;
-        color: black;
-
-        width: 70px;
-        border: 3px solid black;
-        padding: 3px;
-        border-radius: 8px 8px 0px 0px;
+    
+    .nav-link {
+    	border-top: 1px solid lightgray !important;
+    	border-left: 1px solid lightgray !important;
+    	border-right: 1px solid lightgray !important;
+    	color: lightgray;
+    }
+    
+    /*활성화 카테고리 색상 변경*/
+    .active	{
+    	margin-left: 40px;
+    	border-top: 1px solid #B0D9D1 !important;
+    	border-left: 1px solid #B0D9D1 !important;
+    	border-right: 1px solid #B0D9D1 !important;
+    	color: #B0D9D1 !important;
     }
 
     #report{
@@ -37,20 +41,44 @@
         font-weight: bold;
     }
 
+    #search-write-box {
+        margin-left: 20px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
     #search{
-        text-align: right;
         margin: 20px;
+        border: 1px solid gray;
+        border-radius: 50px;
+    }
+
+    #write-box {
+        margin: 25px;
+    }
+    #write{
+        padding: 10px;
+        border: 1px solid #5D736F;
+        background-color: #5D736F;
+        border-radius: 30px;
+        color: white;
+        text-decoration: none;
+    }
+
+    form > div > img{
+        margin-left: 10px;
+        margin-bottom: 4px;
     }
 
     input[type="text"] {
-        border: 1px solid gray;
-        border-radius: 50px;
-        text-align: center;
+        padding: 10px;
+        border: none;
         height: 35px;
+        border-radius: 50px;
     }
 
     #center{
-        border: 1px dashed #B0D9D1;
         width: 95%;
         height: 90%;
         margin: auto;
@@ -73,15 +101,16 @@
     }
 
     .list{
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid lightgray;
         line-height: 35px;
         font-size: large;
     }
 
-    .list:hover{ /*한줄 통째로 처리되게...*/
-        background-color: lightgray;
+    #title:hover{ 
+        text-decoration: underline;
     }
 
+    /*페이징*/
     #page-area{
         margin-top: 20px;
         text-align: center;
@@ -109,18 +138,26 @@
         <main class="shadow">
 
             <div id="wrap">
-
+				
                 <!--카테고리-->
-                <div id="category-wrap">
-                    <a class="category" id="report">보고</a>
-                    <a class="category">지시</a>
-                </div>
-                
+				<ul class="nav nav-tabs">
+			        <li class="nav-item">
+			          <a class="nav-link active" href="${root}/task/report/list">보고</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="${root}/task/order/list">지시</a>
+			        </li>
+			      </ul>
+
                 <!--검색 기능-->
-                <div id="search">
-                    <form action="">
-                        <input type="text" placeholder="보고서 검색">
+                <div id="search-write-box">
+                    <form action="" id="search">
+                        <div>
+                            <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px">
+                            <input type="text" placeholder="보고서 검색">
+                        </div>
                     </form>
+                    <div id="write-box"><a href="${root}/task/report/write" id="write">보고서 작성</a></div>
                 </div>
                 
                 <!--보고서 목록-->
@@ -135,7 +172,7 @@
                     <div class="list">111</div>
                     <div class="list">긴급</div>
                     <div class="list">과장님</div>
-                    <div class="list">테스트 진행 현황</div>
+                    <div class="list" id="title">테스트 진행 현황</div>
                     <div class="list">테스트 사원</div>
                     <div class="list">2022-10-12</div>
 
