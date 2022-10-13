@@ -49,6 +49,14 @@
     #content-top{
         width: 100%;
         height: 10%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #content-top button{
+        background: #5D736F;
+        border-radius: 10px;
+        color: white;
     }
 
     #content-main{
@@ -61,14 +69,12 @@
     }
 
     #content-main-top{
-        border: 1px solid red;
         width: 100%;
         height: 5%;
         text-align: center;
     }
 
     #content-main-bot{
-        border: 1px solid blue;
         width: 100%;
         height: 95%;
     }
@@ -76,6 +82,14 @@
     #content-main-bot>table{
         width: 100%;
         height: 100%;
+        border: none;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    #content-main-bot td{
+        border: 1px solid black;
+        width: 80px;
     }
 
 </style>
@@ -127,6 +141,7 @@
 
                 <div id="content-top">
                     <h1>빔 프로젝트</h1>
+                    <div><button>예약하기</button></div>
                 </div>
     
                 <div id="content-main">
@@ -136,63 +151,69 @@
                     </div>
 
                     <div id="content-main-bot">
-                        <table border="1">
+                        <table>
                             <tr>
-                                <td></td>
+                                <td class="time">시간 \ 빔프로젝트번호</td>
+                                <td>빔1</td>
+                                <td>빔2</td>
+                                <td>빔3</td>
+                            </tr>
+                            <tr>
+                                <td class="time">9시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
+                                <td class="time">10시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
+                                <td class="time">11시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
+                                <td class="time">12시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
+                                <td class="time">13시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                             <tr>
+                                <td class="time">14시</td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time">15시</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time">16시</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time">17시</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time">18시</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
