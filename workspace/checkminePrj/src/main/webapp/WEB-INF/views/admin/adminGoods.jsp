@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 사원관리</title>
+<title>CHECKMINE 공유물관리</title>
 <style>
 
 
@@ -92,20 +92,23 @@
         
         <main class="shadow">
             <div id="area1">
-                <span id="header">사원 관리</span>
-                <button type="button" class="btn">사원등록</button>
+                <span id="header">공유물 관리</span>
+                <div>
+                    <button type="button" class="btn">공유물 등록</button>
+                    <button type="button" class="btn" style="width: 110px;" onclick="deleteList()">선택 삭제</button>
+                </div>
+                
             </div>
 			<div id="area2">
                 <select class="form-select" id="filter">
                     <option>모두</option>
-                    <option>재직</option>
-                    <option>퇴직</option>
+                    <option>장소</option>
+                    <option>장비</option>
                 </select>
                 <form action="">
                     <select class="form-select" id="option" required style="display: inline-block;">
                         <option>이름</option>
-                        <option>부서</option>
-                        <option>아이디</option>
+                        <option>설명</option>
                     </select>
                     <div style="width: 267px; border: 1px solid lightgray; display: inline-block;" >
                         <input type="text" name="keyword" id="keyword" class="form-control" required>
@@ -121,24 +124,22 @@
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
                         <tr>
-                            <th>사원번호</th>
+                            <th>번호</th>
+                            <th>카테고리</th>
                             <th>이름</th>
-                            <th>부서</th>
-                            <th>직위</th>
-                            <th>아이디</th>
-                            <th>입사일자</th>
-                            <th>상태</th>
+                            <th>설명</th>
+                            <th>오늘 예약건수</th>
+                            <th>선택</th>
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
                         <tr onclick="location.href='#'">
                             <td>1</td>
-                            <td>테스트</td>
-                            <td>총무부</td>
-                            <td>대리</td>
-                            <td>CHECKMINE1</td>
-                            <td>2022.10.13</td>
-                            <td>재직</td>
+                            <td>장소</td>
+                            <td>안쪽 어딘가의 회의실</td>
+                            <td>2층 안쪽의 횜ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</td>
+                            <td>3</td>
+                            <td><input type="checkbox" name="checked" id=""></td>
                         
                         </tr>
 
@@ -158,4 +159,10 @@
         </main>
     </div>
 </body>
+<script>
+    //선택 항목 삭제하는 AJAX
+
+
+
+</script>
 </html>
