@@ -22,8 +22,8 @@
     }
 
     #side{
-        width: 20%;
-        height: 90%;
+        width: 170px;
+        height: 740px;
         background-color: #C4F2EA;
         border-radius: 10px;
     }
@@ -41,8 +41,8 @@
     #content{
         display: flex;
         flex-wrap: wrap;
-        width: 80%;
-        height: 90;
+        width: 85%;
+        height: 88%;
         padding-left: 2%;
     }
 
@@ -54,6 +54,28 @@
     #content-main{
         width: 100%;
         height: 90%;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: block;
+        padding: 10px;
+    }
+
+    #content-main-top{
+        border: 1px solid red;
+        width: 100%;
+        height: 5%;
+        text-align: center;
+    }
+
+    #content-main-bot{
+        border: 1px solid blue;
+        width: 100%;
+        height: 95%;
+    }
+
+    #content-main-bot>table{
+        width: 100%;
+        height: 100%;
     }
 
 </style>
@@ -109,6 +131,75 @@
     
                 <div id="content-main">
                     
+                    <div id="content-main-top">
+                        2022-09-30 (금)
+                    </div>
+
+                    <div id="content-main-bot">
+                        <table border="1">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
 
             </div>

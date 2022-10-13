@@ -22,8 +22,8 @@
     }
 
     #side{
-        width: 20%;
-        height: 90%;
+        width: 170px;
+        height: 740px;
         background-color: #C4F2EA;
         border-radius: 10px;
     }
@@ -41,7 +41,7 @@
     #content{
         display: flex;
         flex-wrap: wrap;
-        width: 80%;
+        width: 70%;
         height: 90;
         padding-left: 2%;
     }
@@ -56,6 +56,12 @@
         height: 90%;
         display: flex;
         justify-content: space-around;
+    }
+
+    #content-main button{
+        background: #5D736F;
+        border-radius: 10px;
+        color: white;
     }
 
 </style>
@@ -118,7 +124,7 @@
                     <div id="time">오전 09:00 ~ 오전 10:00</div>
 
                     <div id="goods-btn">
-                        <button id="reservation">예약</button>
+                        <button id="reservation">예약 취소</button>
                     </div>
                     
                 </div>
