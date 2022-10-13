@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("approval")
 public class ApprovalController {
 	
-	@GetMapping("draft")
-	public String draft() {
-		
-		return "approval/draft";
+	@GetMapping
+	public String approval() {
+		return "approval/approval-outline";
 	}
+	
 
 }
