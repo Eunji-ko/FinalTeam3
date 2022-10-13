@@ -7,8 +7,12 @@
 <title>Insert title here</title>
 <style>
     .hr-border {
-        margin: 0;
-        border: 1px solid #B0D9D1;
+        position: absolute;
+        top: 229px;
+        z-index: 0;
+        width: 1519px;
+        height: 1px;
+        background-color: #B0D9D1;
     }
     .left-space {
         margin-left: 20px;
@@ -35,7 +39,6 @@
         padding-left: 12px;
         padding-right: 12px;
     }
-    
     .btn-zone {
         width: 150px;
     }
@@ -47,7 +50,7 @@
         <a class="list-group-item active top-radius-btn" id="list-emp-list" data-bs-toggle="list" href="#list-emp" role="tab" aria-controls="list-emp">사원</a>
         <a class="list-group-item top-radius-btn" id="list-account-list" data-bs-toggle="list" href="#list-account" role="tab" aria-controls="list-account">거래처</a>
     </div>
-    <hr class="hr-border">
+    <div class="hr-border"></div>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="list-emp" role="tabpanel" aria-labelledby="list-emp-list">
             <%@ include file="/WEB-INF/views/personnel/emp-content.jsp" %>
