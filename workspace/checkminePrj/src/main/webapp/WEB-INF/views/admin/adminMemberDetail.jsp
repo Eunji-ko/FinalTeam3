@@ -112,19 +112,19 @@
         <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
         
         <main class="shadow">
-            <form action="" method="post" enctype="multipart/form-data" onsubmit="return check();">
+            <form action="" method="post" enctype="multipart/form-data">
             <div id="area">
                 <div>
                     <button onclick="history.back()">←</button>
-                    <span id="header">&nbsp;&nbsp;사원 등록</span>
+                    <span id="header">&nbsp;&nbsp;상세보기</span>
                 </div>
                 
-                <button type="submit" class="btn">등록하기</button>
+                <button type="submit" class="btn">수정하기</button>
             </div>
             
                 <div id="infoWrap">
                     <div id="memberInfo">
-                    <div id="modify"></div>
+                    <div id="modify">수정일자 2022.10.13</div>
                     
                         <div id="profileImg">
                             <div id="imgArea">
@@ -133,11 +133,11 @@
                             <input type="file" name="photo" id="photo" onchange="review()">
                         </div>
                         
-                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name" required></div>
+                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"  value="aaa" required></div>
                         <div class="inputField" style="grid-column: 2;"><label>부서</label>
                           <select name="position">
                             <option>사원</option>
-                            <option>주임</option>
+                            <option selected>주임</option>
                             <option>대리</option>
                             <option>과장</option>
                           </select>
@@ -145,23 +145,23 @@
                         <div class="inputField" style="grid-column: 2;"><label>직위</label>
                             <select name="department">
                             <option>인사부</option>
-                            <option>총무부</option>
+                            <option selected>총무부</option>
                       
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 30px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId()" required><button id="checkDup" type="button" onclick="checkDup()">확인</button></div>
+                        <div class="inputField" style="grid-column: 2; margin-right: 85px;"><label>아이디</label><input type="text" name="id" id="memberId" value="aaa" readonly></div>
                         <input type="hidden" value="X" id="dup">
-                        <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 90px;"><label>상세주소</label><input type="text" name="addressDetail" ></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" id="" required></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address" value="aaa"></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 90px;"><label>상세주소</label><input type="text" name="addressDetail" value="aaa"></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" id="" value="" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" value="aaa@@"readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
                             <br><input type="checkbox" name="N" id=""><label style="font-weight: normal;">공지 등록</label>
                             <br><input type="checkbox" name="R" id=""><label style="font-weight: normal;">장비/장소 예약 승인</label>
                             <br><input type="checkbox" name="H" id=""><label style="font-weight: normal;">인사 관리</label>
                         </div>
-                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" id="" required></div>
-                        <div class="inputField" style="margin-top:50px;"><label>비밀번호</label><input type="password" name="pwd" id="" required></div>
+                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" value="" readonly></div>
+                        <div class="inputField" style="margin-top:50px;"><label>퇴사일</label><input type="date" name="resignDate"></div>
                     </div>
                     
                 </div>
@@ -187,25 +187,6 @@
                 imgTag.src = "";
             }
        }
-
-        //이메일을 아이디 + @checkmine.com으로 자동 설정
-        function inputId(){
-            const id = document.querySelector('#memberId').value;
-            document.querySelector('#email').value = id + '@checkmine.com';
-        }
-
-        function check(){
-            //중복확인 체크
-            if(document.querySelector('#dup').value == 'X'){
-                alert("중복확인을 먼저해주세요.");
-                return false;
-            }
-        }
-
-
-
-
-
 
 
     </script>
