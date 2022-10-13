@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="imgPath" value="/checkmine/resources/img/member"/>
 </head>
 <body>
 	<div class="d-flex">
