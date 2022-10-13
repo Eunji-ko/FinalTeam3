@@ -41,6 +41,7 @@
         font-weight: bold;
     }
 
+    /*검색 기능+작성 버튼*/
     #search-write-box {
         margin-left: 20px;
         margin-right: 20px;
@@ -48,15 +49,24 @@
         justify-content: space-between;
     }
 
+    /*검색 기능*/
     #search{
         margin: 20px;
         border: 1px solid gray;
         border-radius: 50px;
     }
+    
+    /*검색 이미지*/
+    form > div > img{
+        margin-left: 10px;
+        margin-bottom: 4px;
+    }
 
+    /*작성 버튼*/
     #write-box {
         margin: 25px;
     }
+
     #write{
         padding: 10px;
         border: 1px solid #5D736F;
@@ -64,11 +74,6 @@
         border-radius: 30px;
         color: white;
         text-decoration: none;
-    }
-
-    form > div > img{
-        margin-left: 10px;
-        margin-bottom: 4px;
     }
 
     input[type="text"] {
@@ -93,11 +98,10 @@
     }
 
     .list-header{
-        border-top: 3px solid #5D736F;
-        border-bottom: 3px solid #5D736F;
+        background-color: #B0D9D1;
         font-weight: bolder;
         font-size: large;
-        line-height: 30px;
+        line-height: 40px;
     }
 
     .list{
@@ -106,9 +110,15 @@
         font-size: large;
     }
 
+    #title>a {
+        text-decoration: none;
+        color: black;
+    }
+
     #title:hover{ 
         text-decoration: underline;
     }
+
 
     /*페이징*/
     #page-area{
@@ -172,7 +182,7 @@
                     <div class="list">111</div>
                     <div class="list">긴급</div>
                     <div class="list">과장님</div>
-                    <div class="list" id="title">테스트 진행 현황</div>
+                    <div class="list" id="title"><a href="${root}/task/report/detail">테스트 진행 현황</a></div>
                     <div class="list">테스트 사원</div>
                     <div class="list">2022-10-12</div>
 

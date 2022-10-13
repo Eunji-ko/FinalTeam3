@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <!DOCTYPE html>
-<c:set value="${pageContext.request.contextPath}" var="root"></c:set>>
+<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -100,21 +100,22 @@
     }
 
     #submit-area{
-        text-align: center;
+        margin-right: 40px;
+        text-align: right;
     }
 
     input[type="submit"]{
         padding: 5px;
-        width: 100px;
+        width: 70px;
         border: 1px solid #5D736F;
         background-color: #5D736F;
         border-radius: 30px;
         color: white;
-        font-size: 20px;
     }
 	/*구분 css*/
     .division {
-        background-color: #B0D9D1;
+        font-weight: 700;
+        background-color: #f0f0f0;
         line-height: 40px;
     }
 
@@ -188,6 +189,28 @@
         border-radius: 0 10px 0 0 ;
     }
 
+    /*스크롤바 설정*/
+    #text{
+        border-bottom: none !important;
+        overflow: auto;
+    }
+
+    #text::-webkit-scrollbar {
+        width: 8px;  /* 스크롤바의 너비 */
+    }
+
+    #text::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #D9D9D9; /* 스크롤바의 색상 */
+        
+        border-radius: 10px;
+    }
+
+    #text::-webkit-scrollbar-track {
+        background: white;  /*스크롤바 뒷 배경 색상*/
+        border-radius: 0 0 10px;
+    }
+
 </style>
 </head>
 <body>
@@ -214,7 +237,7 @@
                         <div class="division" id="title-diveision">제　목</div><div id="title"><input type="text" name="title"></div>
                         <div class="division">수신처</div>
                         <div>
-                            <select>
+                            <select  multiple>
                                 <option value="1">부장님</option>
                                 <option value="2">대리님</option>
                                 <option value="3">사장님</option>
@@ -244,11 +267,11 @@
                         </div>
                         <div class="division">첨부 파일</div><div id="file"><input type="file" multiple></div>
                         <div class="division" id="subject">내　용</div>
-                        <div id="text-area" class="division"><textarea name="content" id="" cols="30" rows="10"></textarea></div>
+                        <div id="text-area" class="division"><textarea name="content" id="text" cols="30" rows="10"></textarea></div>
 
                     </div>
                     <div id="submit-area">
-                        <input type="submit" value="제　출">
+                        <input type="submit" value="제출">
                     </div>
                 </form>
             </div>
