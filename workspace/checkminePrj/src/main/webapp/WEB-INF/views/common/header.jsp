@@ -53,6 +53,10 @@
 
 
     </style>
+    <!-- 제이쿼리 -->    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 </head>
 <body>
     <header class="d-flex " style="width: 100%; height: 140px;">
@@ -60,14 +64,14 @@
 
         <!-- 체크마인 로고 TODO: 홈경로 설정-->
         <div id="logo" class="m-auto">
-            <a href="홈경로"><img src="/checkmine/resources/img/header/logo.png"></a>
+            <a href="${rootPath}/member/main"><img src="/checkmine/resources/img/header/logo.png"></a>
         </div>
         
         <!-- 알림, 설정메뉴 TODO: 설정메뉴 경로 설정-->
         <div class="d-flex h-100 align-items-center justify-content-between me-5" style="width:340px">
         
         	<!-- 메일 TODO:메일경로-->
-        	<a href="메일경로"><img src="/checkmine/resources/img/header/mail-icon.png"></a>
+        	<a href="${rootPath}/mail"><img src="/checkmine/resources/img/header/mail-icon.png"></a>
         
             <!-- 알림 TODO:경로처리 갯수 처리, 배지 -->
             <div class="dropdown">
@@ -93,7 +97,7 @@
             </div>
 
             <!-- 설정 -->
-            <div><a href="설정경로">
+            <div><a href="${rootPath}/설정경로">
                 <img src="/checkmine/resources/img/header/cogwheel-button-.png">
             </a></div>
 
