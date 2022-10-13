@@ -12,4 +12,14 @@ public class MailController {
 	public String mail() {
 		return "mail/mail_main";
 	}
+	
+	@GetMapping("detail")
+	public String mailDetail() {
+		return "mail/mail_detail";
+	}
+	
+	@GetMapping("write")
+	public String mailWrite() {
+		return "mail/mail_write";
+	}
 }
