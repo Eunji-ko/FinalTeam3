@@ -128,6 +128,16 @@
         text-align: left;
     }
 
+    .book-list {
+        margin: 0 auto;
+        width: 500px;
+    }
+
+    .book-list *{
+        width: 250px;
+        text-align: center;
+    }
+
 </style>
 <body>
 	<div class="d-flex">
@@ -220,7 +230,7 @@
                     <!-- Modal body -->
                     <div class="modal-body" align="center">
                     <div class="list-header">[회의실A]000님의 예약 내역입니다.</div><hr>
-                    <table>
+                    <table class="book-list">
                         <tr>
                             <th>예약자</th>
                             <td>000 사원</td>
