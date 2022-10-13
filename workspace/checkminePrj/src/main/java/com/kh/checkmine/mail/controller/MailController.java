@@ -22,4 +22,9 @@ public class MailController {
 	public String mailWrite() {
 		return "mail/mail_write";
 	}
+	
+	@GetMapping("addr")
+	public String mailAddr() {
+		return "mail/mail_addr";
+	}
 }
