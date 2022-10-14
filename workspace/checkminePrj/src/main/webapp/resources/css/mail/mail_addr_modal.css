@@ -1,0 +1,28 @@
+@charset "UTF-8";
+#addr-modal-form span{
+        width: 100px;
+    }
+    #addr-modal-form input[type="text"]{
+        border: none;
+        outline: none;
+        background-color: #d9d9d9;
+        border-radius: 20px;
+        width: 350px;
+        text-indent: 0.7em;
+    }
+    #addr-modal-form input[type="radio"]{
+        margin: 0 20px 0 10px;
+    }
+    #addr-modal-form>.modal-body div{
+        margin: 5px 0 5px 0 ;
+    }
+    #addr-modal-form button{
+        width: 100px;
+        height: 37px;
+        border: none;
+        background-color: #B0D9D1;
+        border-radius: 5px;
+    }
+    #addr-modal-form button:active{
+        background-color: #5d786f;
+    }
