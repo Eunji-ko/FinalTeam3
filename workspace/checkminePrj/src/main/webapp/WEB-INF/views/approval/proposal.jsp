@@ -48,7 +48,7 @@
 		text-align: center;
 	}
 	#main-bot{
-		height: 700px;
+		height: 80vh;
 		margin-top : 30px;
 	}
 	#approval-title-div{
@@ -116,16 +116,28 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/draft" method="post">
+		<form action="${rootPath}/approval/proposal" method="post">
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
 				<input type="text" maxlength="250" class="form-control" name="title">
 			</div>
 			<div id="approval-content-div">
-				<div id="draft-team" class="input-group-text">기안팀</div>
-				<input type="text" maxlength="25" class="form-control" name="draftTeam">
-				<textarea id="approval-content" class="form-control" maxlength="2000" name="content"></textarea>
+				<select class="form-select" name="proposalType">
+				  <option value="제휴">제휴</option>
+				  <option value="영업">영업</option>
+				  <option value="용역">용역</option>
+				  <option value="투자">투자</option>
+				  <option value="개발">개발</option>
+				  <option value="컨설팅">컨설팅</option>
+				  <option value="입점">입점</option>
+				</select>
+				<!-- Button to Open the Modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+				  거래처
+				</button>
+				<input type="text" maxlength="25" class="form-control" name="account">
+				<textarea id="approval-content" class="form-control" maxlength="500" name="content"></textarea>
 			</div>
 			<div id="approval-btn-div">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
@@ -134,5 +146,13 @@
 		</form>
 
 	</div>
+	
+	
+	<%@ include file="/WEB-INF/views/approval/proposal-modal.jsp" %>
+	
+	
+	<script>
+		document.querySelector(".dropdown-item").value
+	</script>
 
 </main>

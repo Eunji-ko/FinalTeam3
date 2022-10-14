@@ -48,7 +48,7 @@
 		text-align: center;
 	}
 	#main-bot{
-		height: 700px;
+		height: 80vh;
 		margin-top : 30px;
 	}
 	#approval-title-div{
@@ -116,16 +116,14 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/draft" method="post">
+		<form action="" method="post">
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
-				<input type="text" maxlength="250" class="form-control" name="title">
+				<input type="text" maxlength="250" class="form-control">
 			</div>
 			<div id="approval-content-div">
-				<div id="draft-team" class="input-group-text">기안팀</div>
-				<input type="text" maxlength="25" class="form-control" name="draftTeam">
-				<textarea id="approval-content" class="form-control" maxlength="2000" name="content"></textarea>
+				<textarea id="approval-content" class="form-control" maxlength="2000"></textarea>
 			</div>
 			<div id="approval-btn-div">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
