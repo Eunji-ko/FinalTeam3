@@ -82,6 +82,35 @@
         text-decoration: none;
         color: black;
     }
+
+    .modal-content{
+        width: 700px;
+        height: 500px;
+        padding: 20px;
+    }
+
+    .list-header{
+        text-align: left;
+    }
+
+    .goods-list, .goods-info{
+        margin: 0 auto;
+        width: 500px;
+    }
+
+    .goods-list *, .goods-info *{
+        width: 250px;
+        text-align: center;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        
+    }
+    .modal-body{
+        overflow: auto;
+    }
    
 
 </style>
@@ -101,7 +130,6 @@
             </div>
 			<div id="area2">
                 <select class="form-select" id="filter">
-                    <option>모두</option>
                     <option>장소</option>
                     <option>장비</option>
                 </select>
@@ -133,14 +161,13 @@
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
-                        <tr onclick="location.href='#'">
+                        <tr data-bs-toggle="modal" data-bs-target="#myModal2">
                             <td>1</td>
                             <td>장소</td>
                             <td>안쪽 어딘가의 회의실</td>
                             <td>2층 안쪽의 횜ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</td>
                             <td>3</td>
-                            <td><input type="checkbox" name="checked" id=""></td>
-                        
+                            <td data-bs-dismiss="modal" data-bs-target="#myModal2"><input type="checkbox" name="checked" id=""></td>
                         </tr>
 
                     </tbody>
@@ -158,9 +185,81 @@
             </div>
         </main>
     </div>
+     <!-- The Modal -->
+     <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">상세보기</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body" align="center">
+                <table class="goods-info">
+                    <tr>
+                        <th>이름</th>
+                        <td>회의실 A</td>
+                    </tr>
+                    <tr>
+                        <th>타입</th>
+                        <td>장소</td>
+                    </tr>
+                    <tr>
+                        <th>설명</th>
+                        <td>2층 안쪽에 있는 회의실</td>
+                    </tr>
+                </table>
+                <hr>
+                <div style="margin: 30px; font-weight: bolder;">예약목록</div>
+            <table class="goods-list">
+                <tr>
+                    <th>예약자</th>
+                    <td>테스트</td>
+                </tr>
+                <tr>
+                    <th>예약일자</th>
+                    <td>테스트</td>
+                </tr>
+                <tr>
+                    <th>종료일자</th>
+                    <td>테스트</td>
+                </tr>
+
+            </table>
+            <hr>
+            <table class="goods-list">
+                <tr>
+                    <th>예약자</th>
+                    <td>테스트</td>
+                </tr>
+                <tr>
+                    <th>예약일자</th>
+                    <td>테스트</td>
+                </tr>
+                <tr>
+                    <th>종료일자</th>
+                    <td>테스트</td>
+                </tr>
+
+            </table>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn" style="background-color: #5D736F; color: white;" data-bs-dismiss="modal">닫기</button>
+    </div>
 </body>
 <script>
     //선택 항목 삭제하는 AJAX
+
+
+
+
+
+
 
 
 

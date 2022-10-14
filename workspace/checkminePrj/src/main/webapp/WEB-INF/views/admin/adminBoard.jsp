@@ -66,7 +66,7 @@
         background:url(${root}/resources/img/admin/search.png);
         background-repeat: no-repeat;
         width:20px;
-        height:20px;
+        height:17px;
         border: none;
         
     }
@@ -81,6 +81,14 @@
         padding: 15px;
         text-decoration: none;
         color: black;
+    }
+    table{
+        table-layout: fixed;
+    }
+    td{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
    
 
