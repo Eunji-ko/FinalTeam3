@@ -10,6 +10,7 @@
 <title>CheckMine - 메일</title>
 <link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_basic.css">
 <link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_detail.css">
+<link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_addr_modal.css">
 
 <c:set var="imgPath" value="/checkmine/resources/img/mail"/>
 
@@ -61,7 +62,7 @@
 
                         <div class="d-flax">
                             <span>보낸이 : chan0966@gmail.com</span> 
-                            <button onclick="">주소록에 추가</button>
+                            <button  id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
                             <span id="time">2022.10.13 12:49</span>
                         </div>
 
@@ -84,5 +85,8 @@
             </div>
         </main>
     </div>
+    
+    <!-- 주소록 추가 모달 -->
+    <%@ include file="/WEB-INF/views/mail/addr_modal.jsp" %>
 </body>
 </html>

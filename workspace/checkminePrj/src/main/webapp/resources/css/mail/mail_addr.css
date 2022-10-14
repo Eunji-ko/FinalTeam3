@@ -1,0 +1,144 @@
+@charset "UTF-8";
+    #addr-box-wrap{
+        width: 1248px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+    }
+
+    /* 각각의 주소 박스 */
+    .addr-box{
+        position: relative;
+        width: 380px;
+        height: 480px;
+        border: 1px solid #c2c2c2;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding: 20px;
+    }
+    .addr-box>.category{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+    .addr-box>.list{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #c2c2c2;
+        padding: 7px 2px 7px 2px;
+        font-size: 13px;
+    }
+    .addr-box>.list>input[type="checkbox"]{
+        width: 17px;
+        height: 17px;
+        margin-right: 10px;
+    }
+    .addr-box>.list>.name{
+        width: 52px;
+    }
+    .addr-box>.list>.addr{
+        width: 190px;
+    }
+    .addr-box>.list>.delete{
+        margin-right: 17px;
+    }
+    .addr-box>.footer-menu{
+        width: 340px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 15px;
+    }
+    .addr-box>.footer-menu input{
+        width: 17px;
+        height: 17px;
+        margin-right: 10px;
+    }
+    .addr-box>.footer-menu span{
+        display: inline-block;
+        margin-left: 180px;
+    }
+    .addr-box>.footer-menu .pre-arrow{
+        margin: 0px 10px 0px 10px;
+    }
+
+    /* 주소록 검색창 */
+    #addr-search{
+        width: 510px;
+        height: 33px;
+        border: 1px solid #cdcdcd;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        padding: 3px 10px 0px 10px;
+        margin: 0px 0px 10px 10px;
+    }
+    #addr-search>input{
+        margin-left: 7px;
+        flex-grow: 1;
+        border: none;
+        outline: none;
+    }
+
+    /* 주소록 결과 */
+    #addr-search-result{
+        width: 509px;
+        height: 140px;
+        border: 1px solid #cdcdcd;
+        margin-left: 10px;
+        padding: 7px;
+        overflow-y: scroll;
+        font-size: 13px;
+    }
+    #addr-search-result::-webkit-scrollbar {
+        width: 14px;  /* 스크롤바의 너비 */
+    }
+    #addr-search-result::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #5d786f; /* 스크롤바의 색상 */
+        border-radius: 10px;
+    }
+    #addr-search-result::-webkit-scrollbar-track {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        background: #d9d9d9;  /*스크롤바 뒷 배경 색상*/
+    }
+
+    /* 주소록 검색 결과 리스트 */
+    #addr-search-result>.result{
+        border-bottom: 1px solid #cdcdcd;
+        display: flex;
+        align-items: center;
+        padding-bottom: 3px;
+    }
+    #addr-search-result>.result>span:nth-child(1){
+        display: inline-block;
+        width: 80px;
+    }
+    #addr-search-result>.result>span:nth-child(2){
+        display: inline-block;
+        width: 300px;
+    }
+    #addr-search-result>.result>.delete{
+        margin-right: 20px;
+    }
+
+    /* 주소록 추가 버튼 */
+    #wrapper{
+        position: relative;
+    }
+    
+    #addr-add{
+        width: 100px;
+        height: 37px;
+        border: none;
+        background-color: #B0D9D1;
+        border-radius: 5px;
+        position: absolute;
+        bottom: 0px;
+        right: 12px;
+    }
+    #addr-add:active{
+        background-color: #5d786f;
+    }

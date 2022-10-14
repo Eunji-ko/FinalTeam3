@@ -81,6 +81,9 @@
 
 
 </style>
+<link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_addr_modal.css">
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <c:set var="imgPath" value="/checkmine/resources/img/mail"/>
 
@@ -130,7 +133,7 @@
                             <span>받는사람</span>
                             <span>:</span> 
                             <input type="text">
-                            <button type="button">주소록에 추가</button><!-- TODO:주소록 모달 -->
+                            <button type="button" id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
                         </div>
                         <div class="info">
                             <span>참조인</span>
@@ -138,11 +141,24 @@
                             <input type="text" name="refer">
                         </div>
                         
+                        <textarea name="" id="editor"></textarea>
+
                     </form>
                 </div>
             </div>
         </main>
     </div>
-
+   <!-- 주소록 추가 모달 -->
+   <%@ include file="/WEB-INF/views/mail/addr_modal.jsp" %>
 </body>
+
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!-- Initialize Quill editor -->
+<script>
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+</script>
 </html>
