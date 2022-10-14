@@ -141,7 +141,7 @@
 
                 <div id="content-top">
                     <h1>빔 프로젝트</h1>
-                    <div><button>예약하기</button></div>
+                    <div><button data-bs-toggle="modal" data-bs-target="#exampleModal">예약하기</button></div>
                 </div>
     
                 <div id="content-main">
@@ -223,6 +223,51 @@
 
                 </div>
 
+            </div>
+
+            <!-- Modal -->
+            <style>
+                #exampleModal #reservation{
+                    background: #5D736F;
+                    border-radius: 10px;
+                    color: white;
+                }
+
+                #exampleModal #close{
+                    background: white;
+                    border-radius: 10px;
+                    color: #5D736F;
+                }
+            </style>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">예약하기</h1>
+                    </div>
+                    <div class="modal-body">
+                    <div id="rsv-name">
+                        <div>예약자</div>
+                        <div>뿡빵 사원</div>
+                    </div>
+                    <div id="goods-name">
+                        <div>공유물 이름</div>
+                        <div>빔1</div>
+                    </div>
+                    <div id="date">
+                        날짜
+                    </div>
+                    <div id="time">
+                        예약 시간
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button id="reservation">예약</button>
+                    <button id="close" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+                </div>
             </div>
 			
         </main>
