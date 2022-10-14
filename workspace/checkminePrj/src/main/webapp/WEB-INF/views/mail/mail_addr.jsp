@@ -155,6 +155,11 @@
     #add-addr-modal-content{
         width: 553px;
         height: 280px;
+        justify-content: center;
+    }
+    #modal-body-m{
+        width: 506px;
+        height: px;
     }
     
 </style>
@@ -292,10 +297,11 @@
             </div>
         </main>
     </div>
+    <!-- 주소록 추가 모달 -->
     <div class="modal fade" id="add-addr-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="add-addr-modal-content">
-               
+            <div class="modal-content"  id="add-addr-modal-content" >
+                <div id="modal-body-m" style="border: black;"> sdfsdf</div>
             </div>
         </div>
     </div>
