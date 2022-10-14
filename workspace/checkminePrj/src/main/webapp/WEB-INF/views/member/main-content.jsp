@@ -56,11 +56,45 @@
         margin-bottom: 7px;
     }
     #attend-content {
-        width: 280px;
+        width: 290px;
         height: 220px;
         margin-top: 210px;
         border-radius: 20px;
         background-color: white;
+        align-items: center;
+    }
+    #attend-content * {
+        margin: 0 auto;
+        height: 50px;
+    }
+    #current-day {
+        padding-top: 10px;
+        text-align: center;
+    }
+    #current-time {
+        padding-left: 30px;
+    }
+    #current-time * {
+        float: left;
+    }
+    #time-text {
+        padding-top: 8px;
+        font-size: 18px;
+        padding-right: 10px;
+    }
+    .current-clock {
+        width: 155px;
+        height: 40px;
+        color: #666;
+        font-size: 25px;
+        text-align: center;
+    }
+    #time-zone {
+        width: 170px;
+        height: 40px;
+    }
+    #begin-text, #end-text {
+        font-size: 15px;
     }
     #main-content {
         width: 1070px;
@@ -89,14 +123,7 @@
     #main-content1f > div, #main-content2f > div {
         border: 1px solid #C2C2C2;
     }
-    .current-clock {
-        border: 1px solid black;
-        width: 160px;
-        height: 40px;
-        color: #666;
-        font-size: 25px;
-        text-align: center;
-    }
+    
 </style>
 </head>
 <body onload="printClock()">
@@ -131,16 +158,33 @@
             </div>
             <div id="attend-content">
                 <div id="current-day">
-
+                    
                 </div>
-                <div id="clock" class="current-clock">
-
+                <div id="current-time">
+                    <div id="time-text">
+                        현재시간
+                    </div>
+                    <div id="clock" class="current-clock">
+    
+                    </div>
                 </div>
-                <div id="begin-time">
-
-                </div>
-                <div id="end-time">
-
+                <div id="time-zone">
+                    <div id="begin-zone">
+                        <div id="begin-text">
+                            출근시간
+                        </div>
+                        <div id="begin-time">
+    
+                        </div>
+                    </div>
+                    <div id="end-zone">
+                        <div id="end-text">
+                            퇴근시간
+                        </div>
+                        <div id="end-time">
+                            
+                        </div>
+                    </div>
                 </div>
                 <div id="attend-btn-zone">
 
@@ -165,12 +209,19 @@
         function printClock() {
     
             var clock = document.getElementById("clock");            // 출력할 장소 선택
+            var day = document.getElementById("current-day");
             var currentDate = new Date();                                     // 현재시간
             var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() // 현재 날짜
             var amPm = 'AM'; // 초기값 AM
             var currentHours = addZeros(currentDate.getHours(),2); 
             var currentMinute = addZeros(currentDate.getMinutes() ,2);
             var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = addZeros(currentDate.getMonth() + 1,2);
+            var currentToday = addZeros(currentDate.getDate(),2);
+            var currentDay = currentDate.getDay();
+            var weeks = ['일', '월', '화', '수', '목', '금', '토'];
+            var currentWeek = weeks[currentDay];
 
             if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌
                 amPm = 'PM';
@@ -178,6 +229,7 @@
             }
 
             clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:25px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+            day.innerHTML = currentYear+"년 "+currentMonth+"월 "+currentToday+"일 ("+currentWeek+")";
 
             setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
             }
