@@ -3,10 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!--폰트어썸 최신 CDN-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
 <!DOCTYPE html>
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
@@ -52,7 +48,7 @@
         width:95%;
         height: 90%;
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr;
+        grid-template-columns: 1fr 2fr 1fr 2fr;
         grid-template-rows: 40px 40px 40px 40px 550px;
 		border: 1px solid #5D736F;
         border-radius: 10px;
@@ -65,7 +61,7 @@
 
     #title{
         grid-column-start: 2;
-        grid-column-end: 7;
+        grid-column-end: 5;
     }
 
     #title > input {
@@ -76,17 +72,17 @@
 
     #file {
         grid-column-start: 2;
-        grid-column-end: 7;
+        grid-column-end: 5;
     }
 
     #subject{
         grid-column-start: 1;
-        grid-column-end: 7;
+        grid-column-end: 5;
     }
 
     #text-area{
         grid-column-start: 1;
-        grid-column-end: 7;
+        grid-column-end: 5;
         border-bottom: none !important;
         border-radius: 0 0 10px 10px;
     }
@@ -122,50 +118,6 @@
     select, input[type="file"]{
         width: 100%;
         height: 100%;
-    }
-
-    /*중요도*/
-    #radio-area{
-        width: 100%;
-        line-height: 40px;
-        display: flex;
-        justify-content: space-evenly;
-    }
-
-    /*radio 꾸미기*/
-    /*input 숨기기*/
-    input[type="radio"] {
-        display: none
-    }
-
-    /*input 바로 다음 label 설정*/
-    input[type="radio"] + label {
-        cursor: pointer;
-    }
-
-    /*innput 바로 다음 label:before에 체크하기 전 css 설정*/
-    input[type="radio"] + label:before{
-        content: "";
-        margin: 4px;
-        display: inline-block;
-        width: 17px;
-        height: 17px;
-        line-height: 17px;
-        border: 1px solid #cbcbcb;
-        border-radius: 4px;
-        vertical-align: middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
-    }
-
-    /*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
-    input[type="radio"]:checked + label:before{
-        content:"\f00c";/*폰트어썸 유니코드*/
-        font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
-        font-weight:900;/*폰트어썸 설정*/
-        color:#fff;
-        background-color:#5D736F;
-        border-color:#5D736F;
-        font-size:13px;
-        text-align:center;
     }
 
     /*파일 첨부 css*/
@@ -253,25 +205,13 @@
                                 <option value="4">이사님</option>
                             </select>
                         </div>
-                        <div class="division">중요도</div>
-                        <div id="radio-area">
-                            <div>
-                                <input type="radio" name="importance" id="nomal" value="N" checked/><label for="nomal"><span>보통</span></label>
-                            </div>
-                            <div>
-                                <input type="radio" name="importance" id="import" value="I"/><label for="import"><span>중요</span></label>
-                            </div>
-                            <div>
-                                <input type="radio" name="importance" id="emergency" value="E"/><label for="emergency"><span>긴급</span></label>
-                            </div>
-                        </div>
                         <div class="division">첨부 파일</div><div id="file"><input type="file" multiple></div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division"><textarea name="content" id="text" cols="30" rows="10"></textarea></div>
 
                     </div>
                     <div id="submit-area">
-                        <input type="submit" value="제출">
+                        <input type="submit" value="작성">
                     </div>
                 </form>
             </div>
