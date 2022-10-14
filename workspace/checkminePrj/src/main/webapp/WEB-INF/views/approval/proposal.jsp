@@ -84,6 +84,24 @@
 		margin: auto;
 		display: block;
 	}
+	#proposal-type{
+		color: white;
+		background-color: #5d736f;
+	}
+	#account-btn{
+		color: white;
+		background-color: #5d736f;
+		width: 10%;
+		height: 100%;
+		display: inline;
+	}
+	#account-name-div{
+		width: 90%;
+		height: 100%;
+		padding-left: 30px;
+		display: inline;
+	}
+	
 </style>
 
 
@@ -123,7 +141,7 @@
 				<input type="text" maxlength="250" class="form-control" name="title">
 			</div>
 			<div id="approval-content-div">
-				<select class="form-select" name="proposalType">
+				<select id="proposal-type" class="form-select" name="proposalType">
 				  <option value="제휴">제휴</option>
 				  <option value="영업">영업</option>
 				  <option value="용역">용역</option>
@@ -133,10 +151,12 @@
 				  <option value="입점">입점</option>
 				</select>
 				<!-- Button to Open the Modal -->
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-				  거래처
-				</button>
-				<input type="text" maxlength="25" class="form-control" name="account">
+				<div id="account-div">
+					<button type="button" id="account-btn" class="btn" data-bs-toggle="modal" data-bs-target="#proposal-modal">
+						거래처
+					</button>
+					<div id="account-name-div">(거래처명)</div>
+				</div>
 				<textarea id="approval-content" class="form-control" maxlength="500" name="content"></textarea>
 			</div>
 			<div id="approval-btn-div">
