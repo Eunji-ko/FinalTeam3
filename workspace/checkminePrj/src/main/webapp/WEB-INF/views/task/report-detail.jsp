@@ -180,7 +180,7 @@
                     </div>
                 </div>
                 <div class="btn-area">
-                    <a href="">수정</a>
+                    <a href="${root}/task/report/edit">수정</a>
                     <a href="">삭제</a>
                     <a href="">목록</a>
                 </div>

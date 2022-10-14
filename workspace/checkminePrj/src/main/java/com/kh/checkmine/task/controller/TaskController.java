@@ -26,6 +26,14 @@ public class TaskController {
 		return "task/report-detail";
 	}
 	
+	//보고서 수정
+	@GetMapping("report/edit")
+	public String reportEdit() {
+		return "task/report-edit";
+	}
+	
+	//보고서 삭제
+	
 	//지시서 목록
 	@GetMapping("order/list")
 	public String orderList() {
