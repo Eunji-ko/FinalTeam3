@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% 	session.removeAttribute("loginAdmin");
+   		
+    String msg = (String)session.getAttribute("msg");
+    session.removeAttribute("msg");
+ %>
+	<c:set var="root" value="${pageContext.request.contextPath}"/>
+	
 <html>
 <head>
 	 <title>CHECKMINE 관리자 로그인</title>
@@ -124,7 +129,7 @@
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="adminPwd" placeholder="비밀번호" required></div>
 	                <input type="submit" value="로그인">
 	            </form>
-	            <div id="bottom"><a href="" id="userLogin">사용자로 로그인</a></div>
+	            <div id="bottom"><a href="${root}" id="userLogin">사용자로 로그인</a></div>
 	           
 	
 	        </div>

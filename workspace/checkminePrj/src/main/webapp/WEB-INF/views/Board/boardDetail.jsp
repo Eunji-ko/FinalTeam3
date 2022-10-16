@@ -65,10 +65,11 @@
         margin-bottom: 10px;
     }
     #content{
-        height: 350px;
+   		width:98%;
+   		min-height: 340px;
         margin: 10px;
         border-bottom: 1px solid #5D736F;
-        display: inline;
+        display: inline-block;
     }
     #content > img {
         max-width: 100%;
@@ -121,7 +122,7 @@
         display: flex;
         justify-content: space-around;
     }
-    #correct, #delete{
+    #correct, #delete, #recommend{
         width: 88px;
         font-size: 16px;
         background-color: #5D736F; 
@@ -160,13 +161,10 @@
             
             <div id="infoWrap">
                 <div id="title"><div>공지사항 기타 내용</div></div>
-                <div id="info"><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
+                <div id="info"><div>추천수 5</div><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
                 <div id="content-box">
                     <div id="content">
-                        <img src="${rootPath}/resources/img/admin/test1.jpg" style="max-width: 100%; ">
-                        <img src="${rootPath}/resources/img/admin/search.png" style="max-width: 90%; ">
-                        <img src="${rootPath}/resources/img/admin/test1.jpg">
-                        <img src="${rootPath}/resources/img/admin/test1.jpg">
+                 
                         <div>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</div>
                     </div>
                     <div id="replyArea">
@@ -187,6 +185,8 @@
 
                 </div>
                 <div id="buttonArea">
+                <!-- 임시로 추천 상태 on으로 설정함 -->
+                <button type="button" class="btn" id="recommend" style="background-color: white; color:#5D736F" onclick ="location.href = '#'">추천</button>
                     <button type="button" class="btn" id="correct" onclick ="location.href = '#'">수정</button>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </div>

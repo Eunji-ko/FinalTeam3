@@ -65,10 +65,11 @@
         margin-bottom: 10px;
     }
     #content{
-        height: 350px;
+   		width:98%;
+   		min-height: 340px;
         margin: 10px;
         border-bottom: 1px solid #5D736F;
-        display: inline;
+        display: inline-block;
     }
     #content > img {
         max-width: 100%;
@@ -160,7 +161,7 @@
             
             <div id="infoWrap">
                 <div id="title"><div>공지사항 기타 내용</div></div>
-                <div id="info"><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
+                <div id="info"><div>추천수 5</div><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
                 <div id="content-box">
                     <div id="content">
                         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -183,7 +184,7 @@
                 </div>
                 <div id="buttonArea">
                     <button type="button" class="btn" id="correct" onclick = "location.href = '#'">수정</button>
-                    <button type="button" class="btn" id="delete" onclick="confirm('해당 게시물을 삭제할까요?')">삭제</button>
+                    <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </div>
                 
             </div>
@@ -194,7 +195,13 @@
     </div>
 
     <script>
-        
+	  //게시물 삭제 시 컨펌으로 한번더 확인
+	    function deleteBoard(){
+	        const answer = confirm('해당 게시물을 삭제할까요?');
+	        if(answer == true){
+	            location.href="##";
+	        }
+	    }
 
 
     </script>
