@@ -71,11 +71,19 @@
 	}
 	#approval-content{
 		height: 100%;
+		grid-column: 1/3;
+	}
+	.minutes-grid{
+		display: grid;
+		grid-template-columns: 1fr 6fr;
+		grid-template-rows: 1fr 8fr;
+	}
+	.minutes-grid textarea{
+		height: 100%;
 		resize: none;
 		grid-column: 1/3;
 	}
 	#approval-btn-div{
-		padding-top: 28px;
 		height: 10%;
 	}
 	#approval-btn{
@@ -116,16 +124,24 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="" method="post">
+		<form action="${rootPath}/approval/minutes" method="multipart/form-data">
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
 				<input type="text" maxlength="250" class="form-control">
 			</div>
 			<div id="approval-content-div">
-				<textarea id="approval-content" class="form-control" maxlength="2000"></textarea>
+				<div id="minutes-purpose" class="input-group-text">목적</div>
+				<input type="text" maxlength="500" class="form-control" name="purpose">
+				<div id="approval-content" class="minutes-grid">
+					<div id="minutes-purpose" class="input-group-text">참석자</div>
+					<input type="text" maxlength="50" class="form-control" name="emp">
+					<textarea class="form-control" maxlength="2000"></textarea>
+				</div>
+				
 			</div>
 			<div id="approval-btn-div">
+				<input type="file" name="minutesFile" id="">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 

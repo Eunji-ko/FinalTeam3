@@ -75,7 +75,6 @@
 		grid-column: 1/3;
 	}
 	#approval-btn-div{
-		padding-top: 28px;
 		height: 10%;
 	}
 	#approval-btn{
@@ -116,7 +115,7 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="" method="post">
+		<form action="${rootPath}/approval/leave" method="multipart/form-data">
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -126,6 +125,7 @@
 				<textarea id="approval-content" class="form-control" maxlength="2000"></textarea>
 			</div>
 			<div id="approval-btn-div">
+				<input type="file" name="leaveFile" id="">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
