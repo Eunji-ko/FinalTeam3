@@ -62,11 +62,17 @@
     #content-box{
         height: 550px;
         overflow: auto;
+        margin-bottom: 10px;
     }
     #content{
         height: 350px;
         margin: 10px;
         border-bottom: 1px solid #5D736F;
+        display: inline;
+    }
+    #content > img {
+        max-width: 100%;
+        display: block;
     }
     #replyArea{
         height: 150px;

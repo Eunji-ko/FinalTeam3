@@ -114,7 +114,7 @@
                        
                     </div>
                     <div id="footer">
-                        <div id="attach"></div>
+                        <div id="attach"><input type="file" name="file" multiple></div>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
                     </div>
 
@@ -131,15 +131,15 @@
     </div>
    
     <script>
-        //갤러리 선택 시 사진 첨부 가능하게 함
+        //커뮤니티, 갤러리 선택 시 사진만 첨부 가능하게 함
         function attach(){
             const select = document.querySelector("select[name=type]").value;
             const attachArea = document.querySelector("#attach");
             console.log(select);
-            if(select == 'g'){
+            if(select == 'g' || select == 'c'){
                 attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="file" multiple>';
             }else{
-                attachArea.innerHTML = '';
+                attachArea.innerHTML = '<input type="file" name="file" multiple>';
             }
 
         }
