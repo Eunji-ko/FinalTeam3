@@ -148,11 +148,11 @@
 			<div id="approval-content-div">
 				<div id="form-check-div" class="form-control">
 					<div class="form-check spanning">
-						<input class="form-check-input" type="checkbox" id="in" name="R" value="R">
+						<input class="form-check-input" type="checkbox" id="in" name="r" value="R">
 						<label class="form-check-label" for="in">입금</label>
 					</div>
 					<div class="form-check spanning">
-						<input class="form-check-input" type="checkbox" id="out" name="P" value="P">
+						<input class="form-check-input" type="checkbox" id="out" name="p" value="P">
 						<label class="form-check-label" for="out">출금</label>
 					</div>
 				</div>

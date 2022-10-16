@@ -83,6 +83,27 @@
 		margin: auto;
 		display: block;
 	}
+	.form-select{
+		height: 100%;
+		width: 100%;
+		color: white;
+		background-color: #5d736f;
+	}
+	#l-day-div{
+		display : grid;
+		grid-template-columns : 1fr 5fr;
+	}
+	#leave-content{
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 6fr;
+		grid-template-rows: repeat(4, 1fr);
+	}
+	#leave-apply{
+		color: white;
+		background-color: #91b3ac;
+	}
 </style>
 
 
@@ -122,7 +143,35 @@
 				<input type="text" maxlength="250" class="form-control">
 			</div>
 			<div id="approval-content-div">
-				<textarea id="approval-content" class="form-control" maxlength="2000"></textarea>
+				<select id="leave-type" class="form-select" name="leaveType">
+					<option value="연차">연차</option>
+					<option value="반차" id="l-time">반차</option>
+					<option value="공가">공가</option>
+					<option value="병가">병가</option>
+					<option value="특별휴가">특별휴가</option>
+				</select>
+				<div id="l-day-div">
+					<div id="draft-team" class="input-group-text">휴가일수</div>
+					<input type="number" min="0" class="form-control" name="lDay">
+				</div>
+				<div id="approval-content">
+					<div id="leave-content">
+						<div class="input-group-text">시작일</div>
+						<input type="date" name="apply-date" id="start-date" class="form-control">
+						<div class="input-group-text">종료일</div>
+						<input type="date" name="apply-date" id="end-date" class="form-control">
+						<div class="input-group-text">반차 시간</div>
+						<div>
+							<select id="l-time-select" class="form-select" name="lTime" disabled>
+								<option value="">없음</option>
+								<option value="오전">오전</option>
+								<option value="오후">오후</option>
+							</select>
+						</div>
+						<div class="input-group-text">신청 연차</div>
+						<input type="text" id="leave-apply" class="form-control" value="0" disabled>
+					</div>
+				</div>
 			</div>
 			<div id="approval-btn-div">
 				<input type="file" name="leaveFile" id="">
@@ -132,5 +181,35 @@
 		</form>
 
 	</div>
+
+	<script>
+		//신청 연차 계산식
+		$('input[name=apply-date]').blur(function(){
+			var date1 = new Date(document.querySelector('#start-date').value);
+			var date2 = new Date(document.querySelector('#end-date').value);
+			var applyTime = Math.abs(date1 - date2);
+			var applyDay = Math.ceil(applyTime/(1000*60*60*24))+1;
+			if(isNaN(applyDay)==false){
+				document.querySelector('#leave-apply').value = applyDay;
+			}
+		});
+
+		//반차 활성화
+		$('#leave-type').blur(function(){
+			if($('#leave-type').val() == '반차'){
+				$("#l-time-select").prop("disabled", false);
+				document.querySelector('#leave-apply').value = 0.5;
+			}else{
+				$("#l-time-select").prop("disabled", true);
+				var date1 = new Date(document.querySelector('#start-date').value);
+				var date2 = new Date(document.querySelector('#end-date').value);
+				var applyTime = Math.abs(date1 - date2);
+				var applyDay = Math.ceil(applyTime/(1000*60*60*24))+1;
+				if(isNaN(applyDay)==false){
+					document.querySelector('#leave-apply').value = applyDay;
+				}
+			}
+		});
+	</script>
 
 </main>
