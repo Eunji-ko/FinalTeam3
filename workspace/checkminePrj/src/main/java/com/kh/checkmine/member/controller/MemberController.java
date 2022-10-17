@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 	
 	@GetMapping("main")
-	public String sample() {
+	public String mainHome() {
 		return "member/main";
+	}
+	
+	@GetMapping("mypage")
+	public String myPage() {
+		return "member/mypage";
 	}
 
 }
