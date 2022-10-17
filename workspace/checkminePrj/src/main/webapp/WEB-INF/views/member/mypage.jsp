@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>체크마인 마이페이지</title>
-<!--<c:set var="imgPath" value="/checkmine/resources/img/member"/>-->
+<c:set var="imgPath" value="/checkmine/resources/img/member"/>
 </head>
 <body>
 	<div class="d-flex">
