@@ -17,7 +17,7 @@
     .left-space {
         margin-left: 20px;
     }
-    .list-group-horizontal>.list-group-item:first-child, .list-group-horizontal>.list-group-item:last-child {
+    .list-group-horizontal>.list-group-item:nth-child(n) {
         border-radius: 0.25rem 0.25rem 0 0;
     }
     .list-group-item.active {
@@ -48,6 +48,16 @@
 		appearance: none;
 		margin: 0;
 	}
+    input[type=file]::file-selector-button {
+        width: 100px;
+        margin: 5px;
+        height: 30px;
+        background: #5D736F;
+        border: 1px solid #5D736F;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>

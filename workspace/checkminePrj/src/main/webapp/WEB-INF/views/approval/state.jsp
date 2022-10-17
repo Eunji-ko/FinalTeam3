@@ -90,8 +90,7 @@
 		background-color: #5d736f !important;
 	}
 	#state-name{
-		display: grid;
-		grid-template-columns: 1fr 5fr;
+		font-size: 25px;
 	}
 	#state-content{
 		height: 100%;
@@ -100,13 +99,25 @@
 		grid-template-columns: 1fr 6fr;
 		grid-template-rows: 1fr 1fr 4fr;
 	}
-	#state-content>textarea{
-		resize: none;
+	#state-table-div{
+		grid-column: 1/3;
+		grid-row: 3/4;
 	}
 	.spanning{
 		display: inline-block;
 		margin-top: 5px;
 	}
+    .table-content-div{
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+    }
+    #plus-btn{
+        color: white;
+		background-color: #5d736f;
+        margin: auto;
+		display: block;
+        margin-top: 10px;
+    }
 </style>
 
 
@@ -148,26 +159,40 @@
 			<div id="approval-content-div">
 				<div id="form-check-div" class="form-control">
 					<div class="form-check spanning">
-						<input class="form-check-input" type="checkbox" id="in" name="r" value="R">
+						<input class="form-check-input" type="radio" id="in" name="state-type" value="R" checked>
 						<label class="form-check-label" for="in">입금</label>
 					</div>
 					<div class="form-check spanning">
-						<input class="form-check-input" type="checkbox" id="out" name="p" value="P">
+						<input class="form-check-input" type="radio" id="out" name="state-type" value="P">
 						<label class="form-check-label" for="out">출금</label>
 					</div>
 				</div>
 				<div id="state-name">
-					<div class="input-group-text">품목명</div>
-					<input type="text" maxlength="50" class="form-control" name="stateName">
+					
 				</div>
 				<div id="approval-content">
 					<div id="state-content">
-						<div class="input-group-text">입금액</div>
-						<input type="number" class="form-control" id="in-money" name="inMoney" min="0" disabled>
-						<div class="input-group-text">출금액</div>
-						<input type="number" class="form-control" id="out-money" name="outMoney" min="0" disabled>
-						<div class="input-group-text">적요</div>
-						<textarea maxlength="100" class="form-control" name="brief"></textarea>
+						<div class="input-group-text">거래처</div>
+						<input type="text" class="form-control" id="state-account" name="account">
+						<div class="input-group-text">총 금액</div>
+						<input type="number" class="form-control" id="money" name="money" min="0" readonly>
+						<div id="state-table-div">
+							<div class="table-content-div">
+								<div class="th-div input-group-text">품목명</div>
+								<div class="th-div input-group-text">적요</div>
+								<div class="th-div input-group-text">금액</div>
+							</div>
+							
+							<div class="table-content-div" id="table-div">
+								<input type="text" class="form-control" id="name-iniput">
+								<input type="text" class="form-control" id="brief-input">
+								<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0">
+							</div>
+							<div id="plus-btn-div">
+								<button type="button" class="btn" id="plus-btn">+</button>
+							</div>
+							
+						</div>
 					</div>
 				</div>
 			</div>
@@ -180,25 +205,29 @@
 
 	</div>
 
-	<script>
-		//입금 누르면 입금액 입력가능
-		$("#in").click(function(){
-            if($("#in").is(":checked") == true){
-            	$("#in-money").prop("disabled", false);
-        	}else{
-				$("#in-money").prop("disabled", true);
-			}
-        });
 
-		//출금 누르면 출금액 입력가능
-		$('#out').click(function(){
-			if($("#out").is(":checked") == true) {
-				$("#out-money").prop("disabled", false);
-			}else{
-				$("#out-money").prop("disabled", true);
+	<script>
+		//전표 추가
+		let idNum = 0;
+		$('#plus-btn').click(function(e){
+			const oriDiv = document.querySelector('#table-div');
+			const btnDiv = document.querySelector('#plus-btn-div');
+			const newDiv = oriDiv.cloneNode(true);
+			newDiv.id = oriDiv.id + idNum;
+			btnDiv.before(newDiv);
+			idNum++;
+			if(idNum > 5){
+				$('#plus-btn').prop('disabled', true);
 			}
 		});
-		
+
+		//총 금액 구하기
+		$('.money-form').blur(fucntion(){
+			//var arr = ;
+			//var result = arr.reduce(function add(sum, currValue) {
+			//return sum + currValue;
+			//}, 0);
+		});
 	</script>
 
 </main>
