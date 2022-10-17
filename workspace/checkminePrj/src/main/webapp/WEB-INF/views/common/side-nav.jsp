@@ -9,14 +9,14 @@
 
 	<!-- 사이드 네비게이션 TODO: 경로설정 -->
         <nav class="d-flex flex-column align-items-center">
-            <a href="홈경로" id="side-nav-home">HOME</a>
-            <a href="근태경로">근태관리</a>
-            <a href="전자결재">전자결재</a>
-            <a href="업무">업무</a>
-            <a href="인사관리">인사관리</a>
-            <a href="예약">예약</a>
-            <a href="게시판">게시판</a>
-            <a href="일정">일정</a>
+            <a href="${rootPath}/member/main" id="side-nav-home">HOME</a>
+            <a href="${rootPath}/근태관리">근태관리</a>
+            <a href="${rootPath}/approval">전자결재</a>
+            <a href="${rootPath}/task/report/list">업무</a>
+            <a href="${rootPath}/personnel/main">인사관리</a>
+            <a href="${rootPath}/reservation/myreservation">예약</a>
+            <a href="${rootPath}/board">게시판</a>
+            <a href="${rootPath}/schedule/main">일정</a>
         </nav>
 </body>
 </html>

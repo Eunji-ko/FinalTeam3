@@ -170,6 +170,10 @@
         padding-left: 20px;
         padding-right: 20px;
     }
+    #right-box > a {
+        text-decoration-line: none;
+        color: black;
+    }
     #right-box > h4 {
         margin-bottom: 40px;
     }
@@ -275,7 +279,7 @@
             <div id="main-content1f">
                 <div>
                     <div id="right-box">
-                        <h4>메일함</h4>
+                        <a href="${rootPath}/mail"><h4>메일함</h4></a>
                         <div id="right-box-content">
                             <table class="table">
                                 <tr>
@@ -303,7 +307,7 @@
             <div id="main-content2f">
                 <div>
                     <div id="right-box">
-                        <h4>전자결재</h4>
+                        <a href="${rootPath}/approval/"><h4>전자결재</h4></a>
                         <div id="right-box-content">
                             <table class="table">
                                 <tr>
@@ -324,7 +328,7 @@
                 </div>
                 <div>
                     <div id="right-box">
-                        <h4>업무</h4>
+                        <a href="${rootPath}/task/report/list"><h4>업무</h4></a>
                         <div id="right-box-content">
                             <table class="table">
                                 <tr>

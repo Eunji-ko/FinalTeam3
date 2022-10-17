@@ -61,7 +61,7 @@
         <div class="tab-pane fade" id="list-alarm" role="tabpanel" aria-labelledby="list-alarm-list">
             <%@ include file="/WEB-INF/views/member/alarm-content.jsp" %>
         </div>
-        <div class="tab-pane fade show active" id="list-address" role="tabpanel" aria-labelledby="list-address-list">
+        <div class="tab-pane fade" id="list-address" role="tabpanel" aria-labelledby="list-address-list">
             <%@ include file="/WEB-INF/views/member/address-content.jsp" %>
         </div>
         <div class="tab-pane fade" id="list-certi" role="tabpanel" aria-labelledby="list-certi-list">

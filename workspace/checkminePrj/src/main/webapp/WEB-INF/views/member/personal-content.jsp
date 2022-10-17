@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #personal-content {
-    }
     #psn-all-zone {
         float: left;
         margin-left: 50px;
@@ -74,7 +72,6 @@
         padding-right: 10px;
         padding-top: 3px;
         padding-top: 3px;
-        margin-left: 90px;
     }
     .checkmine-btn:hover {
         background-color: #72918b;
@@ -144,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn checkmine-btn">사진 변경 신청</button>
+                <button class="btn checkmine-btn" style="margin-left: 90px;">사진 변경 신청</button>
             </div>
         </div>
         <div id="psn-all-zone">
