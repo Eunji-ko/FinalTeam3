@@ -1,7 +1,10 @@
 package com.kh.checkmine.admin.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.checkmine.admin.service.AdminService;
 import com.kh.checkmine.admin.vo.AdminVo;
+import com.kh.checkmine.board.vo.BoardVo;
 
 @Controller
 @RequestMapping("admin")
@@ -45,21 +49,28 @@ public class AdminController {
 			session.setAttribute("msg", "로그인에 실패하였습니다.");
 			return "redirect:/admin/login";
 		}
-		
-		
-		
+
+	}
+	
+	//관리자 로그아웃
+	@GetMapping("logout")
+	public String logout(HttpSession session, HttpServletRequest req) {
+		session.invalidate();
+		return "redirect:/admin/login";
 	}
 	
 	//홈화면으로 이동 
-	/*
-	 * @GetMapping("main") public String main(Model model) {
-	 * 
-	 * int[] summary = service.summary();
-	 * 
-	 * model.addAttribute(summary);
-	 * 
-	 * return "admin/adminMain"; }
-	 */
+	
+	  @GetMapping("main") 
+	  public String main(Model model) {
+	  
+		  HashMap<String, Integer> summary = service.summary();
+		  List<BoardVo> boardList = service.boardList();
+		  model.addAttribute("summary", summary);
+		  model.addAttribute("boardList", boardList);
+		  return "admin/adminMain"; 
+	}
+	 
 	
 	
 	

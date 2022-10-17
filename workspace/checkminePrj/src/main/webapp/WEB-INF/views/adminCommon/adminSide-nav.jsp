@@ -35,7 +35,7 @@
             <div id="profile"><img src="${root}/resources/img/admin/adminProfile.png" alt="관리자이미지"></div>
             <div id="adminName">${loginAdmin.name} 관리자</div>
             
-            <a href="로그아웃" id="logout">로그아웃</a>
+            <a href="${root}/admin/logout" id="logout">로그아웃</a>
             <a href="${root}/admin/main" id="side-nav-home">HOME</a>
             <a href="사원관리">사원관리</a>
             <a href="게시판관리">게시판관리</a>
