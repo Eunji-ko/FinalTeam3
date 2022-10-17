@@ -142,8 +142,12 @@
                 <!-- 공지사항 -->
                 <div id="notice" class="container tab-pane active"><br>
                     <div id="searchArea">
-                        <div style="width: 267px; border: 1px solid lightgray; " >
+                        <div style="width: 267px; border: 1px solid lightgray;">
                         <form action="">
+                        	<select>
+                        		<option>최신순</option>
+                        		<option>추천순</option>
+                        	</select>
                             <input type="text" name="keyword" id="keyword" class="form-control" placeholder="공지사항 검색" required>
                             <input type="submit" id="search" value="">
                         </form>

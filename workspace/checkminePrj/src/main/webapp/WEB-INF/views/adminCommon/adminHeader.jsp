@@ -12,7 +12,6 @@
 		</script>
 	</c:if>
   
-<c:set var="root" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>

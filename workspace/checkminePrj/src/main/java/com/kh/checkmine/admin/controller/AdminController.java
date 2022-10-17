@@ -1,8 +1,11 @@
 package com.kh.checkmine.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,14 +51,15 @@ public class AdminController {
 	}
 	
 	//홈화면으로 이동 
-	@GetMapping("main")
-	public String main() {
-		
-		//int[] memberChange = service.summary();
-		
-		return "admin/adminMain";
-	}
-	
+	/*
+	 * @GetMapping("main") public String main(Model model) {
+	 * 
+	 * int[] summary = service.summary();
+	 * 
+	 * model.addAttribute(summary);
+	 * 
+	 * return "admin/adminMain"; }
+	 */
 	
 	
 	

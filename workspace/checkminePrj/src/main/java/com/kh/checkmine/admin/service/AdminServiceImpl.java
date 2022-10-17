@@ -1,5 +1,7 @@
 package com.kh.checkmine.admin.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,6 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
-
 	//로그인
 	@Override
 	public AdminVo login(AdminVo vo) {
@@ -42,11 +43,14 @@ public class AdminServiceImpl implements AdminService{
 
 
 	//홈 > 요약 정보
-	@Override
-	public int[] summary() {
-		
-		return null;
-	}
+	/*
+	 * @Override public int[] summary() { int[] summary = dao.summary(sst);
+	 * 
+	 * System.out.println(summary.toString());
+	 * 
+	 * 
+	 * return summary; }
+	 */
 	
 	
 
