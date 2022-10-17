@@ -14,6 +14,7 @@
 
 <c:set var="imgPath" value="/checkmine/resources/img/mail"/>
 
+
 </head>
 <body>
 	<div class="d-flex">
@@ -66,20 +67,20 @@
                             <span id="time">2022.10.13 12:49</span>
                         </div>
 
-                        <div id="content">
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용
+                        <div id="content">내용</div>
+
+                        <!-- 다운로드 처리 -->
+                        <div>
+                            <button id="down">전부 다운로드</button> : 
+                            <a href="다운로드 경로" download>다운로드 이름</a>
                         </div>
 
-                        <button>
-                            <img src="${imgPath}/mail_d_reply.png">
-                            답장
-                        </button>
+                        <div class="d-flex justify-content-end">
+                            <button id="reply-btn">
+                                <img src="${imgPath}/mail_d_reply.png">
+                                답장
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
-#detail-container{
+	#detail-container{
         width: 1249px;
-        height: 691px;
+        min-height: 691px;
         border: 1px solid #8d8d8d;
         border-radius: 20px;
         margin: 24px 0 0 13px;
@@ -62,18 +62,30 @@
     }
 
     /* 답장버튼 */
-    #detail-container>button{
+    #reply-btn{
         margin-top: 10px;
         width: 130px;
         height: 39px;
         border: none;
         border-radius: 5px;
         background-color: #b0d9d1;
-        float: right;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
     }
-    #detail-container>button:active{
+    #reply-btn:active{
+        background-color: #91b3aC;
+    }
+    
+    /* 전체 다운로드 버튼 */
+    #down{
+        display: inline;
+        width: 120px;
+        height: 25px;
+        border: none;
+        background-color: #b0d9d1;
+        border-radius: 4px;
+    }
+    #down:active{
         background-color: #91b3aC;
     }
