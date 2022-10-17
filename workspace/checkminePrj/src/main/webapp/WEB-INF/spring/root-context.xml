@@ -30,9 +30,9 @@
 	<!-- 데이터소스 -->
 	<bean id="bds" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="${url}"/>
-		<property name="username" value="${username}"/>
-		<property name="password" value="${password}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
 	</bean>
 
 	<!-- 트랜잭션 관리 bean 등록 (id는 고정) -->

@@ -11,7 +11,7 @@ public class AdminDaoImpl implements AdminDao{
 	//로그인
 	@Override
 	public AdminVo selectOneById(AdminVo vo, SqlSessionTemplate sst) {
-		return null;
+		return sst.selectOne("adminMapper.selectOneById", vo);
 	}
 	
 

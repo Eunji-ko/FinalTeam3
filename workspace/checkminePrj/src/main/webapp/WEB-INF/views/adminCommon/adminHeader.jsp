@@ -2,17 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <% AdminVo loginAdmin = (AdminVo)session.getAttribute("loginAdmin");
-   		
-    String msg = (String)session.getAttribute("msg");
-    session.removeAttribute("msg");
-    
-    %>
-   <c:if test="${not empty msg}">
-   	<script>
-   		alert(${msg});
-   	</script>
-   </c:if>
+    <c:set var="msg" value="${sessionScope.msg}"/>
+	<c:remove var="msg" scope="session"/>
+	<c:set var="root" value="${pageContext.request.contextPath}"/>
+
+	<c:if test="${not empty msg}">
+		<script>
+			alert('${msg}');
+		</script>
+	</c:if>
+  
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -81,7 +80,7 @@
 
         <!-- 체크마인 로고 TODO: 홈경로 설정-->
         <div id="logo" class="m-auto">
-            <a href="홈경로"><img src="${root}/resources/img/header/logo.png"></a>
+            <a href="${root}/admin/main"><img src="${root}/resources/img/header/logo.png"></a>
         </div>
         
         <!-- 설정메뉴 TODO: 설정메뉴 경로 설정-->
@@ -95,9 +94,9 @@
             <!-- 사용자 TODO: 프로필 이미지 처리, 사용자 이름 처리-->
             <div class="d-flex align-items-center justify-content-between" style="width: 110px; margin-left: 30px;">
                 <div style="width: 40px; height: 40px; border-radius: 50%;" id="profileImg">
-                    <img src="${root}/resources/img/header/adminProfile.png">
+                    <img src="${root}/resources/img/admin/adminProfile.png">
                 </div>
-                <span class="fs-5 fw-bold">테스트</span>
+                <span class="fs-5 fw-bold">${loginAdmin.name}</span>
             </div>
         </div>
     </header>

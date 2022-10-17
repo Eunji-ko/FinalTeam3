@@ -5,7 +5,9 @@
 	<setting name="jdbcTypeForNull" value="NULL"/>
   	<setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
-
+<typeAliases>
+	<typeAlias type="com.kh.checkmine.admin.vo.AdminVo" alias="AdminVo"/>
+</typeAliases>
 
 
 </configuration>
