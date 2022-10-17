@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 공지사항 등록</title>
+<title>CHECKMINE 글 수정하기</title>
 
 <style>
 
@@ -90,7 +90,7 @@
             <div id="area">
                 <div>
                     <button onclick="history.back()">←</button>
-                    <span id="header">&nbsp;&nbsp;공지사항 작성</span>
+                    <span id="header">&nbsp;&nbsp;글 수정하기</span>
                 </div>
             </div>
             
@@ -104,7 +104,7 @@
                     </div>
                     <div id="footer">
                         <input type="file" name="file" multiple>
-                        <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
+                        <div id="buttonArea"><button type="submit" class="btn" id="regist">수정하기</button></div>
                     </div>
 
                 </div>

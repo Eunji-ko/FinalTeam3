@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +32,11 @@
 
 	<!-- 사이드 네비게이션 TODO: 경로설정 -->
         <nav class="d-flex flex-column align-items-center">
-            <div id="profile"><img src="${root}/resources/img/admin/adminProfile.png" alt=""></div>
-            <div id="adminName">테스트 관리자</div>
+            <div id="profile"><img src="${root}/resources/img/admin/adminProfile.png" alt="관리자이미지"></div>
+            <div id="adminName">${loginAdmin.name} 관리자</div>
+            
             <a href="로그아웃" id="logout">로그아웃</a>
-            <a href="홈경로" id="side-nav-home">HOME</a>
+            <a href="${root}/admin/main" id="side-nav-home">HOME</a>
             <a href="사원관리">사원관리</a>
             <a href="게시판관리">게시판관리</a>
             <a href="공유물관리">공유물관리</a>

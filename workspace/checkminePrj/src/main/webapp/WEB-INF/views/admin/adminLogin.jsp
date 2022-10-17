@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<c:set var="msg" value="${sessionScope.msg}"/>
+	<c:remove var="msg" scope="session"/>
+	<c:set var="root" value="${pageContext.request.contextPath}"/>
+	
+	<c:if test="${not empty msg}">
+		<script>
+			alert('${msg}');
+		</script>
+	</c:if>
+	
 <html>
 <head>
 	 <title>CHECKMINE 관리자 로그인</title>
@@ -120,11 +128,11 @@
 	       		<div id="subText">ADMIN</div>
 	            <div id="mainText">CHECKMINE</div>
 	            <form action="" method="post">
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="adminId" placeholder="아이디" required></div>
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="adminPwd" placeholder="비밀번호" required></div>
+	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="id" placeholder="아이디" required></div>
+	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
 	                <input type="submit" value="로그인">
 	            </form>
-	            <div id="bottom"><a href="" id="userLogin">사용자로 로그인</a></div>
+	            <div id="bottom"><a href="${root}" id="userLogin">사용자로 로그인</a></div>
 	           
 	
 	        </div>

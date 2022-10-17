@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/adminCommon/adminHeader.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,7 +122,7 @@
         display: flex;
         justify-content: space-around;
     }
-    .btn{
+    #correct, #delete, #recommend{
         width: 88px;
         font-size: 16px;
         background-color: #5D736F; 
@@ -149,7 +149,7 @@
 </head>
 <body>
 	<div class="d-flex">
-        <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
+        <%@ include file="/WEB-INF/views/common/side-nav.jsp" %>
         
         <main class="shadow">
             <div id="area">
@@ -164,7 +164,8 @@
                 <div id="info"><div>추천수 5</div><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
                 <div id="content-box">
                     <div id="content">
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                 
+                        <div>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</div>
                     </div>
                     <div id="replyArea">
                         <div id="replyTitle">댓글</div>
@@ -172,6 +173,7 @@
                             <div id="replyWriter"><div>테스트 사원</div><div>2022.10.13</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div>
                             <div>댓글 내용 어쩌구 </div>
                         </div>
+                        
                         <div id="write">
                             <textarea name="content" id="text" placeholder="댓글을 남겨보세요."></textarea><button type="button" id="add">등록</button>
                         </div>
@@ -183,7 +185,9 @@
 
                 </div>
                 <div id="buttonArea">
-                    <button type="button" class="btn" id="correct" onclick = "location.href = '#'">수정</button>
+                <!-- 임시로 추천 상태 on으로 설정함 -->
+                <button type="button" class="btn" id="recommend" style="background-color: white; color:#5D736F" onclick ="location.href = '#'">추천</button>
+                    <button type="button" class="btn" id="correct" onclick ="location.href = '#'">수정</button>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </div>
                 
@@ -195,13 +199,14 @@
     </div>
 
     <script>
-	  //게시물 삭제 시 컨펌으로 한번더 확인
-	    function deleteBoard(){
-	        const answer = confirm('해당 게시물을 삭제할까요?');
-	        if(answer == true){
-	            location.href="##";
-	        }
-	    }
+        //게시물 삭제 시 컨펌으로 한번더 확인
+        function deleteBoard(){
+            const answer = confirm('해당 게시물을 삭제할까요?');
+            if(answer == true){
+                location.href="##";
+            }
+        }
+        
 
 
     </script>

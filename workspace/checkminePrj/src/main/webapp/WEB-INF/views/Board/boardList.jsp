@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 게시판관리</title>
+<title>CHECKMINE 게시판</title>
 <style>
 
 
@@ -14,9 +14,7 @@
         margin: 10px auto;
     }
     
-    #notice{
-        height: 0px;
-    }
+  
    
     #listArea{
         height: 596px;
@@ -40,11 +38,6 @@
         color: white;
         margin-left: 15px;
     }
-
-    #option{
-        width: 183px;
-    }
-
     input[type="text"]{
         width: 230px;
         display: inline-block;
@@ -53,7 +46,7 @@
     #search{
         background:url(${rootPath}/resources/img/admin/search.png);
         background-repeat: no-repeat;
-        width:30px;
+        width:25px;
         height:23px;
         border: none;
     }
@@ -85,10 +78,42 @@
     table{
         table-layout: fixed;
     }
-    td{
+    td, .title{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .board-item{
+        border-radius: 20px;
+        margin: 10px;
+        width: 250px;
+        height: 270px;
+        border: 1px solid lightgray;
+        display: inline-block;
+        margin-left: 50px;
+        font-size: 13px;
+    }
+    .thumbnail{
+        width: 230px;
+        height: 210px;
+        margin: 10px auto;
+    }
+
+    .thumbnail img{
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+    }
+    .info{
+        display: flex;
+        justify-content: space-around;
+    }
+    .title, .writer{
+        display: inline-block;
+    }
+    .title{
+        width: 150px;
+        margin-right: 10px;
     }
    
 
@@ -216,39 +241,50 @@
                     <a href="#">&gt;</a>
                 </div>
                 </div>
+                <!--갤러리-->
                 <div id="gallery" class="container tab-pane fade"><br>
                     <div id="searchArea">
                         <div style="width: 267px; border: 1px solid lightgray; " >
                         <form action="">
-                            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="커뮤니티 검색" required>
+                            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="갤러리 검색" required>
                             <input type="submit" id="search" value="">
                         </form>
                         </div> 
                         <button type="button" class="btn" id="btn">글 작성</button> 
                     </div>
                     <div id="listArea">
-                        <table class="table table-hover">
-                            <thead style="background-color: #C4F2EA;">
-                                <tr>
-                                    <th width="10%">번호</th>
-                                    <th width="40%">제목</th>
-                                    <th width="20%">작성자</th>
-                                    <th width="20%">작성일</th>
-                                    <th width="10%">조회수</th>
-                                </tr>
-                            </thead>
-                            <tbody style="border-top: none;">
-                                <tr onclick="location.href='#'">
-                                    <td>1</td>
-                                    <td>게시물sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss 제목</td>
-                                    <td>테스트</td>
-                                    <td>2022.10.13</td>
-                                    <td>10</td>
-                                </tr>
-        
-                            </tbody>
-                            
-                        </table>
+                        <div class="board-item" style="cursor: pointer;" onclick="location.href='#';">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
+                        <div class="board-item">
+                            <div class="thumbnail"><img src="${rootPath}/resources/img/abc.PNG" alt=""></div>
+                            <div class="info"><div class="title">wpaaaaaaaaa</div><div class="writer">작성자</div></div>
+                        </div>
                     </div>
 
 

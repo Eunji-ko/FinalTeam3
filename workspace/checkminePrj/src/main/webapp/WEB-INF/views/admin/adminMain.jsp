@@ -149,7 +149,7 @@
                 <div class="summaryItem" style="grid-column: 2;">
                     <img src="${root}/resources/img/admin/user-icon.png">
                     <div>사원정보 변동</div>
-                    <div id="memberChange">0건</div>
+                    <div id="memberChange">${adminLogin.name} 건</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/user-icon-b.png">
