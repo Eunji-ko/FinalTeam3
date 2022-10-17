@@ -88,14 +88,6 @@
     #content-main-bot>table{
         width: 100%;
         height: 100%;
-        border: none;
-        border-collapse: collapse;
-        text-align: center;
-    }
-
-    #content-main-bot td{
-        border: 1px solid black;
-        width: 80px;
     }
 
 </style>
@@ -147,74 +139,71 @@
                     </div>
 
                     <div id="content-main-bot">
-                        <table>
-                            <tr>
-                                <td class="time">시간 \ 빔프로젝트번호</td>
-                                <td>빔1</td>
-                                <td>빔2</td>
-                                <td>빔3</td>
-                            </tr>
-                            <tr>
-                                <td class="time">9시</td>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">시간/빔 번호</th>
+                                <th scope="col">빔1</th>
+                                <th scope="col">빔2</th>
+                                <th scope="col">빔3</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">9시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">10시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">10시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">11시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">11시</th>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">12시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">12시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">13시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">13시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">14시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">14시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">15시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">15시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">16시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">16시</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">17시</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">17시</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="time">18시</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
 
                 </div>
@@ -234,6 +223,26 @@
                     border-radius: 10px;
                     color: #5D736F;
                 }
+
+                #rsv-name{
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
+                #type{
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                #date{
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                #time{
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                }
             </style>
 
             <!-- 모달 -->
@@ -241,27 +250,43 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">예약하기</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">예약하기</h1>
                     </div>
+
                     <div class="modal-body">
-                    <div id="rsv-name">
-                        <div>예약자</div>
-                        <div>뿡빵 사원</div>
+                        <div id="rsv-name">
+                            <div>예약자</div>
+                            <div>뿡빵 사원</div>
+                        </div>
+
+                        <div id="type">
+                            <div>종류</div>
+                            <div>빔1</div>
+                        </div>
+
+                        <div id="date">
+                            <div>날짜</div>
+                            <div>22-10-13</div>
+                        </div>
+
+                        <div id="time">
+                            <div>예약시간</div>
+                            <div>대여시간</div>
+                            <div class="btn-group">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Small button
+                                </button>
+                                <ul class="dropdown-menu">
+                                  ...
+                                </ul>
+                              </div>
+                            <div>반납시간</div>
+                        </div>
                     </div>
-                    <div id="goods-name">
-                        <div>공유물 이름</div>
-                        <div>빔1</div>
-                    </div>
-                    <div id="date">
-                        날짜
-                    </div>
-                    <div id="time">
-                        예약 시간
-                    </div>
-                    </div>
+
                     <div class="modal-footer">
-                    <button id="reservation">예약</button>
-                    <button id="close" data-bs-dismiss="modal">취소</button>
+                        <button id="reservation">예약</button>
+                        <button id="close" data-bs-dismiss="modal">취소</button>
                     </div>
                 </div>
                 </div>
