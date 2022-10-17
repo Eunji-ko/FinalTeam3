@@ -145,7 +145,7 @@
         width: 100%;
         height: 350px;
         display: grid;
-        grid-template-columns: 650px 350px;
+        grid-template-columns: 600px 400px;
         grid-template-rows: 350px;
         align-content: center;
         gap: 50px;
@@ -154,7 +154,7 @@
         width: 100%;
         height: 350px;
         display: grid;
-        grid-template-columns: 550px 450px;
+        grid-template-columns: 530px 470px;
         grid-template-rows: 350px;
         align-content: center;
         gap: 50px;
@@ -162,6 +162,44 @@
     #main-content1f > div, #main-content2f > div {
         border: 1px solid #C2C2C2;
     }
+    #right-box {
+        width: 100%;
+        height: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #right-box > h4 {
+        margin-bottom: 40px;
+    }
+    #right-box-content {
+        width: 100%;
+        height: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .right-box-title {
+        color: black;
+        text-decoration-line: none;
+        font-size: 15px;
+    }
+    .right-box-name {
+        font-size: 12px;
+    }
+    .right-box-date {
+        font-size: 11px;
+        color: #C2C2C2;
+    }
+    .right-box-dept {
+        font-size: 14px;
+    }
+    .right-box-urg {
+        font-size: 14px;
+        color: red;
+    }
+    
     
 </style>
 </head>
@@ -235,17 +273,81 @@
         <br>
         <div id="main-content">
             <div id="main-content1f">
-                <div></div>
+                <div>
+                    <div id="right-box">
+                        <h4>메일함</h4>
+                        <div id="right-box-content">
+                            <table class="table">
+                                <tr>
+                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
+                                    <td><div class="right-box-name">김이름</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
+                                    <td><div class="right-box-name">김이름</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
+                                    <td><div class="right-box-name">김이름</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div></div>
             </div>
             <br><br>
             <div id="main-content2f">
-                <div></div>
-                <div></div>
+                <div>
+                    <div id="right-box">
+                        <h4>전자결재</h4>
+                        <div id="right-box-content">
+                            <table class="table">
+                                <tr>
+                                    <td><div class="right-box-dept">마케팅부</div></td>
+                                    <td><a href="" class="right-box-title">마케팅부 박이름 휴가신청서</a></td>
+                                    <td><div class="right-box-name">박이름</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="right-box-dept">총무부</div></td>
+                                    <td><a href="" class="right-box-title">OO 관련 구매 또는 렌탈 관련</a></td>
+                                    <td><div class="right-box-name">이이름</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="right-box">
+                        <h4>업무</h4>
+                        <div id="right-box-content">
+                            <table class="table">
+                                <tr>
+                                    <td><div class="right-box-urg">긴급</div></td>
+                                    <td><a href="" class="right-box-title">figma 레이아웃 및 디자인 ...</a></td>
+                                    <td><div class="right-box-name">지시자</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="right-box-urg"></div></td>
+                                    <td><a href="" class="right-box-title">erd 다이어그램 수정 및 참조 ...</a></td>
+                                    <td><div class="right-box-name">지시자</div></td>
+                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <br>
+
     <script>
         function printClock() {
     
