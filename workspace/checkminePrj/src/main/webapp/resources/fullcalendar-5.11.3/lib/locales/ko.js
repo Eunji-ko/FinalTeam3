@@ -7,9 +7,9 @@ FullCalendar.globalLocales.push(function () {
       prev: "\uC774\uC804\uB2EC",
       next: "\uB2E4\uC74C\uB2EC",
       today: "\uC624\uB298",
-      month: "\uC6D4",
-      week: "\uC8FC",
-      day: "\uC77C",
+      month: "\uC6D4\uAC04",
+      week: "\uC8FC\uAC04",
+      day: "\uC77C\uAC04",
       list: "\uC77C\uC815\uBAA9\uB85D"
     },
     weekText: "\uC8FC",
