@@ -31,11 +31,17 @@
     #side-content{
         text-align : center;
         padding : 100px 0;
+        display: flex;
+        flex-direction: column;
     }
 
     #side-content a{
         color: black;
         text-decoration: none;
+    }
+
+    #side-content *{
+        margin-top: 30px;
     }
 
     #content{
@@ -53,9 +59,9 @@
 
     #content-main{
         width: 100%;
-        height: 90%;
-        display: flex;
-        justify-content: space-around;
+        height: 10%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     #content-main button{
@@ -85,24 +91,14 @@
 
                     <a href="/checkmine/reservation/myreservation">나의 예약</a>
 
-                    <br><br>
-
                     <h4>공유물</h4>
 
-                    <br>
-
-                    <a href="/checkmine/reservation/goodsone">빔 프로젝터</a>
-                    <br>
+                    <a href="/checkmine/reservation/goodsone">빔 프로젝트</a>
                     <a href="">법인차</a>
-
-                    <br><br>
 
                     <h4>장소</h4>
 
-                    <br>
-
                     <a href="">회의실</a>
-                    <br>
                     <a href="">응접실</a>
 
                 </div>
@@ -116,20 +112,65 @@
                 </div>
     
                 <div id="content-main">
-                    
-                    <div id="goods">공유물</div>
 
-                    <div id="goods-type">법인차</div>
+                    <div id="type">공유물</div>
+
+                    <div id="name">124호 0407</div>
 
                     <div id="time">오전 09:00 ~ 오전 10:00</div>
 
-                    <div id="goods-btn">
-                        <button id="reservation">예약 취소</button>
+                    <div id="rd-btn">
+                        <button id="reservation" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
+                    </div>
+                
+                    <div id="type">공유물</div>
+
+                    <div id="name">빔1</div>
+
+                    <div id="time">오전 09:00 ~ 오전 10:00</div>
+
+                    <div id="rd-btn">
+                        <button id="reservation" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
                     </div>
                     
                 </div>
 
             </div>
+
+            <!-- Modal 스타일 -->
+            <style>
+                #exampleModal #reservation{
+                    background: #5D736F;
+                    border-radius: 10px;
+                    color: white;
+                }
+
+                #exampleModal #close{
+                    background: white;
+                    border-radius: 10px;
+                    color: #5D736F;
+                }
+            </style>
+
+             <!-- 모달 -->
+             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">예약취소</h1>
+                        </div>
+
+                        <div class="modal-body">
+                            예약을 정말 취소하시겠습니까?
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="reservation">예</button>
+                            <button id="close" data-bs-dismiss="modal">아니오</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
 
         </main>
     </div>
