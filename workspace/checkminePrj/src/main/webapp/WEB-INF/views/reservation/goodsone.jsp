@@ -31,11 +31,17 @@
     #side-content{
         text-align : center;
         padding : 100px 0;
+        display: flex;
+        flex-direction: column;
     }
 
     #side-content a{
         color: black;
         text-decoration: none;
+    }
+
+    #side-content *{
+        margin-top: 30px;
     }
 
     #content{
@@ -113,24 +119,14 @@
 
                     <a href="/checkmine/reservation/myreservation">나의 예약</a>
 
-                    <br><br>
-
                     <h4>공유물</h4>
 
-                    <br>
-
-                    <a href="/checkmine/reservation/goodsone">빔 프로젝터</a>
-                    <br>
+                    <a href="/checkmine/reservation/goodsone">빔 프로젝트</a>
                     <a href="">법인차</a>
-
-                    <br><br>
 
                     <h4>장소</h4>
 
-                    <br>
-
                     <a href="">회의실</a>
-                    <br>
                     <a href="">응접실</a>
 
                 </div>
@@ -225,7 +221,7 @@
 
             </div>
 
-            <!-- Modal -->
+            <!-- Modal 스타일 -->
             <style>
                 #exampleModal #reservation{
                     background: #5D736F;
@@ -240,6 +236,7 @@
                 }
             </style>
 
+            <!-- 모달 -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
