@@ -44,24 +44,23 @@
         margin-top: 30px;
     }
 
-    #content{
-        display: flex;
-        flex-wrap: wrap;
+    .content{
         width: 70%;
         height: 90;
-        padding-left: 2%;
     }
 
     #content-top{
         width: 100%;
         height: 10%;
+        padding-left: 2%;
     }
 
     #content-main{
         width: 100%;
         height: 10%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
     }
 
     #content-main button{
@@ -105,15 +104,13 @@
                 
             </div>
 
-            <div id="content">
+            <div class="content">
 
                 <div id="content-top">
                     <h1>나의 예약</h1>
                 </div>
     
                 <div id="content-main">
-
-                    <div id="type">공유물</div>
 
                     <div id="name">124호 0407</div>
 
@@ -123,8 +120,6 @@
                         <button id="reservation" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
                     </div>
                 
-                    <div id="type">공유물</div>
-
                     <div id="name">빔1</div>
 
                     <div id="time">오전 09:00 ~ 오전 10:00</div>
