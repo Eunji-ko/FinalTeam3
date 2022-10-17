@@ -43,6 +43,11 @@
     .tab-content>div{
     	padding : 30px;
     }
+    input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		appearance: none;
+		margin: 0;
+	}
 </style>
 </head>
 <body>

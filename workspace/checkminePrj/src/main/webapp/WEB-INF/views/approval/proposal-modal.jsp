@@ -32,7 +32,7 @@
       <div class="modal-body">
         <div id="account-name" class="input-group mb-3">
           <span class="input-group-text">거래처명</span>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" required>
           <button type="button" id="search-account" class="btn">찾기</button>
         </div>
         <div id="account-info-div">

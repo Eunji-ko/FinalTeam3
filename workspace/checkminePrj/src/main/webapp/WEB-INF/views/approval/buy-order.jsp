@@ -75,7 +75,6 @@
 		grid-column: 1/3;
 	}
 	#approval-btn-div{
-		padding-top: 28px;
 		height: 10%;
 	}
 	#approval-btn{
@@ -83,6 +82,16 @@
 		background-color: #5d736f;
 		margin: auto;
 		display: block;
+	}
+	.buy-order-content{
+		display: grid;
+		grid-template-columns: 1fr 2fr 1fr 2fr;
+		grid-template-rows: repeat(4, 1fr);
+	}
+	.buy-order-content textarea{
+		resize: none;
+		grid-column: 1/5;
+		grid-row: 4/5;
 	}
 </style>
 
@@ -116,16 +125,33 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="" method="post">
+		<form action="${rootPath}/approval/order" method="multipart/form-data">
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
 				<input type="text" maxlength="250" class="form-control">
 			</div>
 			<div id="approval-content-div">
-				<textarea id="approval-content" class="form-control" maxlength="2000"></textarea>
+				<div class="input-group-text">품의부서</div>
+				<input type="text" maxlength="25" class="form-control" name="department" required>
+				<div id="approval-content" class="buy-order-content">
+					<div class="input-group-text">목적</div>
+					<input type="text" maxlength="100" class="form-control" name="conservation">
+					<div class="input-group-text">품명</div>
+					<input type="text" maxlength="50" class="form-control" name="name" required>
+					<div class="input-group-text">수량</div>
+					<input type="number" class="form-control" name="amount" min="0" required>
+					<div class="input-group-text">단가</div>
+					<input type="number" class="form-control" name="price" min="0" required>
+					<div class="input-group-text">납품기간</div>
+					<input type="date" maxlength="25" class="form-control" name="startDate">
+					<div class="input-group-text">완납일자</div>
+					<input type="date" maxlength="25" class="form-control" name="endDate">
+					<textarea class="form-control" maxlength="250"></textarea>
+				</div>
 			</div>
 			<div id="approval-btn-div">
+				<input type="file" name="orderFile" id="">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
