@@ -7,10 +7,24 @@
   	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
   	ON B.NO = R.NO JOIN MEMBER M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'N' 
-  	
-  	
-  	
+  	<choose>
+  		<when test='sort=="n"'>
+  			AND TYPE='N'
+  		</when>
+  		<when test='sort=="c"'>
+  			AND TYPE='C'
+  		</when>
+  		<when test='sort=="g"'>
+  			AND TYPE='G'
+  		</when>
+  	</choose>
   	ORDER BY B.ENROLL_DATE DESC
+  </select>
+  
+  
+  <select id="selectBoardTotal" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
+
   </select>
   
 </mapper>
