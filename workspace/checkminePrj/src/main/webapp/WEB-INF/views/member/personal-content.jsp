@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn checkmine-btn" style="margin-left: 90px;">사진 변경 신청</button>
+                <button class="btn checkmine-btn" style="margin-left: 90px;"  data-bs-toggle="modal" data-bs-target="#changeImg">사진 변경 신청</button>
             </div>
         </div>
         <div id="psn-all-zone">
@@ -172,7 +172,7 @@
                         checkmine
                     </div>
                     <div id="margin-btm">
-                        <button class="btn checkmine-btn">비밀번호 변경</button>
+                        <button class="btn checkmine-btn" data-bs-toggle="modal" data-bs-target="#changePwd">비밀번호 변경</button>
                     </div>
                     <div id="margin-btm">
                         010-1234-1234
@@ -190,5 +190,8 @@
             </div>
         </div>
     </div>
+
+    <%@ include file="/WEB-INF/views/member/pwd-modal.jsp" %>
+    <%@ include file="/WEB-INF/views/member/img-modal.jsp" %>
 </body>
 </html>
