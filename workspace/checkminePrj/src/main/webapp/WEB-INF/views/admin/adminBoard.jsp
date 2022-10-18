@@ -28,8 +28,8 @@
     }
 
     #listArea{
-        height: 596px;
-        margin: 20px auto;
+        height: 452px;
+        margin: 80px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
@@ -102,19 +102,20 @@
             <div id="area1">
                 <span id="header">게시판 관리</span>
                 <div>
-                    <button type="button" class="btn">공지 등록</button>
+                    <button type="button" class="btn" onclick="location.href='${root}/board/write'">공지 등록</button>
                     <button type="button" class="btn" style="width: 110px;" onclick="deleteList()">선택 삭제</button>
                 </div>
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter" name="select" onchange="filter()">
+                <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
+                	<option value="${root}/admin/board/list?sort=a&p=1">-----</option>
                     <option value="${root}/admin/board/list?sort=a&p=1">모두</option>
                     <option value="${root}/admin/board/list?sort=n&p=1">공지사항</option>
                     <option value="${root}/admin/board/list?sort=c&p=1">커뮤니티</option>
                     <option value="${root}/admin/board/list?sort=g&p=1">갤러리</option>
-                 
                 </select>
+                
                 <form action="" method="get">
                     <select class="form-select" id="option" required style="display: inline-block;">
                         <option>제목</option>
@@ -160,7 +161,7 @@
                             <td>${b.writer}</td>
                             <td>${b.enrollDate}</td>
                             <td>${b.hit}</td>
-                            <td><input type="checkbox" name="checked" id=""></td>
+                            <td><input type="checkbox" name="checked" onclick="event.cancelBubble=true"></td>
                         
                         </tr>
                     
@@ -173,28 +174,37 @@
                 </table>
             </div>
             <div id="pageArea">
-                <a href="#">&lt;</a>
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">&gt;</a>
+            <c:if test="${pv.startPage ne 1}">
+                <a href="${root}/admin/board/list?sort=${sort}&p=${pv.startPage -1}">&lt;</a>            
+            </c:if>
+            <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+            	<c:choose>
+            		<c:when test="${pv.currentPage eq i}">
+            			<a style="font-weight:900;">${i}</a>  
+            		</c:when>
+            		<c:otherwise>
+		                <a href="${root}/admin/board/list?sort=${sort}&p=${i}">${i}</a>            
+            		
+            		</c:otherwise>
+            	
+            	</c:choose>
+                
+            </c:forEach>
+              <c:if test="${pv.endPage ne pv.maxPage}">
+                <a href="${root}/admin/board/list?sort=${sort}&p=${pv.endPage + 1}">&gt;</a>
+              </c:if>
             </div>
         </main>
     </div>
 </body>
 <script>
     //선택 항목 삭제하는 AJAX
-    function filter(){
-        console.log(this.value);
-        if(this.value) location.href=(this.value);
-        $(this).val(this.value).prop("selected", true);
-
+    function deleteList(){
+        const listArr = [];
+        $("input:checkbox[name='checked']")
     }
+    
 	
-
-
 
 </script>
 	

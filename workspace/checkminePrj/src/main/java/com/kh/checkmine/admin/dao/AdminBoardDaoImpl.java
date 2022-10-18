@@ -15,18 +15,18 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	
 	//게시글 조회
 	@Override
-	public List<BoardVo> selectBoardList(SqlSessionTemplate sst, PageVo vo, String sort) {
-		int offset = (vo.getCurrentPage()-1) * vo.getBoardLimit();
+	public List<BoardVo> selectBoardList(SqlSessionTemplate sst, PageVo pv, String sort) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		
-		RowBounds rb = new RowBounds(offset, vo.getBoardLimit());
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		System.out.println();
 		return sst.selectList("boardMapper.selectBoardList", sort, rb); 
 	}
 
 	//게시글 수
 	@Override
-	public int selectBoardTotal(SqlSessionTemplate sst) {
-		return sst.selectOne("boardMapper.selectBoardTotal");
+	public int selectBoardTotal(SqlSessionTemplate sst, String sort) {
+		return sst.selectOne("boardMapper.selectBoardTotal", sort);
 	}
 
 }

@@ -24,15 +24,15 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	
 	//게시물 리스트
 	@Override
-	public List<BoardVo> boardList(PageVo vo, String sort) {
-		List<BoardVo> boardList = dao.selectBoardList(sst, vo, sort);
+	public List<BoardVo> boardList(PageVo pv, String sort) {
+		List<BoardVo> boardList = dao.selectBoardList(sst, pv, sort);
 		return boardList;
 	}
 
 	//게시글 수
 	@Override
-	public int selectTotalCnt() {
-		int total = dao.selectBoardTotal(sst);
+	public int selectTotalCnt(String sort) {
+		int total = dao.selectBoardTotal(sst, sort);
 		
 		return total;
 	}

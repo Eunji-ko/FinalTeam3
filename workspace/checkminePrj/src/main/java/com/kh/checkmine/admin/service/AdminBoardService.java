@@ -8,10 +8,10 @@ import com.kh.checkmine.common.PageVo;
 public interface AdminBoardService {
 
 	//게시물 리스트
-	List<BoardVo> boardList(PageVo vo, String sort);
+	List<BoardVo> boardList(PageVo pv, String sort);
 
 	//총 게시글 수
-	int selectTotalCnt();
+	int selectTotalCnt(String sort);
 
 
 }

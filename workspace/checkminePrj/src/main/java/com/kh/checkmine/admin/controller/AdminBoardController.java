@@ -30,16 +30,14 @@ public class AdminBoardController {
 	@GetMapping("list")
 	public String list(@RequestParam("p") int pno, @RequestParam("sort") String sort, Model model) {
 		
-		
-		int totalCount = service.selectTotalCnt();
+		int totalCount = service.selectTotalCnt(sort);
 		
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		System.out.println(sort);
 		List<BoardVo> boardList = service.boardList(pv, sort);
 		model.addAttribute("boardList", boardList);
-		
-		
+		model.addAttribute("sort", sort);
+		model.addAttribute("pv", pv);
 		return "admin/adminBoard";
 		
 	}
