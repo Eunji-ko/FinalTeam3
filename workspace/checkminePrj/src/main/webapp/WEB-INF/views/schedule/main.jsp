@@ -11,7 +11,7 @@
 <script src='${root}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script src="${root}/resources/fullcalendar-5.11.3/lib/locales/ko.js"></script>
 <style>
-    #calendar{
+    #calendar{ /*캘린더 설정*/
         width: 1100px;
         height: 850px;
         margin: auto;
@@ -19,15 +19,16 @@
         padding: 10px;
     }
 
-    thead > tr{
+    thead > tr{ /*요일 배경*/
         background-color: lightgray;
     }
 
-    .fc-col-header-cell-cushion:hover{
+    .fc-col-header-cell-cushion:hover{ /*요일 호버 색 안바뀌게*/
         color: black !important;
     }
-
-    a{
+ 
+    /*글자 색 설정*/
+    a{ 
         color: black;
         text-decoration: none;
     }
@@ -37,11 +38,19 @@
         text-decoration: none !important;
     }
 
-    a.fc-event:hover{
+    [aria-label="일요일"], .fc-day-sun>div>a {
+        color: firebrick !important;
+    }
+
+    [aria-label="토요일"], .fc-day-sat>div>a {
+        color: dodgerblue !important;
+    }
+
+    a.fc-event:hover{ /*이벤트 호버시 색 변경*/
         background-color:#5D736F;
     }
 
-    a.fc-event{
+    a.fc-event{ /*이벤트 설정*/
         background-color: #91b3ac;
         border: 1px solid white;
         border-radius: 20px;
@@ -49,15 +58,16 @@
         color: white;
     }
 
-    .fc-day-today{
+    .fc-day-today{ /*오늘 날짜 백그라운드*/
         background-color: #b0d9d14d !important;
     }
 
-    .fc-highlight{
+    .fc-highlight{ /*날짜칸 클릭시*/
         background-color: #5d736f86 !important;
     }
 
-    .fc-popover-header{
+    /*팝오버 배경 설정*/
+    .fc-popover-header{ 
         background-color: #b0d9d1 !important;
     }
 
@@ -91,7 +101,17 @@
             selectable: true, //달력 일자 드래그 설정
             dayMaxEvents: true, //이벤트 오버되면 높이 제한
             eventLimit:true,
-            
+
+            //구글 캘린더 - 공휴일 연동
+            googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY", //api id
+            eventSources :[
+                {
+                    googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', //캘린더 id
+                    color: 'firebrick',
+                    textColor: 'white',
+                }
+            ],
+
             events: [{
                 title: 'test01',
                 start: '2022-10-17 12:00:00',
