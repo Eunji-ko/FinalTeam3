@@ -108,13 +108,13 @@
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter">
-                    <option>모두</option>
-                    <option>공지사항</option>
-                    <option>커뮤니티</option>
-                    <option>갤러리</option>
+                <select class="form-select" id="filter" name="filter">
+                    <option value="a" onclick="filter()">모두</option>
+                    <option value="n" onclick="filter()">공지사항</option>
+                    <option value="c" onclick="filter()">커뮤니티</option>
+                    <option value="g" onclick="filter()">갤러리</option>
                 </select>
-                <form action="">
+                <form action="" method="get">
                     <select class="form-select" id="option" required style="display: inline-block;">
                         <option>제목</option>
                         <option>내용</option>
@@ -186,7 +186,30 @@
 <script>
     //선택 항목 삭제하는 AJAX
 
-
+    
+	
 
 </script>
+	
+	<script>
+    //카테고리 필터 AJAX
+	function filter(){
+    	const category = $("#filter").val();
+		$.ajax({
+			url : "${root}/board/list",
+			type : 'GET',
+			data : {"category":category},
+			success : function(data){
+				console.log(data);
+			},
+			error : function(){
+				alert("error");
+			}
+
+
+
+		});
+	}
+	
+	</script>
 </html>
