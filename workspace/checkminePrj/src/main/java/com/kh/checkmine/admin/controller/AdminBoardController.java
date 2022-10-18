@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.checkmine.admin.service.AdminBoardService;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
 
 @Controller
 @RequestMapping("admin/board")
@@ -25,12 +27,16 @@ public class AdminBoardController {
 	}
 	
 	//게시물 조회
-	@GetMapping("list/{sort}/{pno}")
-	public String list(@PathVariable int pno, @PathVariable String sort, Model model) {
+	@GetMapping("list")
+	public String list(@RequestParam("p") int pno, @RequestParam("sort") String sort, Model model) {
+		
+		
+		int totalCount = service.selectTotalCnt();
+		
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		System.out.println(sort);
-		System.out.println(pno);
-		List<BoardVo> boardList = service.boardList();
+		List<BoardVo> boardList = service.boardList(pv, sort);
 		model.addAttribute("boardList", boardList);
 		
 		

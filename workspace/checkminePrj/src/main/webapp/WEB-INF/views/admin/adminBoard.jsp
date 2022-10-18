@@ -108,11 +108,11 @@
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter" name="filter" onchange="window.open(value,'_blank');">
-                    <option value="${root}/admin/board/list/all/1">모두</option>
-                    <option value="${root}/admin/board/list/n/1">공지사항</option>
-                    <option value="${root}/admin/board/list/c/1">커뮤니티</option>
-                    <option value="${root}/admin/board/list/g/1">갤러리</option>
+                <select class="form-select" id="filter" name="select" onchange="filter()">
+                    <option value="${root}/admin/board/list?sort=a&p=1">모두</option>
+                    <option value="${root}/admin/board/list?sort=n&p=1">공지사항</option>
+                    <option value="${root}/admin/board/list?sort=c&p=1">커뮤니티</option>
+                    <option value="${root}/admin/board/list?sort=g&p=1">갤러리</option>
                  
                 </select>
                 <form action="" method="get">
@@ -186,9 +186,15 @@
 </body>
 <script>
     //선택 항목 삭제하는 AJAX
+    function filter(){
+        console.log(this.value);
+        if(this.value) location.href=(this.value);
+        $(this).val(this.value).prop("selected", true);
 
-    
+    }
 	
+
+
 
 </script>
 	
