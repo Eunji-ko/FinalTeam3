@@ -15,9 +15,12 @@
        justify-content: flex-start;
     }
 
-    #top{
+    .nav-link{
+        color: black;
+    }
+    
+    #main{
         width: 100%;
-        height: 10%;
     }
 </style>
 </head>
@@ -27,12 +30,22 @@
         
         <main class="shadow">
 			
-            <div id="top">
-                
-            </div>
+            <div id="main">
 
-            <div id="content">
-                
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">출.퇴근</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">연차신청</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">근태기록</a>
+                    </li>
+                </ul>
+
+                <div>sdfasd</div>
+
             </div>
 
         </main>
