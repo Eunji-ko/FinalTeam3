@@ -28,7 +28,7 @@ public class AdminDaoImpl implements AdminDao{
 	 //게시글 리스트
 	@Override
 	public List<BoardVo> selectBoardList(SqlSessionTemplate sst) {
-		return sst.selectList("adminMapper.selectBoardList"); 
+		return sst.selectList("boardMapper.selectBoardList"); 
 	}
 	 
 	 

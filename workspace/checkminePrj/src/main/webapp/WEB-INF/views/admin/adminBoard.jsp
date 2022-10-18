@@ -134,26 +134,38 @@
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
                         <tr>
-                            <th>번호</th>
-                            <th>카테고리</th>
-                            <th>게시물 제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>조회수</th>
-                            <th>선택</th>
+                            <th width="10%">번호</th>
+                            <th width="10%">카테고리</th>
+                            <th width="40%">게시물 제목</th>
+                            <th width="10%">작성자</th>
+                            <th width="15%">작성일</th>
+                            <th width="10%">조회수</th>
+                            <th width="5%">선택</th>
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
-                        <tr onclick="location.href='#'">
-                            <td>1</td>
-                            <td>공지사항</td>
-                            <td>게시물 제목</td>
-                            <td>테스트</td>
-                            <td>2022.10.13</td>
-                            <td>10</td>
+                    <c:forEach items="${boardList}" var="b">
+                    
+                        <tr onclick="location.href='${root}/board/detail/${b.no}'">
+                            <td>${b.no}</td>
+                            <td>
+	                            <c:choose>
+	                            	<c:when test="${b.type eq 'N'}">공지사항</c:when>
+	                            	<c:when test="${b.type eq 'C'}">커뮤니티</c:when>
+	                            	<c:when test="${b.type eq 'G'}">갤러리</c:when>
+	                            </c:choose>
+                            </td>
+                            <td>${b.title}</td>
+                            <td>${b.writer}</td>
+                            <td>${b.enrollDate}</td>
+                            <td>${b.hit}</td>
                             <td><input type="checkbox" name="checked" id=""></td>
                         
                         </tr>
+                    
+                    
+                    
+                    </c:forEach>
 
                     </tbody>
                     

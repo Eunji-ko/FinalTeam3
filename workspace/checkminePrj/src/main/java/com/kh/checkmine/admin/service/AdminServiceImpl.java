@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class AdminServiceImpl implements AdminService{
 	private final SqlSessionTemplate sst;
 	private final PasswordEncoder pwdEncoder;
 	
-	
+	@Autowired
 	public AdminServiceImpl(AdminDao dao, SqlSessionTemplate sst, PasswordEncoder pwdEncoder) {
 		this.dao = dao;
 		this.sst = sst;

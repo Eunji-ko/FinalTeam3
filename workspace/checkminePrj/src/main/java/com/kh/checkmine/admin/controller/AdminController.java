@@ -66,6 +66,10 @@ public class AdminController {
 	  
 		  HashMap<String, Integer> summary = service.summary();
 		  List<BoardVo> boardList = service.boardList();
+		  //사원
+		  
+		  //예약
+		  
 		  model.addAttribute("summary", summary);
 		  model.addAttribute("boardList", boardList);
 		  return "admin/adminMain"; 

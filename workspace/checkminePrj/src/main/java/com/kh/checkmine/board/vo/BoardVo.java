@@ -11,6 +11,8 @@ public class BoardVo {
 	private String hit;
 	private String enrollDate;
 	private String modifyDate;
+	private String deleteYn;
+	private String type;
 	
 	//추천수
 	private String recommendCnt;
