@@ -149,22 +149,22 @@
                 <div class="summaryItem" style="grid-column: 2;">
                     <img src="${root}/resources/img/admin/user-icon.png">
                     <div>사원정보 변동</div>
-                    <div id="memberChange">${adminLogin.name} 건</div>
+                    <div id="memberChange">${summary.MEMBERCHANGE}건</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/user-icon-b.png">
                     <div>총 사원수</div>
-                    <div id="memberTotal">0명</div>
+                    <div id="memberTotal">${summary.MEMBERTOTAL}명</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/board-icon.png">
                     <div>등록된 게시물수</div>
-                    <div id="boardTotal">0건</div>
+                    <div id="boardTotal">${summary.BOARD}건</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/time-icon.png">
                     <div>오늘 예약건</div>
-                    <div id="bookTotal">0건</div>
+                    <div id="bookTotal">${summary.BOOK}건</div>
                 </div>
             </div>
             <div class="area">
@@ -188,18 +188,12 @@
             </div>
             <div class="area">
                 <div id="boardArea">
-                    <div class="header">게시판 현황</div><a href="" id="more">더보기</a>
-                    <div class="list"><a href="">님이 등록되었습니다.asasdasdasdasdasfㅁㄻㄴㄻㄴㄹㄴㅁㄻㄴㄻㄴㄹ </a><span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-
+                    <div class="header">게시판 현황</div><a href="${root}/admin/board/list/1" id="more">더보기</a>
+                    <c:forEach items="${boardList}" var="b" end="8">
+                    	<div class="list"><a href="${root}/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
                     
+                    </c:forEach>
+                  
 
                 </div>
 

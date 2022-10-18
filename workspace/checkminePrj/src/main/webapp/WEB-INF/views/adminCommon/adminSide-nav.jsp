@@ -35,12 +35,12 @@
             <div id="profile"><img src="${root}/resources/img/admin/adminProfile.png" alt="관리자이미지"></div>
             <div id="adminName">${loginAdmin.name} 관리자</div>
             
-            <a href="로그아웃" id="logout">로그아웃</a>
+            <a href="${root}/admin/logout" id="logout">로그아웃</a>
             <a href="${root}/admin/main" id="side-nav-home">HOME</a>
             <a href="사원관리">사원관리</a>
-            <a href="게시판관리">게시판관리</a>
+            <a href="${root}/admin/board/list/all/1">게시판관리</a>
             <a href="공유물관리">공유물관리</a>
-            <a href="조직도">조직도</a>
+            <a href="${root}/board/list/notice/1">조직도</a>
         </nav>
 </body>
 </html>

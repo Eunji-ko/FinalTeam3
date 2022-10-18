@@ -7,6 +7,7 @@
   </settings>
 <typeAliases>
 	<typeAlias type="com.kh.checkmine.admin.vo.AdminVo" alias="AdminVo"/>
+	<typeAlias type="com.kh.checkmine.board.vo.BoardVo" alias="BoardVo"/>
 </typeAliases>
 
 

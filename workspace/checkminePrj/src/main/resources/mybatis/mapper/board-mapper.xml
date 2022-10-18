@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+   <select id="selectBoardList" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	ON B.NO = R.NO JOIN MEMBER M ON M.NO = B.WRITER
+  	WHERE DELETE_YN = 'N' 
+  	
+  	
+  	
+  	ORDER BY B.ENROLL_DATE DESC
+  </select>
+  
+</mapper>
