@@ -105,5 +105,26 @@
     </main>
 </div>
 
+
+<script>
+	function approval(){
+        if(confirm("결재하시겠습니까?")){
+            //예
+            return true;
+        }else{
+            //아니오
+            const result = prompt('반려사유 :');
+            if(result == null){
+                return false;
+            }else{
+                document.querySelector('#return-reason').val(result);
+                return true;
+            }
+        }
+    }
+</script>
+
+
+
 </body>
 </html>

@@ -47,6 +47,10 @@
 		padding: 10px;
 		text-align: center;
 	}
+	#approver5, #approver6, #approver7, #approver8{
+		line-height: 80px;
+		font-size: 25px;
+	}
 	#main-bot{
 		height: 700px;
 		margin-top : 30px;
@@ -99,23 +103,23 @@
 			</div>
 		</div>
 		<div id="approver-info">
-			<div id="approver1">1</div>
-			<div id="approver2">2</div>
-			<div id="approver3">3</div>
-			<div id="approver4">4</div>
-			<div id="approver5">5</div>
-			<div id="approver6">6</div>
-			<div id="approver7">7</div>
-			<div id="approver8">8</div>
-			<div id="approver9">9</div>
-			<div id="approver10">10</div>
-			<div id="approver11">11</div>
-			<div id="approver12">12</div>
+			<div id="approver1">1차</div>
+			<div id="approver2">2차</div>
+			<div id="approver3">3차</div>
+			<div id="approver4">최종</div>
+			<div id="approver5">이</div>
+			<div id="approver6">름</div>
+			<div id="approver7">넣</div>
+			<div id="approver8">기</div>
+			<div id="approver9">날</div>
+			<div id="approver10">짜</div>
+			<div id="approver11">넣</div>
+			<div id="approver12">기</div>
 		</div>
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/draft" method="multipart/form-data">
+		<form action="${rootPath}/approval/draft" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -127,7 +131,8 @@
 				<textarea id="approval-content" class="form-control" maxlength="2000" name="content"></textarea>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="draftFile" id="">
+				<input type="file" name="draftFile" id="" multiple>
+				<input type="hidden" id="return-reason" name="returnReason">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 

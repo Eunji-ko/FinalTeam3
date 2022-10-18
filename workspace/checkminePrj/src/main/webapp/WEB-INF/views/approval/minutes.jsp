@@ -108,10 +108,10 @@
 			</div>
 		</div>
 		<div id="approver-info">
-			<div id="approver1">1</div>
-			<div id="approver2">2</div>
-			<div id="approver3">3</div>
-			<div id="approver4">4</div>
+			<div id="approver1">1차</div>
+			<div id="approver2">2차</div>
+			<div id="approver3">3차</div>
+			<div id="approver4">최종</div>
 			<div id="approver5">5</div>
 			<div id="approver6">6</div>
 			<div id="approver7">7</div>
@@ -124,7 +124,7 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/minutes" method="multipart/form-data">
+		<form action="${rootPath}/approval/minutes" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -141,7 +141,8 @@
 				
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="minutesFile" id="">
+				<input type="file" name="minutesFile" id="" multiple>
+				<input type="hidden" id="return-reason" name="returnReason">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
