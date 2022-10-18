@@ -15,6 +15,8 @@
     }
     #addr-add {
         position: relative;
+        margin-top: 10px;
+        margin-left: 430px;
     }
 </style>
 <c:set var="imgPath" value="/checkmine/resources/img/mail"/>
@@ -93,7 +95,7 @@
                 </div>
             </div>
         </div>
-    
+        <hr>
         <div>
             <div id="addr-search">
                 <img src="${imgPath}/mail_search.png">
