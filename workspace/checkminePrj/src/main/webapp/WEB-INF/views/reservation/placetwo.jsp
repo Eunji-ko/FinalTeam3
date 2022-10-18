@@ -107,7 +107,7 @@
         border-radius: 10px;
         position: absolute;
         margin-top: 160px;
-        margin-left: 550px;
+        margin-left: 390px;
     }
 
 </style>
@@ -152,7 +152,7 @@
             <div id="content">
 
                 <div id="content-top">
-                    <h1>빔 프로젝트</h1>
+                    <h1>응접실</h1>
                     <div><button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">예약하기</button></div>
                 </div>
     
@@ -166,10 +166,10 @@
                         <table class="table">
                             <thead>
                               <tr>
-                                <th scope="col">시간/빔 번호</th>
-                                <th scope="col">빔1</th>
-                                <th scope="col">빔2</th>
-                                <th scope="col">빔3</th>
+                                <th scope="col">시간/응접실</th>
+                                <th scope="col">응접실1</th>
+                                <th scope="col">응접실2</th>
+                                <th scope="col">응접실3</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -290,9 +290,9 @@
                         <div id="type">
                             <div>종류</div>
                             <select name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="빔1">빔1</option>
-                                <option value="빔2">빔2</option>
-                                <option value="빔3">빔3</option>
+                                <option value="응접실1">응접실1</option>
+                                <option value="응접실2">응접실2</option>
+                                <option value="응접실3">응접실3</option>
                             </select>
                         </div>
 
