@@ -2,9 +2,6 @@ package com.kh.checkmine.admin.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +25,11 @@ public class AdminBoardController {
 	}
 	
 	//게시물 조회
-	@GetMapping("list/{pno}")
-	public String list(@PathVariable int pno,HttpServletRequest req, Model model) {
+	@GetMapping("list/{sort}/{pno}")
+	public String list(@PathVariable int pno, @PathVariable String sort, Model model) {
 		
-		String filter = req.getParameter("filter");
-		System.out.println(filter);
+		System.out.println(sort);
+		System.out.println(pno);
 		List<BoardVo> boardList = service.boardList();
 		model.addAttribute("boardList", boardList);
 		
