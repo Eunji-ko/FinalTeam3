@@ -184,9 +184,9 @@
 							</div>
 							
 							<div class="table-content-div" id="table-div">
-								<input type="text" class="form-control" id="name-iniput">
-								<input type="text" class="form-control" id="brief-input">
-								<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0">
+								<input type="text" class="form-control" id="name-input" name="stateName">
+								<input type="text" class="form-control" id="brief-input" name="stateBrief">
+								<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="stateMoney">
 							</div>
 							<div id="plus-btn-div">
 								<button type="button" class="btn" id="plus-btn">+</button>
@@ -222,11 +222,14 @@
 		});
 
 		//총 금액 구하기
-		$('.money-form').blur(fucntion(){
-			//var arr = ;
-			//var result = arr.reduce(function add(sum, currValue) {
-			//return sum + currValue;
-			//}, 0);
+		$('.money-form').blur(function(){
+			var arr = document.querySelector('input[name=stateMoney]').val();
+			var result = arr.reduce(function add(sum, currValue) {
+			return sum + currValue;
+			}, 0);
+			if(isNaN(result)){
+				$('#money').val(result);
+			}
 		});
 	</script>
 
