@@ -1,6 +1,7 @@
 package com.kh.checkmine.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,43 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	
 	//게시물 리스트
 	@Override
-	public List<BoardVo> boardList(PageVo vo, String sort) {
-		List<BoardVo> boardList = dao.selectBoardList(sst, vo, sort);
+	public List<BoardVo> selectBoardList(PageVo pv, String sort) {
+		List<BoardVo> boardList = dao.selectBoardList(sst, pv, sort);
 		return boardList;
 	}
 
 	//게시글 수
 	@Override
-	public int selectTotalCnt() {
-		int total = dao.selectBoardTotal(sst);
+	public int selectTotalCnt(String sort) {
+		int total = dao.selectBoardTotal(sst, sort);
 		
 		return total;
 	}
+
+	//게시글 삭제
+	@Override
+	public int delete(int boardNo) {
+		int result = dao.delete(sst, boardNo);
+		return result;
+	}
+
+	//게시글 검색
+	@Override
+	public List<BoardVo> selectBoardKeyword(PageVo pv, Map<String, String> map) {
+		
+		List<BoardVo> boardList = dao.selectBoardKeyword(sst, pv, map);
+		
+		return boardList;
+	}
+
+	//검색 결과 게시글 수
+	@Override
+	public int selectKeywordCnt(Map<String, String> map) {
+		int total = dao.selectTotalKeyword(sst, map);
+		return total;
+	}
+
+	
 
 	
 

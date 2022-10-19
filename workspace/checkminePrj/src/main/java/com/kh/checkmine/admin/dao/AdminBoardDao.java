@@ -1,6 +1,7 @@
 package com.kh.checkmine.admin.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -10,10 +11,18 @@ import com.kh.checkmine.common.PageVo;
 public interface AdminBoardDao {
 
 	//게시글 조회
-	List<BoardVo> selectBoardList(SqlSessionTemplate sst, PageVo vo, String sort);
+	List<BoardVo> selectBoardList(SqlSessionTemplate sst, PageVo pv, String sort);
 
 	//게시글 수
-	int selectBoardTotal(SqlSessionTemplate sst);
+	int selectBoardTotal(SqlSessionTemplate sst, String sort);
+
+	//게시글 삭제
+	int delete(SqlSessionTemplate sst, int boardNo);
+
+	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
+
+	//게시글 수 + 검색
+	int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map);
 	
 	
 

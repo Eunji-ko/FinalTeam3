@@ -52,6 +52,7 @@
 
     #filter{
         width: 110px;
+        display: inline-block;
     }
     #option{
         width: 183px;
@@ -108,6 +109,7 @@
                 
             </div>
 			<div id="area2">
+			<div>
                 <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
                 	<option value="${root}/admin/board/list?sort=a&p=1">-----</option>
                     <option value="${root}/admin/board/list?sort=a&p=1">모두</option>
@@ -115,9 +117,10 @@
                     <option value="${root}/admin/board/list?sort=c&p=1">커뮤니티</option>
                     <option value="${root}/admin/board/list?sort=g&p=1">갤러리</option>
                 </select>
-                
+            	<div style="display: inline-block; margin:10px">'${keyword}'의 검색결과입니다.</div>
+               </div>
                 <form action="${root}/admin/board/search" method="get">
-                    <input type="hidden" name="p" value="1">
+                <input type="hidden" name="p" value="1">
                     <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="title">제목</option>
                         <option value="content">내용</option>
@@ -129,11 +132,12 @@
                     </div>
                     
                 </form>
-          
 
 
             </div>
+            
             <div id="listArea">
+            
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
                         <tr>
@@ -176,7 +180,7 @@
             </div>
             <div id="pageArea">
             <c:if test="${pv.startPage ne 1}">
-                <a href="${root}/admin/board/list?sort=${sort}&p=${pv.startPage -1}">&lt;</a>            
+                <a href="${root}/admin/board/search?p=${pv.startPage -1}&option=${option}&keyword=${keyword}">&lt;</a>            
             </c:if>
             <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
             	<c:choose>
@@ -184,7 +188,7 @@
             			<a style="font-weight:900;">${i}</a>  
             		</c:when>
             		<c:otherwise>
-		                <a href="${root}/admin/board/list?sort=${sort}&p=${i}">${i}</a>            
+		                <a href="${root}/admin/board/search?p=${i}&option=${option}&keyword=${keyword}">${i}</a>            
             		
             		</c:otherwise>
             	
@@ -192,7 +196,7 @@
                 
             </c:forEach>
               <c:if test="${pv.endPage ne pv.maxPage}">
-                <a href="${root}/admin/board/list?sort=${sort}&p=${pv.endPage + 1}">&gt;</a>
+                <a href="${root}/admin/board/search?p=${pv.endPage + 1}&option=${option}&keyword=${keyword}">&gt;</a>
               </c:if>
             </div>
         </main>
@@ -241,7 +245,6 @@
         
     }
     
-	
 
 </script>
 	
