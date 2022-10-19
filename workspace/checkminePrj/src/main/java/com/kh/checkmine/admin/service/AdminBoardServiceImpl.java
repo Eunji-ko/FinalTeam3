@@ -6,8 +6,10 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.admin.dao.AdminBoardDao;
+import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 
@@ -59,6 +61,28 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	public int selectKeywordCnt(Map<String, String> map) {
 		int total = dao.selectTotalKeyword(sst, map);
 		return total;
+	}
+
+	//게시글 + 첨부파일
+	@Override
+	@Transactional
+	public int insertBoard(BoardVo vo, List<BoardAttVo> attVoList) {
+		
+		//게시글
+		int result1 = dao.insertBoard(sst, vo);
+
+		//첨부파일
+		int result2 = dao.insertBoardAtt(sst, attVoList);
+		System.out.println(result1);
+		System.out.println(result2);
+		return result1*result2;
+	}
+
+	//게시글 올리기
+	@Override
+	public int insertBoard(BoardVo vo) {
+		int result = dao.insertBoard(sst, vo);
+		return result;
 	}
 
 	

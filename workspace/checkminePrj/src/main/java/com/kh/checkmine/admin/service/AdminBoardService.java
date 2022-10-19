@@ -3,6 +3,7 @@ package com.kh.checkmine.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 
@@ -22,6 +23,12 @@ public interface AdminBoardService {
 
 	//검색결과 게시글 수
 	int selectKeywordCnt(Map<String, String> map);
+
+	//게시글 올리기+첨부파일
+	int insertBoard(BoardVo vo, List<BoardAttVo> attVoList);
+
+	//게시글 올리기
+	int insertBoard(BoardVo vo);
 
 
 

@@ -78,6 +78,19 @@
   	</choose>
 
   </select>
- 
+  
+  <insert id="insertBoard">
+  	INSERT INTO BOARD(NO, WRITER, TITLE, CONTENT, TYPE) 
+  	VALUES(SEQ_BOARD_NO.NEXTVAL, #{writer}, #{title}, #{content}, #{type})
+  </insert>
+  
+ <insert id="insertBoardAtt" parameterType="java.util.List">
+ 	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
+ 	select SEQ_BATT_NO.NEXTVAL, A.* from(
+ 	<foreach collection="list" item="item" separator="UNION ALL ">
+ 	select 1 as B_NO,
+ 	#{item.name} as name, #{item.filePath} as FILE_PATH from dual
+ 	</foreach>) A
+ </insert>
   
 </mapper>

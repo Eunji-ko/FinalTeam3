@@ -12,6 +12,6 @@ public class BoardAttVo {
 	private String name;
 	private String filePath;
 	private String enrollDate;
-	private MultipartFile attach;
+	private MultipartFile[] attach;
 
 }

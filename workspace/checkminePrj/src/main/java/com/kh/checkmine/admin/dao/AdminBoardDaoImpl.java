@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 
@@ -47,6 +48,17 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	@Override
 	public int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map) {
 		return sst.selectOne("boardMapper.selectTotalKeyword", map);
+	}
+
+	//공지사항 올리기
+	@Override
+	public int insertBoard(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.insert("boardMapper.insertBoard", vo);
+	}
+
+	@Override
+	public int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
+		return sst.insert("boardMapper.insertBoardAtt", attVoList);
 	}
 
 }
