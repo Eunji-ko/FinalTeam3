@@ -127,11 +127,11 @@
 			</div>
 			<div id="approval-content-div">
 				<div id="draft-team" class="input-group-text">기안팀</div>
-				<input type="text" maxlength="25" class="form-control" name="draftTeam">
+				<input type="text" maxlength="25" class="form-control" name="department">
 				<textarea id="approval-content" class="form-control" maxlength="2000" name="content"></textarea>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="draftFile" id="" multiple>
+				<input type="file" name="fileName" id="" multiple>
 				<input type="hidden" id="return-reason" name="returnReason">
 				<button id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
