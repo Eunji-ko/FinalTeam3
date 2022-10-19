@@ -116,11 +116,11 @@
                     <option value="${root}/admin/board/list?sort=g&p=1">갤러리</option>
                 </select>
                 
-                <form action="" method="get">
-                    <select class="form-select" id="option" required style="display: inline-block;">
-                        <option>제목</option>
-                        <option>내용</option>
-                        <option>작성자</option>
+                <form action="${root}/admin/board/search" method="get">
+                    <select class="form-select" id="option" name="option" required style="display: inline-block;">
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                        <option value="writer">작성자</option>
                     </select>
                     <div style="width: 267px; border: 1px solid lightgray; display: inline-block;" >
                         <input type="text" name="keyword" id="keyword" class="form-control" required>
@@ -161,7 +161,7 @@
                             <td>${b.writer}</td>
                             <td>${b.enrollDate}</td>
                             <td>${b.hit}</td>
-                            <td><input type="checkbox" name="checked" onclick="event.cancelBubble=true"></td>
+                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="check" value="${b.no}"></td>
                         
                         </tr>
                     
@@ -200,8 +200,44 @@
 <script>
     //선택 항목 삭제하는 AJAX
     function deleteList(){
-        const listArr = [];
-        $("input:checkbox[name='checked']")
+        const checkArr = [];
+        var answer = confirm("해당 게시물을 삭제하시겠습니까?");
+        
+        //확인 버튼 누를 시 체크 값 담고 삭제
+        ;
+        if(answer == true){
+            if($("input:checkbox[name='check']:checked").length == 0){
+                alert("선택한 게시물이 없습니다");
+            }else{
+                $("input:checkbox[name='check']:checked").each(function(){
+             checkArr.push($(this).val());
+             console.log(checkArr);
+        });
+
+            $.ajax({
+            type : "POST",
+            url : "${root}/admin/board/delete",
+            data:{
+                checkArr : checkArr
+            },
+            success: function(e){
+                console.log(e);
+                alert("삭제되었습니다.");
+                location.reload();
+            },
+            fail: function(error){
+                alert("오류가 발생하였습니다. 시스템 관리자에게 문의하세요.");
+            }
+
+        });
+            }
+            
+            }else{
+                return false;
+            }
+        
+      
+        
     }
     
 	

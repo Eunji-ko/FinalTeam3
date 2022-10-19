@@ -38,4 +38,10 @@
 
   </select>
   
+  
+  
+  <update id="deleteBoard">
+  	UPDATE BOARD SET DELETE_YN = 'Y' WHERE NO=#{BOARDNO}
+  </update>
+  
 </mapper>

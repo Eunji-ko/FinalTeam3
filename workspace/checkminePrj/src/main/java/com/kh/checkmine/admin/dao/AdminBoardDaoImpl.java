@@ -19,7 +19,6 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		System.out.println();
 		return sst.selectList("boardMapper.selectBoardList", sort, rb); 
 	}
 
@@ -27,6 +26,18 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	@Override
 	public int selectBoardTotal(SqlSessionTemplate sst, String sort) {
 		return sst.selectOne("boardMapper.selectBoardTotal", sort);
+	}
+
+	//게시글 삭제
+	@Override
+	public int delete(SqlSessionTemplate sst, int boardNo) {
+		return sst.update("boardMapper.deleteBoard", boardNo);
+	}
+
+	//게시물 검색
+	@Override
+	public List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectList("boardMapper.selectBoardKeyword", map);
 	}
 
 }
