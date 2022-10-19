@@ -83,6 +83,17 @@
 		margin: auto;
 		display: block;
 	}
+	#expenditure-table-div{
+		grid-column: 1/3;
+		grid-row: 1/3;
+	}
+	#eplus-btn{
+        color: white;
+		background-color: #5d736f;
+        margin: auto;
+		display: block;
+        margin-top: 10px;
+    }
 </style>
 
 
@@ -122,14 +133,24 @@
 				<input type="text" maxlength="250" class="form-control">
 			</div>
 			<div id="approval-content-div">
-				<div id="expenditure-brief" class="input-group-text">적요</div>
-				<input type="text" maxlength="50" class="form-control" name="purpose" required>
-				<div id="approval-content" class="minutes-grid">
-					<div id="expenditure-amount" class="input-group-text">금액</div>
-					<input type="number" class="form-control" name="amount" min="0" required>
-					<textarea class="form-control" maxlength="2000"></textarea>
+				<div id="expenditure-table-div">
+					<div class="table-content-div">
+						<div class="th-div input-group-text">적요</div>
+						<div class="th-div input-group-text">금액</div>
+						<div class="th-div input-group-text">비고</div>
+					</div>
+					
+					<div class="table-content-div" id="etable-div">
+						<input type="text" class="form-control" id="name-input" name="brief">
+						<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="amount">
+						<input type="text" class="form-control" id="brief-input" name="note">
+					</div>
+					<div id="eplus-btn-div">
+						<button type="button" class="btn" id="eplus-btn">+</button>
+					</div>
 				</div>
 			</div>
+				
 			<div id="approval-btn-div">
 				<input type="file" name="expenditureFile" id="" multiple>
 				<input type="hidden" id="return-reason" name="returnReason">
@@ -139,5 +160,22 @@
 		</form>
 
 	</div>
+
+	<script>
+
+		let eidNum = 0;
+		$('#eplus-btn').click(function(){
+			const eoriDiv = document.querySelector('#etable-div');
+			const ebtnDiv = document.querySelector('#eplus-btn-div');
+			const enewDiv = eoriDiv.cloneNode(true);
+			enewDiv.id = eoriDiv.id + eidNum;
+			ebtnDiv.before(enewDiv);
+			eidNum++;
+			if(eidNum > 5){
+				$('#eplus-btn').prop('disabled', true);
+			}
+		});
+
+	</script>
 
 </main>
