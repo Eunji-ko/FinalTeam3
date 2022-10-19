@@ -95,7 +95,7 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                 <div id="title"><div><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div></div>
                 <div id="content-box">
                     <div id="content">

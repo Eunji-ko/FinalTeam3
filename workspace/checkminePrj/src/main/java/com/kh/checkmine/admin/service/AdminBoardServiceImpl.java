@@ -47,11 +47,18 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	//게시글 검색
 	@Override
-	public List<BoardVo> selectBoardKeyword(Map<String, String> map) {
+	public List<BoardVo> selectBoardKeyword(PageVo pv, Map<String, String> map) {
 		
-		List<BoardVo> boardList = dao.selectBoardKeyword(sst, map);
+		List<BoardVo> boardList = dao.selectBoardKeyword(sst, pv, map);
 		
 		return boardList;
+	}
+
+	//검색 결과 게시글 수
+	@Override
+	public int selectKeywordCnt(Map<String, String> map) {
+		int total = dao.selectTotalKeyword(sst, map);
+		return total;
 	}
 
 	

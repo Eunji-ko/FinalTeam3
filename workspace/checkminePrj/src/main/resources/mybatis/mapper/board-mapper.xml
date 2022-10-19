@@ -44,4 +44,40 @@
   	UPDATE BOARD SET DELETE_YN = 'Y' WHERE NO=#{BOARDNO}
   </update>
   
+  
+  <select id="selectBoardKeyword" parameterType="HashMap" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH:MI') AS ENROLL_DATE, TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH:MI') AS MODIFY_DATE, B.DELETE_YN, B.TYPE FROM BOARD B 
+	JOIN MEMBER M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N' 
+  	<choose>
+  		<when test='option=="title"'>
+  			AND TITLE LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="content"'>
+  			AND CONTENT LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="writer"'>
+  			AND NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  	</choose>
+  	ORDER BY B.ENROLL_DATE DESC
+  
+  </select>
+  
+  <select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
+	  SELECT COUNT(B.NO) FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N'
+	  	<choose>
+  		<when test='option=="title"'>
+  			AND B.TITLE LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="content"'>
+  			AND B.CONTENT LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="writer"'>
+  			AND NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  	</choose>
+
+  </select>
+ 
+  
 </mapper>

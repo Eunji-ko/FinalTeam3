@@ -19,7 +19,10 @@ public interface AdminBoardDao {
 	//게시글 삭제
 	int delete(SqlSessionTemplate sst, int boardNo);
 
-	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, Map<String, String> map);
+	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
+
+	//게시글 수 + 검색
+	int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map);
 	
 	
 

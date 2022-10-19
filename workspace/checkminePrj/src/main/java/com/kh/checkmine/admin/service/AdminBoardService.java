@@ -18,7 +18,10 @@ public interface AdminBoardService {
 	int delete(int boardNo);
 
 	//게시글 검색
-	List<BoardVo> selectBoardKeyword(Map<String, String> map);
+	List<BoardVo> selectBoardKeyword(PageVo pv, Map<String, String> map);
+
+	//검색결과 게시글 수
+	int selectKeywordCnt(Map<String, String> map);
 
 
 

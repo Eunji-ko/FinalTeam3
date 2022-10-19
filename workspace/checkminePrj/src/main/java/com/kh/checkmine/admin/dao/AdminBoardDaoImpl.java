@@ -36,8 +36,17 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//게시물 검색
 	@Override
-	public List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, Map<String, String> map) {
-		return sst.selectList("boardMapper.selectBoardKeyword", map);
+	public List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("boardMapper.selectBoardKeyword", map, rb);
+	}
+
+	//게시글 수 + 검색
+	@Override
+	public int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectOne("boardMapper.selectTotalKeyword", map);
 	}
 
 }
