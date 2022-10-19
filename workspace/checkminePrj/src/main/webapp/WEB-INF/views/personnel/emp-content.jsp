@@ -108,7 +108,7 @@
         </select>
         <br><br>
         <div class="out-line">
-            <table class="table table-light table-hover psn-emp-table">
+            <table class="table table-hover psn-emp-table">
                 <thead>
                     <tr>
                         <th>사원번호</th>
@@ -121,7 +121,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr data-bs-toggle="modal" data-bs-target="#changeEmp">
                         <th>1</th>
                         <td>테스트</td>
                         <td>-</td>
@@ -199,5 +199,7 @@
             <a href="">&gt;</a>
         </div>
     </div>
+
+    <%@ include file="/WEB-INF/views/personnel/emp-modal.jsp" %>
 </body>
 </html>

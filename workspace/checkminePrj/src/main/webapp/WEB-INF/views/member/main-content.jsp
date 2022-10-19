@@ -203,9 +203,19 @@
         font-size: 14px;
         color: red;
     }
-    
-    
+    #calendar {
+    	margin: 3px;
+    }
+    .fc-daygrid-day-number, .fc-col-header-cell-cushion  {
+    	color: black;
+    	text-decoration-line: none;
+    }
+    .fc-daygrid-day-number:hover, .fc-col-header-cell-cushion:hover {
+    	cursor: pointer;
+    }
 </style>
+<link href='${rootPath}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+<script src='${rootPath}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 </head>
 <body onload="printClock()">
     <br>
@@ -301,7 +311,9 @@
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div>
+                	<div id="calendar"></div>
+                </div>
             </div>
             <br><br>
             <div id="main-content2f">
@@ -391,6 +403,17 @@
             }
             return zero + num;
         }
+    </script>
+    
+    <script>
+	  //풀캘린더 라이브러리 적용
+	    document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	        initialView: 'dayGridMonth',
+	    });
+	    calendar.render();
+	    });
     </script>
 </body>
 </html>
