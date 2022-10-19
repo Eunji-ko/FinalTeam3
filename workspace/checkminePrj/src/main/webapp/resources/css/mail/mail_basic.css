@@ -67,6 +67,7 @@
         color: #000000;
     }
     #container-nav li a:hover{
+    	cursor:pointer;
         color: cadetblue;
     }
     #container-nav li span{

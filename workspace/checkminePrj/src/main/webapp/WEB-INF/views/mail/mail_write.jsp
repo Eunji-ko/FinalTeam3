@@ -185,7 +185,7 @@
 
             <div class="d-flex" style="padding-top: 8px;">
                 <div id="container-nav">
-                    <div>
+                    <div onclick="location.href='/checkmine/mail/write'">
                         <img src="${imgPath}/mail_send.png">
                         <span>메일 쓰기</span>
                     </div>
@@ -196,7 +196,7 @@
                         <li><div><a href="">중요편지함</a><span>21</span></div></li>
                         <li><div><a href="">임시보관함</a><span>21</span></div></li>
                         <li><div><a href="">휴지통</a></div></li>
-                        <li><div><a href="">주소록</a></div></li>
+                        <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
                 </div>
                 <!-- 여기까지 -->
@@ -279,10 +279,10 @@
     const input = document.querySelector('#file-upload');
     const preview = document.querySelector('#file-preview');
     input.addEventListener("change",function(){
-        const preNods = document.querySelectorAll('#file-preview div');
+        const prePreview = document.querySelectorAll('#file-preview div');
 
-        for(var i=0;i<preNods.length;i++){
-            preview.removeChild(preNods[i]);
+        for(var i=0;i<prePreview.length;i++){
+            preview.removeChild(prePreview[i]);
         }
 
         const uploadFiles = input.files;
@@ -293,6 +293,8 @@
 
             preview.appendChild(preItem);
         }
+
+        
 
     });
 

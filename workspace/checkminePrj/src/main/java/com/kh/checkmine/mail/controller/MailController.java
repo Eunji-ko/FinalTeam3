@@ -1,10 +1,13 @@
 package com.kh.checkmine.mail.controller;
 
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -26,15 +29,21 @@ public class MailController {
 		return "mail/mail_write";
 	}
 	
-	@PostMapping("write")
-	public String mailWrite(String test) {
-		System.out.println(test);
-		
-		return"";
-	}
-	
 	@GetMapping("addr")
 	public String mailAddr() {
 		return "mail/mail_addr";
+	}
+	
+	@PostMapping("recycleBin")
+	@ResponseBody
+	public String moveToRecycleBin(@RequestParam(value="mails[]")int[] mails) {
+		//서비스로 보내기
+		return "3";
+	}
+	
+	@PostMapping("importance")
+	@ResponseBody
+	public void updateImp(String importance, String mailNum) {
+		//서비스로 보내기
 	}
 }
