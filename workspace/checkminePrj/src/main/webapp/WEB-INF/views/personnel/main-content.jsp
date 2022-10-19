@@ -42,6 +42,18 @@
     .btn-zone {
         width: 150px;
     }
+    .checkmine-btn {
+        background-color: #5D736F;
+        color: white;
+        border-radius: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 3px;
+        padding-top: 3px;
+    }
+    .checkmine-btn:hover {
+        background-color: #72918b;
+    }
 </style>
 </head>
 <body>

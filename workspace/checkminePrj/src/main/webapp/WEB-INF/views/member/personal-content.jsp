@@ -183,8 +183,11 @@
                     <div style="margin-bottom: 45px;">
                         0길 남도빌딩 2층 D강의장
                     </div>
-                    <div id="margin-btm">
+                    <div style="margin-bottom: 100px;">
                         2022.09.29 (0년 0개월차)
+                    </div>
+                    <div>
+                    	<button class="btn checkmine-btn" data-bs-toggle="modal" data-bs-target="#changeInfo">개인정보 수정</button>
                     </div>
                 </div>
             </div>
@@ -193,5 +196,6 @@
 
     <%@ include file="/WEB-INF/views/member/pwd-modal.jsp" %>
     <%@ include file="/WEB-INF/views/member/img-modal.jsp" %>
+    <%@ include file="/WEB-INF/views/member/info-modal.jsp" %>
 </body>
 </html>

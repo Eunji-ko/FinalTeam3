@@ -35,7 +35,7 @@
         </select>
         <br><br>
         <div class="out-line">
-            <table class="table table-hover table-light psn-acc-table">
+            <table class="table table-hover psn-acc-table">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr data-bs-toggle="modal" data-bs-target="#changeAcc">
                         <th>1</th>
                         <td>(주)거래처1</td>
                         <td>일번거</td>
@@ -117,5 +117,7 @@
             <a href="">&gt;</a>
         </div>
     </div>
+
+    <%@ include file="/WEB-INF/views/personnel/acc-modal.jsp" %>
 </body>
 </html>

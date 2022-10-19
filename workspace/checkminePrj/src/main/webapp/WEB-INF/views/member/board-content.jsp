@@ -92,7 +92,7 @@
     <br>
     <div id="mp-board-area">
         <div id="left-board">
-            <h3 style="color: #5D736F">게시판</h3>
+            <h3 style="color: #5D736F">내가 쓴 글</h3>
             <table class="table" id="mp-board-tbl">
                 <tr>
                     <input type="hidden" value="">
@@ -178,7 +178,7 @@
             </div>
         </div>
         <div id="right-comment">
-            <h3 style="color: #5D736F">댓글</h3>
+            <h3 style="color: #5D736F">내가 쓴 댓글</h3>
             <table class="table" id="mp-board-tbl">
                 <tr>
                     <input type="hidden" value="">
