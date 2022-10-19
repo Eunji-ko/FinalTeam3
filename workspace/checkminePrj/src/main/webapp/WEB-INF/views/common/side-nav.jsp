@@ -10,7 +10,7 @@
 	<!-- 사이드 네비게이션 TODO: 경로설정 -->
         <nav class="d-flex flex-column align-items-center">
             <a href="${rootPath}/member/main" id="side-nav-home">HOME</a>
-            <a href="${rootPath}/근태관리">근태관리</a>
+            <a href="${rootPath}/commute/mycommute">근태관리</a>
             <a href="${rootPath}/approval">전자결재</a>
             <a href="${rootPath}/task/report/list">업무</a>
             <a href="${rootPath}/personnel/main">인사관리</a>
