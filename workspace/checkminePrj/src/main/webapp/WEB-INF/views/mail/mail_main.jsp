@@ -102,6 +102,7 @@
     #mail-list div{
         border-bottom: 1px solid #9a9a9a;
     }
+    
 
 
 
@@ -132,11 +133,11 @@
                     </div>
 
                     <ul>
-                        <li><div class="container-nav-selected"><a onclick="">받은편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="">보낸편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="">중요편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="">임시보관함</a><span>21</span></div></li>
-                        <li><div><a onclick="">휴지통</a></div></li>
+                        <li><div class="container-nav-selected"><a onclick="getList(this,'receve',1);">받은편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'send',1);">보낸편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'imp',1);">중요편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'save',1);">임시보관함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'recycle',1);">휴지통</a></div></li>
                         <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
                 </div>
@@ -177,7 +178,7 @@
                         </div>
                         
                         <!-- 리스트 여기부터 받아오기 -->
-                        <div id="1" class="d-flex align-items-center notRead notImp">
+                        <div id="1" class="mail-item notRead notImp d-flex align-items-center">
                             <a href="메일_상세보기" class="mail-list-item">
                                 <input type="checkbox" value="1">
                                 <span style="width: 207px;">chan0966@gmail.com</span>
@@ -265,6 +266,54 @@
                     }
                 });
             }
+        }
+
+        //메일 리스트 조회
+        function getList(element, type, page){
+            //클릭시 화면 효과
+            const menuList = document.querySelectorAll('#container-nav>ul div');
+            for(let i=0;i<menuList.length;i++){
+                if(menuList[i].classList.contains('container-nav-selected')){
+                    menuList[i].classList.toggle('container-nav-selected');
+                }
+            }
+            element.parentNode.classList.add('container-nav-selected');
+
+            //리스트 삭제
+            const mailList = document.querySelectorAll('#mail-list .mail-item');
+            
+            for(let i=0;i<mailList.length;i++){
+                mailList[i].remove();
+            }
+
+            //리스트 조회
+            $.ajax({
+                url:'/checkmine/mail/getlist',
+                type : 'post',
+                data:{
+                    'type' : type,
+                    'page' : page
+                },
+                success : function(data){
+                    console.log(data);
+
+                    //받아온 데이터로 처리하기
+                    const mailListWrap = document.querySelector('#mail-list');
+                    for(let i=0;i<5;i++){
+                        mailListWrap.innerHTML = mailListWrap.innerHTML + 
+                        '<div id="1" class="mail-item notRead notImp d-flex align-items-center">'+
+                            '<a href="메일_상세보기" class="mail-list-item"> '+
+                                '<input type="checkbox" value="1">'+
+                                '<span style="width: 207px;">chan0966@gmail.com</span>'+
+                                '<span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span'+
+                                '<span style="width: 150px;">2022-10-12 12:12</span>'+
+                            '</a>'+
+                            '<span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>'+
+                        '</div>'
+                    }
+                    
+                }
+            });
         }
     </script>
 </body>

@@ -1,6 +1,6 @@
 package com.kh.checkmine.mail.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,5 +45,16 @@ public class MailController {
 	@ResponseBody
 	public void updateImp(String importance, String mailNum) {
 		//서비스로 보내기
+	}
+	
+	@PostMapping("getlist")
+	@ResponseBody
+	public String getList(String type, String page) {
+		System.out.println(type + " : " + page);
+		ArrayList<String> arr = new ArrayList<String>();
+		arr.add("sdf");
+		arr.add("sfsfs");
+		
+		return arr.toString();
 	}
 }

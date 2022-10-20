@@ -41,12 +41,12 @@
                     </div>
 
                     <ul>
-                        <li><div class="container-nav-selected"><a href="">받은편지함</a><span>21</span></div></li>
+                        <li><div><a href="">받은편지함</a><span>21</span></div></li>
                         <li><div><a href="">보낸편지함</a><span>21</span></div></li>
                         <li><div><a href="">중요편지함</a><span>21</span></div></li>
                         <li><div><a href="">임시보관함</a><span>21</span></div></li>
                         <li><div><a href="">휴지통</a></div></li>
-                        <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
+                        <li><div class="container-nav-selected"><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
                 </div>
                 <!-- 여기까지 -->
