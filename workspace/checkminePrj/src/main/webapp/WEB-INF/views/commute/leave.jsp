@@ -22,6 +22,46 @@
     #main{
         width: 100%;
     }
+
+    #leave{
+        border: 1px solid black;
+        width: 100%;
+        height: 20%;
+        margin-top: 5%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+    }
+
+    #leave-list{
+        width: 100%;
+        height: 80%;
+        margin-top: 5%;
+    }
+
+    #leave-list-top{
+      width: 100%;
+      height: 20%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+    }
+
+    .table{
+        text-align: center;
+    }
+
+    #page-btn{
+      text-align: center;
+    }
+
+    #btn1{
+      margin-left: 90%;
+    }
+
+    #btn2{
+      margin-right: 100%;
+    }
 </style>
 </head>
 <body>
@@ -40,11 +80,84 @@
                       <a class="nav-link" href="/checkmine/commute/commute">전체 근태기록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/leave">연차신청</a>
+                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/leave">연차내역</a>
                     </li>
                 </ul>
 
-                <div>ddddddd</div>
+                <div id="leave">
+
+                    <div id="total-leave">총 연차</div>
+
+                    <div id="use-leave">사용한 연차</div>
+
+                    <div id="remain-leave">남은 연차</div>
+
+                    <div>5</div>
+
+                    <div>0</div>
+                    
+                    <div>5</div>
+
+                </div>
+
+                <div id="leave-list">
+
+                    <div id="leave-list-top">
+
+                      <div id="btn1">
+                        <button type="button" class="btn btn-sm">&lt;</button>
+                      </div>
+
+                      <div id="date">2020-10</div>
+
+                      <div id="btn2">
+                        <button type="button" class="btn btn-sm"> &gt;</button>
+                      </div>
+
+                      <div></div>
+
+                      <div></div>
+
+                      <div id="name">테스트 사원</div>
+
+                    </div>
+
+                    <div id="leave-list-bot">
+
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">연차 사용기간</th>
+                                <th scope="col">사용연차</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>2022.10.18</td>
+                                <td>09:00</td>
+                              </tr>
+                              <tr>
+                                <td>2022.10.19</td>
+                                <td>09:00</td>
+                              </tr>
+                              <tr>
+                                <td>2022.10.20</td>
+                                <td>09:00</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <div id="page-btn">
+
+                            <a class="btn btn-sm" href="">1</a>
+                            <a class="btn btn-sm" href="">2</a>
+                            <a class="btn btn-sm" href="">3</a>
+
+                          </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
