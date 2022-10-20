@@ -29,8 +29,20 @@
         margin-top: 5%;
     }
 
+    #commute-top{
+      width: 100%;
+      height: 20%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+    }
+
     .table{
         text-align: center;
+    }
+
+    #page-btn{
+      text-align: center;
     }
 </style>
 </head>
@@ -58,7 +70,21 @@
 
                     <div id="commute-top">
 
+                      <div id="btn1">
+                        <button type="button" class="btn btn-sm"><</button>
+                      </div>
 
+                      <div id="date">2020-10</div>
+
+                      <div id="btn2">
+                        <button type="button" class="btn btn-sm">></button>
+                      </div>
+
+                      <div></div>
+
+                      <div></div>
+
+                      <div id="name">테스트 사원</div>
 
                     </div>
 
@@ -102,6 +128,14 @@
                               </tr>
                             </tbody>
                           </table>
+
+                          <div id="page-btn">
+
+                            <a class="btn btn-sm" href="">1</a>
+                            <a class="btn btn-sm" href="">2</a>
+                            <a class="btn btn-sm" href="">3</a>
+
+                          </div>
 
                     </div>
 
