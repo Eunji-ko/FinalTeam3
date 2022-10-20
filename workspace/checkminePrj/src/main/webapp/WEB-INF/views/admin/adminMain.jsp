@@ -53,7 +53,7 @@
 
     .area{
         width: 490px;
-        height: 490px;
+        height: 510px;
         margin: 0 8px;
         display: flex;
         flex-direction: column;
