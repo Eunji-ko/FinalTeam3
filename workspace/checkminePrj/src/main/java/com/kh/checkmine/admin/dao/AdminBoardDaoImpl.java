@@ -31,7 +31,7 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//게시글 삭제
 	@Override
-	public int delete(SqlSessionTemplate sst, int boardNo) {
+	public int delete(SqlSessionTemplate sst, String boardNo) {
 		return sst.update("boardMapper.deleteBoard", boardNo);
 	}
 
@@ -76,6 +76,24 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	@Override
 	public int increaseHit(SqlSessionTemplate sst, String no) {
 		return sst.update("boardMapper.increaseHit", no);
+	}
+
+	//글 수정
+	@Override
+	public int edit(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.update("boardMapper.edit", vo);
+	}
+
+	//파일 수정
+	@Override
+	public int edit(SqlSessionTemplate sst, BoardAttVo attVo) {
+		return sst.insert("boardMapper.updateBoardAtt", attVo);
+	}
+
+	//기존 파일 삭제
+	@Override
+	public int deleteAtt(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.delete("boardMapper.deleteAtt", vo);
 	}
 
 }

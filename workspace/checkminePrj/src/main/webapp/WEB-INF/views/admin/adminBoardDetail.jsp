@@ -114,9 +114,9 @@
         background-color: #5D736F;
         border: none;
         color: white;
-        height: 30px;
+        height: 55px;
         width: 60px;
-        margin: auto;
+        margin-top: 5px;
     }
     #write {
         display: flex;
@@ -166,7 +166,12 @@
                 		${board.title}
                 	</div>
                 </div>
-                <div id="info"><div>조회수 ${board.hit}</div><div id="writer"><b>${board.department}&nbsp${board.writer}</b></div><div>${board.enrollDate}</div></div>
+                <div id="info">
+                	<div>추천 ${board.recommendCnt}</div>
+	                <div>조회수 ${board.hit}</div>
+	                <div id="writer"><b>${board.department}&nbsp${board.writer}</b></div>
+	                <div>${board.enrollDate}</div>
+                </div>
                 <div id="content-box">
                     <div id="content">
                     	<c:if test="${fn:length(attList) != 0}">
@@ -210,7 +215,9 @@
 
                 </div>
                 <div id="buttonArea">
-                    <button type="button" class="btn" id="correct" onclick = "location.href = '#'">수정</button>
+                <c:if test="${loginAdmin.no eq board.wno}">
+                    <button type="button" class="btn" id="correct" onclick = "location.href = '${root}/admin/board/edit/${board.no}'">수정</button>
+                </c:if>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </div>
                 
@@ -226,7 +233,7 @@
 	    function deleteBoard(){
 	        const answer = confirm('해당 게시물을 삭제할까요?');
 	        if(answer == true){
-	            location.href="##";
+	            location.href="${root}/admin/board/delete/${board.no}";
 	        }
 	    }
 

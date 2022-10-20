@@ -18,7 +18,7 @@ public interface AdminBoardDao {
 	int selectBoardTotal(SqlSessionTemplate sst, String sort);
 
 	//게시글 삭제
-	int delete(SqlSessionTemplate sst, int boardNo);
+	int delete(SqlSessionTemplate sst, String boardNo);
 
 	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
@@ -38,6 +38,14 @@ public interface AdminBoardDao {
 	List<BoardAttVo> selectAtt(SqlSessionTemplate sst, String no);
 
 	int increaseHit(SqlSessionTemplate sst, String no);
+
+	
+	//수정
+	int edit(SqlSessionTemplate sst, BoardVo vo);
+
+	int edit(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+
+	int deleteAtt(SqlSessionTemplate sst, BoardVo vo);
 	
 	
 
