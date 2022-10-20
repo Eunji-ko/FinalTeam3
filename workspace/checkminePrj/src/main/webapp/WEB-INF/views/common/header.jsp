@@ -57,6 +57,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
+    
+    <c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
+	<c:remove var="alertMsg" scope="session"/>
+
+	<c:if test="${not empty alertMsg}">
+		<script>
+			alert('${alertMsg}');
+		</script>
+	</c:if>
 </head>
 <body>
     <header class="d-flex " style="width: 100%; height: 140px;">
@@ -106,7 +115,7 @@
                 <div style="width: 40px; height: 40px;">
                     <img src="/checkmine/resources/img/header/profile.png">
                 </div>
-                <span class="fs-5 fw-bold">테스트</span>
+                <span class="fs-5 fw-bold">${loginMember.name}</span>
             </div>
         </div>
     </header>
