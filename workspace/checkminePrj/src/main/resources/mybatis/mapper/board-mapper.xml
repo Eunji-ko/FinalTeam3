@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
    <select id="selectBoardList" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
   	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
-  	ON B.NO = R.NO JOIN MEMBER M ON M.NO = B.WRITER
+  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'N' 
   	<choose>
   		<when test='sort=="n"'>
@@ -46,8 +46,8 @@
   
   
   <select id="selectBoardKeyword" parameterType="HashMap" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH:MI') AS ENROLL_DATE, TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH:MI') AS MODIFY_DATE, B.DELETE_YN, B.TYPE FROM BOARD B 
-	JOIN MEMBER M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N' 
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, B.DELETE_YN, B.TYPE FROM BOARD B 
+	JOIN employee M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N' 
   	<choose>
   		<when test='option=="title"'>
   			AND TITLE LIKE '%'||#{keyword}||'%'
@@ -64,7 +64,7 @@
   </select>
   
   <select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
-	  SELECT COUNT(B.NO) FROM BOARD B JOIN MEMBER M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N'
+	  SELECT COUNT(B.NO) FROM BOARD B JOIN employee M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N'
 	  	<choose>
   		<when test='option=="title"'>
   			AND B.TITLE LIKE '%'||#{keyword}||'%'
@@ -88,5 +88,26 @@
  	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
   	VALUES(SEQ_BATT_NO.NEXTVAL, SEQ_BOARD_NO.CURRVAL, #{name}, #{filePath})
  </insert>
+ 
+ <select id="selectOne" resultType="BoardVo">
+ 	  SELECT RECOMMENDCNT, B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE,'YYYY.MM.DD HH24:MI') ENROLL_DATE, 
+    TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, B.TYPE,
+    P.name POSITION, D.NAME DEPARTMENT FROM BOARD B
+    JOIN EMPLOYEE M ON M.NO = B.WRITER
+    JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+    JOIN POSITION P ON P.NO = M.POS_NO
+    JOIN (SELECT R.NO, COUNT(R.M_NO) RECOMMENDCNT FROM BOARD_RECOMMEND R GROUP BY R.NO) R ON R.NO = B.NO
+    WHERE DELETE_YN = 'N' AND B.NO = #{NO}
+ 
+ </select>
+ 
+ <select id="selectAtt" resultType="com.kh.checkmine.board.vo.BoardAttVo">
+ 	SELECT * FROM BOARD_ATT WHERE B_NO = #{NO}
+ </select>
+ 
+ <update id="increaseHit">
+ 	UPDATE BOARD SET HIT = HIT + 1 WHERE NO = #{NO} AND DELETE_YN = 'N'
+ 
+ </update>
   
 </mapper>

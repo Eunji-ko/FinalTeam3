@@ -14,6 +14,10 @@ public class BoardVo {
 	private String deleteYn;
 	private String type;
 	
+	//부서, 직급
+	private String position;
+	private String department;
+	
 	//추천수
 	private String recommendCnt;
 

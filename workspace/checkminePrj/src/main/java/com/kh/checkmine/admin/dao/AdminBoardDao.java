@@ -30,6 +30,14 @@ public interface AdminBoardDao {
 	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
 
 	int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+
+	
+	//상세보기
+	BoardVo selectOne(SqlSessionTemplate sst, String no);
+
+	List<BoardAttVo> selectAtt(SqlSessionTemplate sst, String no);
+
+	int increaseHit(SqlSessionTemplate sst, String no);
 	
 	
 

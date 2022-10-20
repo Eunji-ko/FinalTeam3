@@ -30,6 +30,11 @@ public interface AdminBoardService {
 	//게시글 올리기
 	int insertBoard(BoardVo vo);
 
+	//상세보기
+	BoardVo selectOne(String no);
+
+	List<BoardAttVo> selectAttList(String no);
+
 
 
 }

@@ -74,7 +74,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
-        
+        height : 100%;
     }
 
     #pageArea > a{
@@ -149,7 +149,7 @@
                     <tbody style="border-top: none;">
                     <c:forEach items="${boardList}" var="b">
                     
-                        <tr onclick="location.href='${root}/board/detail/${b.no}'">
+                        <tr onclick="location.href='${root}/admin/board/detail/${b.no}'">
                             <td>${b.no}</td>
                             <td>
 	                            <c:choose>
