@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approvalMapper">
+
+	<select id="selectCountApAll" resultType="int">
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE
+			(
+			FIRST_APPROVER = #{employeeNo}
+			OR SECOND_APPROVER = #{employeeNo}
+			OR THIRD_APPROVER = #{employeeNo}
+			OR FINAL_APPROVER = #{employeeNo}
+			)
+			AND STATUS = '대기'
+	</select>
+
+</mapper>

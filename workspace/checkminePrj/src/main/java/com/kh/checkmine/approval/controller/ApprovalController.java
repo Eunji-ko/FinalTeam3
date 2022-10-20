@@ -1,10 +1,14 @@
 package com.kh.checkmine.approval.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,17 +16,20 @@ import com.kh.checkmine.approval.service.ApprovalService;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
 import com.kh.checkmine.approval.vo.ApprovalFileVo;
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
+import com.kh.checkmine.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("approval")
 public class ApprovalController {
 	
-	private final ApprovalService as;
+	private final ApprovalService service;
 	
 	@Autowired
-	public ApprovalController(ApprovalService as) {
+	public ApprovalController(ApprovalService service) {
 		super();
-		this.as = as;
+		this.service = service;
 	}
 
 	@GetMapping
@@ -30,8 +37,27 @@ public class ApprovalController {
 		return "approval/approval-outline";
 	}
 	
-	@GetMapping("list")
-	public String list() {
+	@GetMapping(value={"list/{pno}","list"})
+	public String list(@PathVariable(required = false) String pno, Model model, HttpSession session) {
+		
+		//현재 로그인한 사원 가져오기 ::: 로그인 가능 이후로는 주석 지우기
+		//MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		//String employeeNo = loginMember.getNo();
+		String employeeNo = "1";
+		
+		//페이지번호 파싱
+		int pnoInt = Integer.parseInt(pno);
+		
+		int totalCount = service.selectTotalCnt(employeeNo);
+		
+		PageVo pv = Pagination.getPageVo(totalCount, pnoInt, 5, 15);
+		
+		//디비 데이터 조회
+		//List<ApprovalDocVo> voList = as.selectList(pv);
+		
+		//model.addAttribute("voList", voList);
+		model.addAttribute("pv", pv);
+		
 		return "approval/list";
 	}
 	
