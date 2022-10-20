@@ -58,6 +58,12 @@
         border-radius: 10px;
         cursor: pointer;
     }
+    #approval-list-btn{
+    	color: white;
+		background-color: #5d736f;
+		margin-left : 20px;
+		margin-bottom : 20px;
+    }
 </style>
 </head>
 <body>
@@ -67,7 +73,8 @@
     
     <main class="shadow" id="approval-wrapper">
     
-    	<br><br>
+    	<br>
+    	<a href="${rootPath}/approval/list" class="btn" id="approval-list-btn">결재목록</a>
 	    <div class="list-group list-group-horizontal left-space" id="list-tab" role="tablist">
 	        <a class="list-group-item active top-radius-btn" id="list-draft-list" data-bs-toggle="list" href="#list-draft" role="tab" aria-controls="list-draft">기안서</a>
 	        <a class="list-group-item top-radius-btn" id="list-proposal-list" data-bs-toggle="list" href="#list-proposal" role="tab" aria-controls="list-proposal">제안서</a>

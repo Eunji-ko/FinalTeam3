@@ -30,6 +30,11 @@ public class ApprovalController {
 		return "approval/approval-outline";
 	}
 	
+	@GetMapping("list")
+	public String list() {
+		return "approval/list";
+	}
+	
 	@PostMapping("/draft")
 	public String draft(ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session) {
 		
