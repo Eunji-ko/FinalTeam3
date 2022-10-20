@@ -3,6 +3,13 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<% //테스트용 멤버 나중에 없앨것임
+	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
+	vo.setNo("1");
+	vo.setEmail("chanrb0966@gmail.com");
+	session.setAttribute("loginMember", vo);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,7 +126,7 @@
                 <span style="font-size: 30px;">메일</span>
                 <div>
                     <img src="${imgPath}/mail_search.png">
-                    <input type="text" placeholder="메일검색">
+                    <input type="text" placeholder="메일검색" onkeyup="if(window.event.keyCode==13){mailSearch(this);}">
                 </div>
             </div>
 
@@ -137,13 +144,14 @@
                         <li><div><a onclick="getList(this,'send',1);">보낸편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'imp',1);">중요편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'save',1);">임시보관함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'ref',1);">참조편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'recycle',1);">휴지통</a></div></li>
                         <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
                 </div>
 
                 <div>
-                    <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
+                    <div id="list-name" style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
 
                     <div id="mid-nav" class="d-flex" style="width: 1258px;">
                         <!-- 전체 체크박스 -->
@@ -270,6 +278,19 @@
 
         //메일 리스트 조회
         function getList(element, type, page){
+            const sub = document.getElementById('list-name');
+            if(type == 'receve'){
+                sub.innerText = '받은편지함';
+            }else if(type == 'send'){
+                sub.innerText = '보낸편지함';
+            }else if(type == 'imp'){
+                sub.innerText = '중요편지함';
+            }else if(type == 'save'){
+                sub.innerText = '임시보관함';
+            }else if(type == 'recycle'){
+                sub.innerText = '휴지통';
+            }
+
             //클릭시 화면 효과
             const menuList = document.querySelectorAll('#container-nav>ul div');
             for(let i=0;i<menuList.length;i++){
@@ -294,8 +315,8 @@
                     'type' : type,
                     'page' : page
                 },
-                success : function(data){
-                    console.log(data);
+                success : function(mailList){
+                    console.log(mailList);
 
                     //받아온 데이터로 처리하기
                     const mailListWrap = document.querySelector('#mail-list');
@@ -305,13 +326,58 @@
                             '<a href="메일_상세보기" class="mail-list-item"> '+
                                 '<input type="checkbox" value="1">'+
                                 '<span style="width: 207px;">chan0966@gmail.com</span>'+
-                                '<span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span'+
+                                '<span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>'+
                                 '<span style="width: 150px;">2022-10-12 12:12</span>'+
                             '</a>'+
                             '<span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>'+
                         '</div>'
                     }
                     
+                }
+            });
+        }
+
+        //메일 검색
+        function mailSearch(serchElement){
+            
+            //검색시 화면 효과
+            const menuList = document.querySelectorAll('#container-nav>ul div');
+            for(let i=0;i<menuList.length;i++){
+                if(menuList[i].classList.contains('container-nav-selected')){
+                    menuList[i].classList.toggle('container-nav-selected');
+                }
+            }
+
+            //리스트 삭제
+            const mailList = document.querySelectorAll('#mail-list .mail-item');
+            
+            for(let i=0;i<mailList.length;i++){
+                mailList[i].remove();
+            }
+            
+            const keyword = serchElement.value;
+            const sub = document.getElementById('list-name');
+            sub.innerText = '"' + keyword + '" (으)로 검색한 결과';
+            //검색 요청
+            $.ajax({
+                url : '/checkmine/mail/serch',
+                type : 'post',
+                data : {'keyword' : keyword},
+                success : function(mailList){
+                    const mailListWrap = document.querySelector('#mail-list');
+                    
+                    for(let i=0;i<5;i++){
+                        mailListWrap.innerHTML = mailListWrap.innerHTML + 
+                        '<div id="1" class="mail-item notRead notImp d-flex align-items-center">'+
+                            '<a href="메일_상세보기" class="mail-list-item"> '+
+                                '<input type="checkbox" value="1">'+
+                                '<span style="width: 207px;">chan0966@gmail.com</span>'+
+                                '<span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>'+
+                                '<span style="width: 150px;">2022-10-12 12:12</span>'+
+                            '</a>'+
+                            '<span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>'+
+                        '</div>'
+                    }
                 }
             });
         }

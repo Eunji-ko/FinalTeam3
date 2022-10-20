@@ -57,4 +57,11 @@ public class MailController {
 		
 		return arr.toString();
 	}
+	
+	@PostMapping("serch")
+	@ResponseBody
+	public String getSerchList(String keyword) {
+		System.out.println(keyword);
+		return "";
+	}
 }
