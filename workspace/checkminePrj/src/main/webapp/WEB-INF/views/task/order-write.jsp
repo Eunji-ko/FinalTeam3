@@ -58,8 +58,8 @@
         width:95%;
         height: 90%;
         display: grid;
-        grid-template-columns: 100px 2fr 200px;
-        grid-template-rows: 40px 40px 40px 40px 550px 40px 40px ;
+        grid-template-columns: 100px 2fr 100px 2fr 100px 2fr;
+        grid-template-rows: 40px 40px 40px 40px 40px 550px 40px 40px ;
 		border: 1px solid #5D736F;
         border-radius: 10px;
 	}
@@ -69,17 +69,22 @@
         text-align: center;
 	}
 
-    div.title{grid-column-start: 2; grid-column-end: 4;}
-    .importance{grid-row-start: 2; grid-row-end: 3;
-        grid-column-start: 3; grid-column-end: 4;}
-    #radio-area{grid-column-start: 3; grid-column-end: 4;}
-    .file {grid-column-start: 2; grid-column-end: 4;}
-    #subject{grid-column-start: 1; grid-column-end: 4;}
+    div.title{grid-column-start: 2; grid-column-end: 7;}
+    .importance{grid-row-start: 4; grid-row-end: 5;
+        grid-column-start: 1; grid-column-end: 2;}
+    #radio-area{grid-row-start: 4; grid-row-end: 5;
+        grid-column-start: 2; grid-column-end: 3;}
+    .destination{grid-column-start: 2; grid-column-end: 7;}
+    .reference{grid-column-start: 2; grid-column-end: 7;}
+    .attachments{grid-row-start: 8; grid-row-end: 10;}
+    .file {grid-column-start: 2; grid-column-end: 7;}
+    #subject{grid-column-start: 1; grid-column-end: 7;}
     #text-area{
         grid-column-start: 1;
-        grid-column-end: 4;
-        border-radius: 0 0 10px 10px;
+        grid-column-end: 7;
     }
+    .start-date{grid-column-start: 3; grid-column-end: 4;}
+    .end-date{grid-column-start: 5; grid-column-end: 6;}
 
 
     .title input {
@@ -171,6 +176,17 @@
         text-align:center;
     }
 
+    /*날짜*/
+    .date-control{
+        width: 100%;
+        height: 100%;
+        border: none;
+        text-align: center;
+        padding-right: 50px;
+    }
+
+    .date-control:hover{cursor: pointer;}
+
     /*파일 첨부 css*/
     input[type=file]::file-selector-button {
         width: 100px;
@@ -186,12 +202,11 @@
     }
 
     input[type=file]{cursor: pointer;}
-    input[type=file]:hover{background: #5D736F;}
-
+    input[type=file]::file-selector-button:hover{background: #5D736F;}
 
     .attachments{
-        grid-row-start: 6;
-        grid-row-end: 8;
+        grid-row-start: 7;
+        grid-row-end: 9;
         line-height: 40px;
         line-height: 80px;
         border-radius: 0 0 0 10px;
@@ -200,7 +215,7 @@
 
     #show-files{
         grid-column-start: 2;
-        grid-column-end: 4;
+        grid-column-end: 7;
         border-radius: 0 0 10px 0;
         border-bottom: none !important;
     }
@@ -320,6 +335,8 @@
                                 <input type="radio" name="importance" id="emergency" value="E"/><label for="emergency"><span>긴급</span></label>
                             </div>
                         </div>
+                        <div class="division start-date">시작일</div><div><input type="date" class="date-control" id="order_start_date" name="order_start_date"></div>
+                        <div class="division end-date">마감일</div><div><input type="date" class="date-control" id="order_end_date" name="order_end_date"></div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division"><textarea name="content" id="text" cols="30" rows="10"></textarea></div>
                         <div class="division attachments">첨부 파일</div><div class="file"><input type="file" id="upload-file" multiple></div>

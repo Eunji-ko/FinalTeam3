@@ -5,51 +5,37 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("task")
-public class TaskController {
+@RequestMapping("task/report")
+public class TaskReportController {
 	
 	//보고서 목록
-	@GetMapping("report/list")
+	@GetMapping("list")
 	public String reportList() {
 		return "task/report-list";
 	}
 	
 	//보고서 작성
-	@GetMapping("report/write")
+	@GetMapping("write")
 	public String reportWrite() {
 		return "task/report-write";
 	}
 	
 	//보고서 보기
-	@GetMapping("report/detail")
+	@GetMapping("detail")
 	public String reportDetail() {
 		return "task/report-detail";
 	}
 	
 	//보고서 수정
-	@GetMapping("report/edit")
+	@GetMapping("edit")
 	public String reportEdit() {
 		return "task/report-edit";
 	}
 	
 	//보고서 삭제
-	
-	//지시서 목록
-	@GetMapping("order/list")
-	public String orderList() {
-		return "task/order-list";
+	@GetMapping("delete")
+	public String reportDelete() {
+		return "redirect:/task/order/list";
 	}
-	
-	//지시서 작성
-	@GetMapping("order/write")
-	public String orderWrite() {
-		return "task/order-write";
-	}
-	
-	//지시서 보기
-	@GetMapping("order/detail")
-	public String orderDetail() {
-		return "task/order-detail";
-	}
-	
+
 }
