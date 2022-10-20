@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +24,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.checkmine.admin.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
+import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
@@ -34,10 +37,12 @@ import com.kh.checkmine.common.Pagination;
 public class AdminBoardController {
 	
 	private final AdminBoardService service;
+	private final ReplyService rs;
 	
 	@Autowired
-	public AdminBoardController(AdminBoardService service) {
-		this.service = service;	
+	public AdminBoardController(AdminBoardService service, ReplyService rs) {
+		this.service = service;
+		this.rs = rs;	
 	}
 	
 	//게시물 조회
@@ -153,7 +158,19 @@ public class AdminBoardController {
 	}
 	
 	//상세보기
-	
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no, Model model) {
+		BoardVo vo = service.selectOne(no);
+		List<BoardAttVo> attList = service.selectAttList(no);
+		List<ReplyVo> replyList = rs.selectReplyList(no);
+		
+		model.addAttribute("board", vo);
+		model.addAttribute("attList", attList);
+		model.addAttribute("replyList", replyList);
+		
+		
+		return "admin/adminBoardDetail";
+	}
 	
 	
 	//댓글

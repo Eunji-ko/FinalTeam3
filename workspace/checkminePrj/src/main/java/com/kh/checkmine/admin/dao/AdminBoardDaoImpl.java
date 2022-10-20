@@ -61,4 +61,21 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 		return sst.insert("boardMapper.insertBoardAtt", attVo);
 	}
 
+	//상세보기
+	@Override
+	public BoardVo selectOne(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("boardMapper.selectOne", no);
+	}
+
+	@Override
+	public List<BoardAttVo> selectAtt(SqlSessionTemplate sst, String no) {
+		return sst.selectList("boardMapper.selectAtt", no);
+	}
+
+	//조회수 증가
+	@Override
+	public int increaseHit(SqlSessionTemplate sst, String no) {
+		return sst.update("boardMapper.increaseHit", no);
+	}
+
 }

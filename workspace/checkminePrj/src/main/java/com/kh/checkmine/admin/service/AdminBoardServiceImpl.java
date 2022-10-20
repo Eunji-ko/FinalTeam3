@@ -88,6 +88,23 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return result;
 	}
 
+	//상세보기 + 조회수 증가
+	@Override
+	public BoardVo selectOne(String no) {
+		int result = dao.increaseHit(sst, no);
+		
+		if(result == 1) {
+			return dao.selectOne(sst, no);			
+		}
+		return null;
+	}
+
+	@Override
+	public List<BoardAttVo> selectAttList(String no) {
+		List<BoardAttVo> attList = dao.selectAtt(sst, no);
+		return attList;
+	}
+
 	
 
 	

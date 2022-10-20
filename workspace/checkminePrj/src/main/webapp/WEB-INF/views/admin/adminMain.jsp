@@ -149,12 +149,12 @@
                 <div class="summaryItem" style="grid-column: 2;">
                     <img src="${root}/resources/img/admin/user-icon.png">
                     <div>사원정보 변동</div>
-                    <div id="memberChange">${summary.MEMBERCHANGE}건</div>
+                    <div id="memberChange">${summary.EMPLOYEECHANGE}건</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/user-icon-b.png">
                     <div>총 사원수</div>
-                    <div id="memberTotal">${summary.MEMBERTOTAL}명</div>
+                    <div id="memberTotal">${summary.EMPLOYEETOTAL}명</div>
                 </div>
                 <div class="summaryItem">
                     <img src="${root}/resources/img/admin/board-icon.png">
@@ -190,7 +190,7 @@
                 <div id="boardArea">
                     <div class="header">게시판 현황</div><a href="${root}/admin/board/list" id="more">더보기</a>
                     <c:forEach items="${boardList}" var="b" end="8">
-                    	<div class="list"><a href="${root}/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
+                    	<div class="list"><a href="${root}/admin/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
                     
                     </c:forEach>
                   

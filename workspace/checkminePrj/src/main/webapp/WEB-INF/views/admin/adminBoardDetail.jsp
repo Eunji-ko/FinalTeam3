@@ -160,18 +160,45 @@
             </div>
             
             <div id="infoWrap">
-                <div id="title"><div>공지사항 기타 내용</div></div>
-                <div id="info"><div>추천수 5</div><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
+                <div id="title">
+                	<div>
+                	<c:if test="${board.type eq 'N'}">[공지]&nbsp</c:if>
+                		${board.title}
+                	</div>
+                </div>
+                <div id="info"><div>조회수 ${board.hit}</div><div id="writer"><b>${board.department}&nbsp${board.writer}</b></div><div>${board.enrollDate}</div></div>
                 <div id="content-box">
                     <div id="content">
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    	<c:if test="${fn:length(attList) != 0}">
+                    		<c:forEach items="${attList}" var="a">
+                    			<c:choose>
+                    				<c:when test="${fn:endsWith(a.name, '.png')}">
+                    					<img src="${root}/resources/upload/board/${a.name}">
+                    				</c:when>
+                    				<c:when test="${fn:endsWith(a.name, '.jpg')}">
+                    					<img src="${root}/resources/upload/board/${a.name}">
+                    				</c:when>
+                    				<c:when test="${fn:endsWith(a.name, '.gif')}">
+                    					<img src="${root}/resources/upload/board/${a.name}">
+                    				</c:when>
+	                    			<c:otherwise>
+	                    				<a download href="${root}/resources/upload/board/${a.name}">${a.name}</a>
+	                    			</c:otherwise>
+                    		</c:choose>
+                    		</c:forEach>
+                    	</c:if>
+                        ${board.content}
                     </div>
                     <div id="replyArea">
                         <div id="replyTitle">댓글</div>
-                        <div id="reply-bot">
-                            <div id="replyWriter"><div>테스트 사원</div><div>2022.10.13</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div>
-                            <div>댓글 내용 어쩌구 </div>
-                        </div>
+                        <c:if test="${fn:length(replyList) != 0}">
+                    		<c:forEach items="${replyList}" var="r">
+	                        <div id="reply-bot">
+	                            <div id="replyWriter"><div>${r.replier}&nbsp${r.position}</div><div>${r.replyDate}</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div>
+	                            <div>${r.content}</div>
+	                        </div>
+                        	</c:forEach>
+                        </c:if>
                         <div id="write">
                             <textarea name="content" id="text" placeholder="댓글을 남겨보세요."></textarea><button type="button" id="add">등록</button>
                         </div>
