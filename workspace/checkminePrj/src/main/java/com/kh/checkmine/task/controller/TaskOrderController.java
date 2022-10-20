@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.checkmine.task.service.TaskOrderService;
+import com.kh.checkmine.task.vo.TaskOrderAttVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
 @Controller
@@ -34,21 +35,33 @@ public class TaskOrderController {
 	}
 	
 	@PostMapping("write")
-	public String orderWrite(TaskOrderVo vo, Model model, HttpSession session) {
-		String no = "1";
+	public String orderWrite(TaskOrderVo orderVo, TaskOrderAttVo orderAttVo , Model model, HttpSession session) {
+		
+		//지시서
+		String orderer = "1";
 		String deptNo = "2";
 		
-		vo.setOrderer(no);
-		vo.setDeptNo(deptNo);
+		orderVo.setOrderer(orderer);
+		orderVo.setDeptNo(deptNo);
 		
-		int result = orderService.write(vo);
+		System.out.println("컨트롤러 ::: " + orderVo);
 		
-		if(result == 1) {
+		int orderRsult = orderService.write(orderVo);
+		
+		//수신,참조 등록
+		orderAttVo.setTaskNo(orderVo.getNo());
+		String[] empNo = orderAttVo.getEmpNo();
+		int attResult = 0;
+		
+		for(int i = 0; i<empNo.length; ++i) {
+		}
+		
+		if(orderRsult == 1 && attResult == 1) {
 			session.setAttribute("alertMsg", "지시서가 작성되었습니다.");
 			return "redirect:/task/order/list";
 		}else {
-			model.addAttribute("msg", "지시서가 제대로 작성되지 못했습니다.");
-			return "error/errorPage";
+			session.setAttribute("alertMsg", "지시서가 작성되지 못했습니다.");
+			return "redirect:/task/order/list";
 		}
 	}
 	
