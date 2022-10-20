@@ -17,11 +17,15 @@ public class MemberServiceImpl implements MemberService {
 	public MemberServiceImpl(SqlSessionTemplate sst, MemberDao dao) {
 		this.sst = sst;
 		this.dao = dao;
+		
 	}
 
 	@Override
 	public MemberVo login(MemberVo vo) {
-		return null;
+		
+		MemberVo dbMember = dao.selectOneById(sst, vo);
+		
+		return dbMember;
 	}
 
 }

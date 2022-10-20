@@ -2,4 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
  
+ 	<select id="selectOneById" resultType="com.kh.checkmine.member.vo.MemberVo">
+	  	SELECT
+		    NO
+		    , POS_NO
+		    , DEPT_NO
+		    , ID
+		    , PWD
+		    , NAME
+		    , EMAIL
+		    , PHONE
+		    , ADDRESS
+		    , ADDRESS_DETAIL
+		    , MODIFY_DATE
+		    , ENROLL_DATE
+		    , RESIGN_DATE
+		    , RESIGN_YN
+		    , PHOTO_NAME
+		    , PHOTO_PATH
+		    , PERMISSION
+		FROM EMPLOYEE
+		WHERE ID = #{id}
+		AND RESIGN_YN = 'N'
+  </select>
+ 
 </mapper>

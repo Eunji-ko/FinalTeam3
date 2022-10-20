@@ -37,9 +37,16 @@ public class MemberController {
 	public String login(MemberVo vo, HttpSession session, Model model) {
 		
 		MemberVo loginMember = ms.login(vo);
-		//TODO ServiceImpl 만들기 부터 쭉 채워나가야 함
 		
-		return "member/main";
+		if(loginMember != null) {
+			//로그인 성공
+			session.setAttribute("loginMember", loginMember);
+			return "member/main";
+		}else {
+			//로그인 실패
+			model.addAttribute("msg", "로그인 실패!");
+			return "error/errorPage";
+		}
 	}
 
 }

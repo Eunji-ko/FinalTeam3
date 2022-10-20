@@ -122,7 +122,7 @@
 	        </div>
 	        <div id="login-form">
 	            <div id="mainText">CHECKMINE</div>
-	            <form action="" method="post">
+	            <form action="member/login" method="post">
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="id" placeholder="아이디" required></div>
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
 	                <input type="submit" value="로그인">
