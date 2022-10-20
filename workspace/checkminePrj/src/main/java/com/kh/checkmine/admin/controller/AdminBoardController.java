@@ -1,7 +1,9 @@
 package com.kh.checkmine.admin.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +42,11 @@ public class AdminBoardController {
 	
 	//게시물 조회
 	@GetMapping("list")
-	public String list(@RequestParam("p") int pno, @RequestParam("sort") String sort, Model model) {
+	public String list(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(value = "sort", defaultValue = "a") String sort, Model model) {
 		
 		int totalCount = service.selectTotalCnt(sort);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
 		
 		List<BoardVo> boardList = service.selectBoardList(pv, sort);
 		model.addAttribute("boardList", boardList);
@@ -80,7 +82,7 @@ public class AdminBoardController {
 		map.put("keyword", keyword);
 		int totalCount = service.selectKeywordCnt(map);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
 		
 		List<BoardVo> boardList = service.selectBoardKeyword(pv, map);
 		model.addAttribute("boardList", boardList);
@@ -99,36 +101,56 @@ public class AdminBoardController {
 	
 	//공지사항 작성
 	@PostMapping("write")
-	public String write(BoardVo vo,  MultipartFile[] file, HttpServletRequest req, HttpSession session) {
-		AdminVo loginAdmin = (AdminVo)session.getAttribute("loginAdmin");
+	public String write(BoardVo vo, BoardAttVo attVo, HttpServletRequest req, HttpSession session) {
+		String loginAdminNo = ((AdminVo)session.getAttribute("loginAdmin")).getNo();
 		
+		vo.setWriter(loginAdminNo);
+		vo.setType("N"); //공지사항
+		
+		int result = 0;
 		
 		//파일 업로드 후 attVo에 담기
-//		if(!) {
-//			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
-//			String changeName = FileUploader.fileUpload(attVo.getAttach(), savePath);
-//			attVo.setName(changeName);
-//			
-			System.out.println(file.length);
+		MultipartFile[] fArr =  attVo.getAttach();
+		List<BoardAttVo> attVoList = new LinkedList<BoardAttVo>();
 		
-		
-		
-		
-		
-		
-		
-		
+		if(!fArr[0].isEmpty()) { //전달받은 파일있음
+			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
 			
-			return "";
-			
-			
-			
-			
-		
-	
-		
+			for(int i = 0; i < fArr.length; i++) {
+				BoardAttVo att = new BoardAttVo();
+				MultipartFile f = fArr[i];
+				
+				String changeName = FileUploader.fileUpload(f, savePath);
+				att.setName(changeName);
+				att.setFilePath(savePath);
+				attVoList.add(att);
+
 	}
-	
+
+			result = service.insertBoard(vo, attVoList);
+
+		}else {
+			
+			result = service.insertBoard(vo);
+		}
+		
+		if(result >= 1) {
+			session.setAttribute("msg", "정상적으로 등록되었습니다.");
+			return "redirect:/admin/board/list";
+			
+		}else {
+			
+			if(!attVoList.isEmpty()) {
+				for(int i = 0; i < attVoList.size(); i++) {
+					String savepath = attVoList.get(i).getFilePath()+ attVoList.get(i).getName();
+					new File(savepath).delete();
+				}
+			}
+			session.setAttribute("msg", "죄송합니다. 문제가 발생하였습니다.");
+			return "redirect:/admin/board/list";
+			
+		}
+	}
 	
 	//상세보기
 	

@@ -103,7 +103,7 @@
                        
                     </div>
                     <div id="footer">
-                        <input type="file" name="file" multiple>
+                        <input type="file" name="attach" multiple>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
                     </div>
 

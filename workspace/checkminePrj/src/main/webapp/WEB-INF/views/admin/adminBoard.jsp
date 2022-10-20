@@ -28,8 +28,8 @@
     }
 
     #listArea{
-        height: 452px;
-        margin: 80px auto;
+        height: 616px;
+        margin: 20px auto;
         border: 1px solid lightgray;
     }
     #pageArea {

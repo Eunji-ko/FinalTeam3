@@ -78,6 +78,15 @@
   	</choose>
 
   </select>
- 
+  
+  <insert id="insertBoard">
+  	INSERT INTO BOARD(NO, WRITER, TITLE, CONTENT, TYPE) 
+  	VALUES(SEQ_BOARD_NO.NEXTVAL, #{writer}, #{title}, #{content}, #{type})
+  </insert>
+  
+ <insert id="insertBoardAtt">
+ 	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
+  	VALUES(SEQ_BATT_NO.NEXTVAL, SEQ_BOARD_NO.CURRVAL, #{name}, #{filePath})
+ </insert>
   
 </mapper>

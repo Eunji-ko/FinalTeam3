@@ -53,7 +53,7 @@
 
     .area{
         width: 490px;
-        height: 490px;
+        height: 510px;
         margin: 0 8px;
         display: flex;
         flex-direction: column;
@@ -188,7 +188,7 @@
             </div>
             <div class="area">
                 <div id="boardArea">
-                    <div class="header">게시판 현황</div><a href="${root}/admin/board/list/1" id="more">더보기</a>
+                    <div class="header">게시판 현황</div><a href="${root}/admin/board/list" id="more">더보기</a>
                     <c:forEach items="${boardList}" var="b" end="8">
                     	<div class="list"><a href="${root}/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
                     
