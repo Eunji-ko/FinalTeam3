@@ -29,7 +29,7 @@ public interface AdminBoardDao {
 	//공지사항 올리기
 	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
 
-	int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
+	int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo boardAttVo);
 	
 	
 

@@ -46,7 +46,7 @@ public class AdminBoardController {
 		
 		int totalCount = service.selectTotalCnt(sort);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
 		
 		List<BoardVo> boardList = service.selectBoardList(pv, sort);
 		model.addAttribute("boardList", boardList);
@@ -82,7 +82,7 @@ public class AdminBoardController {
 		map.put("keyword", keyword);
 		int totalCount = service.selectKeywordCnt(map);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
 		
 		List<BoardVo> boardList = service.selectBoardKeyword(pv, map);
 		model.addAttribute("boardList", boardList);
@@ -111,22 +111,23 @@ public class AdminBoardController {
 		
 		//파일 업로드 후 attVo에 담기
 		MultipartFile[] fArr =  attVo.getAttach();
-		List<BoardAttVo> attVoList = new LinkedList<>();
+		List<BoardAttVo> attVoList = new LinkedList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
 			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
 			
 			for(int i = 0; i < fArr.length; i++) {
+				BoardAttVo att = new BoardAttVo();
 				MultipartFile f = fArr[i];
+				
+				String changeName = FileUploader.fileUpload(f, savePath);
+				att.setName(changeName);
+				att.setFilePath(savePath);
+				attVoList.add(att);
 
-				String changeName = FileUploader.fileUpload(fArr[i], savePath);
-				attVo.setName(changeName);
-				attVo.setFilePath(savePath);
-				attVoList.add(attVo);
 	}
 
 			result = service.insertBoard(vo, attVoList);
-			
 
 		}else {
 			

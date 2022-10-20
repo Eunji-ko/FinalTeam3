@@ -72,10 +72,13 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		int result1 = dao.insertBoard(sst, vo);
 
 		//첨부파일
-		int result2 = dao.insertBoardAtt(sst, attVoList);
-		System.out.println(result1);
-		System.out.println(result2);
-		return result1*result2;
+		int result2 = 1;
+		for(int i = 0; i < attVoList.size(); i++) {
+			
+			result2 *= dao.insertBoardAtt(sst, attVoList.get(i));
+		}
+	
+		return result1 * result2;
 	}
 
 	//게시글 올리기

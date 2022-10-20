@@ -57,8 +57,8 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	}
 
 	@Override
-	public int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
-		return sst.insert("boardMapper.insertBoardAtt", attVoList);
+	public int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo attVo) {
+		return sst.insert("boardMapper.insertBoardAtt", attVo);
 	}
 
 }
