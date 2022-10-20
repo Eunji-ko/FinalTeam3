@@ -1,5 +1,7 @@
 package com.kh.checkmine.member.vo;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.Data;
 
 @Data
@@ -22,5 +24,9 @@ public class MemberVo {
 	public String photoName;
 	public String photoPath;
 	public String permission;
+	
+	public void encodePwd(PasswordEncoder pwdEnc) {
+		this.pwd = pwdEnc.encode(this.pwd);
+	}
 	
 }

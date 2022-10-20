@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+<c:set var="alertMsg" value="${sessionScope.alertMsg}"/>
+	<c:remove var="alertMsg" scope="session"/>
+
+	<c:if test="${not empty alertMsg}">
+		<script>
+			alert('${alertMsg}');
+		</script>
+	</c:if>
 <html>
 <head>
 	 <title>CHECKMINE 로그인</title>
@@ -10,6 +18,7 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <style>
         @font-face {
             font-family: 'SDSamliphopangche_Basic';
@@ -122,18 +131,19 @@
 	        </div>
 	        <div id="login-form">
 	            <div id="mainText">CHECKMINE</div>
-	            <form action="member/login" method="post">
+	            <form action="${root}/member/login" method="post">
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="id" placeholder="아이디" required></div>
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
 	                <input type="submit" value="로그인">
 	            </form>
-	            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="" id="findIdPwd">아이디/비밀번호 찾기</a></div>
+	            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="#findIdPwd" id="findIdPwd" data-toggle="modal">아이디/비밀번호 찾기</a></div>
 	           
 	
 	        </div>
 	    </div>
     </div>
     
+    <%@ include file="/WEB-INF/views/member/find-modal.jsp" %>
 
     
 </body>

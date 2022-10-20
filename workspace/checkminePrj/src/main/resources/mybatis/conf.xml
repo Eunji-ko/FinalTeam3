@@ -8,6 +8,19 @@
 <typeAliases>
 	<typeAlias type="com.kh.checkmine.admin.vo.AdminVo" alias="AdminVo"/>
 	<typeAlias type="com.kh.checkmine.board.vo.BoardVo" alias="BoardVo"/>
+	<typeAlias type="com.kh.checkmine.board.vo.BoardAttVo" alias="BoardAttVo"/>
+	<typeAlias type="com.kh.checkmine.board.vo.BoardReplyVo" alias="BoardReplyVo"/>
+	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalVo" alias="ApprovalVo"/>
+	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalDocVo" alias="ApprovalDocVo"/>
+	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalDraftVo" alias="ApprovalDraftVo"/>
+	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalFileVo" alias="ApprovalFileVo"/>
+	<typeAlias type="com.kh.checkmine.member.vo.MemberVo" alias="MemberVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderAttVo" alias="TaskOrderAttVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderFileVo" alias="TaskOrderFileVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderVo" alias="TaskOrderVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskReportVo" alias="TaskReportVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskReportAttVo" alias="TaskReportAttVo"/>
+	<typeAlias type="com.kh.checkmine.task.vo.TaskReportFileVo" alias="TaskReportFileVo"/>
 </typeAliases>
 
 
