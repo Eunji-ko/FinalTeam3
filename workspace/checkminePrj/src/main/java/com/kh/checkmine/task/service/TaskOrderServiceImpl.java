@@ -23,16 +23,17 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	//지시서 작성
 	@Override
 	public int write(TaskOrderVo vo) {
-		
-
-		System.out.println("서비스 ::: " + vo);
-		
 		return orderDao.insertReport(sst, vo);
 	}
 
 	//수신참조 등록
 	@Override
-	public int addAtt(TaskOrderAttVo orderAttVo) {
+	public int addAttNoA(TaskOrderAttVo orderAttVo) {
+		return orderDao.insertReportAtt(sst, orderAttVo);
+	}
+
+	@Override
+	public int addAttNoR(TaskOrderAttVo orderAttVo) {
 		return orderDao.insertReportAtt(sst, orderAttVo);
 	}
 

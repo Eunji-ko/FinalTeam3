@@ -12,12 +12,13 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 	//지시서 작성
 	@Override
 	public int insertReport(SqlSessionTemplate sst, TaskOrderVo vo) {
-		return sst.insert("taskReportMapper.insertReport", vo);
+		return sst.insert("taskOrderMapper.insertReport", vo);
 	}
 
+	//수신, 참조 등록
 	@Override
 	public int insertReportAtt(SqlSessionTemplate sst, TaskOrderAttVo orderAttVo) {
-		return sst.insert("taskReportMapper.insertReportAtt", orderAttVo);
+		return sst.insert("taskOrderMapper.insertReportAtt", orderAttVo);
 	}
 
 }
