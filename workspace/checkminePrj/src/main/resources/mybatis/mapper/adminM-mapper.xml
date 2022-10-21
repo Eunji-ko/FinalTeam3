@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminmMapper">
+  
+  <select id="selectTotalCnt">
+  	SELECT COUNT(NO) FROM EMPLOYEE
+  	<choose>
+  		<when test='sort=="n"'>
+  			WHERE RESIGN_YN = 'N'
+  		</when>
+  		<when test='sort=="y"'>
+  			WHERE RESIGN_YN = 'Y'
+  		</when>
+  	</choose>
+  </select>
+  
+  <select id="selectMemberList" resultType="MemberVo">
+  SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD'), RESIGN_YN
+        FROM EMPLOYEE M 
+        LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
+        LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+  	<choose>
+  		<when test='sort=="n"'>
+  			WHERE RESIGN_YN = 'N'
+  		</when>
+  		<when test='sort=="y"'>
+  			WHERE RESIGN_YN = 'Y'
+  		</when>
+  	</choose>
+  </select>
+  
+</mapper>

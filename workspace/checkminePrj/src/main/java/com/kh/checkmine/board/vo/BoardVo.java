@@ -20,5 +20,8 @@ public class BoardVo {
 	
 	//추천수
 	private String recommendCnt;
+	
+	//사원번호
+	private String wno;
 
 }

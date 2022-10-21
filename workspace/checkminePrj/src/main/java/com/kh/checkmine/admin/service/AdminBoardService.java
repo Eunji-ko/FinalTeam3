@@ -16,7 +16,7 @@ public interface AdminBoardService {
 	int selectTotalCnt(String sort);
 
 	//게시글 삭제
-	int delete(int boardNo);
+	int delete(String string);
 
 	//게시글 검색
 	List<BoardVo> selectBoardKeyword(PageVo pv, Map<String, String> map);
@@ -34,6 +34,14 @@ public interface AdminBoardService {
 	BoardVo selectOne(String no);
 
 	List<BoardAttVo> selectAttList(String no);
+
+	
+	//게시물 수정
+	int edit(BoardVo vo, List<BoardAttVo> attVoList);
+
+	int edit(BoardVo vo);
+
+
 
 
 

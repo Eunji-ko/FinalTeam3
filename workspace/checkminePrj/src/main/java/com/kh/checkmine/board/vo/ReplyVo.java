@@ -14,4 +14,7 @@ public class ReplyVo {
 
 	//직급
 	private String position;
+	
+	//작성자의 번호
+	private String mno;
 }

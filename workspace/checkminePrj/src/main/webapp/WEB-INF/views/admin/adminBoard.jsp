@@ -28,7 +28,7 @@
     }
 
     #listArea{
-        height: 616px;
+        height: 622px;
         margin: 20px auto;
         border: 1px solid lightgray;
     }
@@ -74,7 +74,6 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
-        height : 100%;
     }
 
     #pageArea > a{

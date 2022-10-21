@@ -26,7 +26,6 @@ public class AdminServiceImpl implements AdminService{
 		this.pwdEncoder = pwdEncoder;
 	}
 
-
 	//로그인
 	@Override
 	public AdminVo login(AdminVo vo) {

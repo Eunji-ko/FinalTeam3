@@ -95,15 +95,15 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post">
-                <div id="title"><div><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div></div>
+                <form action="" method="post" enctype="multipart/form-data">
+                <div id="title"><div><input type="text" class="form-control" value=${board.title} name="title" required></div></div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;"name="content" style="width:650px; height:350px;" required></textarea>
+                        <textarea style="width: 100%; height: 100%;" name="content" style="width:650px; height:350px;" required>${board.content}</textarea>
                        
                     </div>
                     <div id="footer">
-                        <input type="file" name="file" multiple>
+                        <input type="file" name="attach" multiple>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">수정하기</button></div>
                     </div>
 
@@ -123,9 +123,6 @@
 
        
     </script>
-    
-
-
 
 
 </body>
