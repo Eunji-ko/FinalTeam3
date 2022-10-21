@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminmMapper">
   
-  <select id="selectTotalCnt">
+  <select id="selectTotalCnt" resultType="int">
   	SELECT COUNT(NO) FROM EMPLOYEE
   	<choose>
   		<when test='sort=="n"'>
@@ -15,8 +15,8 @@
   </select>
   
   <select id="selectMemberList" resultType="MemberVo">
-  SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD'), RESIGN_YN
-        FROM EMPLOYEE M 
+		SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
+  		RESIGN_YN FROM EMPLOYEE M 
         LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
         LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
   	<choose>
@@ -27,6 +27,69 @@
   			WHERE RESIGN_YN = 'Y'
   		</when>
   	</choose>
+  			ORDER BY M.NO ASC
+  </select>
+  
+  <select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
+  		SELECT COUNT(M.NO) FROM EMPLOYEE M
+        LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+	  	<choose>
+  		<when test='option=="name"'>
+  			WHERE M.NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="dept"'>
+  			WHERE D.NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="id"'>
+  			WHERE M.ID LIKE '%'||#{keyword}||'%'
+  		</when>
+  	</choose>
+  			
+  </select>
+  
+  <select id="selectMemberKeyword" parameterType="HashMap" resultType="MemberVo">
+  	SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
+  		RESIGN_YN FROM EMPLOYEE M 
+        LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
+        LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+ 	 <choose>
+  		<when test='option=="name"'>
+  			WHERE M.NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="dept"'>
+  			WHERE D.NAME LIKE '%'||#{keyword}||'%'
+  		</when>
+  		<when test='option=="id"'>
+  			WHERE M.ID LIKE '%'||#{keyword}||'%'
+  		</when>
+  	</choose> 
+  			ORDER BY M.NO ASC
+  </select>
+  
+  <select id="selectDeptList" resultType="com.kh.checkmine.member.vo.DeptVo">
+  	SELECT NO, NAME FROM DEPARTMENT
+  </select>
+  
+  <select id="selectPosList" resultType="com.kh.checkmine.member.vo.PosVo">
+  	SELECT NO, NAME FROM POSITION
+  </select>
+  
+  <select id="checkDup" resultType="String">
+  	SELECT COUNT(ID) FROM EMPLOYEE WHERE ID=#{id} 
+  </select>
+  
+  <insert id="insertMember" parameterType="MemberVo">
+  	INSERT INTO EMPLOYEE(NO, POS_NO, DEPT_NO, ID, PWD, NAME, EMAIL, PHONE, ADDRESS,
+         ADDRESS_DETAIL, ENROLL_DATE, PHOTO_NAME, PHOTO_PATH, PERMISSION)
+        VALUES(SEQ_EMP_NO.nextval, #{posNo}, #{deptNo}, #{id}, #{pwd}, #{name}, #{email},
+        #{phone}, #{address}, #{addressDetail}, #{enrollDate}, #{photoName}, #{photoPath},
+        #{permission})
+  </insert>
+  
+  <select id="selectMember" resultType="MemberVo">
+  
+  
+  
   </select>
   
 </mapper>

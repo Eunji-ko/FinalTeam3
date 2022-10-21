@@ -1,6 +1,7 @@
 package com.kh.checkmine.member.vo;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 

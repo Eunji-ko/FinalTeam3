@@ -1,19 +1,30 @@
 package com.kh.checkmine.admin.controller;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.admin.service.AdminMemberService;
-import com.kh.checkmine.admin.service.AdminService;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
+import com.kh.checkmine.member.vo.DeptVo;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.member.vo.PosVo;
 
 @Controller
 @RequestMapping("admin/member")
@@ -42,11 +53,94 @@ public class AdminMemberController {
 		
 		return "admin/adminMember";
 	}
+	
+	//사원 검색
+	@GetMapping("search")
+	public String search(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
+		Map<String, String> map = new HashMap<>(2);
+		map.put("option", option);
+		map.put("keyword", keyword);
+		int totalCount = service.selectKeywordCnt(map);
+		
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		
+		List<MemberVo> memberList = service.selectMemberKeyword(pv, map);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
+		return "admin/adminMemberSearch";
+	}
+	
+	
+	
 		
 	//사원 관리 > 사원 등록 
-	@GetMapping("member/add")
-	public String memberAdd() {
+	@GetMapping("add")
+	public String memberAdd(Model model) {
+		//부서 목록
+		List<DeptVo> dept = service.selectDeptList();
+		
+		//직위 목록
+		List<PosVo> pos = service.selectPosList();
+		
+		model.addAttribute("dept", dept);
+		model.addAttribute("pos", pos);
+		
 		return "admin/adminMemberAdd";
 	}
+	
+	@PostMapping("add")
+	public String memberAdd(MemberVo vo, HttpServletRequest req, HttpSession session) {
+		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setPhotoName(changeName);
+			vo.setPhotoPath(savePath);
+		}
+		//권한 ',' 제거, 대문자로 변환
+		String permission = vo.getPermission().replace(",", "").toUpperCase();
+		vo.setPermission(permission);
+		int result = service.insertMember(vo);
+		
+		if(result == 1) {
+			session.setAttribute("msg", "정상적으로 등록되었습니다.");
+			return "redirect:/admin/member/list";
+			
+		}else {
+			
+			if(!vo.getProfile().isEmpty()) {
+				String savepath = vo.getPhotoPath()+ vo.getPhotoName();
+				new File(savepath).delete();
+				}
+			}
+			session.setAttribute("msg", "죄송합니다. 문제가 발생하였습니다.");
+			return "redirect:/admin/member/list";
+
+	}
+	
+	//아이디 중복
+	@PostMapping("dup")
+	@ResponseBody
+	public String dup(String id) {
+		String result = service.checkDup(id);
+
+		return result;
+
+	}
+	
+	//사원 정보
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no) {
+		MemberVo vo = service.selectMember(no);
+		
+		
+		return "admin/adminMemberDetail";
+	}
+	
+	
+	//사원 수정
+	
 
 }

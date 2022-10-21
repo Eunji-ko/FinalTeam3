@@ -52,6 +52,7 @@
 
     #filter{
         width: 110px;
+        display: inline-block;
     }
     #option{
         width: 183px;
@@ -96,12 +97,16 @@
                 <button type="button" class="btn" onclick="location.href='${root}/admin/member/add'">사원등록</button>
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter" onchange="location.href=this.value">
-                	<option value="${root}/admin/member/list?sort=a&p=1">-----</option>
-                    <option value="${root}/admin/member/list?sort=a&p=1">모두</option>
-                    <option value="${root}/admin/member/list?sort=n&p=1">재직</option>
-                    <option value="${root}/admin/member/list?sort=y&p=1">퇴직</option>
-                </select>
+				<div>
+	                <select class="form-select" id="filter" onchange="location.href=this.value">
+	                	<option value="${root}/admin/member/list?sort=a&p=1">-----</option>
+	                    <option value="${root}/admin/member/list?sort=a&p=1">모두</option>
+	                    <option value="${root}/admin/member/list?sort=n&p=1">재직</option>
+	                    <option value="${root}/admin/member/list?sort=y&p=1">퇴직</option>
+	                </select>
+	                <div style="display: inline-block; margin:10px">'${keyword}'의 검색결과입니다.</div>
+
+				</div>
                 <form action="${root}/admin/member/search" method="get">
                     <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="name">이름</option>

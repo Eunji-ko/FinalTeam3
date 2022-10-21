@@ -95,7 +95,7 @@
         width: 219px;
         height: 36px;
     }
-    #checkDup{
+    #checkDupBtn{
         background-color: #C4F2EA;
         border: 1px solid lightgrey;
         margin-left: 5px;
@@ -112,7 +112,7 @@
         <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
         
         <main class="shadow">
-            <form action="" method="post" enctype="multipart/form-data" onsubmit="return check();">
+            <form action="${root}/admin/member/add" method="post" enctype="multipart/form-data" onsubmit="return check();">
             <div id="area">
                 <div>
                     <button onclick="history.back()">←</button>
@@ -135,33 +135,34 @@
                         
                         <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name" required></div>
                         <div class="inputField" style="grid-column: 2;"><label>부서</label>
-                          <select name="position">
-                            <option>사원</option>
-                            <option>주임</option>
-                            <option>대리</option>
-                            <option>과장</option>
+                          <select name="posNo">
+                          <c:forEach items="${pos}" var="p">
+                            <option value="${p.no}">${p.name}</option>
+                          </c:forEach>
                           </select>
                         </div>
                         <div class="inputField" style="grid-column: 2;"><label>직위</label>
-                            <select name="department">
-                            <option>인사부</option>
-                            <option>총무부</option>
-                      
+                            <select name="deptNo">
+                            <c:forEach items="${dept}" var="d">
+                            	<option value="${d.no}">${d.name}</option>
+                            </c:forEach>
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 30px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId()" required><button id="checkDup" type="button" onclick="checkDup()">확인</button></div>
+                        <div class="inputField" style="grid-column: 2; margin-right: 30px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();" required>
+                            <button id="checkDupBtn" type="button" onclick="checkDup();">확인</button>
+                        </div>
                         <input type="hidden" value="X" id="dup">
                         <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address"></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 90px;"><label>상세주소</label><input type="text" name="addressDetail" ></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" id="" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" required></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
-                            <br><input type="checkbox" name="N" id=""><label style="font-weight: normal;">공지 등록</label>
-                            <br><input type="checkbox" name="R" id=""><label style="font-weight: normal;">장비/장소 예약 승인</label>
-                            <br><input type="checkbox" name="H" id=""><label style="font-weight: normal;">인사 관리</label>
+                            <br><input type="checkbox" name="permission" value="n"><label style="font-weight: normal;">공지 등록</label>
+                            <br><input type="checkbox" name="permission" value="r"><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            <br><input type="checkbox" name="permission" value="h"><label style="font-weight: normal;">인사 관리</label>
                         </div>
-                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" id="" required></div>
-                        <div class="inputField" style="margin-top:50px;"><label>비밀번호</label><input type="password" name="pwd" id="" required></div>
+                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" required></div>
+                        <div class="inputField" style="margin-top:50px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off" required></div>
                     </div>
                     
                 </div>
@@ -188,8 +189,9 @@
             }
        }
 
-        //이메일을 아이디 + @checkmine.com으로 자동 설정
+        //이메일을 아이디 + @checkmine.com으로 자동 설정, 중복 확인 전까지 X로
         function inputId(){
+            document.querySelector('#dup').value = 'X';
             const id = document.querySelector('#memberId').value;
             document.querySelector('#email').value = id + '@checkmine.com';
         }
@@ -201,9 +203,33 @@
                 return false;
             }
         }
+    </script>
+    <script>
+        //아이디 중복확인 ajax
+        function checkDup(){
+            const dup = document.querySelector('#dup');
+            const id = document.querySelector('#memberId').value;
+
+            $.ajax({
+                url : "${root}/admin/member/dup",
+                type : "POST",
+                data : {id : id},
+                success : function(result){
+                    if(result == 0){
+                        alert("사용 가능한 아이디입니다.");
+                        dup.value = 'O';
+                    }else{
+                        alert("사용 불가한 아이디입니다.");
+                        dup.value = 'X';
+                    }
+                },
+                error : function(){
+                    alert("처리 중 문제가 발생하였습니다.");
+                }
+            });
 
 
-
+        }
 
 
 
