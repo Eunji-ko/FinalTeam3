@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.approval.dao.ApprovalDao;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
+import com.kh.checkmine.approval.vo.ApprovalDraftVo;
+import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.member.vo.MemberVo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -33,6 +36,30 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public List<ApprovalDocVo> selectList(String employeeNo, PageVo pv) {
 		return dao.selectApListAll(sst, employeeNo, pv);
+	}
+
+	//문서번호로 결재문서 조회하기
+	@Override
+	public ApprovalDocVo selectDocByNo(String dno) {
+		return dao.selectDoc(sst, dno);
+	}
+
+	//문서번호로 결재정보 조회해오기
+	@Override
+	public ApprovalVo selectApByDocNo(String dno) {
+		return dao.selectAp(sst, dno);
+	}
+
+	//문서번호로 기안서 조회하기
+	@Override
+	public ApprovalDraftVo selectDraftByNo(String dno) {
+		return dao.selectDraft(sst, dno);
+	}
+
+	//사원번호로 작성자검색
+	@Override
+	public MemberVo selectEmpByNo(String writerNo) {
+		return dao.selectWriter(sst, writerNo);
 	}
 
 

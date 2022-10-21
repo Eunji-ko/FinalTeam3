@@ -114,6 +114,7 @@
 
 
 <script>
+	//반려 알람탭 나오는 함수
 	function approval(){
         if(confirm("결재하시겠습니까?")){
             //예
@@ -130,6 +131,69 @@
         }
     }
 </script>
+
+<c:if test="${docVo ne null}">
+	<script>
+		//결재목록에서 들어왔을 때 해당 결재목록 보여주기
+		const type = '${docVo.type}';
+	    if(type == 'D'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-draft-list').addClass('active');
+	        $('#list-draft').addClass('active');
+	        $('#list-draft').addClass('show');
+	    }else if(type == 'P'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-proposal-list').addClass('active');
+	        $('#list-proposal').addClass('active');
+	        $('#list-proposal').addClass('show');
+	    }else if(type == 'M'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-minutes-list').addClass('active');
+	        $('#list-minutes').addClass('active');
+	        $('#list-minutes').addClass('show');
+	    }else if(type == 'B'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-buy-order-list').addClass('active');
+	        $('#list-buy-order').addClass('active');
+	        $('#list-buy-order').addClass('show');
+	    }else if(type == 'E'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-expenditure-list').addClass('active');
+	        $('#list-expenditure').addClass('active');
+	        $('#list-expenditure').addClass('show');
+	    }else if(type == 'S'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-state-list').addClass('active');
+	        $('#list-state').addClass('active');
+	        $('#list-state').addClass('show');
+	    }else if(type == 'L'){
+	        $('#list-draft-list').removeClass('active');
+	        $('#list-draft').removeClass('active');
+	        $('#list-draft').removeClass('show');
+	        $('#list-leave-list').addClass('active');
+	        $('#list-leave').addClass('active');
+	        $('#list-leave').addClass('show');
+	    }
+	
+	    //작성이 아닌 결재만 할때 모든 input/textarea 비활성화
+	    $('input').prop('readonly', true);
+	    $('input').prop('disabled', true);
+	    $('textarea').prop('readonly',true);
+	    $('select').prop('disabled', true);
+	</script>
+</c:if>
 
 
 

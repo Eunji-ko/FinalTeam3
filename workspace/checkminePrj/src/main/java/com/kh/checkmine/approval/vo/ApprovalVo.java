@@ -11,7 +11,10 @@ public class ApprovalVo {
 	private String secondApprover;
 	private String thirdApprover;
 	private String finalApprover;
-	private String date;
+	private String firstDate;
+	private String secondDate;
+	private String thirdDate;
+	private String finalDate;
 	private String status;
 	private String returnReason;
 
