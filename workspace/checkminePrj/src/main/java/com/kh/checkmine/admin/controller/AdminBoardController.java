@@ -135,7 +135,7 @@ public class AdminBoardController {
 			result = service.insertBoard(vo, attVoList);
 
 		}else {
-			
+			//첨부파일 없이 글만 작성
 			result = service.insertBoard(vo);
 		}
 		
@@ -144,7 +144,7 @@ public class AdminBoardController {
 			return "redirect:/admin/board/list";
 			
 		}else {
-			
+			//문제 발생하면 이전에 올렸던 파일 제거
 			if(!attVoList.isEmpty()) {
 				for(int i = 0; i < attVoList.size(); i++) {
 					String savepath = attVoList.get(i).getFilePath()+ attVoList.get(i).getName();

@@ -1,6 +1,7 @@
 package com.kh.checkmine.member.vo;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class MemberVo {
 	public String photoName;
 	public String photoPath;
 	public String permission;
+	private MultipartFile profile;
 	
 	public void encodePwd(PasswordEncoder pwdEnc) {
 		this.pwd = pwdEnc.encode(this.pwd);
