@@ -97,9 +97,10 @@
             </div>
 			<div id="area2">
                 <select class="form-select" id="filter">
-                    <option>모두</option>
-                    <option>재직</option>
-                    <option>퇴직</option>
+                	<option value="${root}/admin/member/list?sort=a&p=1">-----</option>
+                    <option value="${root}/admin/member/list?sort=a&p=1">모두</option>
+                    <option value="${root}/admin/member/list?sort=n&p=1">재직</option>
+                    <option value="${root}/admin/member/list?sort=y&p=1">퇴직</option>
                 </select>
                 <form action="">
                     <select class="form-select" id="option" required style="display: inline-block;">
@@ -131,17 +132,27 @@
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
+                    <c:forEach items="${memberList}" var="m">
                         <tr onclick="location.href='#'">
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td>총무부</td>
-                            <td>대리</td>
-                            <td>CHECKMINE1</td>
-                            <td>2022.10.13</td>
-                            <td>재직</td>
+                            <td>${m.no}</td>
+                            <td>${m.name}</td>
+                            <td>${m.department}</td>
+                            <td>${m.position}</td>
+                            <td>${m.id}</td>
+                            <td>${m.enrollDate}</td>
+                            <td>
+								<c:if test="${m.resignYn eq 'Y'}"></c:if>
+								<c:choose>
+									
+								
+								
+								</c:choose>
+								
+								
+							</td>
                         
                         </tr>
-
+                        </c:forEach>
                     </tbody>
                     
                 </table>

@@ -9,7 +9,6 @@
 	<typeAlias type="com.kh.checkmine.admin.vo.AdminVo" alias="AdminVo"/>
 	<typeAlias type="com.kh.checkmine.board.vo.BoardVo" alias="BoardVo"/>
 	<typeAlias type="com.kh.checkmine.board.vo.BoardAttVo" alias="BoardAttVo"/>
-	<typeAlias type="com.kh.checkmine.board.vo.BoardReplyVo" alias="BoardReplyVo"/>
 	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalVo" alias="ApprovalVo"/>
 	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalDocVo" alias="ApprovalDocVo"/>
 	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalDraftVo" alias="ApprovalDraftVo"/>
