@@ -8,4 +8,8 @@ public interface MemberDao {
 
 	MemberVo selectOneById(SqlSessionTemplate sst, MemberVo vo);
 
+	int updatePwd(SqlSessionTemplate sst, MemberVo vo);
+
+	int updateInfo(SqlSessionTemplate sst, MemberVo vo);
+
 }

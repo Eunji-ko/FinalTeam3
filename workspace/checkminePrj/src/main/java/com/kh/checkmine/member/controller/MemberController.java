@@ -39,6 +39,7 @@ public class MemberController {
 		
 		if(loginMember != null) {
 			//로그인 성공
+			session.setAttribute("loginPwd", vo.getPwd());
 			session.setAttribute("loginMember", loginMember);
 			return "member/main";
 		}else {
@@ -57,6 +58,39 @@ public class MemberController {
 	@GetMapping("mypage")
 	public String myPage() {
 		return "member/mypage";
+	}
+	
+	@PostMapping("changePwd")
+	public String changePwd(MemberVo vo, String newPwd, HttpSession session) {
+		
+		vo.setPwd(newPwd);
+		
+		int result = ms.changePwd(vo);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "비밀번호를 성공적으로 변경하였습니다 !");
+			return "redirect:/member/mypage";
+		}else {
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다 !");
+			return "redirect:/member/mypage";
+		}
+		
+	}
+	
+	@PostMapping("changeInfo")
+	public String changeInfo(MemberVo vo, HttpSession session) {
+		
+		int result = ms.changeInfo(vo);
+		
+		if(result == 1) {
+//			MemberVo loginMember = ms.login(vo);
+			session.setAttribute("alertMsg", "개인정보를 성공적으로 변경하였습니다 !");
+			return "redirect:/member/mypage";
+		}else {
+			session.setAttribute("alertMsg", "개인정보 변경에 실패하였습니다 !");
+			return "redirect:/member/mypage";
+		}
+		
 	}
 
 }

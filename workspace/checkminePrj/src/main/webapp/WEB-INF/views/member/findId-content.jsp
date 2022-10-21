@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h3>본인인증 기능 어찌 할지 좀더 고민해보기</h3>
 </body>
 </html>
