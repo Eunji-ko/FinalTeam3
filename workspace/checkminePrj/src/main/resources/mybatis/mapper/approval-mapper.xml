@@ -14,5 +14,28 @@
 			)
 			AND STATUS = '대기'
 	</select>
+	
+	<select id="selectApListAll" resultType="ApprovalDocVo">
+		SELECT 
+		    D.NO
+		    ,E.NAME WRITER_NO
+		    ,D.TITLE
+		    ,D."DATE"
+		    ,T."NAME" TYPE
+		FROM AP_DOC D
+		JOIN APPROVAL A
+		ON D.NO = A.DOC_NO
+		JOIN EMPLOYEE E
+		ON D.WRITER_NO = E.NO
+		JOIN AP_TYPE T
+		ON D."TYPE" = T."TYPE"
+		WHERE
+		    (A.FIRST_APPROVER = 2
+		    OR A.SECOND_APPROVER = 2
+		    OR A.THIRD_APPROVER = 2
+		    OR A.FINAL_APPROVER = 2)
+		    AND A.STATUS = '대기'
+		ORDER BY D."DATE" DESC
+	</select>
 
 </mapper>

@@ -10,5 +10,6 @@ public class ApprovalDocVo {
 	private String title;
 	private String date;
 	private String type;
+	
 
-}
+}//class

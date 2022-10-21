@@ -40,12 +40,19 @@ public class ApprovalController {
 	@GetMapping(value={"list/{pno}","list"})
 	public String list(@PathVariable(required = false) String pno, Model model, HttpSession session) {
 		
-		//현재 로그인한 사원 가져오기 ::: 로그인 가능 이후로는 주석 지우기
-		//MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		//String employeeNo = loginMember.getNo();
-		String employeeNo = "1";
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String employeeNo = loginMember.getNo();
+		////////////////////////임시
+		if(employeeNo == null) {
+			employeeNo = "2";
+		}
+		///////////////////////////
 		
 		//페이지번호 파싱
+		if(pno == null) {
+			pno = "1";
+		}
 		int pnoInt = Integer.parseInt(pno);
 		
 		int totalCount = service.selectTotalCnt(employeeNo);
@@ -53,9 +60,9 @@ public class ApprovalController {
 		PageVo pv = Pagination.getPageVo(totalCount, pnoInt, 5, 15);
 		
 		//디비 데이터 조회
-		//List<ApprovalDocVo> voList = as.selectList(pv);
+		List<ApprovalDocVo> voList = service.selectList(employeeNo, pv);
 		
-		//model.addAttribute("voList", voList);
+		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
 		
 		return "approval/list";
