@@ -13,7 +13,7 @@
 	</c:if>
 <html>
 <head>
-	 <title>CHECKMINE 로그인</title>
+	 <title>CHECKMINE 아이디/비밀번호 찾기</title>
 	    
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -126,18 +126,9 @@
 <body>
    <div id="pageWrap">
 	    <div id="background">
-	        <div id="logo">
-	            <img src="${root}/resources/img/admin/checkLogo.png" alt="로고" width="250px">
-	        </div>
-	        <div id="login-form">
-	            <div id="mainText">CHECKMINE</div>
-	            <form action="${root}/member/login" method="post">
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="id" placeholder="아이디" required></div>
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
-	                <input type="submit" value="로그인">
-	            </form>
-	            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="${root}/member/findIdPwd" id="findIdPwd">아이디/비밀번호 찾기</a></div>
-	           
+	        <div>
+	        
+	        	<%@ include file="/WEB-INF/views/member/find-content.jsp" %>
 	
 	        </div>
 	    </div>
