@@ -56,10 +56,12 @@
                     <div class="list-title">제목</div>
                     <div class="list-title">작성자</div>
     
-                    <div class="list-content">1</div>
-                    <div class="list-content">기안서</div>
-                    <div class="list-content"><a href="">기안서제목</a></div>
-                    <div class="list-content">김사원</div>
+    				<c:forEach items="${voList}" var="vo">
+	    				<div class="list-content">${vo.no}</div>
+	                    <div class="list-content">${vo.type}</div>
+	                    <div class="list-content"><a href="">${vo.title}</a></div>
+	                    <div class="list-content">${vo.writerNo}</div>
+    				</c:forEach>
                 </div>
 
                 <div id="page-area">
