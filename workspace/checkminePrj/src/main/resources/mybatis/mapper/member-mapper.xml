@@ -4,26 +4,43 @@
  
  	<select id="selectOneById" resultType="MemberVo">
 	  	SELECT
-		    NO
-		    , POS_NO
-		    , DEPT_NO
-		    , ID
-		    , PWD
-		    , NAME
-		    , EMAIL
-		    , PHONE
-		    , ADDRESS
-		    , ADDRESS_DETAIL
-		    , MODIFY_DATE
-		    , ENROLL_DATE
-		    , RESIGN_DATE
-		    , RESIGN_YN
-		    , PHOTO_NAME
-		    , PHOTO_PATH
-		    , PERMISSION
-		FROM EMPLOYEE
-		WHERE ID = #{id}
-		AND RESIGN_YN = 'N'
+	          E.NO
+	        , P.NAME POS_NO
+	        , D.NAME DEPT_NO
+	        , E.ID
+	        , E.PWD
+	        , E.NAME
+	        , E.EMAIL
+	        , E.PHONE
+	        , E.ADDRESS
+	        , E.ADDRESS_DETAIL
+	        , E.MODIFY_DATE
+	        , E.ENROLL_DATE
+	        , E.RESIGN_DATE
+	        , E.RESIGN_YN
+	        , E.PHOTO_NAME
+	        , E.PHOTO_PATH
+	        , E.PERMISSION
+		FROM EMPLOYEE E, POSITION P, DEPARTMENT D
+		WHERE E.POS_NO = P.NO
+		AND E.DEPT_NO = D.NO
+		AND E.ID = #{id}
+		AND E.RESIGN_YN = 'N'
   </select>
+  
+  <update id="updatePwd">
+  	UPDATE EMPLOYEE
+  		SET PWD = #{pwd}
+ 		WHERE NO = #{no} 
+  </update>
+  
+  <update id="updateInfo">
+  	UPDATE EMPLOYEE
+  		SET EMAIL = #{email}
+  			, PHONE = #{phone}
+  			, ADDRESS = #{address}
+  			, ADDRESS_DETAIL = #{addressDetail}
+ 		WHERE NO = #{no} 
+  </update>
  
 </mapper>

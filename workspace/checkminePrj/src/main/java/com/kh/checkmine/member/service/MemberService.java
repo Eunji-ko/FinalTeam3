@@ -6,4 +6,8 @@ public interface MemberService {
 
 	MemberVo login(MemberVo vo);
 
+	int changePwd(MemberVo vo);
+
+	int changeInfo(MemberVo vo);
+
 }

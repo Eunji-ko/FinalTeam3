@@ -8,31 +8,31 @@
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 </head>
 <body>
-  <div class="modal fade" id="changeInfo" tabindex="-1" aria-labelledby="changeInfoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="changeInfoLabel">비밀번호 변경</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="email" class="form-control" name="email" value="test@checkmine.com">
-          <br>
-          <input type="tel" class="form-control" name="phone" value="010-1234-1234">
-          <br>
-          <button type="button" class="btn checkmine-btn btn-icon-split" onclick="openHomeSearch()" style="margin-bottom: 10px;">우편번호검색</button>
-          <br>
-          <input type="text" class="form-control" name="postno" placeholder="우편번호" style="margin-bottom: 10px;" readonly>
-          <hr>
-          <input type="text" class="form-control" name="addr" placeholder="주소" style="margin-bottom: 10px;" readonly>
-          <input type="text" class="form-control" name="detAddr" placeholder="상세주소" style="margin-bottom: 10px;">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn checkmine-btn">신청하기</button>
+  <form action="${rootPath}/member/changeInfo" method="post" onsubmit="return check();">
+    <div class="modal fade" id="changeInfo" tabindex="-1" aria-labelledby="changeInfoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="changeInfoLabel">개인정보 변경</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="no" value="${loginMember.no}">
+            <input type="email" class="form-control" name="email" value="${loginMember.email}">
+            <br>
+            <input type="tel" class="form-control" name="phone" value="${loginMember.phone}">
+            <br>
+            <button type="button" class="btn checkmine-btn btn-icon-split" onclick="openHomeSearch()" style="margin-bottom: 20px;">우편번호 검색</button>
+            <input type="text" class="form-control" name="address" placeholder="주소" style="margin-bottom: 10px;" readonly>
+            <input type="text" class="form-control" name="addressDetail" placeholder="상세주소" style="margin-bottom: 10px;">
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn checkmine-btn" value="변경하기">
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <script>
   //다음 우편번호 검색
@@ -40,12 +40,28 @@
 		new daum.Postcode({
 			oncomplete:function(data){
   // 				alert("data" + JSON.stringify(data));
-				$('[name=postno]').val(data.zonecode);
-				$('[name=addr]').val(data.address);
-				$('[name=detAddr]').val(data.buildingName);
+				// $('[name=postno]').val(data.zonecode);
+				$('[name=address]').val(data.address);
+				$('[name=addressDetail]').val(data.buildingName);
 			}
 		}).open();
 	}
+  </script>
+
+  <script>
+    const phone = document.querySelector('input[name=phone]');
+
+    function check() {
+
+      if(phone.value.length != 13 || phone.value.substr(0,4) != '010-' || phone.value.substr(8,1) != '-'){
+            alert("휴대폰 번호는 010-XXXX-XXXX의 형태로 입력해주세요!");
+            return false;
+        }
+  
+        return true;
+
+    }
+
   </script>
 </body>
 </html>

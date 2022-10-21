@@ -35,4 +35,16 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public int changePwd(MemberVo vo) {
+		vo.encodePwd(pwdEnc);
+		
+		return dao.updatePwd(sst, vo);
+	}
+
+	@Override
+	public int changeInfo(MemberVo vo) {
+		return dao.updateInfo(sst, vo);
+	}
+
 }//class

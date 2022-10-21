@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,13 +132,13 @@
                             <img src="${imgPath}/none-profile.jpg">
                         </div>
                         <div id="mp-profile-tag">
-                            테스트
+                            ${loginMember.name}
                         </div>
                         <div id="mp-profile-dept">
-                            영업부 대리
+                            ${loginMember.deptNo} ${loginMember.posNo}
                         </div>
                         <div id="mp-profile-email">
-                            test@checkmine.com
+                            ${loginMember.email}
                         </div>
                     </div>
                 </div>
@@ -169,22 +170,32 @@
             <div id="psn-right-out">
                 <div id="psn-right-in">
                     <div id="margin-btm">
-                        checkmine
+                        ${loginMember.id}
                     </div>
                     <div id="margin-btm">
                         <button class="btn checkmine-btn" data-bs-toggle="modal" data-bs-target="#changePwd">비밀번호 변경</button>
                     </div>
                     <div id="margin-btm">
-                        010-1234-1234
+                        ${loginMember.phone}
                     </div>
                     <div style="margin-bottom: 15px;">
-                        서울 강남구 테헤란로
+                    	<c:if test="${not empty loginMember.address}">
+                        	${loginMember.address}
+                    	</c:if>
+                    	<c:if test="${empty loginMember.address}">
+                        	-
+                    	</c:if>
                     </div>
                     <div style="margin-bottom: 45px;">
-                        0길 남도빌딩 2층 D강의장
+                        <c:if test="${not empty loginMember.addressDetail}">
+                        	${loginMember.addressDetail}
+                    	</c:if>
+                    	<c:if test="${empty loginMember.addressDetail}">
+                        	-
+                    	</c:if>
                     </div>
                     <div style="margin-bottom: 100px;">
-                        2022.09.29 (0년 0개월차)
+                        ${fn:substring(loginMember.enrollDate,0,10)} (0년 0개월차)
                     </div>
                     <div>
                     	<button class="btn checkmine-btn" data-bs-toggle="modal" data-bs-target="#changeInfo">개인정보 수정</button>

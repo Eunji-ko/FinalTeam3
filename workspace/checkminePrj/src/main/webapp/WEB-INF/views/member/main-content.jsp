@@ -225,7 +225,7 @@
                 <img src="${imgPath}/none-profile.jpg">
             </div>
             <div id="profile-tag">
-                테스트 사원
+                ${loginMember.name} ${loginMember.posNo}
             </div>
             <div id="myp-log">
                 <a href="${rootPath}/member/mypage">마이페이지</a>
