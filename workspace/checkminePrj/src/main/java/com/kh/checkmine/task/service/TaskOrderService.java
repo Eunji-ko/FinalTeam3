@@ -9,6 +9,7 @@ public interface TaskOrderService {
 	int write(TaskOrderVo vo);
 
 	//수신,참조 등록
-	int addAtt(TaskOrderAttVo orderAttVo);
+	int addAttNoA(TaskOrderAttVo orderAttVo);
+	int addAttNoR(TaskOrderAttVo orderAttVo);
 
 }

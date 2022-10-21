@@ -1,5 +1,10 @@
 package com.kh.checkmine.task.controller;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -44,19 +49,34 @@ public class TaskOrderController {
 		orderVo.setOrderer(orderer);
 		orderVo.setDeptNo(deptNo);
 		
-		System.out.println("컨트롤러 ::: " + orderVo);
-		
 		int orderRsult = orderService.write(orderVo);
 		
 		//수신,참조 등록
-		orderAttVo.setTaskNo(orderVo.getNo());
-		String[] empNo = orderAttVo.getEmpNo();
-		int attResult = 0;
+		//orderAttVo.setTaskNo((String)orderVo.getNo());
+		orderAttVo.setTaskNo("1");
+		Map<String, String> attNoA = orderAttVo.getAttNoA();
+		String[] attNoR = orderAttVo.getAttNoR();
+
+		System.out.println(attNoA.values());
 		
-		for(int i = 0; i<empNo.length; ++i) {
-		}
+//		int attNoAResult = 0;
+//		for(int i = 0; i<attNoA.size(); ++i) {
+////			orderAttVo.setEmpNo(attNoA.values());
+//			orderAttVo.setType("A");
+//			attNoAResult = orderService.addAttNoA(orderAttVo); 
+//		}
+//		
+//		if(attNoR != null) {
+//			int attNoRResult = 0;
+//			for(int i = 0; i<attNoR.length; ++i) {
+//				System.out.println(attNoR);
+////				orderAttVo.setEmpNo(attNoR[i]);
+////				orderAttVo.setType("R");
+////				attNoRResult = orderService.addAttNoR(orderAttVo); 
+//			}
+//		}
 		
-		if(orderRsult == 1 && attResult == 1) {
+		if(orderRsult == 1) {
 			session.setAttribute("alertMsg", "지시서가 작성되었습니다.");
 			return "redirect:/task/order/list";
 		}else {
