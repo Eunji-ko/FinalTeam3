@@ -33,7 +33,7 @@
       width: 100%;
       height: 20%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       text-align: center;
     }
 
@@ -45,21 +45,14 @@
       text-align: center;
     }
 
-    #btn1{
-      margin-left: 90%;
-    }
-
-    #btn2{
-      margin-right: 100%;
-    }
 </style>
 </head>
 <body>
-	<div class="d-flex">
+   <div class="d-flex">
         <%@ include file="/WEB-INF/views/common/side-nav.jsp" %>
         
         <main class="shadow">
-			
+         
             <div id="main">
 
                 <ul class="nav nav-tabs">
@@ -78,15 +71,23 @@
 
                     <div id="commute-top">
 
-                      <div id="btn1">
-                        <button type="button" class="btn btn-sm">&lt;</button>
+                      <div>
+                        <button type="button" class="btn btn-sm" onClick="prevCalendar();">&lt;</button>
                       </div>
 
-                      <div id="date"></div>
+                      <div id="calYear">YYYY</div>
+
+                      <div>-</div>
+                      
+                      <div id="calMonth">MM</div>
 
                       <div>
-                        <button type="button" id="btn2" class="btn btn-sm"> &gt;</button>
+                        <button type="button" class="btn btn-sm" onClick="nextCalendar();">&gt;</button>
                       </div>
+
+                      <div></div>
+
+                      <div></div>
 
                       <div></div>
 
@@ -150,50 +151,62 @@
         </main>
     </div>
 
+    <!-- 날짜 스크립트 -->
     <script>
 
-      $().ready(function() {
-
-        const date = new Date();
-
-        let year = date.getFullYear();
-        let month = date.getMonth();        
-
-        $('#date').append(year + ' - ' + (month + 1))
-
-        $('#btn2').on('click', function(){
-          $('#date').remove();
-
-          let dateText = $('#date')[0].innerHTML;
-          let monthDate = dateText.split(' '); 
-
-          //현재 버튼의 월 + 1
-          let month = monthDate[2];
-          let nextMonth = parseInt(month, 10) + 1;
-          if(nextMonth == 12){
-            nextYear = year + 1;
-            nextMonth = 1;
-            $('#date').append(nextYear + ' - ' + tex);
-          }
-
-          
-
-
-        })
-
-
+      document.addEventListener("DOMContentLoaded", function() {
+              buildCalendar();
       });
 
-      
+      var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
+      var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
 
+      /**
+       * @brief   이전달 버튼 클릭
+       */
+      function prevCalendar() {
+          this.today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+          buildCalendar();    // @param 전월 캘린더 출력 요청
+      }
 
+      /**
+       * @brief   다음달 버튼 클릭
+       */
+      function nextCalendar() {
+          this.today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+          buildCalendar();    // @param 명월 캘린더 출력 요청
+      }
 
+      /**
+       * @brief   캘린더 오픈
+       * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
+       */
+      function buildCalendar() {
 
+          let doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+          let lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+          let tbCalendar = document.querySelector(".scriptCalendar > tbody");
+
+          document.getElementById("calYear").innerText = today.getFullYear();                                  // @param YYYY월
+          document.getElementById("calMonth").innerText = autoLeftPad((today.getMonth() + 1), 2);   // @param MM월
+            
+      }
+
+      /**
+       * @brief   숫자 두자릿수( 00 ) 변경
+       * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
+       * @param   num     앞에 0을 붙일 숫자 값
+       * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
+       */
+      function autoLeftPad(num, digit) {
+          if(String(num).length < digit) {
+              num = new Array(digit - String(num).length + 1).join("0") + num;
+          }
+          return num;
+      }
 
     </script>
-
-
-
 
 
 
