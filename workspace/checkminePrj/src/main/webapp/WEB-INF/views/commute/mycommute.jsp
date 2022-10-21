@@ -82,10 +82,10 @@
                         <button type="button" class="btn btn-sm">&lt;</button>
                       </div>
 
-                      <div id="date">2020-10</div>
+                      <div id="date"></div>
 
-                      <div id="btn2">
-                        <button type="button" class="btn btn-sm"> &gt;</button>
+                      <div>
+                        <button type="button" id="btn2" class="btn btn-sm"> &gt;</button>
                       </div>
 
                       <div></div>
@@ -149,5 +149,54 @@
 
         </main>
     </div>
+
+    <script>
+
+      $().ready(function() {
+
+        const date = new Date();
+
+        let year = date.getFullYear();
+        let month = date.getMonth();        
+
+        $('#date').append(year + ' - ' + (month + 1))
+
+        $('#btn2').on('click', function(){
+          $('#date').remove();
+
+          let dateText = $('#date')[0].innerHTML;
+          let monthDate = dateText.split(' '); 
+
+          //현재 버튼의 월 + 1
+          let month = monthDate[2];
+          let nextMonth = parseInt(month, 10) + 1;
+          if(nextMonth == 12){
+            nextYear = year + 1;
+            nextMonth = 1;
+            $('#date').append(nextYear + ' - ' + tex);
+          }
+
+          
+
+
+        })
+
+
+      });
+
+      
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
 </body>
 </html>
