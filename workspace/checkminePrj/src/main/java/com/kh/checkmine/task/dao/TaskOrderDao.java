@@ -3,14 +3,18 @@ package com.kh.checkmine.task.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
+import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
 public interface TaskOrderDao {
 
-	//Áö½Ã¼­ ÀÛ¼º
+	//ì§€ì‹œì„œ ì‘ì„±
 	int insertReport(SqlSessionTemplate sst, TaskOrderVo vo);
 
-	//¼ö½Å,ÂüÁ¶ µî·Ï
+	//ìˆ˜ì‹ , ì°¸ì¡° ë“±ë¡
 	int insertReportAtt(SqlSessionTemplate sst, TaskOrderAttVo orderAttVo);
+
+	//íŒŒì¼ ë“±ë¡
+	int insertFile(SqlSessionTemplate sst, TaskOrderFileVo orderFileVo);
 
 }

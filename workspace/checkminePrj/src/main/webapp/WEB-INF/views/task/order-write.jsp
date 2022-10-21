@@ -230,22 +230,22 @@
     }
 
     /*스크롤바 설정*/
-    #text, #show-files{
+    #content, #show-files{
         overflow: auto;
     }
 
-    #text::-webkit-scrollbar, #show-files::-webkit-scrollbar {
+    #content::-webkit-scrollbar, #show-files::-webkit-scrollbar {
         width: 8px;  /* 스크롤바의 너비 */
     }
 
-    #text::-webkit-scrollbar-thumb, #show-files::-webkit-scrollbar-thumb {
+    #content::-webkit-scrollbar-thumb, #show-files::-webkit-scrollbar-thumb {
         height: 30%; /* 스크롤바의 길이 */
         background: #D9D9D9; /* 스크롤바의 색상 */
         
         border-radius: 10px;
     }
 
-    #text::-webkit-scrollbar-track, #show-files::-webkit-scrollbar-track {
+    #content::-webkit-scrollbar-track, #show-files::-webkit-scrollbar-track {
         background: white;  /*스크롤바 뒷 배경 색상*/
         border-radius: 0 0 10px;
     }
@@ -312,12 +312,12 @@
 			        </li>
 			    </ul>
 
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data" onsubmit="return check();">
                     <div id="table">
-                        <div class="division" id="title-diveision">제　목</div><div class="title"><input class="title" type="text" name="title"></div>
+                        <div class="division" id="title-diveision">제　목</div><div class="title"><input class="title" id="title" type="text" name="title"></div>
                         <div class="division">수　신</div>
                         <div class="destination">
-                            <input type="text" class="tag" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
+                            <input type="text" class="tag" id="att" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
                         </div>
                         <div class="division">참　조</div>
                         <div class="reference">
@@ -339,13 +339,11 @@
                         <div class="division end-date">마감일</div><div><input type="date" class="date-control" id="order_end_date" name="endDate"></div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division">
-                            <textarea name="content" id="text" cols="30" rows="10"></textarea>
+                            <textarea name="content" id="content" cols="30" rows="10"></textarea>
                         </div>
                         <div class="division attachments">첨부 파일</div>
-                        <div class="file"><input type="file" id="upload-file" multiple></div>
+                        <div class="file"><input type="file" id="upload-file" name="name" multiple></div>
                         <div id="show-files"></div>
-                        
-
                     </div>
                     <div id="submit-area">
                         <input type="submit" value="작성">
@@ -355,9 +353,49 @@
         </main>
     </div>
 
-    <!---->
+    <!--빈칸 방지-->
     <script>
-        //file 목록 출력
+        const title = document.querySelector('#title');
+        const content = document.querySelector('#content');
+        const att = document.querySelector('#att');
+        const startDate = document.querySelector('#order_start_date');
+        const endDate = document.querySelector('#order_end_date');
+
+        function check(){
+            //제목
+            if(title.value.length == 0){
+                alert("제목을 작성해주세요.");
+                return false;
+            }
+
+            //본문
+            if(content.value.length == 0){
+                alert("내용을 작성해주세요.");
+                return false;
+            }
+
+            //수신
+            if(att.value.length == 0){
+                alert("수신인을 지정해주세요.");
+                return false;
+            }
+            
+            //시작일
+            if(startDate.value.length == 0){
+                alert("시작일을 지정해주세요.");
+                return false;
+            }
+            
+            //마감일
+            if(endDate.value.length == 0){
+                alert("마감일을 지정해주세요.");
+                return false;
+            }
+        }
+    </script>
+
+    <!--파일 목록 출력-->
+    <script>
         window.onload = function(){
             target = document.getElementById('upload-file');
             target.addEventListener('change', function(){
@@ -369,8 +407,10 @@
                 target2.innerHTML = fileList;
             })
         }
+    </script>
 
-        //tagify
+    <!--tagify-->
+    <script>
         const input = document.querySelector('input[name=attNoA]');
         const input2 = document.querySelector('input[name=attNoR]');
         let tagify = new Tagify(input, {//드롭다운
@@ -400,7 +440,6 @@
         tagify.on('add', function() {
           console.log(tagify.value); // 입력된 태그 정보 객체
         })
-
     </script>
 </body>
 </html>

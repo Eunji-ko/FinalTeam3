@@ -1,15 +1,19 @@
 package com.kh.checkmine.task.service;
 
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
+import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
 public interface TaskOrderService {
 	
-	//Áö½Ã¼­ ÀÛ¼º
+	//ï¿½ï¿½ï¿½Ã¼ï¿½ ï¿½Û¼ï¿½
 	int write(TaskOrderVo vo);
 
-	//¼ö½Å,ÂüÁ¶ µî·Ï
-	int addAttNoA(TaskOrderAttVo orderAttVo);
-	int addAttNoR(TaskOrderAttVo orderAttVo);
+	//ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	int insertAttNoA(TaskOrderAttVo orderAttVo);
+	int insertAttNoR(TaskOrderAttVo orderAttVo);
+
+	int insertFile(TaskOrderFileVo orderFileVo);
+
 
 }

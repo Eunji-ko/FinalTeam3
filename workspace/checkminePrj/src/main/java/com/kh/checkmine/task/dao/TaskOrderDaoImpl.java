@@ -4,21 +4,27 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
+import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
 @Repository
 public class TaskOrderDaoImpl implements TaskOrderDao {
 
-	//Áö½Ã¼­ ÀÛ¼º
+	//ì§€ì‹œì„œ ì‘ì„±
 	@Override
 	public int insertReport(SqlSessionTemplate sst, TaskOrderVo vo) {
 		return sst.insert("taskOrderMapper.insertReport", vo);
 	}
 
-	//¼ö½Å, ÂüÁ¶ µî·Ï
+	//ìˆ˜ì‹ ,ì°¸ì¡° ë“±ë¡
 	@Override
 	public int insertReportAtt(SqlSessionTemplate sst, TaskOrderAttVo orderAttVo) {
 		return sst.insert("taskOrderMapper.insertReportAtt", orderAttVo);
+	}
+
+	@Override
+	public int insertFile(SqlSessionTemplate sst, TaskOrderFileVo orderFileVo) {
+		return sst.insert("taskOrderMapper.insertFile", orderFileVo);
 	}
 
 }

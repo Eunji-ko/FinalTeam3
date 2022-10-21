@@ -42,4 +42,21 @@
 			#{type}
 		)
  	</insert>
+ 	
+ 	<insert id="insertFile">
+ 		INSERT INTO TASK_FILE
+ 		(
+ 			NO,
+			TASK_NO,
+			NAME,
+			PATH
+ 		)
+ 		VALUES
+ 		(
+ 			SEQ_TASK_FILE_NO.NEXTVAL,
+ 			#{taskNo},
+ 			#{name},
+ 			#{path}
+ 		)
+ 	</insert>
 </mapper>

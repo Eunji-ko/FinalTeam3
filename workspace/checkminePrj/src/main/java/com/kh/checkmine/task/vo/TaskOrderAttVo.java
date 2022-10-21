@@ -11,6 +11,6 @@ public class TaskOrderAttVo {
 	private String taskNo;
 	private String type;
 
-	private Map<String, String> attNoA;
-	private String[] attNoR;
+	private String attNoA;
+	private String attNoR;
 }
