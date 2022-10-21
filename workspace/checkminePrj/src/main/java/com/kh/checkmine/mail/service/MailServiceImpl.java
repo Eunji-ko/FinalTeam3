@@ -1,12 +1,15 @@
 package com.kh.checkmine.mail.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.mail.dao.MailDao;
+import com.kh.checkmine.mail.vo.ReceveMailVo;
 
 @Service
 public class MailServiceImpl implements MailService{
@@ -35,6 +38,14 @@ public class MailServiceImpl implements MailService{
 		infoMap.put("loginMember", loginMember);
 		
 		return dao.getMailListCount(sst, infoMap);
+	}
+
+	/**
+	 * 로그인한 멤버의 메일 리스트 가져오기
+	 */
+	@Override
+	public List<ReceveMailVo> getList(HashMap<String, String> listInfo, PageVo pageVo) {
+		return dao.getMailList(sst, listInfo, pageVo);
 	}
 
 }

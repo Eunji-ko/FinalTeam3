@@ -88,12 +88,12 @@
         text-decoration: none;
         color: #000000;
     }
-    .mail-list-item.read{
+    .mail-item.read a{
         background-color: #f8f8f8;
         color: #9a9a9a;
     }
 
-    .mail-list-item:hover{
+    .mail-item.read a:hover{
         color: #000000;
         background-color: #f0f0f0;
     }
@@ -141,11 +141,11 @@
 
                     <ul>
                         <li><div class="container-nav-selected"><a onclick="getList(this,'receve',1, ${loginMember.no});">받은편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'send',1);">보낸편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'imp',1);">중요편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'save',1);">임시보관함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'ref',1);">참조편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'recycle',1);">휴지통</a></div></li>
+                        <li><div><a onclick="getList(this,'send',1 ,${loginMember.no});">보낸편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'imp',1, ${loginMember.no});">중요편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'save',1, ${loginMember.no});">임시보관함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'ref',1 ,${loginMember.no});">참조편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'recycle',1, ${loginMember.no});">휴지통</a></div></li>
                         <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
                 </div>
@@ -179,14 +179,14 @@
                     <!-- 메일 리스트 -->
                     <div id="mail-list" style="width: 1258px; margin-top: 19px;">
                         <div class="d-flex" style="padding-bottom: 10px; ">
-                            <span style="margin-left: 59px; width: 207px;">보낸이</span>
-                            <span style="width: 785px;">제목/내용</span>
-                            <span style="width: 150px;">시간</span>
+                            <span style="margin-left: 59px; width: 257px;">보낸이</span>
+                            <span style="width: 650px;">제목/내용</span>
+                            <span style="width: 235px;">시간</span>
                             <span>중요도</span> 
                         </div>
                         
                         <!-- 리스트 여기부터 받아오기 -->
-                        <div id="1" class="mail-item notRead notImp d-flex align-items-center">
+                        <div id="1" class="mail-item read notImp d-flex align-items-center">
                             <a href="메일_상세보기" class="mail-list-item">
                                 <input type="checkbox" value="1">
                                 <span style="width: 207px;">chan0966@gmail.com</span>
@@ -319,18 +319,25 @@
                     'loginMember' : receverNo
                 },
                 success : function(mailList){
-                    console.log(mailList);
+                	const list = JSON.parse(mailList);
 
                     //받아온 데이터로 처리하기
                     const mailListWrap = document.querySelector('#mail-list');
-                    for(let i=0;i<5;i++){
+                    for(let i=0;i<list.length;i++){
+                    	
+                    	let read;
+                    	let imp;
+                    	if(list[i].read == 'N'){ read = 'notRead'; }else{ read = 'read';}
+                    	if(list[i].importance == 'N'){ imp = 'notImp' }else{ imp = 'imp' }
+                    	
+                    	
                         mailListWrap.innerHTML = mailListWrap.innerHTML + 
-                        '<div id="1" class="mail-item notRead notImp d-flex align-items-center">'+
-                            '<a href="메일_상세보기" class="mail-list-item"> '+
-                                '<input type="checkbox" value="1">'+
-                                '<span style="width: 207px;">chan0966@gmail.com</span>'+
-                                '<span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>'+
-                                '<span style="width: 150px;">2022-10-12 12:12</span>'+
+                        '<div id="' +list[i].mailNo + '" class="mail-item ' + read + ' ' + imp + ' d-flex align-items-center">'+
+                            '<a href="/checkmine/mail/detail?' + list[i].mailNo +'" class="mail-list-item"> '+
+                                '<input type="checkbox" value="' + list[i].mailNo + '">'+
+                                '<span style="width: 250px; font-size:13px;">' + list[i].senderEmail+ '</span>'+
+                                '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
+                                '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
                             '</a>'+
                             '<span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>'+
                         '</div>'

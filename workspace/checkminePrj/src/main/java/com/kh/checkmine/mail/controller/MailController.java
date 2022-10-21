@@ -3,14 +3,17 @@ package com.kh.checkmine.mail.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.mail.service.MailService;
@@ -52,24 +55,40 @@ public class MailController {
 	 * @param type 편지함의 타입(받은편지, 중요편지...)
 	 * @param page 현재 페이지
 	 * @param loginMember 로그인한 사람 번호
+	 * @param response 
 	 * @return
 	 */
-	@PostMapping("getlist")
+	@PostMapping(value="getlist", produces = "application/text; charset=UTF-8" )
 	@ResponseBody
 	public String getList(String type, String page, String loginMember) {
 		
-		//페이지vo 생성
-		int listCount = service.getListCount(type, loginMember);		
-		PageVo pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 10);
+		PageVo pageVo;
+		String listStr ="";
 		
-		//데이터 뭉치기
-		HashMap<String , String> listInfo = new HashMap<String, String>();
-		listInfo.put("type", type);
-		listInfo.put("page", page);
-		listInfo.put("loginMember", loginMember);
+		if("receve".equals(type)||"ref".equals(type)) { //받은메일함일 때
+			//페이지vo 생성
+			int listCount = service.getListCount(type, loginMember);
+			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
+			
+			//데이터 뭉치기
+			if("receve".equals(type)) {type = "A";}
+			else if("ref".equals(type)) {type = "R";}
+			
+			HashMap<String , String> listInfo = new HashMap<String, String>();
+			
+			listInfo.put("type", type);
+			listInfo.put("loginMember", loginMember);
+			
+			ArrayList<ReceveMailVo> rcvMailList = (ArrayList<ReceveMailVo>) service.getList(listInfo, pageVo);
+			Gson gson = new Gson();
+			
+			listStr = gson.toJson(rcvMailList);
+			
+		}else if("send".equals(type)) { //보낸메일함일 때//
+			
+		}
 		
-		
-		return "";
+		return listStr;
 	}
 	
 	
