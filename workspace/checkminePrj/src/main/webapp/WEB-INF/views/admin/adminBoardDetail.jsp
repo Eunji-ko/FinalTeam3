@@ -116,7 +116,8 @@
         color: white;
         height: 55px;
         width: 60px;
-        margin-top: 5px;
+        margin: 5px;
+        border-radius: 20px;    
     }
     #write {
         display: flex;
@@ -199,16 +200,21 @@
                         <c:if test="${fn:length(replyList) != 0}">
                     		<c:forEach items="${replyList}" var="r">
 	                        <div id="reply-bot">
-	                            <div id="replyWriter"><div>${r.replier}&nbsp${r.position}</div><div>${r.replyDate}</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div>
-	                            <div>${r.content}</div>
+	                            <div id="replyWriter">
+                                    <input type="hidden" value="${r.no}" id="replyNo">
+                                    <div>${r.replier}&nbsp${r.position}</div>
+                                    <div>${r.replyDate}</div>
+                                    <c:if test="${loginAdmin.no eq r.mno}">
+	                                    <button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>                                    
+                                    </c:if>
+                                </div>
+	                                <div>${r.content}</div>
 	                        </div>
                         	</c:forEach>
                         </c:if>
                         <div id="write">
-                            <textarea name="content" id="text" placeholder="댓글을 남겨보세요."></textarea><button type="button" id="add">등록</button>
+                            <textarea name="content" id="replyText" placeholder="댓글을 남겨보세요."></textarea><button type="button" onclick="replyAdd()" id="add">등록</button>
                         </div>
-
-
                     </div>
                     
 
@@ -216,7 +222,7 @@
                 </div>
                 <div id="buttonArea">
                 <c:if test="${loginAdmin.no eq board.wno}">
-                    <button type="button" class="btn" id="correct" onclick = "location.href = '${root}/admin/board/edit/${board.no}'">수정</button>
+                    <button type="button" class="btn" id="correct" onclick ="location.href ='${root}/admin/board/edit/${board.no}'">수정</button>
                 </c:if>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </div>
@@ -236,8 +242,102 @@
 	            location.href="${root}/admin/board/delete/${board.no}";
 	        }
 	    }
+    </script>
+    <script>
+        //댓글 추가 ajax
+        function replyAdd(){
+            const replyText = document.querySelector('#replyText').value;
+
+            //댓글 올린 날짜 + 시간
+            var today = new Date();
+
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var hours = ('0' + today.getHours()).slice(-2); 
+            var minutes = ('0' + today.getMinutes()).slice(-2);
 
 
+            var dateString = year + '.' + month  + '.' + day +  ' ' + hours + ':' + minutes;
+
+
+
+            if(replyText == ''){
+                alert("댓글 내용을 입력해주세요");
+                return;
+            }
+            const boardNo = ${board.no};
+            const replierName = '${sessionScope.loginAdmin.name}' + ' 관리자';
+            
+            $.ajax({
+                url: "${root}/reply/write",
+                type : "POST",
+                data : {
+        
+                    "content" : replyText,
+                    "bNo" : boardNo
+                    
+                },
+                success: function(result){
+                    if(result == 'ok'){
+                        alert("등록되었습니다.");
+                        const target = document.querySelector('#replyTitle');
+                        $(target).append('<div id="reply-bot" style="margin-left: 30px; color:black; font-weight:normal; border-bottom: 1px solid lightgrey;"><div id="replyWriter">'
+                            +'<input type="hidden" value="${r.no}" id="replyNo"><div>' 
+                            + replierName + '</div><div>' + dateString +'</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div><div>' 
+                                + replyText + '</div></div>');
+                        
+                        //기존에 입력한 내용 지우기
+                        document.querySelector('#replyText').value = '';
+                    
+                    
+                    }else{
+                        alert("처리 중 문제가 발생하였습니다.");
+                        
+                    }
+                },
+                error: function(result){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+            });
+
+
+
+        }
+    </script>
+
+    <script>
+        //댓글 삭제 ajax
+        function deleteReply(){
+            let answer = confirm("삭제하시겠습니까?");
+            if(!answer){
+                return;
+            }
+
+            const replyNo = document.querySelector('#replyNo').value;
+
+            $.ajax({
+                url: "${root}/reply/delete",
+                type : "POST",
+                data : {
+                    "no" : replyNo
+                },
+                success: function(result){
+                    if(result == 'ok'){
+                        alert("삭제되었습니다.");
+                        location.reload();
+                   
+                    }else{
+                        alert("처리 중 문제가 발생하였습니다.");
+                        
+                    }
+                },
+                error: function(result){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+            });
+            
+        }
     </script>
 </body>
 </html>

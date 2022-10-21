@@ -28,7 +28,7 @@
     }
 
     #listArea{
-        height: 616px;
+        height: 622px;
         margin: 20px auto;
         border: 1px solid lightgray;
     }

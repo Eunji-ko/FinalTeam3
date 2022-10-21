@@ -254,6 +254,6 @@ public class AdminBoardController {
 	
 	}
 	
-	//댓글
+	
 
 }

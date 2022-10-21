@@ -2,12 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="replyMapper">
 	<select id="selectListByBno" resultType="com.kh.checkmine.board.vo.ReplyVo">
-		SELECT R.NO, R.B_NO, M.NAME REPLIER, R.CONTENT, TO_CHAR(R.REPLY_DATE,'YYYY.MM.DD HH24:MI') REPLY_DATE, 
+		SELECT R.NO, R.B_NO, M.NAME REPLIER, M.NO MNO, R.CONTENT, TO_CHAR(R.REPLY_DATE,'YYYY.MM.DD HH24:MI') REPLY_DATE, 
 		p.name POSITION FROM BOARD_REPLY R
 	    JOIN EMPLOYEE M ON M.NO = REPLIER
 	    JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
 	    JOIN POSITION P ON P.NO = M.POS_NO
 	    WHERE DELETE_YN = 'N' AND B_NO = #{no} AND m.resign_yn = 'N'
+	    ORDER BY R.REPLY_DATE DESC
 	</select>
+	
+	<insert id="insertOne">
+		INSERT INTO BOARD_REPLY(NO, B_NO, REPLIER, CONTENT) 
+		VALUES(SEQ_BOARD_REP_NO.NEXTVAL, #{bNo}, #{replier}, #{content})
+	
+	</insert>
+	
+	<update id="deleteOne">
+		UPDATE BOARD_REPLY SET DELETE_YN = 'Y' WHERE NO = #{no}
+		
+	</update>
 
 </mapper>

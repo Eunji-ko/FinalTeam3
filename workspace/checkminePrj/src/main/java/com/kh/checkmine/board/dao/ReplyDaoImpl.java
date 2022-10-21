@@ -15,5 +15,17 @@ public class ReplyDaoImpl implements ReplyDao{
 	public List<ReplyVo> selectList(SqlSessionTemplate sst, String no) {
 		return sst.selectList("replyMapper.selectListByBno", no);
 	}
+
+	//댓글 작성하기
+	@Override
+	public int insertOne(SqlSessionTemplate sst, ReplyVo vo) {
+		return sst.insert("replyMapper.insertOne", vo);
+	}
+
+	//댓글 삭제
+	@Override
+	public int deleteOne(SqlSessionTemplate sst, ReplyVo vo) {
+		return sst.update("replyMapper.deleteOne", vo);
+	}
 	
 }

@@ -28,4 +28,17 @@ public class ReplyServiceImpl implements ReplyService{
 		return dao.selectList(sst, no);
 	}
 
+
+	//댓글 작성
+	@Override
+	public int reply(ReplyVo vo) {
+		return dao.insertOne(sst, vo);
+	}
+
+	//댓글 삭제
+	@Override
+	public int replyDelete(ReplyVo vo) {
+		return dao.deleteOne(sst, vo);
+	}
+
 }

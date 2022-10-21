@@ -6,6 +6,13 @@ import com.kh.checkmine.board.vo.ReplyVo;
 
 public interface ReplyService {
 
+	//댓글 리스트
 	List<ReplyVo> selectReplyList(String no);
+
+	//댓글 작성
+	int reply(ReplyVo vo);
+
+	//댓글 삭제
+	int replyDelete(ReplyVo vo);
 
 }
