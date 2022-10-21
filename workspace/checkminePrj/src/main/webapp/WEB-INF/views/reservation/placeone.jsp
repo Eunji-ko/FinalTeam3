@@ -159,7 +159,21 @@
                 <div id="content-main">
                     
                     <div id="content-main-top">
-                        2022-09-30 (금)
+                        
+                        <div>
+                            <button type="button" class="btn btn-sm" onClick="prevCalendar();">&lt;</button>
+                        </div>
+
+                        <div id="calYear">YYYY</div>
+
+                        <div>-</div>
+                        
+                        <div id="calMonth">MM</div>
+
+                        <div>
+                            <button type="button" class="btn btn-sm" onClick="nextCalendar();">&gt;</button>
+                        </div>
+
                     </div>
 
                     <div id="content-main-bot">
@@ -340,5 +354,83 @@
 			
         </main>
     </div>
+
+    <!-- 날짜 스크립트 -->
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+                buildCalendar();
+        });
+  
+        var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
+        var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
+  
+        /**
+         * @brief   이전달 버튼 클릭
+         */
+        function prevCalendar() {
+            this.today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            buildCalendar();    // @param 전월 캘린더 출력 요청
+        }
+  
+        /**
+         * @brief   다음달 버튼 클릭
+         */
+        function nextCalendar() {
+            this.today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            buildCalendar();    // @param 명월 캘린더 출력 요청
+        }
+  
+        /**
+         * @brief   캘린더 오픈
+         * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
+         */
+        function buildCalendar() {
+  
+            let doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            let lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  
+            let tbCalendar = document.querySelector(".scriptCalendar > tbody");
+  
+            document.getElementById("calYear").innerText = today.getFullYear();                                  // @param YYYY월
+            document.getElementById("calMonth").innerText = autoLeftPad((today.getMonth() + 1), 2);   // @param MM월
+              
+        }
+  
+        /**
+         * @brief   날짜 선택
+         * @details 사용자가 선택한 날짜에 체크표시를 남긴다.
+         */
+        function calendarChoiceDay(column) {
+  
+            // @param 기존 선택일이 존재하는 경우 기존 선택일의 표시형식을 초기화 한다.
+            if(document.getElementsByClassName("choiceDay")[0]) {
+                document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
+            }
+  
+            // @param 선택일 체크 표시
+            column.style.backgroundColor = "#FF9999";
+  
+  
+            // @param 선택일 클래스명 변경
+            column.classList.add("choiceDay");
+        }
+  
+        /**
+         * @brief   숫자 두자릿수( 00 ) 변경
+         * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
+         * @param   num     앞에 0을 붙일 숫자 값
+         * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
+         */
+        function autoLeftPad(num, digit) {
+            if(String(num).length < digit) {
+                num = new Array(digit - String(num).length + 1).join("0") + num;
+            }
+            return num;
+        }
+  
+      </script>
+
 </body>
 </html>
