@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.task.dao.TaskOrderDao;
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
+import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
 @Service
@@ -20,21 +21,27 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		this.sst = sst;
 	}
 
-	//Áö½Ã¼­ ÀÛ¼º
+	//ì§€ì‹œì„œ ì‘ì„±
 	@Override
 	public int write(TaskOrderVo vo) {
 		return orderDao.insertReport(sst, vo);
 	}
 
-	//¼ö½ÅÂüÁ¶ µî·Ï
+	//ìˆ˜ì‹  ì°¸ì¡° ë“±ë¡
 	@Override
-	public int addAttNoA(TaskOrderAttVo orderAttVo) {
+	public int insertAttNoA(TaskOrderAttVo orderAttVo) {
 		return orderDao.insertReportAtt(sst, orderAttVo);
 	}
 
 	@Override
-	public int addAttNoR(TaskOrderAttVo orderAttVo) {
+	public int insertAttNoR(TaskOrderAttVo orderAttVo) {
 		return orderDao.insertReportAtt(sst, orderAttVo);
+	}
+
+	//íŒŒì¼ ì €ì¥
+	@Override
+	public int insertFile(TaskOrderFileVo orderFileVo) {
+		return orderDao.insertFile(sst, orderFileVo);
 	}
 
 }
