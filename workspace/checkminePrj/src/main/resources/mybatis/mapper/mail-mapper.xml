@@ -3,6 +3,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 	<select id="selectListCount" resultType="int">
-		SELECT COUNT(*) FROM mail_ref WHERE RECEIVER=#{loginMember} AND TYPE=#{type}
+		SELECT COUNT(*) FROM mail_ref WHERE STATUS='N' AND RECEIVER=#{loginMember} AND TYPE=#{type}
+	</select>
+	
+	<select id="selectList" resultType="com.kh.checkmine.mail.vo.ReceveMailVo">
+		SELECT 
+		    MR.NO,
+		    MR.MAIL_NO,
+		    MR.RECEIVER,
+		    MR.TYPE,
+		    MR.READ,
+		    MR.STATUS,
+		    MR.IMPORTANCE,
+		    M.SENDER,
+		    M.TITLE,
+		    M.CONTENT,
+		    M.S_STATUS,
+		    M.SEND_DATE,
+		    E.EMAIL AS SENDER_EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
+		WHERE MR.STATUS = 'N'
+		AND MR.TYPE = #{type}
+		AND mr.receiver = #{loginMember}
+		ORDER BY M.SEND_DATE DESC
 	</select>
 </mapper>

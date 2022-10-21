@@ -1,8 +1,13 @@
 package com.kh.checkmine.mail.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.ReceveMailVo;
 
 public interface MailDao {
 
@@ -13,5 +18,14 @@ public interface MailDao {
 	 * @return
 	 */
 	int getMailListCount(SqlSessionTemplate sst, HashMap<String, String> infoMap);
+
+	/**
+	 * 로그인한 멤버의 메일 리스트 가져오기
+	 * @param sst
+	 * @param listInfo
+	 * @param pageVo
+	 * @return
+	 */
+	List<ReceveMailVo> getMailList(SqlSessionTemplate sst, HashMap<String, String> listInfo, PageVo pageVo);
 
 }
