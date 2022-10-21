@@ -96,10 +96,10 @@
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
-				작성자 : (작성자영역)
+				작성자 : ${docVo.writerNo}
 			</div>
 			<div id="write-date-div">
-				작성일 : (작성년월일)
+				작성일 : ${docVo.date}
 			</div>
 		</div>
 		<div id="approver-info">
@@ -107,33 +107,33 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">이</div>
-			<div id="approver6">름</div>
-			<div id="approver7">넣</div>
-			<div id="approver8">기</div>
-			<div id="approver9">날</div>
-			<div id="approver10">짜</div>
-			<div id="approver11">넣</div>
-			<div id="approver12">기</div>
+			<div id="approver5">${apVo.firstApprover}</div>
+			<div id="approver6">${apVo.secondApprover}</div>
+			<div id="approver7">${apVo.thirdApprover}</div>
+			<div id="approver8">${apVo.finalApprover}</div>
+			<div id="approver9">${apVo.firstDate}</div>
+			<div id="approver10">${apVo.secondDate}</div>
+			<div id="approver11">${apVo.thirdDate}</div>
+			<div id="approver12">${apVo.finalDate}</div>
 		</div>
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/draft" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
+		<form action="${rootPath}/approval/draft/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
-				<input type="text" maxlength="250" class="form-control" name="title">
+				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
 			</div>
 			<div id="approval-content-div">
 				<div id="draft-team" class="input-group-text">기안팀</div>
-				<input type="text" maxlength="25" class="form-control" name="department">
-				<textarea id="approval-content" class="form-control" maxlength="2000" name="content"></textarea>
+				<input type="text" maxlength="25" class="form-control" name="department" value="${draftVo.department}">
+				<textarea id="approval-content" class="form-control" maxlength="2000" name="content">${draftVo.content}</textarea>
 			</div>
 			<div id="approval-btn-div">
 				<input type="file" name="fileName" id="" multiple>
 				<input type="hidden" id="return-reason" name="returnReason">
-				<button id="approval-btn" class="btn btn-lg">결재</button>
+				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
 		</form>

@@ -143,7 +143,7 @@
 			<div id="approval-btn-div">
 				<input type="file" name="minutesFile" id="" multiple>
 				<input type="hidden" id="return-reason" name="returnReason">
-				<button id="approval-btn" class="btn btn-lg">결재</button>
+				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
 		</form>

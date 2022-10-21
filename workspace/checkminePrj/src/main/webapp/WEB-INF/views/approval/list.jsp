@@ -59,7 +59,7 @@
     				<c:forEach items="${voList}" var="vo">
 	    				<div class="list-content">${vo.no}</div>
 	                    <div class="list-content">${vo.type}</div>
-	                    <div class="list-content"><a href="">${vo.title}</a></div>
+	                    <div class="list-content"><a href="${rootPath}/approval/${vo.no}">${vo.title}</a></div>
 	                    <div class="list-content">${vo.writerNo}</div>
     				</c:forEach>
                 </div>
@@ -71,7 +71,7 @@
                     </c:if>
                     
                     <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                        <a href="${rootPath}/approval/list/${i}" class="btn btn-sm">${i}</a>
+                        <a href="${rootPath}/approval/list/${i}" class="btn btn-sm" id="current-page">${i}</a>
                     </c:forEach>
                     
                     <c:if test="${pv.endPage ne pv.maxPage}">
@@ -81,5 +81,7 @@
             </div>
         </main>
     </div>
+    
+    
 </body>
 </html>

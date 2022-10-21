@@ -37,5 +37,31 @@
 		    AND A.STATUS = '대기'
 		ORDER BY D."DATE" DESC
 	</select>
+	
+	<select id="selectDoc" resultType="ApprovalDocVo">
+		SELECT *
+		FROM AP_DOC
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectAp" resultType="ApprovalVo">
+		SELECT *
+		FROM APPROVAL
+		WHERE DOC_NO = #{dno}
+		AND STATUS = '대기'
+	</select>
+	
+	<select id="selectDraft" resultType="ApprovalDraftVo">
+		SELECT *
+		FROM DRAFT
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectWriter" resultType="MemberVo">
+		SELECT *
+		FROM EMPLOYEE
+		WHERE NO = #{writerNo}
+		AND RESIGN_YN = 'N'
+	</select>
 
 </mapper>

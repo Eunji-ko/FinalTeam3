@@ -7,7 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
+import com.kh.checkmine.approval.vo.ApprovalDraftVo;
+import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.member.vo.MemberVo;
 
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao{
@@ -27,6 +30,30 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		
 		return sst.selectList("approvalMapper.selectApListAll", employeeNo, rb);
+	}
+
+	//문서번호로 결재문서 조회하기
+	@Override
+	public ApprovalDocVo selectDoc(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectDoc", dno);
+	}
+
+	//문서번호로 결재정보 조회해오기
+	@Override
+	public ApprovalVo selectAp(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectAp", dno);
+	}
+
+	//문서번호로 기안서 조회하기
+	@Override
+	public ApprovalDraftVo selectDraft(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectDraft", dno);
+	}
+
+	//사원번호로 작성자검색
+	@Override
+	public MemberVo selectWriter(SqlSessionTemplate sst, String writerNo) {
+		return sst.selectOne("approvalMapper.selectWriter", writerNo);
 	}
 
 }
