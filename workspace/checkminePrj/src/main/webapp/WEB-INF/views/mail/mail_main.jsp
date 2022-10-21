@@ -140,7 +140,7 @@
                     </div>
 
                     <ul>
-                        <li><div class="container-nav-selected"><a onclick="getList(this,'receve',1);">받은편지함</a><span>21</span></div></li>
+                        <li><div class="container-nav-selected"><a onclick="getList(this,'receve',1, ${loginMember.no});">받은편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'send',1);">보낸편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'imp',1);">중요편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'save',1);">임시보관함</a><span>21</span></div></li>
@@ -277,7 +277,7 @@
         }
 
         //메일 리스트 조회
-        function getList(element, type, page){
+        function getList(element, type, page, receverNo){
             const sub = document.getElementById('list-name');
             if(type == 'receve'){
                 sub.innerText = '받은편지함';
@@ -289,6 +289,8 @@
                 sub.innerText = '임시보관함';
             }else if(type == 'recycle'){
                 sub.innerText = '휴지통';
+            }else if(type == 'ref'){
+                sub.innerText = '참조편지함';
             }
 
             //클릭시 화면 효과
@@ -313,7 +315,8 @@
                 type : 'post',
                 data:{
                     'type' : type,
-                    'page' : page
+                    'page' : page,
+                    'loginMember' : receverNo
                 },
                 success : function(mailList){
                     console.log(mailList);

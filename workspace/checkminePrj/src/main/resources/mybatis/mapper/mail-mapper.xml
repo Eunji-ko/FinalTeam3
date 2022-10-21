@@ -2,5 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
-	
+	<select id="selectListCount" resultType="int">
+		SELECT COUNT(*) FROM mail_ref WHERE RECEIVER=#{loginMember} AND TYPE=#{type}
+	</select>
 </mapper>
