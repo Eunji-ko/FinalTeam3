@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="personnelMapper">
+ 
+ 	<select id="selectMemberList" resultType="MemberVo">
+	  	SELECT
+	          E.NO
+	        , P.NAME POS_NO
+	        , D.NAME DEPT_NO
+	        , E.ID
+	        , E.PWD
+	        , E.NAME
+	        , E.EMAIL
+	        , E.PHONE
+	        , E.ADDRESS
+	        , E.ADDRESS_DETAIL
+	        , E.MODIFY_DATE
+	        , E.ENROLL_DATE
+	        , E.RESIGN_DATE
+	        , E.RESIGN_YN
+	        , E.PHOTO_NAME
+	        , E.PHOTO_PATH
+	        , E.PERMISSION
+		FROM EMPLOYEE E, POSITION P, DEPARTMENT D
+		WHERE E.POS_NO = P.NO
+		AND E.DEPT_NO = D.NO
+		AND E.RESIGN_YN = 'N'
+  </select>
+ 
+</mapper>

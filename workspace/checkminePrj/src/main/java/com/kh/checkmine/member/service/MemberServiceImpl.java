@@ -2,6 +2,7 @@ package com.kh.checkmine.member.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	private final SqlSessionTemplate sst;
 	private final MemberDao dao;
-	private final PasswordEncoder pwdEnc;
+	private final BCryptPasswordEncoder pwdEnc;
 	
 	@Autowired
-	public MemberServiceImpl(SqlSessionTemplate sst, MemberDao dao, PasswordEncoder pwdEnc) {
+	public MemberServiceImpl(SqlSessionTemplate sst, MemberDao dao, BCryptPasswordEncoder pwdEnc) {
 		this.sst = sst;
 		this.dao = dao;
 		this.pwdEnc = pwdEnc;
@@ -45,6 +46,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int changeInfo(MemberVo vo) {
 		return dao.updateInfo(sst, vo);
+	}
+
+	@Override
+	public MemberVo selectOneByNo(String no) {
+		return dao.selectOneByNo(sst, no);
 	}
 
 }//class

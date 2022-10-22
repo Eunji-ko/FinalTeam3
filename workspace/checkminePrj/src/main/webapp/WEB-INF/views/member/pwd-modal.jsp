@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <form action="${rootPath}/member/changePwd" method="post" onsubmit="return check();">
+  <form action="${rootPath}/member/changePwd" method="post" onsubmit="return checkPwd();">
     <div class="modal fade" id="changePwd" tabindex="-1" aria-labelledby="changePwdLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -37,12 +37,18 @@
   const pwd = document.querySelector('input[name=newPwd]');
   const pwd2 = document.querySelector('input[name=newPwd2]');
 
-  function check(){
+  function checkPwd(){
 
       //중복확인 했는지 체크
       if(oldPwd.value != ${loginPwd}){
           alert("기존 비밀번호가 틀립니다 !");
           return false;
+      }
+
+      //기존 비밀번호와 새 비밀번호가 같다면 오류
+      if(oldPwd.value == pwd.value){
+        alert("새 비밀번호가 기존 비밀번호와 같습니다 !");
+        return false;
       }
 
       //비밀번호 일치 여부

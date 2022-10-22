@@ -10,4 +10,6 @@ public interface MemberService {
 
 	int changeInfo(MemberVo vo);
 
+	MemberVo selectOneByNo(String no);
+
 }

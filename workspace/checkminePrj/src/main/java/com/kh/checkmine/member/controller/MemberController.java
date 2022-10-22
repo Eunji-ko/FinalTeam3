@@ -68,8 +68,8 @@ public class MemberController {
 		int result = ms.changePwd(vo);
 		
 		if(result == 1) {
-			session.setAttribute("alertMsg", "비밀번호를 성공적으로 변경하였습니다 !");
-			return "redirect:/member/mypage";
+			session.invalidate();
+			return "redirect:/";
 		}else {
 			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다 !");
 			return "redirect:/member/mypage";
@@ -83,9 +83,15 @@ public class MemberController {
 		int result = ms.changeInfo(vo);
 		
 		if(result == 1) {
-//			MemberVo loginMember = ms.login(vo);
-			session.setAttribute("alertMsg", "개인정보를 성공적으로 변경하였습니다 !");
-			return "redirect:/member/mypage";
+			MemberVo loginMember = ms.selectOneByNo(vo.getNo());
+			if(loginMember != null) {
+				session.setAttribute("loginMember", loginMember);
+				session.setAttribute("alertMsg", "개인정보를 성공적으로 변경하였습니다 !");
+				return "redirect:/member/mypage";
+			}else {
+				session.setAttribute("alertMsg", "개인정보를 다시 불러오는 데에 실패하였습니다 !");
+				return "redirect:/member/mypage";
+			}
 		}else {
 			session.setAttribute("alertMsg", "개인정보 변경에 실패하였습니다 !");
 			return "redirect:/member/mypage";
