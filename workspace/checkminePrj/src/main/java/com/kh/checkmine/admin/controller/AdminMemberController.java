@@ -140,7 +140,7 @@ public class AdminMemberController {
 		List<PosVo> pos = service.selectPosList();
 		
 		MemberVo memberVo = service.selectMember(no);
-		
+		System.out.println(memberVo.getPermission());
 		model.addAttribute("memberVo", memberVo);
 		model.addAttribute("dept", dept);
 		model.addAttribute("pos", pos);

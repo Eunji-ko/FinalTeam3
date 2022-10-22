@@ -87,8 +87,11 @@
   </insert>
   
   <select id="selectMember" resultType="MemberVo">
-  	SELECT * FROM EMPLOYEE 
-        WHERE NO = #{no} 
+  	SELECT NO, NAME, POS_NO, DEPT_NO, ID, PWD, EMAIL, PHONE,
+        ADDRESS, ADDRESS_DETAIL, TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD') MODIFY_DATE, 
+        TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(RESIGN_DATE, 'YYYY-MM-DD') 
+        RESIGN_DATE, RESIGN_YN, PHOTO_NAME, PHOTO_PATH, PERMISSION FROM EMPLOYEE 
+        WHERE NO = #{no}
   </select>
   
 </mapper>

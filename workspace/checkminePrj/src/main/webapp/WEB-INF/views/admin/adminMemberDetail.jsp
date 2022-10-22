@@ -178,12 +178,36 @@
                         <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" required></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" value="${m.email}" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
-                            <br><input type="checkbox" name="N"><label style="font-weight: normal;">공지 등록</label>
-                            <br><input type="checkbox" name="R"><label style="font-weight: normal;">장비/장소 예약 승인</label>
-                            <br><input type="checkbox" name="H"><label style="font-weight: normal;">인사 관리</label>
+                            <br>
+                            <c:choose>
+                            	<c:when test="${fn:contains(m.permission, 'N')}">
+                            		<input type="checkbox" name="N" checked><label style="font-weight: normal;">공지 등록</label>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<input type="checkbox" name="N"><label style="font-weight: normal;">공지 등록</label>
+                            	</c:otherwise>
+                            </c:choose>
+                            <br>
+                            <c:choose>
+                            	<c:when test="${fn:contains(m.permission, 'R')}">
+                            		<input type="checkbox" name="R" checked><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<input type="checkbox" name="R"><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            	</c:otherwise>
+                            </c:choose>
+                            <br>
+                            <c:choose>
+                            	<c:when test="${fn:contains(m.permission, 'H')}">
+                            		<input type="checkbox" name="H" checked><label style="font-weight: normal;">인사 관리</label>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<input type="checkbox" name="H"><label style="font-weight: normal;">인사 관리</label>
+                            	</c:otherwise>
+                            </c:choose>
                         </div>
-                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" value="" readonly></div>
-                        <div class="inputField" style="margin-top:50px;"><label>퇴사일</label><input type="date" name="resignDate"></div>
+                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" value="${m.enrollDate}" readonly></div>
+                        <div class="inputField" style="margin-top:50px;"><label>퇴사일</label><input type="date" name="resignDate" value="${m.resignDate}"></div>
                     </div>
                     
                 </div>

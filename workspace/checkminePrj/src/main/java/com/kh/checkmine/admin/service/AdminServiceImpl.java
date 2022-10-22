@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.admin.dao.AdminDao;
@@ -17,10 +17,10 @@ public class AdminServiceImpl implements AdminService{
 	
 	private final AdminDao dao;
 	private final SqlSessionTemplate sst;
-	private final PasswordEncoder pwdEncoder;
+	private final BCryptPasswordEncoder pwdEncoder;
 	
 	@Autowired
-	public AdminServiceImpl(AdminDao dao, SqlSessionTemplate sst, PasswordEncoder pwdEncoder) {
+	public AdminServiceImpl(AdminDao dao, SqlSessionTemplate sst, BCryptPasswordEncoder pwdEncoder) {
 		this.dao = dao;
 		this.sst = sst;
 		this.pwdEncoder = pwdEncoder;
