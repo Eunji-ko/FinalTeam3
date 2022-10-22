@@ -132,10 +132,18 @@ public class AdminMemberController {
 	
 	//사원 정보
 	@GetMapping("detail/{no}")
-	public String detail(@PathVariable String no) {
-		MemberVo vo = service.selectMember(no);
+	public String detail(@PathVariable String no, Model model) {
+		//부서 목록
+		List<DeptVo> dept = service.selectDeptList();
 		
+		//직위 목록
+		List<PosVo> pos = service.selectPosList();
 		
+		MemberVo memberVo = service.selectMember(no);
+		
+		model.addAttribute("memberVo", memberVo);
+		model.addAttribute("dept", dept);
+		model.addAttribute("pos", pos);
 		return "admin/adminMemberDetail";
 	}
 	

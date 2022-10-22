@@ -87,9 +87,8 @@
   </insert>
   
   <select id="selectMember" resultType="MemberVo">
-  
-  
-  
+  	SELECT * FROM EMPLOYEE 
+        WHERE NO = #{no} 
   </select>
   
 </mapper>
