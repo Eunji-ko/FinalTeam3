@@ -23,4 +23,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sst.update("memberMapper.updateInfo", vo);
 	}
 
+	@Override
+	public MemberVo selectOneByNo(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("memberMapper.selectOneByNo", no);
+	}
+
 }

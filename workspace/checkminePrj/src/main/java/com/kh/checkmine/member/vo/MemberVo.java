@@ -1,5 +1,6 @@
 package com.kh.checkmine.member.vo;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,7 @@ public class MemberVo {
     public String photoPath;
     public String permission;
     
-    public void encodePwd(PasswordEncoder pwdEnc) {
+    public void encodePwd(BCryptPasswordEncoder pwdEnc) {
         this.pwd = pwdEnc.encode(this.pwd);
     }
     

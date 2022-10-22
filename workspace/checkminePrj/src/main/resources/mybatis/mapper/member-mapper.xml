@@ -42,5 +42,31 @@
   			, ADDRESS_DETAIL = #{addressDetail}
  		WHERE NO = #{no} 
   </update>
+  
+  <select id="selectOneByNo" resultType="MemberVo">
+  	SELECT
+	          E.NO
+	        , P.NAME POS_NO
+	        , D.NAME DEPT_NO
+	        , E.ID
+	        , E.PWD
+	        , E.NAME
+	        , E.EMAIL
+	        , E.PHONE
+	        , E.ADDRESS
+	        , E.ADDRESS_DETAIL
+	        , E.MODIFY_DATE
+	        , E.ENROLL_DATE
+	        , E.RESIGN_DATE
+	        , E.RESIGN_YN
+	        , E.PHOTO_NAME
+	        , E.PHOTO_PATH
+	        , E.PERMISSION
+		FROM EMPLOYEE E, POSITION P, DEPARTMENT D
+		WHERE E.POS_NO = P.NO
+		AND E.DEPT_NO = D.NO
+		AND E.NO = #{no}
+		AND E.RESIGN_YN = 'N'
+  </select>
  
 </mapper>

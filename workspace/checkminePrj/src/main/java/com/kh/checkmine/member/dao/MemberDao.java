@@ -12,4 +12,6 @@ public interface MemberDao {
 
 	int updateInfo(SqlSessionTemplate sst, MemberVo vo);
 
+	MemberVo selectOneByNo(SqlSessionTemplate sst, String no);
+
 }
