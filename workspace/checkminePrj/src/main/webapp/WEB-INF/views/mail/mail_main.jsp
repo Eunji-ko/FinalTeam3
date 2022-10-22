@@ -140,7 +140,7 @@
                     </div>
 
                     <ul>
-                        <li><div class="container-nav-selected"><a onclick="getList(this,'receve',1, ${loginMember.no});">받은편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'receve',1, ${loginMember.no});">받은편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'send',1 ,${loginMember.no});">보낸편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'imp',1, ${loginMember.no});">중요편지함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'save',1, ${loginMember.no});">임시보관함</a><span>21</span></div></li>
@@ -186,15 +186,6 @@
                         </div>
                         
                         <!-- 리스트 여기부터 받아오기 -->
-                        <div id="1" class="mail-item read notImp d-flex align-items-center">
-                            <a href="메일_상세보기" class="mail-list-item">
-                                <input type="checkbox" value="1">
-                                <span style="width: 207px;">chan0966@gmail.com</span>
-                                <span style="width: 785px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>
-                                <span style="width: 150px;">2022-10-12 12:12</span>
-                            </a>
-                            <span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>
-                        </div>
 
                     </div>
                 </div>
@@ -203,6 +194,12 @@
     </div>
 
     <script>
+    	window.onload = function(){
+    		const rcvDiv = document.querySelector('#container-nav>ul div:nth-child(1) a');
+    		getList(rcvDiv,'receve',1, ${loginMember.no});
+    		
+    	}
+    
         // 전체선택 전체 해재
         function selectAll(selectAll)  {
             const checkboxes = document.querySelectorAll('#mail-list input[type="checkbox"]');
@@ -320,29 +317,48 @@
                 },
                 success : function(mailList){
                 	const list = JSON.parse(mailList);
-
-                    //받아온 데이터로 처리하기
                     const mailListWrap = document.querySelector('#mail-list');
-                    for(let i=0;i<list.length;i++){
-                    	
-                    	let read;
-                    	let imp;
-                    	if(list[i].read == 'N'){ read = 'notRead'; }else{ read = 'read';}
-                    	if(list[i].importance == 'N'){ imp = 'notImp' }else{ imp = 'imp' }
-                    	
-                    	
-                        mailListWrap.innerHTML = mailListWrap.innerHTML + 
-                        '<div id="' +list[i].mailNo + '" class="mail-item ' + read + ' ' + imp + ' d-flex align-items-center">'+
-                            '<a href="/checkmine/mail/detail?' + list[i].mailNo +'" class="mail-list-item"> '+
-                                '<input type="checkbox" value="' + list[i].mailNo + '">'+
-                                '<span style="width: 250px; font-size:13px;">' + list[i].senderEmail+ '</span>'+
-                                '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
-                                '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
-                            '</a>'+
-                            '<span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>'+
-                        '</div>'
-                    }
-                    
+
+                    if(type == 'receve' || type == 'ref'){
+                        //받아온 데이터로 처리하기
+                        for(let i=0;i<list.length;i++){
+                            let read;
+                            let imp;
+                            let star;
+                            if(list[i].read == 'N'){ read = 'notRead'; }else{ read = 'read';}
+                            if(list[i].importance == 'N'){ 
+                                imp = 'notImp';
+                                star = '${imgPath}/mail_star_blank.png';
+                            }else{ 
+                                imp = 'imp';
+                                star = '${imgPath}/mail_star_sel.png';
+                            }
+                            
+                            mailListWrap.innerHTML = mailListWrap.innerHTML + 
+                            '<div id="' +list[i].mailNo + '" class="mail-item ' + read + ' ' + imp + ' d-flex align-items-center">'+
+                                '<a href="/checkmine/mail/detail?' + list[i].mailNo +'" class="mail-list-item"> '+
+                                    '<input type="checkbox" value="' + list[i].mailNo + '">'+
+                                    '<span style="width: 250px; font-size:13px;">' + list[i].senderEmail+ '</span>'+
+                                    '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
+                                    '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
+                                '</a>'+
+                                '<span class="d-flex justify-content-center"><img class="impbtn" src="'+star+'" style="margin-left: 11px;" onclick="importance(this);"></span>'+
+                            '</div>'
+                        }
+                    }else if(type == 'send'){
+                        for(let i=0;i<list.length;i++){
+                            mailListWrap.innerHTML = mailListWrap.innerHTML + 
+                            '<div id="' +list[i].no + '" class="mail-item d-flex align-items-center">'+
+                                '<a href="/checkmine/mail/detail?' + list[i].no +'" class="mail-list-item"> '+
+                                    '<input type="checkbox" value="' + list[i].no + '">'+
+                                    '<span style="width: 250px; font-size:13px;">' + '${loginMember.email}' + '</span>'+
+                                    '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
+                                    '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
+                                '</a>'+
+                                '<span class="d-flex justify-content-center"><img class="impbtn" src="" style="margin-left: 11px;"></span>'+
+                            '</div>'
+                        }
+                    }          
                 }
             });
         }

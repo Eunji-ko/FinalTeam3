@@ -4,17 +4,10 @@ import lombok.Data;
 
 @Data
 public class MailVo {
-	public String no;
-	public String mailNo;
-	public String receiver;
-	public String type;
-	public String read;
-	public String status;
-	public String importance;
-	public String sender;
-	public String title;
-	public String content;
-	public String sStatus;
-	public String sendDate;
-	public String senderEmail;
+	private String no;
+	private String sender;
+	private String title;
+	private String content;
+	private String sStatus;
+	private String sendDate;
 }
