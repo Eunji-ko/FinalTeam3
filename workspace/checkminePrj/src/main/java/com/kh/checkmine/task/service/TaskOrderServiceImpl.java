@@ -1,9 +1,12 @@
 package com.kh.checkmine.task.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.task.dao.TaskOrderDao;
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
 import com.kh.checkmine.task.vo.TaskOrderFileVo;
@@ -22,26 +25,47 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	}
 
 	//지시서 작성
+	//지시서 + 수신참조 + 파일
 	@Override
-	public int write(TaskOrderVo vo) {
-		return orderDao.insertReport(sst, vo);
+	public int write(TaskOrderVo orderVo, List<TaskOrderAttVo> attVoList, List<TaskOrderFileVo> fileVoList) {
+		int result1 = orderDao.insertOrder(sst, orderVo);
+		int result2 = 1; //수신,참조 첨부
+		int result3 = 1; //파일 첨부
+
+		for(int i = 0; i < attVoList.size(); i++) {
+			result2 = orderDao.insertOrderAtt(sst, attVoList.get(i));
+		}
+		
+		for(int j = 0; j < fileVoList.size(); j++) {
+			result3 *= orderDao.insertFile(sst, fileVoList.get(j)); 
+		}
+		
+		return result1 * result2 * result3;
+	}
+	//지시서 + 수신참조
+	@Override
+	public int write(TaskOrderVo orderVo, List<TaskOrderAttVo> attVoList) {
+		int result1 = orderDao.insertOrder(sst, orderVo);
+		int result2 = 1; //수신,참조 첨부
+
+		for(int i = 0; i < attVoList.size(); i++) {
+			result2 = orderDao.insertOrderAtt(sst, attVoList.get(i));
+		}
+		
+		return result1 * result2;
 	}
 
-	//수신 참조 등록
+	//전체 지시서 갯수 조회
 	@Override
-	public int insertAttNoA(TaskOrderAttVo orderAttVo) {
-		return orderDao.insertReportAtt(sst, orderAttVo);
+	public int selectTotalCnt() {
+		return orderDao.selectCountAll(sst);
 	}
 
+	//지시서 목록 조회
 	@Override
-	public int insertAttNoR(TaskOrderAttVo orderAttVo) {
-		return orderDao.insertReportAtt(sst, orderAttVo);
+	public List<TaskOrderVo> selectList(PageVo pv) {
+		return orderDao.selectList(sst, pv);
 	}
-
-	//파일 저장
-	@Override
-	public int insertFile(TaskOrderFileVo orderFileVo) {
-		return orderDao.insertFile(sst, orderFileVo);
-	}
+	
 
 }
