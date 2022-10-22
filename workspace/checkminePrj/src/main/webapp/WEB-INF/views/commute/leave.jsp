@@ -37,8 +37,6 @@
         width: 100%;
         height: 90%;
         margin-top: 5%;
-        display: flex;
-        flex-direction: column;
     }
 
     #leave-list-top{
@@ -50,7 +48,8 @@
     }
 
     #leave-list-bot{
-      margin-top: 0%;
+      width: 100%;
+      height: 80%;
     }
 
     .table{
@@ -136,8 +135,6 @@
 
                     </div>
 
-                    </div>
-
                     <div id="leave-list-bot">
 
                         <table class="table">
@@ -165,13 +162,17 @@
 
                           <div id="page-btn">
 
+                            <button type="button" class="btn btn-sm">&lt;</button>
                             <a class="btn btn-sm" href="">1</a>
                             <a class="btn btn-sm" href="">2</a>
                             <a class="btn btn-sm" href="">3</a>
+                            <button type="button" class="btn btn-sm">&gt;</button>
 
                           </div>
 
                     </div>
+
+                  </div>
 
                 </div>
 

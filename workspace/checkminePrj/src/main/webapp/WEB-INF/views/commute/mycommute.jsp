@@ -136,9 +136,11 @@
 
                           <div id="page-btn">
 
+                            <button type="button" class="btn btn-sm">&lt;</button>
                             <a class="btn btn-sm" href="">1</a>
                             <a class="btn btn-sm" href="">2</a>
                             <a class="btn btn-sm" href="">3</a>
+                            <button type="button" class="btn btn-sm">&gt;</button>
 
                           </div>
 
