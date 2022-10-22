@@ -1,5 +1,6 @@
 package com.kh.checkmine.mail.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.mail.dao.MailDao;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceveMailVo;
 
 @Service
@@ -46,6 +48,19 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public List<ReceveMailVo> getList(HashMap<String, String> listInfo, PageVo pageVo) {
 		return dao.getMailList(sst, listInfo, pageVo);
+	}
+
+	/**
+	 * 로그인한 멤버의 보낸 메일 갯수 가져오기
+	 */
+	@Override
+	public int getSendListCount(String loginMember) {
+		return dao.getSendMailListCount(sst, loginMember);
+	}
+
+	@Override
+	public List<MailVo> getSendList(String loginMember, PageVo pageVo) {
+		return dao.getSendMailList(sst,loginMember, pageVo);
 	}
 
 }

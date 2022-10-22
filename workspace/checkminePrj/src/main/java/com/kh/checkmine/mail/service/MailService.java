@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceveMailVo;
 
 public interface MailService {
@@ -14,5 +15,11 @@ public interface MailService {
 
 	//멤버의 메일 리스트 가져오기
 	List<ReceveMailVo> getList(HashMap<String, String> listInfo, PageVo pageVo);
+
+	//멤버의 보낸 메일 리스트 갯수 가져오기
+	int getSendListCount(String type);
+
+	//멤버의 보낸 메일 리스트 가져오기
+	List<MailVo> getSendList(String loginMember, PageVo pageVo);
 
 }

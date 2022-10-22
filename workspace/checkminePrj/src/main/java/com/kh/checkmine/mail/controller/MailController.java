@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceveMailVo;
 
 @Controller
@@ -63,6 +64,7 @@ public class MailController {
 	public String getList(String type, String page, String loginMember) {
 		
 		PageVo pageVo;
+		Gson gson = new Gson();
 		String listStr ="";
 		
 		if("receve".equals(type)||"ref".equals(type)) { //받은메일함일 때
@@ -80,12 +82,16 @@ public class MailController {
 			listInfo.put("loginMember", loginMember);
 			
 			ArrayList<ReceveMailVo> rcvMailList = (ArrayList<ReceveMailVo>) service.getList(listInfo, pageVo);
-			Gson gson = new Gson();
 			
 			listStr = gson.toJson(rcvMailList);
 			
 		}else if("send".equals(type)) { //보낸메일함일 때//
+			int listCount = service.getSendListCount(loginMember);
+			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
 			
+			ArrayList<MailVo> sendMailList = (ArrayList<MailVo>) service.getSendList(loginMember, pageVo);
+			
+			listStr = gson.toJson(sendMailList);
 		}
 		
 		return listStr;
