@@ -342,7 +342,7 @@
                             <textarea name="content" id="content" cols="30" rows="10"></textarea>
                         </div>
                         <div class="division attachments">첨부 파일</div>
-                        <div class="file"><input type="file" id="upload-file" name="name" multiple></div>
+                        <div class="file"><input type="file" id="upload-file" name="files" multiple></div>
                         <div id="show-files"></div>
                     </div>
                     <div id="submit-area">

@@ -169,24 +169,28 @@
                             <input type="text" placeholder="지시서 검색">
                         </div>
                     </form>
-                    <div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
+                    <c:if test="${not empty loginMember}">
+                    	<div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
+                    </c:if>
                 </div>
                 
                 <!--보고서 목록-->
                 <div id="center">
                     <div class="list-header">지시서 번호</div>
                     <div class="list-header">중요도</div>
-                    <div class="list-header">받은이</div>
+                    <div class="list-header">수신자</div>
                     <div class="list-header">제목</div>
                     <div class="list-header">작성자</div>
                     <div class="list-header">날짜</div>
-    
-                    <div class="list">111</div>
-                    <div class="list">긴급</div>
-                    <div class="list">과장님</div>
-                    <div class="list" id="title"><a href="${root}/task/order/detail">테스트 진행 현황</a></div>
-                    <div class="list">테스트 사원</div>
-                    <div class="list">2022-10-12</div>
+                    
+                    <c:forEach items="${voList}" var="vo">
+	                    <div class="list">${vo.no}</div>
+	                    <div class="list">${vo.importance}</div>
+	                    <div class="list">${vo.att}</div>
+	                    <div class="list" id="title"><a href="${root}/task/order/detail">${vo.title}</a></div>
+	                    <div class="list">${vo.orderer}</div>
+	                    <div class="list">${vo.enrollDate}</div>
+                    </c:forEach>
 
                 </div>
                 

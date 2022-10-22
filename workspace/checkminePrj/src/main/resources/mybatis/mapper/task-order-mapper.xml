@@ -38,7 +38,7 @@
 		(
 			SEQ_TASK_ATT_NO.NEXTVAL,
 			#{empNo},
-			#{taskNo},
+			SEQ_TASK_NO.CURRVAL,
 			#{type}
 		)
  	</insert>
@@ -54,9 +54,34 @@
  		VALUES
  		(
  			SEQ_TASK_FILE_NO.NEXTVAL,
- 			#{taskNo},
+ 			SEQ_TASK_NO.CURRVAL,
  			#{name},
  			#{path}
  		)
  	</insert>
+ 	
+ 	<select id="selectCountAll" resultType="int">
+ 		SELECT COUNT(NO)
+ 		FROM TASK
+ 	</select>
+ 	
+ 	<select id="selectList" resultType="TaskOrderVo">
+		SELECT 
+		    T.NO,
+		    T.DEPT_NO,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE,
+		    E.NAME AS ORDERER,
+		    A.TASK_NO AS ATT
+		FROM TASK T
+		JOIN EMPLOYEE E
+		ON T.ORDERER = E.NO
+		JOIN TASK_ATT A
+		ON T.NO = A.TASK_NO
+		ORDER BY T.NO DESC
+ 	</select>
 </mapper>

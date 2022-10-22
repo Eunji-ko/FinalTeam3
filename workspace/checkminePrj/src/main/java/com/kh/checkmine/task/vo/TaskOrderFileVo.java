@@ -10,6 +10,5 @@ public class TaskOrderFileVo {
 	private String taskNo;
 	private String name;
 	private String path;
-	
-	private MultipartFile[] file;
+	private MultipartFile[] files;
 }
