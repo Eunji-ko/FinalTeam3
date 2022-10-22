@@ -4,8 +4,14 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
+import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
+import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
+import com.kh.checkmine.approval.vo.ApprovalProposalVo;
+import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -29,5 +35,23 @@ public interface ApprovalDao {
 
 	//사원번호로 작성자검색
 	MemberVo selectWriter(SqlSessionTemplate sst, String writerNo);
+
+	//문서번호로 제안서 조회하기
+	ApprovalProposalVo selectProposal(SqlSessionTemplate sst, String dno);
+
+	//문서번호로 회의록 조회하기
+	ApprovalMinutesVo selectMinutes(SqlSessionTemplate sst, String dno);
+
+	//문서번호로 지출결의서 조회하기
+	ApprovalExpenditureVo selectExpenditure(SqlSessionTemplate sst, String dno);
+
+	//문서번호로 구매품의서 조회하기
+	ApprovalBuyOrderVo selectBuyOrder(SqlSessionTemplate sst, String dno);
+
+	//문서번호로 전표 조회하기
+	ApprovalStateVo selectState(SqlSessionTemplate sst, String dno);
+
+	//문서번호로 휴가 조회하기
+	ApprovalLeaveVo selectLeave(SqlSessionTemplate sst, String dno);
 
 }

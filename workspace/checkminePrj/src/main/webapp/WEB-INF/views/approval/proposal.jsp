@@ -121,14 +121,14 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">5</div>
-			<div id="approver6">6</div>
-			<div id="approver7">7</div>
-			<div id="approver8">8</div>
-			<div id="approver9">9</div>
-			<div id="approver10">10</div>
-			<div id="approver11">11</div>
-			<div id="approver12">12</div>
+			<div id="approver5">${apVo.firstApprover}</div>
+			<div id="approver6">${apVo.secondApprover}</div>
+			<div id="approver7">${apVo.thirdApprover}</div>
+			<div id="approver8">${apVo.finalApprover}</div>
+			<div id="approver9">${apVo.firstDate}</div>
+			<div id="approver10">${apVo.secondDate}</div>
+			<div id="approver11">${apVo.thirdDate}</div>
+			<div id="approver12">${apVo.finalDate}</div>
 		</div>
 	</div>
 	<div id="main-bot">
@@ -137,7 +137,7 @@
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
-				<input type="text" maxlength="250" class="form-control" name="title">
+				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
 			</div>
 			<div id="approval-content-div">
 				<select id="proposal-type" class="form-select" name="proposalType">

@@ -6,8 +6,14 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
+import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
+import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
+import com.kh.checkmine.approval.vo.ApprovalProposalVo;
+import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -54,6 +60,42 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public MemberVo selectWriter(SqlSessionTemplate sst, String writerNo) {
 		return sst.selectOne("approvalMapper.selectWriter", writerNo);
+	}
+
+	//문서번호로 제안서 조회하기
+	@Override
+	public ApprovalProposalVo selectProposal(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectProposal", dno);
+	}
+
+	//문서번호로 회의록 조회하기
+	@Override
+	public ApprovalMinutesVo selectMinutes(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectMinutes", dno);
+	}
+
+	//문서번호로 지출결의서 조회하기
+	@Override
+	public ApprovalExpenditureVo selectExpenditure(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectExpenditure", dno);
+	}
+
+	//문서번호로 구매품의서 조회하기
+	@Override
+	public ApprovalBuyOrderVo selectBuyOrder(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("apprvalMapper.selectBuyOrder", dno);
+	}
+
+	//문서번호로 전표 조회하기
+	@Override
+	public ApprovalStateVo selectState(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectState", dno);
+	}
+
+	//문서번호로 휴가 조회하기
+	@Override
+	public ApprovalLeaveVo selectLeave(SqlSessionTemplate sst, String dno) {
+		return sst.selectOne("approvalMapper.selectLeave", dno);
 	}
 
 }

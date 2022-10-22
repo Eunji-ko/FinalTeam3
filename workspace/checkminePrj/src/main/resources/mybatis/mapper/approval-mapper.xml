@@ -63,5 +63,41 @@
 		WHERE NO = #{writerNo}
 		AND RESIGN_YN = 'N'
 	</select>
+	
+	<select id="selectProposal" resultType="ApprovalProposalVo">
+		SELECT *
+		FROM PROPOSAL
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectMinutes" resultType="ApprovalMinutesVo">
+		SELECT *
+		FROM MINUTES
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectExpenditure" resultType="ApprovalExpenditureVo">
+		SELECT *
+		FROM EXPENDITURE
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectBuyOrder" resultType="ApprovalBuyOrderVo">
+		SELECT *
+		FROM BUY_ORDER
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectState" resultType="ApprovalStateVo">
+		SELECT *
+		FROM STATE
+		WHERE NO = #{dno}
+	</select>
+	
+	<select id="selectLeave">
+		SELECT *
+		FROM LEAVE
+		WHERE NO = #{dno}
+	</select>
 
 </mapper>

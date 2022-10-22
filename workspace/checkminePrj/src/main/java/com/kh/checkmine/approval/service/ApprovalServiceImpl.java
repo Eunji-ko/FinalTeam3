@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.approval.dao.ApprovalDao;
+import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
+import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
+import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
+import com.kh.checkmine.approval.vo.ApprovalProposalVo;
+import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -61,6 +67,43 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public MemberVo selectEmpByNo(String writerNo) {
 		return dao.selectWriter(sst, writerNo);
 	}
+
+	//문서번호로 제안서 조회하기
+	@Override
+	public ApprovalProposalVo selectProposalByNo(String dno) {
+		return dao.selectProposal(sst, dno);
+	}
+
+	//문서번호로 회의록 조회하기
+	@Override
+	public ApprovalMinutesVo selectMinutesByNo(String dno) {
+		return dao.selectMinutes(sst, dno);
+	}
+
+	//문서번호로 지출결의서 조회하기
+	@Override
+	public ApprovalExpenditureVo selectExpenditureByNo(String dno) {
+		return dao.selectExpenditure(sst, dno);
+	}
+
+	//문서번호로 구매품의서 조회하기
+	@Override
+	public ApprovalBuyOrderVo selectBuyOrderByNo(String dno) {
+		return dao.selectBuyOrder(sst, dno);
+	}
+
+	//문서번호로 전표 조회하기
+	@Override
+	public ApprovalStateVo selectStateByNo(String dno) {
+		return dao.selectState(sst, dno);
+	}
+
+	//문서번호로 휴가 조회하기
+	@Override
+	public ApprovalLeaveVo selectLeaveByNo(String dno) {
+		return dao.selectLeave(sst, dno);
+	}
+	
 
 
 }
