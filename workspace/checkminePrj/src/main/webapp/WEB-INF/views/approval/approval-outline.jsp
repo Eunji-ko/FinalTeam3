@@ -64,6 +64,12 @@
 		margin-left : 20px;
 		margin-bottom : 20px;
     }
+	#approver-select-btn{
+		color: white;
+		background-color: #5d736f;
+		margin-left : 20px;
+		margin-bottom : 20px;
+	}
 </style>
 </head>
 <body>
@@ -75,6 +81,9 @@
     
     	<br>
     	<a href="${rootPath}/approval/list" class="btn" id="approval-list-btn">결재목록</a>
+    	<c:if test="${docVo eq null}">
+    	<button class="btn" id="approver-select-btn" onclick="selectApprover();">결재자 선택</button>
+    	</c:if>
 	    <div class="list-group list-group-horizontal left-space" id="list-tab" role="tablist">
 	        <a class="list-group-item active top-radius-btn" id="list-draft-list" data-bs-toggle="list" href="#list-draft" role="tab" aria-controls="list-draft">기안서</a>
 	        <a class="list-group-item top-radius-btn" id="list-proposal-list" data-bs-toggle="list" href="#list-proposal" role="tab" aria-controls="list-proposal">제안서</a>
@@ -112,76 +121,79 @@
     </main>
 </div>
 
+<!-- 작성하는 사람의 경우 -->
+<c:if test="${docVo eq null}">
+	<script>
+		//결재자 선택하는 함수
+		function selectApprover(){
+			window.open("${rootPath}/approval/select", "none", "width=450px, height=800px");
+		}
 
-<script>
-	//반려 알람탭 나오는 함수
-	function approval(){
-        if(confirm("결재하시겠습니까?")){
-            //예
-            return true;
-        }else{
-            //아니오
-            const result = prompt('반려사유 :');
-            if(result == null){
-                return false;
-            }else{
-                document.querySelector('#return-reason').val(result);
-                return true;
-            }
-        }
-    }
-</script>
+		//작성 마지막 확인
+		function approval(){
+			if(confirm("작성하시겠습니까?")){
+				//예
+				return true;
+			}else{
+				//아니오
+				return false;
+			}
+		}
+	</script>
+</c:if>
 
+<!-- 결재하는 사람의 경우 -->
 <c:if test="${docVo ne null}">
 	<script>
+		//반려 알람탭 나오는 함수
+		function approval(){
+			//작성자가 아닌 경우
+	        if(confirm("결재하시겠습니까?")){
+	            //예
+	            return true;
+	        }else{
+	            //아니오
+	            const result = prompt('반려사유 :');
+	            if(result == null){
+	                return false;
+	            }else{
+	                document.querySelector('#return-reason').val(result);
+	                return true;
+	            }
+	        }
+	    }
+	
 		//결재목록에서 들어왔을 때 해당 결재목록 보여주기
 		const type = '${docVo.type}';
+		$('#list-tab').children().prop('disabled',true);
+		$('#list-draft-list').removeClass('active');
+        $('#list-draft').removeClass('active');
+        $('#list-draft').removeClass('show');
 	    if(type == 'D'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-draft-list').addClass('active');
 	        $('#list-draft').addClass('active');
 	        $('#list-draft').addClass('show');
 	    }else if(type == 'P'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-proposal-list').addClass('active');
 	        $('#list-proposal').addClass('active');
 	        $('#list-proposal').addClass('show');
 	    }else if(type == 'M'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-minutes-list').addClass('active');
 	        $('#list-minutes').addClass('active');
 	        $('#list-minutes').addClass('show');
 	    }else if(type == 'B'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-buy-order-list').addClass('active');
 	        $('#list-buy-order').addClass('active');
 	        $('#list-buy-order').addClass('show');
 	    }else if(type == 'E'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-expenditure-list').addClass('active');
 	        $('#list-expenditure').addClass('active');
 	        $('#list-expenditure').addClass('show');
 	    }else if(type == 'S'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-state-list').addClass('active');
 	        $('#list-state').addClass('active');
 	        $('#list-state').addClass('show');
 	    }else if(type == 'L'){
-	        $('#list-draft-list').removeClass('active');
-	        $('#list-draft').removeClass('active');
-	        $('#list-draft').removeClass('show');
 	        $('#list-leave-list').addClass('active');
 	        $('#list-leave').addClass('active');
 	        $('#list-leave').addClass('show');
@@ -194,8 +206,6 @@
 	    $('select').prop('disabled', true);
 	</script>
 </c:if>
-
-
 
 </body>
 </html>
