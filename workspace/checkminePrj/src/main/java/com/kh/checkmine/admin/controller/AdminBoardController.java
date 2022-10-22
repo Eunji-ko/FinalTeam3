@@ -3,7 +3,6 @@ package com.kh.checkmine.admin.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.checkmine.admin.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
@@ -116,7 +114,7 @@ public class AdminBoardController {
 		
 		//파일 업로드 후 attVo에 담기
 		MultipartFile[] fArr =  attVo.getAttach();
-		List<BoardAttVo> attVoList = new LinkedList<BoardAttVo>();
+		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
 			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
@@ -221,7 +219,7 @@ public class AdminBoardController {
 		int result = 0;
 		
 		MultipartFile[] fArr =  attVo.getAttach();
-		List<BoardAttVo> attVoList = new LinkedList<BoardAttVo>();
+		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
 			for(int i = 0; i < fArr.length; i++) {

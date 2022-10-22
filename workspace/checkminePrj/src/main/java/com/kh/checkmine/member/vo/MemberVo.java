@@ -25,6 +25,7 @@ public class MemberVo {
     public String photoName;
     public String photoPath;
     public String permission;
+    private MultipartFile profile;
     
     public void encodePwd(PasswordEncoder pwdEnc) {
         this.pwd = pwdEnc.encode(this.pwd);
