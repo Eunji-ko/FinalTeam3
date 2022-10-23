@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,9 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	
 	private final AdminMemberDao dao;
 	private final SqlSessionTemplate sst;
-	private final PasswordEncoder pwdEnc;
+	private final BCryptPasswordEncoder pwdEnc;
 	
-	public AdminMemberServiceImpl(AdminMemberDao dao, SqlSessionTemplate sst, PasswordEncoder pwdEnc) {
+	public AdminMemberServiceImpl(AdminMemberDao dao, SqlSessionTemplate sst, BCryptPasswordEncoder pwdEnc) {
 		this.dao = dao;
 		this.sst = sst;
 		this.pwdEnc = pwdEnc;
@@ -81,6 +82,12 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	@Override
 	public MemberVo selectMember(String no) {
 		return dao.selectMember(sst, no);
+	}
+
+	//사원수정
+	@Override
+	public int edit(MemberVo vo) {
+		return dao.updateMember(sst, vo);
 	}
 	
 	

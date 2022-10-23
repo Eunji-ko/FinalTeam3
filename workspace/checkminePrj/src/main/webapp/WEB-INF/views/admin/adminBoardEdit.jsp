@@ -89,7 +89,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;글 수정하기</span>
                 </div>
             </div>

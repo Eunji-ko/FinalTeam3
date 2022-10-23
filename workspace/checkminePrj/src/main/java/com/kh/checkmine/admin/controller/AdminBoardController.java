@@ -239,7 +239,6 @@ public class AdminBoardController {
 			//제목 또는 내용만 수정 시
 			result = service.edit(vo);
 		}
-		
 
 		if(result == 1) {
 			session.setAttribute("msg", "게시물을 수정하였습니다.");

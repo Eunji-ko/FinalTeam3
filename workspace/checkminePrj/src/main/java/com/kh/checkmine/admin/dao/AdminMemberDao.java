@@ -38,4 +38,7 @@ public interface AdminMemberDao {
 	//사원 조회
 	MemberVo selectMember(SqlSessionTemplate sst, String no);
 
+	//사원 수정
+	int updateMember(SqlSessionTemplate sst, MemberVo vo);
+
 }

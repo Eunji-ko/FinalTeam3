@@ -99,6 +99,7 @@ public class AdminMemberController {
 			vo.setPhotoName(changeName);
 			vo.setPhotoPath(savePath);
 		}
+		
 		//권한 ',' 제거, 대문자로 변환
 		String permission = vo.getPermission().replace(",", "").toUpperCase();
 		vo.setPermission(permission);
@@ -140,7 +141,6 @@ public class AdminMemberController {
 		List<PosVo> pos = service.selectPosList();
 		
 		MemberVo memberVo = service.selectMember(no);
-		
 		model.addAttribute("memberVo", memberVo);
 		model.addAttribute("dept", dept);
 		model.addAttribute("pos", pos);
@@ -149,6 +149,51 @@ public class AdminMemberController {
 	
 	
 	//사원 수정
+	@PostMapping("edit/{no}")
+	public String edit(@PathVariable String no, MemberVo vo, HttpServletRequest req, HttpSession session) {
+	
+		//새로운 파일 있다면 업로드, 원래 있던 파일 삭제
+		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+			if(vo.getPhotoName() != null) {
+				File file = new File(savePath + vo.getPhotoName());
+				if(file.exists()) {
+					file.delete();
+				}				
+			}else {
+				//기존 사진없으면 path 설정
+				vo.setPhotoPath(savePath);
+			}
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setPhotoName(changeName);
+		}
+		
+		//권한 ',' 제거, 대문자로 변환
+		if(vo.getPermission() != null) {
+			String permission = vo.getPermission().replace(",", "").toUpperCase();
+			vo.setPermission(permission);			
+		}
+		System.out.println(vo);
+		int result = service.edit(vo);
+		if(result == 1) {
+			session.setAttribute("msg", "정상적으로 수정되었습니다.");
+			return "redirect:/admin/member/list";
+			
+		}else {
+			
+			if(!vo.getProfile().isEmpty()) {
+				String savepath = vo.getPhotoPath()+ vo.getPhotoName();
+				new File(savepath).delete();
+				}
+			}
+			session.setAttribute("msg", "죄송합니다. 문제가 발생하였습니다.");
+			return "redirect:/admin/member/list";
+
+	}
+	
+	
+	
+	
 	
 
 }
