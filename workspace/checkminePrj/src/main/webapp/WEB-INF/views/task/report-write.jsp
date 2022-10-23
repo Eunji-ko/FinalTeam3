@@ -234,7 +234,7 @@
 			          <a class="nav-link active" href="${root}/task/report/list">보고</a>
 			        </li>
 			        <li class="nav-item">
-			          <a class="nav-link" href="${root}/task/order/list">지시</a>
+			          <a class="nav-link" href="${root}/task/order/list/1">지시</a>
 			        </li>
 			    </ul>
 

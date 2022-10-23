@@ -75,13 +75,136 @@
 		    T.START_DATE,
 		    T.END_DATE,
 		    T.IMPORTANCE,
-		    E.NAME AS ORDERER,
-		    A.TASK_NO AS ATT
+		    E.NAME AS ORDERER
 		FROM TASK T
 		JOIN EMPLOYEE E
 		ON T.ORDERER = E.NO
-		JOIN TASK_ATT A
-		ON T.NO = A.TASK_NO
 		ORDER BY T.NO DESC
+ 	</select>
+ 	
+ 	<select id="selectAttList" resultType="TaskOrderAttVo">
+ 		SELECT
+		    A.TASK_NO,
+		    LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO
+		FROM TASK_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		GROUP BY A.TASK_NO
+ 	</select>
+ 	
+ 	<select id="selectOne" resultType="TaskOrderVo">
+ 		SELECT 
+		    T.NO,
+		    E.NAME AS ORDERER,
+		    T.DEPT_NO,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE
+		FROM TASK T
+		JOIN EMPLOYEE E
+		ON T.ORDERER = E.NO
+		WHERE T.NO = #{no}
+ 	</select>
+ 	
+ 	<select id="selectAttOne" resultType="TaskOrderAttVo">
+ 		SELECT
+		    A.TASK_NO,
+		    LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO
+		FROM TASK_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		WHERE A.TASK_NO = #{no}
+		AND TYPE = 'A'
+		GROUP BY A.TASK_NO
+ 	</select>
+ 	
+ 	<select id="selectAttROne" resultType="TaskOrderAttVo">
+ 		SELECT
+		    A.TASK_NO,
+		    LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO
+		FROM TASK_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		WHERE A.TASK_NO = #{no}
+		AND TYPE = 'R'
+		GROUP BY A.TASK_NO
+ 	</select>
+ 	
+ 	<select id="selectOneByNo" resultType="TaskOrderVo">
+		SELECT 
+		    LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME,
+		    A.TYPE,
+		    R.E_NO AS RATT_NAME,
+		    R.TYPE,
+		    A.TASK_NO,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE,
+		    O.ORDERER,
+		    O.POS_NAME,
+		    O.DEP_NAME
+		FROM TASK_ATT A
+		JOIN TASK T
+		ON A.TASK_NO = T.NO
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		JOIN(
+		    SELECT
+		        A.NO,
+		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO,
+		        A.TASK_NO,
+		        A.TYPE
+		    FROM TASK_ATT A
+		    JOIN EMPLOYEE E
+		    ON A.EMP_NO = E.NO
+		    WHERE TYPE = 'R'
+		    AND A.TASK_NO = #{no}
+		    GROUP BY
+		        A.NO,
+		        A.TASK_NO,
+		        A.TYPE
+		) R
+		ON A.TASK_NO = R.TASK_NO
+		JOIN(
+		    SELECT
+		        TAS.NO,
+		        EMP.NAME AS ORDERER,
+		        POS.NAME AS POS_NAME,
+		        DEP.NAME AS DEP_NAME
+		    FROM EMPLOYEE EMP
+		    JOIN DEPARTMENT DEP
+		    ON EMP.DEPT_NO = DEP.NO
+		    JOIN POSITION POS
+		    ON EMP.POS_NO = POS.NO
+		    JOIN TASK TAS
+		    ON TAS.ORDERER = EMP.NO
+		) O
+		ON O.NO = T.NO
+		WHERE A.TYPE = 'A'
+		AND A.TASK_NO = #{no}
+		GROUP BY
+		    A.TASK_NO,
+		    A.TYPE,
+		    R.E_NO,
+		    R.TYPE,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE,
+		    O.ORDERER,
+		    O.POS_NAME,
+		    O.DEP_NAME
  	</select>
 </mapper>

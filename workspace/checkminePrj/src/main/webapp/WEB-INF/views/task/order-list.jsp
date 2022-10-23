@@ -157,7 +157,7 @@
 			          <a class="nav-link" id="report" href="${root}/task/report/list">보고</a>
 			        </li>
 			        <li class="nav-item">
-			          <a class="nav-link active" id="order" href="${root}/task/order/list">지시</a>
+			          <a class="nav-link active" id="order" href="${root}/task/order/list/1">지시</a>
 			        </li>
 			      </ul>
 
@@ -169,9 +169,9 @@
                             <input type="text" placeholder="지시서 검색">
                         </div>
                     </form>
-                    <c:if test="${not empty loginMember}">
+                    <!--<c:if test="${not empty loginMember}">-->
                     	<div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
-                    </c:if>
+                    <!--</c:if>-->
                 </div>
                 
                 <!--보고서 목록-->
@@ -185,9 +185,15 @@
                     
                     <c:forEach items="${voList}" var="vo">
 	                    <div class="list">${vo.no}</div>
-	                    <div class="list">${vo.importance}</div>
-	                    <div class="list">${vo.att}</div>
-	                    <div class="list" id="title"><a href="${root}/task/order/detail">${vo.title}</a></div>
+	                    <div class="list">
+	                    	<c:if test="${vo.importance eq 'N'}"> <span>보통</span></c:if>
+	                    	<c:if test="${vo.importance eq 'E'}"> <span>중요</span></c:if>
+	                    	<c:if test="${vo.importance eq 'I'}"> <span>긴급</span></c:if>
+	                    </div>
+	                    <div class="list">
+	                    		${att.empNo}
+	                    </div>
+	                    <div class="list" id="title"><a href="${root}/task/order/detail/${vo.no}">${vo.title}</a></div>
 	                    <div class="list">${vo.orderer}</div>
 	                    <div class="list">${vo.enrollDate}</div>
                     </c:forEach>
@@ -196,15 +202,15 @@
                 
                 <!--페이징-->
                 <div id="page-area">
-                    <a href=""><<</a>
-                    <a href=""><</a>
-                    <a href="">1</a>
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">4</a>
-                    <a href="">5</a>
-                    <a href="">></a>
-                    <a href="">>></a>
+                	<c:if test="${pv.startPage ne 1}">                	
+	                    <a href="${root}/task/order/list/${pv.startPage-1}"><</a>
+                	</c:if>
+                    <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                    	<a href="${root}/task/order/list/${i}">${i}</a>
+                    </c:forEach>
+                    <c:if test="${pv.endPage ne pv.maxPage}">
+                    	<a href="${root}/task/order/list/${pv.endPage + 1}">></a>
+                    </c:if>
                 </div>
             </div>
         
