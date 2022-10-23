@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.checkmine.approval.service.ApprovalService;
 import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
@@ -144,9 +147,32 @@ public class ApprovalController {
 		return "approval/approval-outline";
 	}
 	
+	//결재자 검색 ajax
+	@PostMapping(value={"first", "second", "third", "final"})
+	@ResponseBody
+	public String firstAp(String approver, Model model) {
+		
+		//이름으로 사원 검색
+		List<MemberVo> memberList = service.selectEmpByName(approver);
+		
+		Gson gson = new Gson();
+		JsonObject obj = new JsonObject();
+		if(memberList != null) {
+			for(int i=0; i<memberList.size(); i++) {
+				obj.addProperty("approver" + i, memberList.get(i).getName());
+				obj.addProperty("email" + i, memberList.get(i).getEmail());
+			}
+			model.addAttribute("memberList", memberList);
+		}
+		String allEmpCnt = Integer.toString(service.selectEmpByName("").size());
+		obj.addProperty("allEmpCnt", allEmpCnt);
+	
+		return gson.toJson(obj);
+	}
+	
 	//기안서 작성
 	@PostMapping(value={"draft/{dno}", "draft"})
-	public String draft(@PathVariable String dno, ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session) {
+	public String draft(@PathVariable(required = false) String dno, ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session) {
 		
 		//회원 정보 가져오기
 		

@@ -54,4 +54,7 @@ public interface ApprovalDao {
 	//문서번호로 휴가 조회하기
 	ApprovalLeaveVo selectLeave(SqlSessionTemplate sst, String dno);
 
+	//사원 이름으로 사원 검색
+	List<MemberVo> selectEmpList(SqlSessionTemplate sst, String approver);
+
 }

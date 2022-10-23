@@ -103,6 +103,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ApprovalLeaveVo selectLeaveByNo(String dno) {
 		return dao.selectLeave(sst, dno);
 	}
+
+	//사원 이름으로 사원 검색하기
+	@Override
+	public List<MemberVo> selectEmpByName(String approver) {
+		return dao.selectEmpList(sst, approver);
+	}
 	
 
 

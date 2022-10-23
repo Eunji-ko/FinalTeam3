@@ -126,7 +126,7 @@
 	<script>
 		//결재자 선택하는 함수
 		function selectApprover(){
-			window.open("${rootPath}/approval/select", "none", "width=450px, height=800px");
+			window.open("${rootPath}/approval/select", "none", "width=500px, height=800px");
 		}
 
 		//작성 마지막 확인
@@ -157,7 +157,7 @@
 	            if(result == null){
 	                return false;
 	            }else{
-	                document.querySelector('#return-reason').val(result);
+	                $('#return-reason').val(result);
 	                return true;
 	            }
 	        }

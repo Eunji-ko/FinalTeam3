@@ -98,4 +98,10 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.selectOne("approvalMapper.selectLeave", dno);
 	}
 
+	//사원 이름으로 사원 검색
+	@Override
+	public List<MemberVo> selectEmpList(SqlSessionTemplate sst, String approver) {
+		return sst.selectList("approvalMapper.selectEmpList", approver);
+	}
+
 }
