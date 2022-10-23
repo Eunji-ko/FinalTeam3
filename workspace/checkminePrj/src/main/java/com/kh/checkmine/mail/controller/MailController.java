@@ -97,6 +97,27 @@ public class MailController {
 		return listStr;
 	}
 	
+	/**
+	 * 메일 중요도 바꾸기
+	 * @param mailNum
+	 * @param importance
+	 * @return
+	 */
+	@PostMapping("importance")
+	@ResponseBody
+	public String setImp(String mailNum, String importance) {
+		HashMap<String, String > impMap = new HashMap<String, String>();
+		
+		System.out.println(mailNum);
+		
+		impMap.put("mailNum", mailNum);
+		impMap.put("importance", importance);
+		
+		int result = service.setImp(impMap);
+		
+		return Integer.toString(result);
+	}
+	
 	
 	
 }

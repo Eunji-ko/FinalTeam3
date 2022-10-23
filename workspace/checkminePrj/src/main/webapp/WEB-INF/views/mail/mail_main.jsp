@@ -256,6 +256,9 @@
                     data:{
                         'mailNum' : mailNum,
                         'importance' : 'N'
+                    },
+                    success:function (result){
+                    	alert(result);
                     }
                 });
             }else{
@@ -335,9 +338,9 @@
                             }
                             
                             mailListWrap.innerHTML = mailListWrap.innerHTML + 
-                            '<div id="' +list[i].mailNo + '" class="mail-item ' + read + ' ' + imp + ' d-flex align-items-center">'+
+                            '<div id="' +list[i].no + '" class="mail-item ' + read + ' ' + imp + ' d-flex align-items-center">'+
                                 '<a href="/checkmine/mail/detail?' + list[i].mailNo +'" class="mail-list-item"> '+
-                                    '<input type="checkbox" value="' + list[i].mailNo + '">'+
+                                    '<input type="checkbox" value="' + list[i].no + '">'+
                                     '<span style="width: 250px; font-size:13px;">' + list[i].senderEmail+ '</span>'+
                                     '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
                                     '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+

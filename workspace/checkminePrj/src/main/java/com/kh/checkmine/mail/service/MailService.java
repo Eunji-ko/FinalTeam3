@@ -22,4 +22,7 @@ public interface MailService {
 	//멤버의 보낸 메일 리스트 가져오기
 	List<MailVo> getSendList(String loginMember, PageVo pageVo);
 
+	//중요도 바꾸기
+	int setImp(HashMap<String, String> impMap);
+
 }

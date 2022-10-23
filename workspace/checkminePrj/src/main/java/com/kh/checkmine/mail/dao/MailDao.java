@@ -46,4 +46,12 @@ public interface MailDao {
 	 */
 	List<MailVo> getSendMailList(SqlSessionTemplate sst, String loginMember, PageVo pageVo);
 
+	/**
+	 * 중요도 표시 별표
+	 * @param sst
+	 * @param impMap
+	 * @return
+	 */
+	int setImp(SqlSessionTemplate sst, HashMap<String, String> impMap);
+
 }

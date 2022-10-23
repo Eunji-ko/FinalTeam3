@@ -53,4 +53,12 @@ public class MailDaoImpl implements MailDao{
 		return sst.selectList("mailMapper.selectSendList", loginMember, rb);
 	}
 
+	/**
+	 * 중요도 표시
+	 */
+	@Override
+	public int setImp(SqlSessionTemplate sst, HashMap<String, String> impMap) {
+		return sst.update("mailMapper.updateImp", impMap);
+	}
+
 }

@@ -58,9 +58,20 @@ public class MailServiceImpl implements MailService{
 		return dao.getSendMailListCount(sst, loginMember);
 	}
 
+	/**
+	 * 보낸메일 리스트 가져오기
+	 */
 	@Override
 	public List<MailVo> getSendList(String loginMember, PageVo pageVo) {
 		return dao.getSendMailList(sst,loginMember, pageVo);
+	}
+
+	/**
+	 * 중요도 설정
+	 */
+	@Override
+	public int setImp(HashMap<String, String> impMap) {
+		return dao.setImp(sst, impMap);
 	}
 
 }
