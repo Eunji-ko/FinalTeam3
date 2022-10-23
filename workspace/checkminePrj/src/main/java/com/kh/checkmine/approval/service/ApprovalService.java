@@ -6,6 +6,7 @@ import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
 import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalFileVo;
 import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
@@ -51,6 +52,36 @@ public interface ApprovalService {
 
 	//문서번호로 휴가 조회하기
 	ApprovalLeaveVo selectLeaveByNo(String dno);
+
+	//사원 이름으로 사원 검색
+	List<MemberVo> selectEmpByName(String approver);
+
+	//반려사유 업데이트
+	int updateApReturn(ApprovalVo apVo);
+
+	//최종 결재 후 결재정보 업데이트
+	int updateApStatus(ApprovalVo apVo);
+
+	//1차 결재일 업데이트
+	int updateApDate1();
+
+	//2차 결재일 업데이트
+	int updateApDate2();
+
+	//3차 결재일 업데이트
+	int updateApDate3();
+
+	//문서 정보 DB에 올리기
+	int insertApDoc(ApprovalDocVo docVo);
+
+	//결재 정보 DB에 올리기
+	int insertApproval(ApprovalVo apVo);
+
+	//기안서 정보 DB에 올리기
+	int insertDraft(ApprovalDraftVo draftVo);
+
+	//파일 정보 DB에 올리기
+	int insertFile(ApprovalFileVo fileVo);
 
 
 }

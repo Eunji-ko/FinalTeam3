@@ -94,10 +94,25 @@
 		WHERE NO = #{dno}
 	</select>
 	
-	<select id="selectLeave">
+	<select id="selectLeave" resultType="ApprovalLeaveVo">
 		SELECT *
 		FROM LEAVE
 		WHERE NO = #{dno}
 	</select>
+	
+	<select id="selectEmpList" resultType="MemberVo">
+		SELECT *
+		FROM EMPLOYEE
+		WHERE NAME LIKE '%${approver}%'
+	</select>
+	
+	<update id="updateReturn">
+		UPDATE APPROVAL
+		SET
+		    FINAL_DATE = SYSDATE
+		    ,STATUS = '반려'
+		    ,RETURN_REASON = #{returnReason}
+		 WHERE "NO" = #{no}
+	</update>
 
 </mapper>

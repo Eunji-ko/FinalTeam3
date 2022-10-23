@@ -153,7 +153,13 @@
 				
 			<div id="approval-btn-div">
 				<input type="file" name="expenditureFile" id="" multiple>
+				<!--반려사유-->
 				<input type="hidden" id="return-reason" name="returnReason">
+				<!--결재자 번호-->
+				<input type="hidden" name="firstApprover" id="first-approver">
+				<input type="hidden" name="secondApprover" id="second-approver">
+				<input type="hidden" name="thirdApprover" id="third-approver">
+				<input type="hidden" name="finalApprover" id="final-approver">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
