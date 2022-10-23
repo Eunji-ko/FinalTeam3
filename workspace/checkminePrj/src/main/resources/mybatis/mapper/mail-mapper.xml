@@ -38,4 +38,12 @@
 		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SENDER = #{loginMember} 
 		ORDER BY SEND_DATE DESC
 	</select>
+	
+	<update id="updateImp">
+		UPDATE MAIL_REF
+		SET
+			IMPORTANCE = #{importance}
+		WHERE
+			NO = #{mailNum}
+	</update>
 </mapper>
