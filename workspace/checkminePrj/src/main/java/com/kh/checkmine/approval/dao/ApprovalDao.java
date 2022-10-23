@@ -8,6 +8,7 @@ import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
 import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalFileVo;
 import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
@@ -56,5 +57,32 @@ public interface ApprovalDao {
 
 	//사원 이름으로 사원 검색
 	List<MemberVo> selectEmpList(SqlSessionTemplate sst, String approver);
+
+	//반려사유 업데이트
+	int updateReturn(SqlSessionTemplate sst, ApprovalVo apVo);
+
+	//최종 결재 후 결재정보 업데이트
+	int updateStatus(SqlSessionTemplate sst, ApprovalVo apVo);
+
+	//1차 결재일 업데이트
+	int updateDate1(SqlSessionTemplate sst);
+
+	//2차 결재일 업데이트
+	int updateDate2(SqlSessionTemplate sst);
+
+	//3차 결재일 업데이트
+	int updateDate3(SqlSessionTemplate sst);
+
+	//문서정보 DB에 올리기
+	int insertDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);
+
+	//결재정보 DB에 올리기
+	int insertApproval(SqlSessionTemplate sst, ApprovalVo apVo);
+
+	//기안서 정보 DB에 올리기
+	int insertDraft(SqlSessionTemplate sst, ApprovalDraftVo draftVo);
+
+	//파일정보 DB에 올리기
+	int insertFile(SqlSessionTemplate sst, ApprovalFileVo fileVo);
 
 }

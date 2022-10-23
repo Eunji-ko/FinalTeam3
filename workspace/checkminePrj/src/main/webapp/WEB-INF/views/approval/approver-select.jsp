@@ -56,6 +56,7 @@
 
     <main id="wrapper">
         <div>
+            ${memberList}
             <div>선택항목</div>
             <div class="input-group mb-3">
                 <input id="search-first" name="first" type="text" class="form-control" placeholder="1차 결재자">
@@ -99,25 +100,24 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-  					if((Object.keys(data).length - 1)/2 == data.allEmpCnt || Object.keys(data).length == 1){
+  					if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/2 > 1){
+  					}else if((Object.keys(data).length - 1)/3 > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/2); i++){
-                            $($('.select-member')[i]).val(data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
+                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember1);
-                        $($('.select-member')[((Object.keys(data).length-1)/2)-1]).hide();
+                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        approver = data.approver0;
-                        $('#search-first').val(approver);
+                        $('#search-first').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
                     }
   				},
   				error : function(){
@@ -135,25 +135,24 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/2 == data.allEmpCnt || Object.keys(data).length == 1){
+                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/2 > 1){
+  					}else if((Object.keys(data).length - 1)/3 > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/2); i++){
-                            $($('.select-member')[i]).val(data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
+                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember2);
-                        $($('.select-member')[((Object.keys(data).length-1)/2)-1]).hide();
+                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        approver = data.approver0;
-                        $('#search-second').val(approver);
+                        $('#search-second').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
                     }
   				},
   				error : function(){
@@ -171,25 +170,24 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/2 == data.allEmpCnt || Object.keys(data).length == 1){
+                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/2 > 1){
+  					}else if((Object.keys(data).length - 1)/3 > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/2); i++){
-                            $($('.select-member')[i]).val(data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
+                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember3);
-                        $($('.select-member')[((Object.keys(data).length-1)/2)-1]).hide();
+                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        approver = data.approver0;
-                        $('#search-third').val(approver);
+                        $('#search-third').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
                     }
   				},
   				error : function(){
@@ -207,25 +205,24 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/2 == data.allEmpCnt || Object.keys(data).length == 1){
+                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/2 > 1){
+  					}else if((Object.keys(data).length - 1)/3 > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/2); i++){
-                            $($('.select-member')[i]).val(data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
+                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember4);
-                        $($('.select-member')[((Object.keys(data).length-1)/2)-1]).hide();
+                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        approver = data.approver0;
-                        $('#search-final').val(approver);
+                        $('#search-final').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
                     }
   				},
   				error : function(){
@@ -279,10 +276,14 @@
             var searchThird = $('#search-third').val();
             var searchFinal = $('#search-final').val();
             if($('#search-final').val() != null && $('#search-final').val() != ""){
-                window.opener.document.querySelector('#approver5').innerHTML = searchFirst.split(" ")[0];
-                window.opener.document.querySelector('#approver6').innerHTML = searchSecond.split(" ")[0];
-                window.opener.document.querySelector('#approver7').innerHTML = searchThird.split(" ")[0];
-                window.opener.document.querySelector('#approver8').innerHTML = searchFinal.split(" ")[0];
+                window.opener.document.querySelector('#approver5').innerHTML = searchFirst.split(" ")[1];
+                window.opener.document.querySelector('#approver6').innerHTML = searchSecond.split(" ")[1];
+                window.opener.document.querySelector('#approver7').innerHTML = searchThird.split(" ")[1];
+                window.opener.document.querySelector('#approver8').innerHTML = searchFinal.split(" ")[1];
+                window.opener.document.querySelector('#first-approver').innerHTML = searchFirst.split(" ")[0];
+                window.opener.document.querySelector('#second-approver').innerHTML = searchSecond.split(" ")[0];
+                window.opener.document.querySelector('#third-approver').innerHTML = searchThird.split(" ")[0];
+                window.opener.document.querySelector('#final-approver').innerHTML = searchFinal.split(" ")[0];
                 window.close();
             }else{
                 alert('최종 결재자를 선택하시기 바랍니다.');

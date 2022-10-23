@@ -10,6 +10,7 @@ import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
 import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalFileVo;
 import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
@@ -102,6 +103,68 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public List<MemberVo> selectEmpList(SqlSessionTemplate sst, String approver) {
 		return sst.selectList("approvalMapper.selectEmpList", approver);
+	}
+
+	//반려사유 업데이트
+	@Override
+	public int updateReturn(SqlSessionTemplate sst, ApprovalVo apVo) {
+		System.out.println("dao ::: " + apVo);
+		return sst.update("approvalMapper.updateReturn", apVo);
+	}
+
+	//최종 결재 후 결재정보 업데이트
+	@Override
+	public int updateStatus(SqlSessionTemplate sst, ApprovalVo apVo) {
+		return 0;
+	}
+
+	//1차 결재일 업데이트
+	@Override
+	public int updateDate1(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//2차 결재일 업데이트
+	@Override
+	public int updateDate2(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//3차 결재일 업데이트
+	@Override
+	public int updateDate3(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//문서정보 DB에 올리기
+	@Override
+	public int insertDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//결재정보 DB에 올리기
+	@Override
+	public int insertApproval(SqlSessionTemplate sst, ApprovalVo apVo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//기안서 정보 DB에 올리기
+	@Override
+	public int insertDraft(SqlSessionTemplate sst, ApprovalDraftVo draftVo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//파일정보 DB에 올리기
+	@Override
+	public int insertFile(SqlSessionTemplate sst, ApprovalFileVo fileVo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

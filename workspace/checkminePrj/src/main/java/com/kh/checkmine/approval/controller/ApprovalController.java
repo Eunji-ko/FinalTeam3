@@ -2,6 +2,7 @@ package com.kh.checkmine.approval.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,7 +151,7 @@ public class ApprovalController {
 	//결재자 검색 ajax
 	@PostMapping(value={"first", "second", "third", "final"})
 	@ResponseBody
-	public String firstAp(String approver, Model model) {
+	public String firstAp(String approver) {
 		
 		//이름으로 사원 검색
 		List<MemberVo> memberList = service.selectEmpByName(approver);
@@ -161,8 +162,8 @@ public class ApprovalController {
 			for(int i=0; i<memberList.size(); i++) {
 				obj.addProperty("approver" + i, memberList.get(i).getName());
 				obj.addProperty("email" + i, memberList.get(i).getEmail());
+				obj.addProperty("num" + i, memberList.get(i).getNo());
 			}
-			model.addAttribute("memberList", memberList);
 		}
 		String allEmpCnt = Integer.toString(service.selectEmpByName("").size());
 		obj.addProperty("allEmpCnt", allEmpCnt);
@@ -171,14 +172,68 @@ public class ApprovalController {
 	}
 	
 	//기안서 작성
+	//TODO : 쿠키로 되는지 확인...세션 안된다 그러면 쿠키 물어보기
 	@PostMapping(value={"draft/{dno}", "draft"})
-	public String draft(@PathVariable(required = false) String dno, ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session) {
+	public String draft(@PathVariable(required = false) String dno, ApprovalVo apVo, ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session, HttpServletRequest req) {
 		
-		//회원 정보 가져오기
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		System.out.println(dno);
+		System.out.println(apVo);
+		System.out.println(docVo);
+		System.out.println(draftVo);
+		System.out.println(fileVo);
 		
 		//문서번호 존재 여부 확인
-		
+		if(dno != null) {
+			int reject = 0;
+			int complete = 0;
+			int approval = 0;
+			if(apVo.getReturnReason() != null) {
+				//반려사유 업데이트, 최종 결재일 업데이트
+				System.out.println("controller ::: " + apVo);
+				reject = service.updateApReturn(apVo);
+				System.out.println(reject);
+			}else if(loginMember.getNo().equals(apVo.getFinalApprover())){//최종 결재자 비교
+				//상태(대기 -> 승인), 최종 결재일 업데이트
+				complete = service.updateApStatus(apVo);
+			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//1차 결재자 비교
+				//1차 결재일 업데이트
+				approval = service.updateApDate1();
+			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//2차 결재자 비교
+				//2차 결재일 업데이트
+				approval = service.updateApDate2();
+			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//3차 결재자 비교
+				//3차 결재일 업데이트
+				approval = service.updateApDate3();
+			}
+			if(reject == 1 || complete == 1 || approval == 1) {
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}else {
+				session.setAttribute("alertMsg", "처리에 실패하였습니다.");
+			}
+		}else {
+			int docResult = service.insertApDoc(docVo);
+			int apResult = service.insertApproval(apVo);
+			int draftResult = service.insertDraft(draftVo);
+			
+			if(fileVo.getFileName() != null && !fileVo.getFileName().isEmpty()) {
+				//파일 있음
+				//파일 업로드 후 저장된 파일명 얻기
+				String savePath = req.getServletContext().getRealPath("/resources/upload/approval/");
+				String changeName = "";
+			}
+			
+			int fileResult = service.insertFile(fileVo);
+			
+			if(docResult*apResult*draftResult == 1 || docResult*apResult*draftResult*fileResult == 1) {
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}else {
+				session.setAttribute("alertMsg", "처리에 실패하였습니다.");
+			}
+		}
 		return "redirect:/approval";
 	}
 
-}
+}//class

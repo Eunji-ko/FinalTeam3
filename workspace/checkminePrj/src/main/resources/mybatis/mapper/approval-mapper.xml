@@ -105,5 +105,14 @@
 		FROM EMPLOYEE
 		WHERE NAME LIKE '%${approver}%'
 	</select>
+	
+	<update id="updateReturn">
+		UPDATE APPROVAL
+		SET
+		    FINAL_DATE = SYSDATE
+		    ,STATUS = '반려'
+		    ,RETURN_REASON = #{returnReason}
+		 WHERE "NO" = #{no}
+	</update>
 
 </mapper>

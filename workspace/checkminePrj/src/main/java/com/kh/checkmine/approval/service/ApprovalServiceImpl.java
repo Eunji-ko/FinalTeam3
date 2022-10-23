@@ -11,6 +11,7 @@ import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.approval.vo.ApprovalDraftVo;
 import com.kh.checkmine.approval.vo.ApprovalExpenditureVo;
+import com.kh.checkmine.approval.vo.ApprovalFileVo;
 import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
@@ -109,7 +110,60 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<MemberVo> selectEmpByName(String approver) {
 		return dao.selectEmpList(sst, approver);
 	}
-	
 
+	//반려사유 업데이트
+	@Override
+	public int updateApReturn(ApprovalVo apVo) {
+		System.out.println("service ::: " + apVo);
+		return dao.updateReturn(sst, apVo);
+	}
+
+	//최종 결재 후 결재정보 업데이트
+	@Override
+	public int updateApStatus(ApprovalVo apVo) {
+		return dao.updateStatus(sst, apVo);
+	}
+
+	//1차 결재일 업데이트
+	@Override
+	public int updateApDate1() {
+		return dao.updateDate1(sst);
+	}
+
+	//2차 결재일 업데이트
+	@Override
+	public int updateApDate2() {
+		return dao.updateDate2(sst);
+	}
+
+	//3차 결재일 업데이트
+	@Override
+	public int updateApDate3() {
+		return dao.updateDate3(sst);
+	}
+
+	//문서정보 DB에 올리기
+	@Override
+	public int insertApDoc(ApprovalDocVo docVo) {
+		return dao.insertDoc(sst, docVo);
+	}
+
+	//결재정보 DB에 올리기
+	@Override
+	public int insertApproval(ApprovalVo apVo) {
+		return dao.insertApproval(sst, apVo);
+	}
+
+	//기안서 정보 DB에 올리기
+	@Override
+	public int insertDraft(ApprovalDraftVo draftVo) {
+		return dao.insertDraft(sst, draftVo);
+	}
+
+	//파일정보 DB에 올리기
+	@Override
+	public int insertFile(ApprovalFileVo fileVo) {
+		return dao.insertFile(sst, fileVo);
+	}
 
 }
