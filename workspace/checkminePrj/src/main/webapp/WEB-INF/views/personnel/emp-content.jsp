@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,7 +112,7 @@
             <table class="table table-hover psn-emp-table">
                 <thead>
                     <tr>
-                        <th>사원번호</th>
+                        <th>번호</th>
                         <th>이름</th>
                         <th>부서</th>
                         <th>직위</th>
@@ -121,70 +122,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-bs-toggle="modal" data-bs-target="#changeEmp">
-                        <th>1</th>
-                        <td>테스트</td>
-                        <td>-</td>
-                        <td>사장</td>
-                        <td>checkmine01</td>
-                        <td>2005.01.01</td>
-                        <td>재직</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>김부장</td>
-                        <td>영업부</td>
-                        <td>부장</td>
-                        <td>checkmine02</td>
-                        <td>2022.01.01</td>
-                        <td>재직</td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>이차장</td>
-                        <td>마케팅부</td>
-                        <td>차장</td>
-                        <td>checkmine03</td>
-                        <td>2022.01.02</td>
-                        <td>퇴직</td>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <td>강주임</td>
-                        <td>회계부</td>
-                        <td>주임</td>
-                        <td>checkmine04</td>
-                        <td>2022.01.03</td>
-                        <td>재직</td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <td>서사원</td>
-                        <td>영업부</td>
-                        <td>사원</td>
-                        <td>checkmine05</td>
-                        <td>2022.01.03</td>
-                        <td>퇴직</td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <td>홍길동</td>
-                        <td>총무부</td>
-                        <td>주임</td>
-                        <td>honggildong</td>
-                        <td>2022.01.03</td>
-                        <td>재직</td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <td>심원용</td>
-                        <td>인사부</td>
-                        <td>부장</td>
-                        <td>1dragon1234</td>
-                        <td>2022.01.04</td>
-                        <td>재직</td>
-                    </tr>
-                    
+                    <c:forEach var="emp" items="${memList}">
+                        <tr data-bs-toggle="modal" data-bs-target="#changeEmp">
+                            <th>${emp.no}</th>
+                            <td>${emp.name}</td>
+                            <td>${emp.deptNo}</td>
+                            <td>${emp.posNo}</td>
+                            <td>${emp.id}</td>
+                            <td>${fn:substring(emp.enrollDate,0,10)}</td>
+                            <td>
+                                <c:if test="${emp.resignYn eq 'N'}">
+                                    재직
+                                </c:if>
+                                <c:if test="${emp.resignYn eq 'Y'}">
+                                    퇴직
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>  
                 </tbody>
             </table>
         </div>
