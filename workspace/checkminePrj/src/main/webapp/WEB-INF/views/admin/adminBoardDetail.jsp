@@ -155,7 +155,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="location.href='${root}/admin/board/list?sort=a&p=1'">←</button>
+                    <button onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;상세보기</span>
                 </div>
             </div>
@@ -267,7 +267,7 @@
                 return;
             }
             const boardNo = ${board.no};
-            const replierName = '${sessionScope.loginAdmin.name}' + ' 관리자';
+            const replierName = '${sessionScope.loginAdmin.name}';
             
             $.ajax({
                 url: "${root}/reply/write",
@@ -287,9 +287,11 @@
                             + replierName + '</div><div>' + dateString +'</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div><div>' 
                                 + replyText + '</div></div>');
                         
+                        //해당 항목 수정할 계획
+                        location.reload();
+                        
                         //기존에 입력한 내용 지우기
                         document.querySelector('#replyText').value = '';
-                    
                     
                     }else{
                         alert("처리 중 문제가 발생하였습니다.");
@@ -315,7 +317,7 @@
             }
 
             const replyNo = document.querySelector('#replyNo').value;
-
+	
             $.ajax({
                 url: "${root}/reply/delete",
                 type : "POST",
@@ -329,7 +331,6 @@
                    
                     }else{
                         alert("처리 중 문제가 발생하였습니다.");
-                        
                     }
                 },
                 error: function(result){
