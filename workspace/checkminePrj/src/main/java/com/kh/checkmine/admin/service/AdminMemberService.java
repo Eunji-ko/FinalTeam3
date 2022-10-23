@@ -36,4 +36,7 @@ public interface AdminMemberService {
 	//사원조회
 	MemberVo selectMember(String no);
 
+	//사원 수정
+	int edit(MemberVo vo);
+
 }

@@ -113,10 +113,10 @@
         <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
         
         <main class="shadow">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="${root}/admin/member/edit/${m.no}" method="post" enctype="multipart/form-data">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;상세보기</span>
                 </div>
                 
@@ -125,8 +125,11 @@
             
                 <div id="infoWrap">
                     <div id="memberInfo">
-                    <div id="modify">수정일자 ${m.modifyDate}</div>
-                    
+                    <div id="modify">
+                    	<c:if test="${m.modifyDate ne null}">
+                    		수정일자 ${m.modifyDate}
+                    	</c:if>
+                    </div>
                         <div id="profileImg">
                             <div id="imgArea">
                             	<c:choose>
@@ -135,11 +138,12 @@
                             		</c:when>
                             		<c:otherwise>
                             			<img src="${root}/resources/upload/profile/${m.photoName}" alt="프로필" id="reviewImg" style="width: 200px; height: 200px; border-radius: 50%;">
+                            			<input type="hidden" name="photoName" value="${m.photoName}">
                             		</c:otherwise>
                             	</c:choose>
 
                             </div>
-                            <input type="file" name="photo" id="photo" onchange="review()">
+                            <input type="file" name="profile" id="photo" onchange="review()">
                         </div>
                         
                         <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"  value="${m.name}" required></div>
@@ -181,28 +185,28 @@
                             <br>
                             <c:choose>
                             	<c:when test="${fn:contains(m.permission, 'N')}">
-                            		<input type="checkbox" name="N" checked><label style="font-weight: normal;">공지 등록</label>
+                            		<input type="checkbox" name="permission" value="n" checked><label style="font-weight: normal;">공지 등록</label>
                             	</c:when>
                             	<c:otherwise>
-                            		<input type="checkbox" name="N"><label style="font-weight: normal;">공지 등록</label>
+                            		<input type="checkbox" name="permission" value="n"><label style="font-weight: normal;">공지 등록</label>
                             	</c:otherwise>
                             </c:choose>
                             <br>
                             <c:choose>
                             	<c:when test="${fn:contains(m.permission, 'R')}">
-                            		<input type="checkbox" name="R" checked><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            		<input type="checkbox" name="permission" value="r" checked><label style="font-weight: normal;">장비/장소 예약 승인</label>
                             	</c:when>
                             	<c:otherwise>
-                            		<input type="checkbox" name="R"><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            		<input type="checkbox" name="permission" value="r"><label style="font-weight: normal;">장비/장소 예약 승인</label>
                             	</c:otherwise>
                             </c:choose>
                             <br>
                             <c:choose>
                             	<c:when test="${fn:contains(m.permission, 'H')}">
-                            		<input type="checkbox" name="H" checked><label style="font-weight: normal;">인사 관리</label>
+                            		<input type="checkbox" name="permission" value="h" checked><label style="font-weight: normal;">인사 관리</label>
                             	</c:when>
                             	<c:otherwise>
-                            		<input type="checkbox" name="H"><label style="font-weight: normal;">인사 관리</label>
+                            		<input type="checkbox" name="permission" value="h"><label style="font-weight: normal;">인사 관리</label>
                             	</c:otherwise>
                             </c:choose>
                         </div>

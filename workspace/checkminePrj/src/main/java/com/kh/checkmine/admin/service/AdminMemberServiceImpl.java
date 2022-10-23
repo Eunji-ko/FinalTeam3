@@ -83,6 +83,12 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	public MemberVo selectMember(String no) {
 		return dao.selectMember(sst, no);
 	}
+
+	//사원수정
+	@Override
+	public int edit(MemberVo vo) {
+		return dao.updateMember(sst, vo);
+	}
 	
 	
 

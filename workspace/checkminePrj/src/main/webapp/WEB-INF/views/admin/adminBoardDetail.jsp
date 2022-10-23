@@ -155,7 +155,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
+                    <button onclick="location.href='${root}/admin/board/list?sort=a&p=1'">←</button>
                     <span id="header">&nbsp;&nbsp;상세보기</span>
                 </div>
             </div>

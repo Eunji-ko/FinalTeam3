@@ -94,4 +94,19 @@
         WHERE NO = #{no}
   </select>
   
+  <update id="updateMember" parameterType="MemberVo">
+	UPDATE EMPLOYEE SET NAME = #{name}, POS_NO = #{posNo}, DEPT_NO = #{deptNo}, ADDRESS = #{address},
+	  	ADDRESS_DETAIL = #{addressDetail}, PHONE = #{phone}, PHOTO_NAME = #{photoName}, PHOTO_PATH = #{photoPath},
+	  	PERMISSION = #{permission}, MODIFY_DATE = SYSDATE, RESIGN_DATE = #{resignDate}
+	  	<choose>
+	  		<when test="resignDate != ''">
+	  			, RESIGN_YN = 'Y'
+	  		</when>
+	  		<otherwise>
+	  			, RESIGN_YN = 'N'
+	  		</otherwise>
+	  	</choose>
+	  WHERE NO = #{no}
+  </update>
+  
 </mapper>

@@ -74,6 +74,12 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 	public MemberVo selectMember(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("adminmMapper.selectMember", no);
 	}
+
+	//사원 수정
+	@Override
+	public int updateMember(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("adminmMapper.updateMember", vo);
+	}
 	
 	
 

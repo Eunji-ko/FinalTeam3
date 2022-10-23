@@ -130,7 +130,7 @@
                             <div id="imgArea">
                                 <img src="${root}/resources/img/admin/user-icon-thum.png" alt="기본이미지" id="reviewImg"style="width: 200px; height: 200px; border-radius: 50%;">
                             </div>
-                            <input type="file" name="photo" id="photo" onchange="review()">
+                            <input type="file" name="profile" id="photo" onchange="review()">
                         </div>
                         
                         <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name" required></div>
