@@ -47,62 +47,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-bs-toggle="modal" data-bs-target="#changeAcc">
-                        <th>1</th>
-                        <td>(주)거래처1</td>
-                        <td>일번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade1@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>(주)거래처2</td>
-                        <td>이번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade2@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>(주)거래처3</td>
-                        <td>삼번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade3@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <td>(주)거래처4</td>
-                        <td>사번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade4@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <td>(주)거래처5</td>
-                        <td>오번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade5@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <td>(주)거래처6</td>
-                        <td>육번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade6@naver.com</td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <td>(주)거래처7</td>
-                        <td>칠번거</td>
-                        <td>031-123-1234</td>
-                        <td>0505-1234-1234</td>
-                        <td>trade7@naver.com</td>
-                    </tr>
+                    <c:forEach var="acc" items="${accList}">
+                        <tr data-bs-toggle="modal" data-bs-target="#changeAcc">
+                            <th>${acc.no}</th>
+                            <td>${acc.corporate}</td>
+                            <td>${acc.pname}</td>
+                            <td>${acc.tel}</td>
+                            <td>
+                                <c:if test="${empty acc.fax}">
+                                    -
+                                </c:if>
+                                <c:if test="${not empty acc.fax}">
+                                    ${acc.fax}
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty acc.email}">
+                                    -
+                                </c:if>
+                                <c:if test="${not empty acc.email}">
+                                    ${acc.email}
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
