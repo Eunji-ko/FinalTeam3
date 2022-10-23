@@ -66,6 +66,24 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	public List<TaskOrderVo> selectList(PageVo pv) {
 		return orderDao.selectList(sst, pv);
 	}
+
+	//지시서 수신자 조회
+	@Override
+	public List<TaskOrderAttVo> selectAttList(TaskOrderAttVo attVo) {
+		return orderDao.selectAttList(sst, attVo);
+	}
+
+	//지시서 디테일
+	@Override
+	public TaskOrderVo selectOne(String no) {
+		return orderDao.selectOne(sst, no);
+	}
+
+	//지시서 디테일 - 수신자 조회
+	@Override
+	public TaskOrderAttVo selectAttOne(String no) {
+		return orderDao.selectAttOne(sst, no);
+	}
 	
 
 }

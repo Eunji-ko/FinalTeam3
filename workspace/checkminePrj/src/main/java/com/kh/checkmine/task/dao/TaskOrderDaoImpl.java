@@ -2,6 +2,7 @@ package com.kh.checkmine.task.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -40,7 +41,31 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 	//게시글 목록 조회
 	@Override
 	public List<TaskOrderVo> selectList(SqlSessionTemplate sst, PageVo pv) {
-		return sst.selectList("taskOrderMapper.selectList");
+		
+		int offset = (pv.getCurrentPage() - 1) * pv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+
+		return sst.selectList("taskOrderMapper.selectList", null, rb);
+	}
+
+	//수신자 목록 조회
+	@Override
+	public List<TaskOrderAttVo> selectAttList(SqlSessionTemplate sst, TaskOrderAttVo attVo) {
+		return sst.selectList("taskOrderMapper.selectAttList");
+	}
+
+	//지시서 디테일
+	@Override
+	public TaskOrderVo selectOne(SqlSessionTemplate sst, String no) {
+		//return sst.selectOne("taskOrderMapper.selectOne", no);
+		
+		return sst.selectOne("taskOrderMapper.selectOneByNo", no);
+	}
+
+	//지시서 디테일 - 수신자 조회
+	@Override
+	public TaskOrderAttVo selectAttOne(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("taskOrderMapper.selectAttOne", no);
 	}
 
 }

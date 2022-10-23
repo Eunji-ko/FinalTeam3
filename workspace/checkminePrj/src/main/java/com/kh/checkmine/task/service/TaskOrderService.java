@@ -20,5 +20,13 @@ public interface TaskOrderService {
 	
 	//지시서 목록 조회
 	List<TaskOrderVo> selectList(PageVo pv);
-
+	
+	//지시서 수신자 조회
+	List<TaskOrderAttVo> selectAttList(TaskOrderAttVo attVo);
+	
+	//지시서 디테일
+	TaskOrderVo selectOne(String no);
+	
+	//지시서 디테일 - 수신자 조회
+	TaskOrderAttVo selectAttOne(String no);
 }

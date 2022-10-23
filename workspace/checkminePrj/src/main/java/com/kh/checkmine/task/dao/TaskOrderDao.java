@@ -26,4 +26,13 @@ public interface TaskOrderDao {
 	//게시글 목록 조회
 	List<TaskOrderVo> selectList(SqlSessionTemplate sst, PageVo pv);
 
+	//수신자 목록 조회
+	List<TaskOrderAttVo> selectAttList(SqlSessionTemplate sst, TaskOrderAttVo attVo);
+
+	//지시서 디테일
+	TaskOrderVo selectOne(SqlSessionTemplate sst, String no);
+
+	//지시서 디테일 - 수신자 조회
+	TaskOrderAttVo selectAttOne(SqlSessionTemplate sst, String no);
+
 }
