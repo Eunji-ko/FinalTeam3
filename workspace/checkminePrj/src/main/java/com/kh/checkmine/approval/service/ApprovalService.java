@@ -63,13 +63,13 @@ public interface ApprovalService {
 	int updateApStatus(ApprovalVo apVo);
 
 	//1차 결재일 업데이트
-	int updateApDate1();
+	int updateApDate1(ApprovalVo ApVo);
 
 	//2차 결재일 업데이트
-	int updateApDate2();
+	int updateApDate2(ApprovalVo ApVo);
 
 	//3차 결재일 업데이트
-	int updateApDate3();
+	int updateApDate3(ApprovalVo ApVo);
 
 	//문서 정보 DB에 올리기
 	int insertApDoc(ApprovalDocVo docVo);

@@ -156,7 +156,10 @@
 	            const result = prompt('반려사유 :');
 	            if(result == null){
 	                return false;
-	            }else{
+	            }else if(result == ''){
+					alert('반려사유를 작성해주시기 바랍니다.');
+					return false;
+				}else{
 	                $('#return-reason').val(result);
 	                return true;
 	            }
@@ -201,7 +204,6 @@
 	
 	    //작성이 아닌 결재만 할때 모든 input/textarea 비활성화
 	    $('input').prop('readonly', true);
-	    $('input').prop('disabled', true);
 	    $('textarea').prop('readonly',true);
 	    $('select').prop('disabled', true);
 	</script>

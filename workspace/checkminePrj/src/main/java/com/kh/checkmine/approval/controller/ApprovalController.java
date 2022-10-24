@@ -2,6 +2,7 @@ package com.kh.checkmine.approval.controller;
 
 import java.util.List;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -33,6 +36,7 @@ import com.kh.checkmine.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("approval")
+@MultipartConfig
 public class ApprovalController {
 	
 	private final ApprovalService service;
@@ -172,9 +176,8 @@ public class ApprovalController {
 	}
 	
 	//기안서 작성
-	//TODO : 쿠키로 되는지 확인...세션 안된다 그러면 쿠키 물어보기
 	@PostMapping(value={"draft/{dno}", "draft"})
-	public String draft(@PathVariable(required = false) String dno, ApprovalVo apVo, ApprovalDocVo docVo, ApprovalDraftVo draftVo, ApprovalFileVo fileVo, HttpSession session, HttpServletRequest req) {
+	public String draft(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalDraftVo draftVo,@ModelAttribute ApprovalFileVo fileVo, HttpSession session, HttpServletRequest req) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
@@ -190,23 +193,29 @@ public class ApprovalController {
 			int reject = 0;
 			int complete = 0;
 			int approval = 0;
-			if(apVo.getReturnReason() != null) {
+			
+			//문서번호로 DB에서 가져온 결재정보
+			ApprovalVo dbApVo = service.selectApByDocNo(dno);
+			System.out.println("memberNo ::: " + loginMember.getNo());
+			System.out.println("finalNo ::: " + dbApVo.getFinalApprover());
+			
+			if(!apVo.getReturnReason().isBlank()) {
+				//DB에서 들고온 결재정보에 반려사유 넣기
+				dbApVo.setReturnReason(apVo.getReturnReason());
 				//반려사유 업데이트, 최종 결재일 업데이트
-				System.out.println("controller ::: " + apVo);
-				reject = service.updateApReturn(apVo);
-				System.out.println(reject);
-			}else if(loginMember.getNo().equals(apVo.getFinalApprover())){//최종 결재자 비교
+				reject = service.updateApReturn(dbApVo);
+			}else if(loginMember.getNo().equals(dbApVo.getFinalApprover())){//최종 결재자 비교
 				//상태(대기 -> 승인), 최종 결재일 업데이트
-				complete = service.updateApStatus(apVo);
-			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//1차 결재자 비교
+				complete = service.updateApStatus(dbApVo);
+			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//1차 결재자 비교
 				//1차 결재일 업데이트
-				approval = service.updateApDate1();
-			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//2차 결재자 비교
+				approval = service.updateApDate1(dbApVo);
+			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//2차 결재자 비교
 				//2차 결재일 업데이트
-				approval = service.updateApDate2();
-			}else if(loginMember.getNo().equals(apVo.getFirstApprover())){//3차 결재자 비교
+				approval = service.updateApDate2(dbApVo);
+			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//3차 결재자 비교
 				//3차 결재일 업데이트
-				approval = service.updateApDate3();
+				approval = service.updateApDate3(dbApVo);
 			}
 			if(reject == 1 || complete == 1 || approval == 1) {
 				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");

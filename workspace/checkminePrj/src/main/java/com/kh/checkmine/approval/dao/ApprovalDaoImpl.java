@@ -108,35 +108,31 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	//반려사유 업데이트
 	@Override
 	public int updateReturn(SqlSessionTemplate sst, ApprovalVo apVo) {
-		System.out.println("dao ::: " + apVo);
 		return sst.update("approvalMapper.updateReturn", apVo);
 	}
 
 	//최종 결재 후 결재정보 업데이트
 	@Override
 	public int updateStatus(SqlSessionTemplate sst, ApprovalVo apVo) {
-		return 0;
+		return sst.update("approvalMapper.updateStatus", apVo);
 	}
 
 	//1차 결재일 업데이트
 	@Override
-	public int updateDate1(SqlSessionTemplate sst) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDate1(SqlSessionTemplate sst, ApprovalVo apVo) {
+		return sst.update("approvalMapper.updateDate1", apVo);
 	}
 
 	//2차 결재일 업데이트
 	@Override
-	public int updateDate2(SqlSessionTemplate sst) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDate2(SqlSessionTemplate sst, ApprovalVo apVo) {
+		return sst.update("approvalMapper.updateDate2", apVo);
 	}
 
 	//3차 결재일 업데이트
 	@Override
-	public int updateDate3(SqlSessionTemplate sst) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDate3(SqlSessionTemplate sst, ApprovalVo apVo) {
+		return sst.update("approvalMapper.updateDate3", apVo);
 	}
 
 	//문서정보 DB에 올리기
