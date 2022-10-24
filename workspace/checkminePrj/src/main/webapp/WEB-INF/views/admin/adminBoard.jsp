@@ -204,7 +204,7 @@
         var answer = confirm("해당 게시물을 삭제하시겠습니까?");
         
         //확인 버튼 누를 시 체크 값 담고 삭제
-        ;
+        
         if(answer == true){
             if($("input:checkbox[name='check']:checked").length == 0){
                 alert("선택한 게시물이 없습니다");

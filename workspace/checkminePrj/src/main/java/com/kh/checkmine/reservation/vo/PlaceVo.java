@@ -9,4 +9,6 @@ public class PlaceVo {
 	private String name;
 	private String content;
 	private String deleteYn;
+	
+	private String cnt;
 }
