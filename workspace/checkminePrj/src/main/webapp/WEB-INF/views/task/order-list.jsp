@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<% //테스트용 멤버
+	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
+	vo.setNo("10");
+	vo.setName("박정규");
+	vo.setPosNo("6");
+	vo.setDeptNo("2");
+	session.setAttribute("loginMember", vo);
+%>
+
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
@@ -91,7 +101,7 @@
         margin: auto;
 
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 3fr 1fr 1fr;
+        grid-template-columns: 100PX 100PX 250px 700px 100px 200px;
         grid-template-rows: repeat(16, 40px);
     }
     
@@ -104,6 +114,7 @@
         font-weight: bolder;
         font-size: large;
         line-height: 40px;
+        border-right: 1px solid white;
     }
 
     .list{
@@ -169,33 +180,34 @@
                             <input type="text" placeholder="지시서 검색">
                         </div>
                     </form>
-                    <!--<c:if test="${not empty loginMember}">-->
+                    <c:if test="${not empty loginMember}">
                     	<div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
-                    <!--</c:if>-->
+                    </c:if>
                 </div>
                 
                 <!--보고서 목록-->
                 <div id="center">
-                    <div class="list-header">지시서 번호</div>
+                    <div class="list-header">번호</div>
                     <div class="list-header">중요도</div>
                     <div class="list-header">수신자</div>
                     <div class="list-header">제목</div>
                     <div class="list-header">작성자</div>
                     <div class="list-header">날짜</div>
-                    
                     <c:forEach items="${voList}" var="vo">
-	                    <div class="list">${vo.no}</div>
-	                    <div class="list">
-	                    	<c:if test="${vo.importance eq 'N'}"> <span>보통</span></c:if>
-	                    	<c:if test="${vo.importance eq 'E'}"> <span>중요</span></c:if>
-	                    	<c:if test="${vo.importance eq 'I'}"> <span>긴급</span></c:if>
-	                    </div>
-	                    <div class="list">
-	                    		${att.empNo}
-	                    </div>
-	                    <div class="list" id="title"><a href="${root}/task/order/detail/${vo.no}">${vo.title}</a></div>
-	                    <div class="list">${vo.orderer}</div>
-	                    <div class="list">${vo.enrollDate}</div>
+ 	                   <c:if test="${vo.orderer eq loginMember.name or vo.attName eq loginMember.name}">
+		                    <div class="list">${vo.no}</div>
+		                    <div class="list">
+		                    	<c:if test="${vo.importance eq 'N'}"> <span>보통</span></c:if>
+		                    	<c:if test="${vo.importance eq 'E'}"> <span>중요</span></c:if>
+		                    	<c:if test="${vo.importance eq 'I'}"> <span>긴급</span></c:if>
+		                    </div>
+		                    <div class="list">
+		                    		${vo.attName}
+		                    </div>
+		                    <div class="list" id="title"><a href="${root}/task/order/detail/${vo.no}">${vo.title}</a></div>
+		                    <div class="list">${vo.orderer}</div>
+		                    <div class="list">${vo.enrollDate}</div>
+	                    </c:if>
                     </c:forEach>
 
                 </div>

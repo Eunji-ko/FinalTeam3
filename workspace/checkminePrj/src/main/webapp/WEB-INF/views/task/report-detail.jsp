@@ -182,7 +182,7 @@
                 <div class="btn-area">
                     <a href="${root}/task/report/edit">수정</a>
                     <a href="">삭제</a>
-                    <a href="${root}/task/report/list">목록</a>
+                    <a href="${root}/task/report/list/1">목록</a>
                 </div>
             </div>
         </main>

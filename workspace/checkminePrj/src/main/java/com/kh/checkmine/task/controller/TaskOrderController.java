@@ -45,7 +45,8 @@ public class TaskOrderController {
 	
 	//지시서 목록
 	@GetMapping("list/{pno}")
-	public String orderList(Model model, @PathVariable int pno) {
+	public String orderList(Model model, @PathVariable int pno, HttpSession session) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
 		int totalCount = orderService.selectTotalCnt();
 
@@ -56,17 +57,15 @@ public class TaskOrderController {
 		List<TaskOrderAttVo> attList = orderService.selectAttList(attVo);
 		
 		model.addAttribute("voList", voList);
-		//TODO order의 no값을 받아와서 해당 값의 수신자만 보이게... 
-		//현재 LISTAGG를 이용해서 같은 지시서의 수신자들끼리는 묶어둠!! 
-		model.addAttribute("attList", attList);  
 		model.addAttribute("pv", pv);
+		model.addAttribute("loginMember", loginMember);
 		
 		return "task/order-list";
 	}
 		
 	//지시서 조회
 	@GetMapping(value = {"detail/{no}", "detail"})
-	public String orderDetail(@PathVariable(required = false) String no, Model model) {
+	public String orderDetail(@PathVariable(required = false) String no, Model model, HttpSession session) {
 		
 		TaskOrderVo vo = orderService.selectOne(no);
 		//MemberVo eVo = memberService.selectOneByNo(vo.getOrderer()); //TODO 이름으로 가져와져서 숫자로 가져오게 찾아보기. 
@@ -164,7 +163,7 @@ public class TaskOrderController {
 		
 		if(orderResult == 1) {
 			session.setAttribute("alertMsg", "지시서가 작성되었습니다.");
-			return "redirect:/task/order/list";
+			return "redirect:/task/order/list/1";
 		}else {
 			//문제 발생 시 파일 제거
 			if(!fileVoList.isEmpty()) {
@@ -174,7 +173,7 @@ public class TaskOrderController {
 				}
 			}
 			session.setAttribute("alertMsg", "지시서가 작성되지 못했습니다.");
-			return "redirect:/task/order/list";
+			return "redirect:/task/order/list/1";
 		}
 	}
 	

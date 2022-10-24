@@ -117,6 +117,7 @@
 
     .btn-area a {
         margin-left: 10px;
+        margin-bottom: 10px;
         background-color: #5D736F;
         color: white;
         width: 70px;
@@ -160,7 +161,7 @@
                     <div class="division">종료일</div><div class="value">${vo.startDate}</div>
                     <div class="division">수　신</div><div class="value">${vo.attName}</div>
                     <div class="division">참　조</div><div class="value">${vo.rattName}</div>
-                    <div class="division">첨부 파일</div><div class="value"><a href="" download="">테스트 문서 다운로드</a></div>
+                    <div class="division">첨부 파일</div><div class="value"><a href="${root}/task/order/detail/${vo.no}/download">테스트 문서 다운로드</a></div>
                     <div class="division content">내용</div>
                     <div class="content value bot">
                         ${vo.content}
@@ -168,7 +169,7 @@
                     
                 </div>
                 <div class="btn-area"> 
-                    <a href="${root}/task/order/list">목록</a>
+                    <a href="${root}/task/order/list/1">목록</a>
                 </div>
             </div>
         </main>
