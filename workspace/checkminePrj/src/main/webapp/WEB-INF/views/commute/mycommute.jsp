@@ -93,7 +93,7 @@
 
                       <div></div>
 
-                      <div id="name">테스트 사원</div>
+                      <div id="name">${empNo}</div>
 
                     </div>
 
@@ -110,13 +110,15 @@
                               </tr>
                             </thead>
                             <tbody>
+                            <c:forEach items="${cVo}" var="c">
                               <tr>
-                                <td>2022.10.18</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
+                                <td>${c.workDate}</td>
+                                <td>${c.arrived}</td>
+                                <td>${c.leave}</td>
                                 <td>08:00</td>
                                 <td>정상출근</td>
                               </tr>
+                            </c:forEach>
                               <tr>
                                 <td>2022.10.19</td>
                                 <td>09:00</td>
