@@ -35,16 +35,16 @@
           <div id="emp-img">
             <img src="${imgPath}/none-profile.jpg">
           </div>
-          <input type="hidden" name="no" value="1">
-          <input type="text" class="form-control" name="name" value="테스트" disabled  style="margin-bottom: 10px;">
+          <input type="hidden" id="modalENo" name="no">
+          <input type="text" class="form-control" id="modalName" name="name" disabled  style="margin-bottom: 10px;">
           <div class="form-floating" style="margin-bottom: 10px;">
             <select class="form-select" id="floatingDept" aria-label="Floating label select example">
-              <option selected>-</option>
-              <option value="1">인사부</option>
-              <option value="2">총무부</option>
-              <option value="3">회계부</option>
-              <option value="4">영업부</option>
-              <option value="5">마케팅부</option>
+              <option value="1" selected>-</option>
+              <option value="2">인사부</option>
+              <option value="3">총무부</option>
+              <option value="4">회계부</option>
+              <option value="5">영업부</option>
+              <option value="6">마케팅부</option>
             </select>
             <label for="floatingDept">부서</label>
           </div>
@@ -76,6 +76,29 @@
     </div>
   </div>
 
-  </script>
+	<script>
+		
+    $('.empModal').on("click", function() {
+      let no = $(this).children('th').html();
+      $.ajax({
+        url: "/checkmine/personnel/empModal",
+        type: 'GET',
+        data : {no : no},
+        success : function(data){
+          if(data == null){
+            alert("사원 정보를 조회하는데에 실패하였습니다 !")
+          }else{
+            $('#modalENo').val(no);
+            $('#modalName').val(data.name);
+            $('#floatingDept').val(data.deptNo).prop("selected", true);
+            $('#floatingPosi').val(data.posNo).prop("selected", true);
+            $('#floatingEmail').val(data.email);
+            $('#floatingPhone').val(data.phone);
+          }
+        }
+      })
+    })
+
+	</script>
 </body>
 </html>

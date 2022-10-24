@@ -32,5 +32,15 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return dao.selectAccountList(sst);
 	}
 
+	@Override
+	public MemberVo selectEmpByNo(String no) {
+		return dao.selectEmpByNo(sst, no);
+	}
+
+	@Override
+	public AccountVo selectAccByNo(String no) {
+		return dao.selectAccByNo(sst, no);
+	}
+
 
 }
