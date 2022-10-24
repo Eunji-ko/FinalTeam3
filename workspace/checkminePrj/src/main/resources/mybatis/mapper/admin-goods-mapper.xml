@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminGoodsMapper">
+	<select id="selectGoodsTotal">
+		<choose>
+		<when test="sort == 'p'">
+			SELECT COUNT(*) FROM PUBLIC_PLACE
+		</when>
+		<otherwise>
+			SELECT COUNT(*) FROM PUBLIC_GOODS
+		</otherwise>
+		</choose>
+	</select>
+
+	<select id="selectGoodsList" resultType="com.kh.checkmine.reservation.vo.GoodsVo">
+			SELECT PG.*, NVL(CNT, 0) CNT FROM PUBLIC_GOODS PG
+         LEFT OUTER JOIN (
+         SELECT GOODS_NO, COUNT(NO) CNT FROM GOODS_RESERVATION
+            GROUP BY GOODS_NO
+         ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
+	</select>
+	
+	<select id="selectPlaceList" resultType="com.kh.checkmine.reservation.vo.PlaceVo">
+			SELECT PP.*, NVL(CNT, 0) CNT FROM PUBLIC_PLACE PP
+         LEFT OUTER JOIN (
+         SELECT PL_NO, COUNT(NO) CNT FROM PLACE_RESERVATION
+            GROUP BY pl_no
+         ) PR ON PP.NO = PR.PL_NO WHERE PP.DELETE_YN = 'N'
+	</select>
+</mapper>
