@@ -26,7 +26,7 @@ public class CommuteController {
 		
 		List<CommuteVo> cVo = cs.selectList();
 		
-		model.addAttribute("cvo", cVo);
+		model.addAttribute("cVo", cVo);
 		
 		return "commute/mycommute";
 		
