@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.checkmine.admin.service.AdminGoodsService;
-import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.reservation.vo.GoodsVo;
@@ -34,17 +37,42 @@ public class AdminGoodsController {
 		
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
 		
+		model.addAttribute("sort", sort);
+		model.addAttribute("pv", pv);
+		
 		if("p".equals(sort)) {
 			List<PlaceVo> goodsList = service.selectPlaceList(pv, sort);	
 			model.addAttribute("goodsList", goodsList);
+			
+			return "admin/adminPlace";
 		}else {
 			List<GoodsVo> goodsList = service.selectGoodsList(pv, sort);
 			model.addAttribute("goodsList", goodsList);
+			return "admin/adminGoods";
 		}
-		model.addAttribute("sort", sort);
-		model.addAttribute("pv", pv);
-
-		return "admin/adminGoods";
+	
 	}
+	
+	//예약 리스트
+	@PostMapping(value = "book/{sort}", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String bookList(@RequestParam String no, @RequestParam String sort) {
+		Gson g = new Gson();
+		System.out.println(sort);
+		//List<ReplyVo> replyList = service.selectReplyList(no);
+		//String str = g.toJson(replyList);
+		return "";
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	//공유물 검색
+	
 
 }
