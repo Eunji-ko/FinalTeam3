@@ -196,8 +196,6 @@ public class ApprovalController {
 			
 			//문서번호로 DB에서 가져온 결재정보
 			ApprovalVo dbApVo = service.selectApByDocNo(dno);
-			System.out.println("memberNo ::: " + loginMember.getNo());
-			System.out.println("finalNo ::: " + dbApVo.getFinalApprover());
 			
 			if(!apVo.getReturnReason().isBlank()) {
 				//DB에서 들고온 결재정보에 반려사유 넣기
@@ -210,10 +208,10 @@ public class ApprovalController {
 			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//1차 결재자 비교
 				//1차 결재일 업데이트
 				approval = service.updateApDate1(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//2차 결재자 비교
+			}else if(loginMember.getNo().equals(dbApVo.getSecondApprover())){//2차 결재자 비교
 				//2차 결재일 업데이트
 				approval = service.updateApDate2(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//3차 결재자 비교
+			}else if(loginMember.getNo().equals(dbApVo.getThirdApprover())){//3차 결재자 비교
 				//3차 결재일 업데이트
 				approval = service.updateApDate3(dbApVo);
 			}
