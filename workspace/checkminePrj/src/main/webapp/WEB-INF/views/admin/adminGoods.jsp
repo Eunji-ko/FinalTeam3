@@ -66,7 +66,7 @@
         background:url(${root}/resources/img/admin/search.png);
         background-repeat: no-repeat;
         width:20px;
-        height:20px;
+        height:17px;
         border: none;
         
     }
@@ -129,14 +129,15 @@
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter">
-                    <option>장소</option>
-                    <option>장비</option>
+                <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
+                    <option value="${root}/admin/board/list?sort=a&p=1">-----</option>
+                    <option value="${root}/admin/board/list?sort=p&p=1">장소</option>
+                    <option value="${root}/admin/board/list?sort=g&p=1">장비</option>
                 </select>
                 <form action="">
                     <select class="form-select" id="option" required style="display: inline-block;">
-                        <option>이름</option>
-                        <option>설명</option>
+                        <option value="name">이름</option>
+                        <option value="info">설명</option>
                     </select>
                     <div style="width: 267px; border: 1px solid lightgray; display: inline-block;" >
                         <input type="text" name="keyword" id="keyword" class="form-control" required>
@@ -152,12 +153,12 @@
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
                         <tr>
-                            <th>번호</th>
-                            <th>카테고리</th>
-                            <th>이름</th>
-                            <th>설명</th>
-                            <th>오늘 예약건수</th>
-                            <th>선택</th>
+                            <th width="10%">번호</th>
+                            <th width="10%">카테고리</th>
+                            <th width="20%">이름</th>
+                            <th width="45%">설명</th>
+                            <th width="10%">오늘 예약건수</th>
+                            <th width="5%">선택</th>
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
@@ -174,14 +175,26 @@
                     
                 </table>
             </div>
-            <div id="pageArea">
-                <a href="#">&lt;</a>
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">&gt;</a>
+             <div id="pageArea">
+            <c:if test="${pv.startPage ne 1}">
+                <a href="${root}/admin/goods/list?sort=${sort}&p=${pv.startPage -1}">&lt;</a>            
+            </c:if>
+            <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+            	<c:choose>
+            		<c:when test="${pv.currentPage eq i}">
+            			<a style="font-weight:900;">${i}</a>  
+            		</c:when>
+            		<c:otherwise>
+		                <a href="${root}/admin/goods/list?sort=${sort}&p=${i}">${i}</a>            
+            		
+            		</c:otherwise>
+            	
+            	</c:choose>
+                
+            </c:forEach>
+              <c:if test="${pv.endPage ne pv.maxPage}">
+                <a href="${root}/admin/goods/list?sort=${sort}&p=${pv.endPage + 1}">&gt;</a>
+              </c:if>
             </div>
         </main>
     </div>

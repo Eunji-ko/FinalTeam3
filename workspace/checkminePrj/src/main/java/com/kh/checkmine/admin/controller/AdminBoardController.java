@@ -160,13 +160,10 @@ public class AdminBoardController {
 	public String detail(@PathVariable String no, Model model) {
 		BoardVo vo = service.selectOne(no);
 		List<BoardAttVo> attList = service.selectAttList(no);
-		List<ReplyVo> replyList = rs.selectReplyList(no);
-		
+	
 		model.addAttribute("board", vo);
 		model.addAttribute("attList", attList);
-		model.addAttribute("replyList", replyList);
-		
-		
+			
 		return "admin/adminBoardDetail";
 	}
 	
