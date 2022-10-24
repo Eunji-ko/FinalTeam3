@@ -5,9 +5,9 @@
 	<select id="selectList" resultType="CommuteVo">
 		SELECT
 		    C.NO
-		    , C.ARRIVED
-		    , C.LEAVE
-		    , C.WORK_DATE
+		    , C.ARRIVED, TO_CHAR(SYSDATE, 'HH-MI')
+		    , C.LEAVE, TO_CHAR(SYSDATE, 'HH-MI')
+		    , C.WORK_DATE, TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		    , E.NAME AS EMP_NO
 		FROM COMMUTE C
 		JOIN EMPLOYEE E

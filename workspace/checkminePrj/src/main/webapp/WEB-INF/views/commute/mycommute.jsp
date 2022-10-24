@@ -93,7 +93,7 @@
 
                       <div></div>
 
-                      <div id="name">${empNo}</div>
+                      <div id="name">${c.empNo} 님</div>
 
                     </div>
 
@@ -119,20 +119,6 @@
                                 <td>정상출근</td>
                               </tr>
                             </c:forEach>
-                              <tr>
-                                <td>2022.10.19</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
-                                <td>08:00</td>
-                                <td>정상출근</td>
-                              </tr>
-                              <tr>
-                                <td>2022.10.20</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
-                                <td>08:00</td>
-                                <td>정상출근</td>
-                              </tr>
                             </tbody>
                           </table>
 
