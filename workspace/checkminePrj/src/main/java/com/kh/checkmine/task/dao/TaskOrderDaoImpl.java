@@ -45,7 +45,7 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 		int offset = (pv.getCurrentPage() - 1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 
-		return sst.selectList("taskOrderMapper.selectList", null, rb);
+		return sst.selectList("taskOrderMapper.selectListAddAtt", null, rb);
 	}
 
 	//수신자 목록 조회
