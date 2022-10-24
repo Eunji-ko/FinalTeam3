@@ -1,14 +1,20 @@
 package com.kh.checkmine.board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.ReplyVo;
@@ -25,6 +31,18 @@ public class ReplyController {
 		this.service = service;
 	}
 	
+	//댓글 조회
+	@PostMapping(value = "list/{no}", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String list(@PathVariable String no) {
+		
+		Gson g = new Gson();
+		List<ReplyVo> replyList = service.selectReplyList(no);
+		String str = g.toJson(replyList);
+		return str;
+	
+	}
+
 	//댓글 작성
 	@PostMapping("write")
 	@ResponseBody

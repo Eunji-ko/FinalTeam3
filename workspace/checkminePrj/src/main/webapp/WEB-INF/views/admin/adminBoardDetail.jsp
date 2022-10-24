@@ -138,14 +138,6 @@
         margin-right: 10px;
     }
 
-  
-
-
-  
-    
-    
-   
-
 </style>
 </head>
 <body>
@@ -197,21 +189,9 @@
                     </div>
                     <div id="replyArea">
                         <div id="replyTitle">댓글</div>
-                        <c:if test="${fn:length(replyList) != 0}">
-                    		<c:forEach items="${replyList}" var="r">
-	                        <div id="reply-bot">
-	                            <div id="replyWriter">
-                                    <input type="hidden" value="${r.no}" id="replyNo">
-                                    <div>${r.replier}&nbsp${r.position}</div>
-                                    <div>${r.replyDate}</div>
-                                    <c:if test="${loginAdmin.no eq r.mno}">
-	                                    <button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>                                    
-                                    </c:if>
-                                </div>
-	                                <div>${r.content}</div>
-	                        </div>
-                        	</c:forEach>
-                        </c:if>
+                        <div id="replyList">
+
+                        </div>
                         <div id="write">
                             <textarea name="content" id="replyText" placeholder="댓글을 남겨보세요."></textarea><button type="button" onclick="replyAdd()" id="add">등록</button>
                         </div>
@@ -244,29 +224,58 @@
 	    }
     </script>
     <script>
+        $(function(){
+            replyList();
+        })
+
+        //댓글 조회 ajax
+        function replyList(){
+            $.ajax({
+                url : "${root}/reply/list/${board.no}",
+                type : 'POST',
+                success : function(list){
+                    var result = "";
+                    for(var i in list){
+                        var a = list[i].mno;
+                       if("${loginAdmin.no}" == a){
+                           result +=
+                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                                       '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div>'+ list[i].replyDate +'</div>'+
+                                       '<button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>'+                              
+                                       '</div><div>'+list[i].content+'</div></div>'
+                       }else{
+                        result +=
+                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                                       '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div>'+ list[i].replyDate +'</div>'+                  
+                                       '</div><div>'+list[i].content+'</div></div>'
+                       }
+                                    
+                    }
+                    $("#replyList").html(result);
+                },
+                error : function(e){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+
+            });
+
+        }
+
+
+
+    </script>
+    <script>
         //댓글 추가 ajax
         function replyAdd(){
             const replyText = document.querySelector('#replyText').value;
-
-            //댓글 올린 날짜 + 시간
-            var today = new Date();
-
-            var year = today.getFullYear();
-            var month = ('0' + (today.getMonth() + 1)).slice(-2);
-            var day = ('0' + today.getDate()).slice(-2);
-            var hours = ('0' + today.getHours()).slice(-2); 
-            var minutes = ('0' + today.getMinutes()).slice(-2);
-
-
-            var dateString = year + '.' + month  + '.' + day +  ' ' + hours + ':' + minutes;
-
-
 
             if(replyText == ''){
                 alert("댓글 내용을 입력해주세요");
                 return;
             }
-            const boardNo = ${board.no};
+            const boardNo = "${board.no}";
             const replierName = '${sessionScope.loginAdmin.name}';
             
             $.ajax({
@@ -281,14 +290,8 @@
                 success: function(result){
                     if(result == 'ok'){
                         alert("등록되었습니다.");
-                        const target = document.querySelector('#replyTitle');
-                        $(target).append('<div id="reply-bot" style="margin-left: 30px; color:black; font-weight:normal; border-bottom: 1px solid lightgrey;"><div id="replyWriter">'
-                            +'<input type="hidden" value="${r.no}" id="replyNo"><div>' 
-                            + replierName + '</div><div>' + dateString +'</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div><div>' 
-                                + replyText + '</div></div>');
                         
-                        //해당 항목 수정할 계획
-                        location.reload();
+                        replyList();
                         
                         //기존에 입력한 내용 지우기
                         document.querySelector('#replyText').value = '';
@@ -327,7 +330,7 @@
                 success: function(result){
                     if(result == 'ok'){
                         alert("삭제되었습니다.");
-                        location.reload();
+                        replyList();
                    
                     }else{
                         alert("처리 중 문제가 발생하였습니다.");

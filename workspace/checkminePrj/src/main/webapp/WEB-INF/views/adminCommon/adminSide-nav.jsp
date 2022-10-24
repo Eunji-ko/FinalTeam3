@@ -39,7 +39,7 @@
             <a href="${root}/admin/main" id="side-nav-home">HOME</a>
             <a href="${root}/admin/member/list">사원관리</a>
             <a href="${root}/admin/board/list?sort=a&p=1">게시판관리</a>
-            <a href="공유물관리">공유물관리</a>
+            <a href="${root}/admin/board/goods">공유물관리</a>
             <a href="${root}/board/list/notice/1">조직도</a>
         </nav>
 </body>
