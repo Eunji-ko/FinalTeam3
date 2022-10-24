@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
 import com.kh.checkmine.reservation.vo.PlaceVo;
 
 @Repository
@@ -34,6 +36,17 @@ public class AdminGoodsDaoImpl implements AdminGoodsDao{
 		
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("adminGoodsMapper.selectPlaceList", sort, rb);
+	}
+
+	//예약 리스트
+	@Override
+	public List<PlaceBookVo> selectPlaceBook(SqlSessionTemplate sst, String no) {
+		return sst.selectList("adminGoodsMapper.selectPlaceBook", no);
+	}
+
+	@Override
+	public List<GoodsBookVo> selectGoodsBook(SqlSessionTemplate sst, String no) {
+		return sst.selectList("adminGoodsMapper.selectGoodsBook", no);
 	}
 
 }

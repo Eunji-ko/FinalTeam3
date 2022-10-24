@@ -163,8 +163,7 @@
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${goodsList}" var="g">
-         
-                    		<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}');">
+                    	<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
                             <td>${g.no}</td>
                             <td>장비</td>
                             <td>${g.name}</td>
@@ -172,7 +171,6 @@
                             <td>${g.cnt}</td>
                             <td data-bs-dismiss="modal" data-bs-target="#myModal2"><input type="checkbox" name="checked"></td>
                         </tr>
-                     
 					</c:forEach>
                     </tbody>
                     
@@ -215,53 +213,8 @@
     
             <!-- Modal body -->
             <div class="modal-body" align="center">
-                <table class="goods-info">
-                    <tr>
-                        <th>이름</th>
-                        <td>회의실A</td>
-                    </tr>
-                    <tr>
-                        <th>타입</th>
-                        <td>장소</td>
-                    </tr>
-                    <tr>
-                        <th>설명</th>
-                        <td>2층 안쪽에 있는 회의실</td>
-                    </tr>
-                </table>
-                <hr>
-                <div style="margin: 30px; font-weight: bolder;">예약목록</div>
-            <table class="goods-list">
-                <tr>
-                    <th>예약자</th>
-                    <td>테스트</td>
-                </tr>
-                <tr>
-                    <th>예약일자</th>
-                    <td>테스트</td>
-                </tr>
-                <tr>
-                    <th>종료일자</th>
-                    <td>테스트</td>
-                </tr>
-
-            </table>
-            <hr>
-            <table class="goods-list">
-                <tr>
-                    <th>예약자</th>
-                    <td>테스트</td>
-                </tr>
-                <tr>
-                    <th>예약일자</th>
-                    <td>테스트</td>
-                </tr>
-                <tr>
-                    <th>종료일자</th>
-                    <td>테스트</td>
-                </tr>
-
-            </table>
+                <table class="goods-info"><tr><th>이름</th><td> </td></tr><tr><th>타입</th><td>장비</td></tr><tr><th>설명</th><td>
+                    ${g.note}</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>
             </div>
     
             <!-- Modal footer -->
@@ -275,21 +228,23 @@
 </body>
 <script>
     //예약 리스트 모달 ajax
-    function bookList(no){
-        const modal = document.querySelector('.goods-info');
+    function bookList(no, name, note){
         $.ajax({
             type : "POST",
-            url : "${root}/admin/goods/book/${sort}",
+            url : "${root}/admin/goods/book",
             data:{
-                "no" : no
+                "no" : no,
+                "sort" : '${sort}'
             },
-            success: function(e){
-                
-
-
-
-
-
+            success: function(list){
+                var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>타입</th><td>장비</td></tr><tr><th>설명</th><td>'
+                    +note+'</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>';
+                for(var i in list){
+                    result += 
+                     '<table class="goods-list"><tr><th>예약자</th><td>'+list[i].eNo+'</td></tr><tr><th>예약일자</th><td>'+list[i].borrow+'</td></tr><tr>'
+                    +'<th>종료일자</th><td>'+list[i].rsvEnd+'</td></tr></table><hr>'
+                }
+                $(".modal-body").html(result);
 
             },
             fail: function(error){

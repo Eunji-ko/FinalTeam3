@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.admin.dao.AdminGoodsDao;
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
 import com.kh.checkmine.reservation.vo.PlaceVo;
 
 @Service
@@ -40,6 +42,19 @@ public class AdminGoodsServiceImpl implements AdminGoodsService{
 	public List<PlaceVo> selectPlaceList(PageVo pv, String sort) {
 		List<PlaceVo> goodsList = dao.selectPlaceList(sst, pv, sort);
 		return goodsList;
+	}
+
+	//예약 리스트
+	@Override
+	public List<PlaceBookVo> selectPlaceBook(String no) {
+		List<PlaceBookVo> bookList = dao.selectPlaceBook(sst, no);
+		return bookList;
+	}
+
+	@Override
+	public List<GoodsBookVo> selectGoodsBook(String no) {
+		List<GoodsBookVo> bookList = dao.selectGoodsBook(sst, no);
+		return bookList;
 	}
 	
 	

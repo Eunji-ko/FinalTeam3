@@ -15,7 +15,9 @@ import com.kh.checkmine.admin.service.AdminGoodsService;
 import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
+import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
 import com.kh.checkmine.reservation.vo.PlaceVo;
 
 @Controller
@@ -42,8 +44,7 @@ public class AdminGoodsController {
 		
 		if("p".equals(sort)) {
 			List<PlaceVo> goodsList = service.selectPlaceList(pv, sort);	
-			model.addAttribute("goodsList", goodsList);
-			
+			model.addAttribute("goodsList", goodsList);	
 			return "admin/adminPlace";
 		}else {
 			List<GoodsVo> goodsList = service.selectGoodsList(pv, sort);
@@ -54,24 +55,23 @@ public class AdminGoodsController {
 	}
 	
 	//예약 리스트
-	@PostMapping(value = "book/{sort}", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "book", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String bookList(@RequestParam String no, @RequestParam String sort) {
 		Gson g = new Gson();
-		System.out.println(sort);
-		//List<ReplyVo> replyList = service.selectReplyList(no);
-		//String str = g.toJson(replyList);
-		return "";
-		
-		
+		String str = "";
+		if("p".equals(sort)) {
+			List<PlaceBookVo> bookList = service.selectPlaceBook(no);
+			str = g.toJson(bookList);
+		}else {
+			List<GoodsBookVo> bookList = service.selectGoodsBook(no);
+			str = g.toJson(bookList);
+		}
+		return str;
+
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	//공유물 검색
 	
 
