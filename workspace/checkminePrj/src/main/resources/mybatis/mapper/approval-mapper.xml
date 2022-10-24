@@ -30,10 +30,15 @@
 		JOIN AP_TYPE T
 		ON D."TYPE" = T."TYPE"
 		WHERE
-		    (A.FIRST_APPROVER = 2
-		    OR A.SECOND_APPROVER = 2
-		    OR A.THIRD_APPROVER = 2
-		    OR A.FINAL_APPROVER = 2)
+		    (
+			    (FINAL_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
+			    OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
+			    OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+			)
 		    AND A.STATUS = '대기'
 		ORDER BY D."DATE" DESC
 	</select>
@@ -127,6 +132,20 @@
 		UPDATE APPROVAL
 		SET
 			FIRST_DATE = SYSDATE
+		WHERE "NO" = #{no}
+	</update>
+	
+	<update id="updateDate2">
+		UPDATE APPROVAL
+		SET
+			SECOND_DATE = SYSDATE
+		WHERE "NO" = #{no}
+	</update>
+	
+	<update id="updateDate3">
+		UPDATE APPROVAL
+		SET
+			THIRD_DATE = SYSDATE
 		WHERE "NO" = #{no}
 	</update>
 
