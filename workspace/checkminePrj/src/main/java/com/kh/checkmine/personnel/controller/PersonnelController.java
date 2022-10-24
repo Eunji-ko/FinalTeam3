@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.service.PersonnelService;
@@ -37,6 +38,22 @@ public class PersonnelController {
 		
 		//화면 선택
 		return "personnel/main";
+	}
+	
+	//사원정보 모달
+	@GetMapping("empModal")
+	@ResponseBody
+	public MemberVo empModal(String no) {
+		MemberVo emp = ps.selectEmpByNo(no);
+		return emp;
+	}
+	
+	//거래처정보 모달
+	@GetMapping("accModal")
+	@ResponseBody
+	public AccountVo accModal(String no) {
+		AccountVo acc = ps.selectAccByNo(no);
+		return acc;
 	}
 	
 	

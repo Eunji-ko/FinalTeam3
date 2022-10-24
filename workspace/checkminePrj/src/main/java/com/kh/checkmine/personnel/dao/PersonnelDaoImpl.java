@@ -21,4 +21,14 @@ public class PersonnelDaoImpl implements PersonnelDao {
 		return sst.selectList("personnelMapper.selectAccountList");
 	}
 
+	@Override
+	public MemberVo selectEmpByNo(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("personnelMapper.selectOneByNo", no);
+	}
+
+	@Override
+	public AccountVo selectAccByNo(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("personnelMapper.selectAccByNo", no);
+	}
+
 }

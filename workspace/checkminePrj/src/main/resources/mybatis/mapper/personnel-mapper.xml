@@ -9,22 +9,41 @@
 	        , D.NAME DEPT_NO
 	        , E.ID
 	        , E.NAME
-	        , E.EMAIL
-	        , E.PHONE
-	        , E.ADDRESS
-	        , E.ADDRESS_DETAIL
-	        , E.MODIFY_DATE
 	        , E.ENROLL_DATE
-	        , E.RESIGN_DATE
 	        , E.RESIGN_YN
-	        , E.PERMISSION
 		FROM EMPLOYEE E, POSITION P, DEPARTMENT D
 		WHERE E.POS_NO = P.NO
 		AND E.DEPT_NO = D.NO
 		ORDER BY E.NO DESC
   </select>
   
-  <select id="selectAccountList" resultType="com.kh.checkmine.personnel.vo.AccountVo">
+  <select id="selectAccountList" resultType="AccountVo">
+  	SELECT
+  		  NO
+  		, CORPORATE
+  		, TEL
+  		, FAX
+  		, PNAME
+  		, EMAIL
+  		, DELETE_YN
+  	FROM ACCOUNT
+  	WHERE DELETE_YN = 'N'
+  	ORDER BY NO DESC
+  </select>
+  
+  <select id="selectOneByNo" resultType="MemberVo">
+  	SELECT
+         NO
+       , DEPT_NO
+       , POS_NO
+       , NAME
+       , EMAIL
+       , PHONE
+    FROM EMPLOYEE
+    WHERE NO = #{no}
+  </select>
+  
+  <select id="selectAccByNo" resultType="AccountVo">
   	SELECT
   		  NO
   		, CORPORATE
@@ -36,10 +55,9 @@
   		, POSITION
   		, PHONE
   		, EMAIL
-  		, DELETE_YN
   	FROM ACCOUNT
   	WHERE DELETE_YN = 'N'
-  	ORDER BY NO DESC
+  	AND NO = #{no}
   </select>
  
 </mapper>

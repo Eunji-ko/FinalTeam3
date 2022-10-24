@@ -123,8 +123,8 @@
                 </thead>
                 <tbody>
                     <c:forEach var="emp" items="${memList}">
-                        <tr data-bs-toggle="modal" data-bs-target="#changeEmp">
-                            <th>${emp.no}</th>
+                        <tr data-bs-toggle="modal" data-bs-target="#changeEmp" class="empModal">
+                            <th class="empNo">${emp.no}</th>
                             <td>${emp.name}</td>
                             <td>${emp.deptNo}</td>
                             <td>${emp.posNo}</td>

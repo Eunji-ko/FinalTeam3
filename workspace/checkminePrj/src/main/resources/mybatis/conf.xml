@@ -20,12 +20,14 @@
 	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalBuyOrderVo" alias="ApprovalBuyOrderVo"/>
 	<typeAlias type="com.kh.checkmine.approval.vo.ApprovalFileVo" alias="ApprovalFileVo"/>
 	<typeAlias type="com.kh.checkmine.member.vo.MemberVo" alias="MemberVo"/>
+	<typeAlias type="com.kh.checkmine.personnel.vo.AccountVo" alias="AccountVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderAttVo" alias="TaskOrderAttVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderFileVo" alias="TaskOrderFileVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskOrderVo" alias="TaskOrderVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportVo" alias="TaskReportVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportAttVo" alias="TaskReportAttVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportFileVo" alias="TaskReportFileVo"/>
+	<typeAlias type="com.kh.checkmine.commute.vo.CommuteVo" alias="CommuteVo"/>
 </typeAliases>
 
 

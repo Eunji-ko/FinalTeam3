@@ -11,4 +11,8 @@ public interface PersonnelService {
 
 	List<AccountVo> selectAccountList();
 
+	MemberVo selectEmpByNo(String no);
+
+	AccountVo selectAccByNo(String no);
+
 }

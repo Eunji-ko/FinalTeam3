@@ -48,7 +48,7 @@
                 </thead>
                 <tbody>
                     <c:forEach var="acc" items="${accList}">
-                        <tr data-bs-toggle="modal" data-bs-target="#changeAcc">
+                        <tr data-bs-toggle="modal" data-bs-target="#changeAcc" class="accModal">
                             <th>${acc.no}</th>
                             <td>${acc.corporate}</td>
                             <td>${acc.pname}</td>

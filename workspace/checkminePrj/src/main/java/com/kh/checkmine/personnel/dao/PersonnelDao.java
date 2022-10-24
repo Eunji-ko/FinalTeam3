@@ -13,4 +13,8 @@ public interface PersonnelDao {
 
 	List<AccountVo> selectAccountList(SqlSessionTemplate sst);
 
+	MemberVo selectEmpByNo(SqlSessionTemplate sst, String no);
+
+	AccountVo selectAccByNo(SqlSessionTemplate sst, String no);
+
 }
