@@ -10,6 +10,14 @@
 		SELECT COUNT(*) FROM MAIL WHERE S_STATUS='N' AND SENDER=#{loginMember}
 	</select>
 	
+	<select id="selectImpListCount" resultType="int">
+		SELECT COUNT(*) FROM MAIL_REF WHERE STATUS='N' AND RECEIVER=#{loginMember} AND IMPORTANCE='Y'
+	</select>
+	
+	<select id="selectSaveListCount" resultType="int">
+		SELECT COUNT(*) FROM MAIL WHERE S_STATUS='N' AND SENDER=#{loginMember} AND SEND_DATE IS NULL
+	</select>
+	
 	<select id="selectList" resultType="com.kh.checkmine.mail.vo.ReceveMailVo">
 		SELECT 
 		    MR.NO,
@@ -35,7 +43,37 @@
 	</select>
 	
 	<select id="selectSendList" resultType="com.kh.checkmine.mail.vo.MailVo">
-		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SENDER = #{loginMember} 
+		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NOT NULL AND SENDER = #{loginMember} 
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	
+	<select id="selectImpList" resultType="com.kh.checkmine.mail.vo.ReceveMailVo">
+		SELECT 
+		    MR.NO,
+		    MR.MAIL_NO,
+		    MR.RECEIVER,
+		    MR.TYPE,
+		    MR.READ,
+		    MR.STATUS,
+		    MR.IMPORTANCE,
+		    M.SENDER,
+		    M.TITLE,
+		    M.CONTENT,
+		    M.S_STATUS,
+		    M.SEND_DATE,
+		    E.EMAIL AS SENDER_EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
+		WHERE MR.STATUS = 'N'
+		AND MR.IMPORTANCE= 'Y'
+		AND mr.receiver = #{loginMember}
+		ORDER BY M.SEND_DATE DESC
+	</select>
+	
+	<select id="selectSaveList" resultType="com.kh.checkmine.mail.vo.MailVo">
+		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NULL AND SENDER = #{loginMember}
 		ORDER BY SEND_DATE DESC
 	</select>
 	

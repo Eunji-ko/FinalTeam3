@@ -30,13 +30,9 @@ public class MailServiceImpl implements MailService{
 	 */
 	@Override
 	public int getListCount(String type, String loginMember) {
-		String dbType = "";
-		if("receve".equals(type)) {
-			dbType = "A";
-		}
 		
 		HashMap<String, String> infoMap = new HashMap<String, String>();
-		infoMap.put("type", dbType);
+		infoMap.put("type", type);
 		infoMap.put("loginMember", loginMember);
 		
 		return dao.getMailListCount(sst, infoMap);
@@ -72,6 +68,35 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int setImp(HashMap<String, String> impMap) {
 		return dao.setImp(sst, impMap);
+	}
+
+	/**
+	 * 중요메일함 갯수 가져오기
+	 */
+	@Override
+	public int getImpListCount(String loginMember) {
+		return dao.getImpListCount(sst, loginMember);
+	}
+
+	/**
+	 * 즁요메일함 리스트 가져오기
+	 */
+	@Override
+	public List<ReceveMailVo> getImpList(String loginMember, PageVo pageVo) {
+		return dao.getImpList(sst, loginMember);
+	}
+
+	/**
+	 * 임시저장 리스트 갯수
+	 */
+	@Override
+	public int getSaveListCount(String loginMember) {
+		return dao.getSaveListCount(sst, loginMember);
+	}
+
+	@Override
+	public List<MailVo> getSaveList(String loginMember, PageVo pageVo) {
+		return dao.getSaveList(sst, loginMember);
 	}
 
 }

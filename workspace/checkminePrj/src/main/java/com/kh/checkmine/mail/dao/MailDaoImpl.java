@@ -1,6 +1,5 @@
 package com.kh.checkmine.mail.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +58,38 @@ public class MailDaoImpl implements MailDao{
 	@Override
 	public int setImp(SqlSessionTemplate sst, HashMap<String, String> impMap) {
 		return sst.update("mailMapper.updateImp", impMap);
+	}
+
+	/**
+	 * 중요메일 이스트 갯수 가져오기
+	 */
+	@Override
+	public int getImpListCount(SqlSessionTemplate sst, String loginMember) {
+		return sst.selectOne("mailMapper.selectImpListCount", loginMember);
+	}
+
+	/**
+	 * 중요메일 리스트 가져오기
+	 */
+	@Override
+	public List<ReceveMailVo> getImpList(SqlSessionTemplate sst, String loginMember) {
+		return sst.selectList("mailMapper.selectImpList",loginMember);
+	}
+
+	/**
+	 * 임시저장 리스트 갯수 가죠오기
+	 */
+	@Override
+	public int getSaveListCount(SqlSessionTemplate sst, String loginMember) {
+		return sst.selectOne("mailMapper.selectSaveListCount", loginMember);
+	}
+
+	/**
+	 * 임시저장 리스트 가졍오기
+	 */
+	@Override
+	public List<MailVo> getSaveList(SqlSessionTemplate sst, String loginMember) {
+		return sst.selectList("mailMapper.selectSaveList", loginMember);
 	}
 
 }

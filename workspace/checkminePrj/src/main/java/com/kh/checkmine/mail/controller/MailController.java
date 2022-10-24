@@ -3,8 +3,6 @@ package com.kh.checkmine.mail.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.mail.service.MailService;
@@ -67,14 +64,14 @@ public class MailController {
 		Gson gson = new Gson();
 		String listStr ="";
 		
-		if("receve".equals(type)||"ref".equals(type)) { //받은메일함일 때
-			//페이지vo 생성
-			int listCount = service.getListCount(type, loginMember);
-			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
-			
+		if("receve".equals(type)||"ref".equals(type)) { //받은메일함일 때 참조메일함일 때
 			//데이터 뭉치기
 			if("receve".equals(type)) {type = "A";}
 			else if("ref".equals(type)) {type = "R";}
+			
+			//페이지vo 생성
+			int listCount = service.getListCount(type, loginMember);
+			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
 			
 			HashMap<String , String> listInfo = new HashMap<String, String>();
 			
@@ -92,6 +89,20 @@ public class MailController {
 			ArrayList<MailVo> sendMailList = (ArrayList<MailVo>) service.getSendList(loginMember, pageVo);
 			
 			listStr = gson.toJson(sendMailList);
+			
+		}else if("imp".equals(type)) { //중요메일함일때
+			int listCount = service.getImpListCount(loginMember);
+			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
+			
+			ArrayList<ReceveMailVo> impMailList = (ArrayList<ReceveMailVo>) service.getImpList(loginMember, pageVo);
+			listStr = gson.toJson(impMailList);
+			
+		}else if("save".equals(type)) { // 임시저장 메일함일때
+			int listCount = service.getSaveListCount(loginMember);
+			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
+			
+			ArrayList<MailVo> saveMailList = (ArrayList<MailVo>) service.getSaveList(loginMember, pageVo);
+			listStr = gson.toJson(saveMailList);
 		}
 		
 		return listStr;
@@ -107,8 +118,6 @@ public class MailController {
 	@ResponseBody
 	public String setImp(String mailNum, String importance) {
 		HashMap<String, String > impMap = new HashMap<String, String>();
-		
-		System.out.println(mailNum);
 		
 		impMap.put("mailNum", mailNum);
 		impMap.put("importance", importance);

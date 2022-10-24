@@ -141,10 +141,10 @@
 
                     <ul>
                         <li><div><a onclick="getList(this,'receve',1, ${loginMember.no});">받은편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'send',1 ,${loginMember.no});">보낸편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'imp',1, ${loginMember.no});">중요편지함</a><span>21</span></div></li>
-                        <li><div><a onclick="getList(this,'save',1, ${loginMember.no});">임시보관함</a><span>21</span></div></li>
                         <li><div><a onclick="getList(this,'ref',1 ,${loginMember.no});">참조편지함</a><span>21</span></div></li>
+                        <li><div><a onclick="getList(this,'send',1 ,${loginMember.no});">보낸편지함</a></div></li>
+                        <li><div><a onclick="getList(this,'imp',1, ${loginMember.no});">중요편지함</a></div></li>
+                        <li><div><a onclick="getList(this,'save',1, ${loginMember.no});">임시보관함</a></div></li>
                         <li><div><a onclick="getList(this,'recycle',1, ${loginMember.no});">휴지통</a></div></li>
                         <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
                     </ul>
@@ -180,7 +180,7 @@
                     <div id="mail-list" style="width: 1258px; margin-top: 19px;">
                         <div class="d-flex" style="padding-bottom: 10px; ">
                             <span style="margin-left: 59px; width: 257px;">보낸이</span>
-                            <span style="width: 650px;">제목/내용</span>
+                            <span style="width: 650px;">제목</span>
                             <span style="width: 235px;">시간</span>
                             <span>중요도</span> 
                         </div>
@@ -256,9 +256,6 @@
                     data:{
                         'mailNum' : mailNum,
                         'importance' : 'N'
-                    },
-                    success:function (result){
-                    	alert(result);
                     }
                 });
             }else{
@@ -322,7 +319,7 @@
                 	const list = JSON.parse(mailList);
                     const mailListWrap = document.querySelector('#mail-list');
 
-                    if(type == 'receve' || type == 'ref'){
+                    if(type == 'receve' || type == 'ref' || type == 'imp'){
                         //받아온 데이터로 처리하기
                         for(let i=0;i<list.length;i++){
                             let read;
@@ -342,7 +339,7 @@
                                 '<a href="/checkmine/mail/detail?' + list[i].mailNo +'" class="mail-list-item"> '+
                                     '<input type="checkbox" value="' + list[i].no + '">'+
                                     '<span style="width: 250px; font-size:13px;">' + list[i].senderEmail+ '</span>'+
-                                    '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
+                                    '<span style="width: 650px;">' + list[i].title + '</span>'+
                                     '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
                                 '</a>'+
                                 '<span class="d-flex justify-content-center"><img class="impbtn" src="'+star+'" style="margin-left: 11px;" onclick="importance(this);"></span>'+
@@ -354,14 +351,27 @@
                             '<div id="' +list[i].no + '" class="mail-item d-flex align-items-center">'+
                                 '<a href="/checkmine/mail/detail?' + list[i].no +'" class="mail-list-item"> '+
                                     '<input type="checkbox" value="' + list[i].no + '">'+
-                                    '<span style="width: 250px; font-size:13px;">' + '${loginMember.email}' + '</span>'+
-                                    '<span style="width: 650px;">' + list[i].title+'-' +list[i].content+ '</span>'+
+                                    '<span style="width: 250px; font-size:13px;">' + '[나]${loginMember.email}' + '</span>'+
+                                    '<span style="width: 650px;">' + list[i].title + '</span>'+
                                     '<span style="width: 235px;">' + list[i].sendDate+ '</span>'+
                                 '</a>'+
                                 '<span class="d-flex justify-content-center"><img class="impbtn" src="" style="margin-left: 11px;"></span>'+
                             '</div>'
                         }
-                    }          
+                    }else if(type == 'save'){
+                    	for(let i=0;i<list.length;i++){
+                            mailListWrap.innerHTML = mailListWrap.innerHTML + 
+                            '<div id="' +list[i].no + '" class="mail-item d-flex align-items-center">'+
+                                '<a href="/checkmine/mail/detail?' + list[i].no +'" class="mail-list-item"> '+
+                                    '<input type="checkbox" value="' + list[i].no + '">'+
+                                    '<span style="width: 250px; font-size:13px;">' + '[나]${loginMember.email}' + '</span>'+
+                                    '<span style="width: 650px;">' + list[i].title + '</span>'+
+                                    '<span style="width: 235px;">' + '임시저장된 메일'+ '</span>'+
+                                '</a>'+
+                                '<span class="d-flex justify-content-center"><img class="impbtn" src="" style="margin-left: 11px;"></span>'+
+                            '</div>'
+                        }
+                    }
                 }
             });
         }
@@ -409,6 +419,10 @@
                     }
                 }
             });
+        }
+        
+        function updateListCount(){
+        	
         }
     </script>
 </body>
