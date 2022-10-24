@@ -1,6 +1,5 @@
 package com.kh.checkmine.mail.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,5 +52,37 @@ public interface MailDao {
 	 * @return
 	 */
 	int setImp(SqlSessionTemplate sst, HashMap<String, String> impMap);
+
+	/**
+	 * 중요 표시 리스트 갯수 가져오기
+	 * @param sst
+	 * @param loginMember
+	 * @return
+	 */
+	int getImpListCount(SqlSessionTemplate sst, String loginMember);
+
+	/**
+	 * 중요표시 메일 리스트 가져오기
+	 * @param sst
+	 * @param loginMember
+	 * @return
+	 */
+	List<ReceveMailVo> getImpList(SqlSessionTemplate sst, String loginMember);
+
+	/**
+	 * 임시저장 메일 리스트 갯수 가져오기
+	 * @param sst
+	 * @param loginMember
+	 * @return
+	 */
+	int getSaveListCount(SqlSessionTemplate sst, String loginMember);
+
+	/**
+	 * 임시저장 메일 리스트 가져오기
+	 * @param sst
+	 * @param loginMember
+	 * @return
+	 */
+	List<MailVo> getSaveList(SqlSessionTemplate sst, String loginMember);
 
 }

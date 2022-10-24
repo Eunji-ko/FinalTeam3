@@ -25,4 +25,21 @@ public interface MailService {
 	//중요도 바꾸기
 	int setImp(HashMap<String, String> impMap);
 
+	//중요메일함 리스트 갯수 가져오기
+	int getImpListCount(String type);
+
+	//중요메일함 리스트 겟수
+	List<ReceveMailVo> getImpList(String loginMember, PageVo pageVo);
+
+	//임시저장 메일함 리스트 갯수
+	int getSaveListCount(String loginMember);
+
+	/**
+	 * 임시저장 메일 리스트 
+	 * @param loginMember
+	 * @param pageVo
+	 * @return
+	 */
+	List<MailVo> getSaveList(String loginMember, PageVo pageVo);
+
 }
