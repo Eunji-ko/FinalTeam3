@@ -114,7 +114,6 @@ public class ApprovalServiceImpl implements ApprovalService{
 	//반려사유 업데이트
 	@Override
 	public int updateApReturn(ApprovalVo apVo) {
-		System.out.println("service ::: " + apVo);
 		return dao.updateReturn(sst, apVo);
 	}
 
@@ -126,20 +125,20 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	//1차 결재일 업데이트
 	@Override
-	public int updateApDate1() {
-		return dao.updateDate1(sst);
+	public int updateApDate1(ApprovalVo apVo) {
+		return dao.updateDate1(sst, apVo);
 	}
 
 	//2차 결재일 업데이트
 	@Override
-	public int updateApDate2() {
-		return dao.updateDate2(sst);
+	public int updateApDate2(ApprovalVo apVo) {
+		return dao.updateDate2(sst, apVo);
 	}
 
 	//3차 결재일 업데이트
 	@Override
-	public int updateApDate3() {
-		return dao.updateDate3(sst);
+	public int updateApDate3(ApprovalVo apVo) {
+		return dao.updateDate3(sst, apVo);
 	}
 
 	//문서정보 DB에 올리기

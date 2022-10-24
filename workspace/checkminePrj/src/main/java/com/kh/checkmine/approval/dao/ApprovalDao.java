@@ -65,13 +65,13 @@ public interface ApprovalDao {
 	int updateStatus(SqlSessionTemplate sst, ApprovalVo apVo);
 
 	//1차 결재일 업데이트
-	int updateDate1(SqlSessionTemplate sst);
+	int updateDate1(SqlSessionTemplate sst, ApprovalVo apVo);
 
 	//2차 결재일 업데이트
-	int updateDate2(SqlSessionTemplate sst);
+	int updateDate2(SqlSessionTemplate sst, ApprovalVo apVo);
 
 	//3차 결재일 업데이트
-	int updateDate3(SqlSessionTemplate sst);
+	int updateDate3(SqlSessionTemplate sst, ApprovalVo apVo);
 
 	//문서정보 DB에 올리기
 	int insertDoc(SqlSessionTemplate sst, ApprovalDocVo docVo);

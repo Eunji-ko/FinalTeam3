@@ -29,8 +29,16 @@
 		padding-left: 20px;
 		background-color:#91b3ac;
 		border-radius: 15px;
-		font-size: 23px;
 		align-items: center;
+	}
+	#write-info input{
+		color: white;
+		background-color:#91b3ac;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+		font-size: 23px;
 	}
 	#approver-info{
 		width: 40%;
@@ -93,13 +101,14 @@
 
 <main id="draft-wrapper">
 
+<form action="${rootPath}/approval/draft/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
-				작성자 : ${docVo.writerNo}
+				작성자 : <input type="text" value="${docVo.writerNo}" name="writerNo" readonly>
 			</div>
 			<div id="write-date-div">
-				작성일 : ${docVo.date}
+				작성일 : <input type="text" value="${docVo.date}" name="date" readonly>
 			</div>
 		</div>
 		<div id="approver-info">
@@ -119,7 +128,7 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/draft/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
+		
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -142,8 +151,9 @@
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
-		</form>
+	
 
 	</div>
+</form>
 
 </main>

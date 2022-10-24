@@ -114,5 +114,20 @@
 		    ,RETURN_REASON = #{returnReason}
 		 WHERE "NO" = #{no}
 	</update>
+	
+	<update id="updateStatus">
+		UPDATE APPROVAL
+		SET
+			FINAL_DATE = SYSDATE
+			,STATUS = '승인'
+		WHERE "NO" = #{no}
+	</update>
+	
+	<update id="updateDate1">
+		UPDATE APPROVAL
+		SET
+			FIRST_DATE = SYSDATE
+		WHERE "NO" = #{no}
+	</update>
 
 </mapper>
