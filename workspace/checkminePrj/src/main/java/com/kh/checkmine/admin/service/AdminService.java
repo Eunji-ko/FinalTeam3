@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 public interface AdminService {
 	
@@ -17,6 +19,13 @@ public interface AdminService {
 
 	//게시글 리스트
 	List<BoardVo> boardList();
+
+
+	//사원 리스트
+	List<MemberVo> MemberList();
+
+	//예약 리스트
+	List<PlaceBookVo> bookList();
 	 
 
 }

@@ -101,12 +101,12 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post">
+                <form action="${root}/admin/goods/add" method="post">
                     <div id="content-box">
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td><input type="text" class="form-control" name="" id="" required></td>
+                            <td><input type="text" class="form-control" name="name" id="" required></td>
                         </tr>
                         <tr>
                             <th>타입</th>
@@ -116,7 +116,7 @@
                         </tr>
                         <tr>
                             <th>설명</th>
-                            <td><textarea class="form-control" name="" id="" required></textarea></td>
+                            <td><textarea class="form-control" name="content" id="" required></textarea></td>
                         </tr>
                     </table>
                 </div>

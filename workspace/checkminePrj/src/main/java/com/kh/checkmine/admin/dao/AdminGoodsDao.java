@@ -1,5 +1,6 @@
 package com.kh.checkmine.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,5 +25,24 @@ public interface AdminGoodsDao {
 	List<PlaceBookVo> selectPlaceBook(SqlSessionTemplate sst, String no);
 
 	List<GoodsBookVo> selectGoodsBook(SqlSessionTemplate sst, String no);
+
+	//항목 삭제
+	int deletePlace(SqlSessionTemplate sst, String placeNo);
+
+	int deleteGoods(SqlSessionTemplate sst, String goodsNo);
+
+	//공유물 등록
+	int addList(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	
+	//검색결과
+	int selectGoodsTotalKeyword(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	List<GoodsVo> selectSearchGoodsList(SqlSessionTemplate sst, PageVo pv, HashMap<String, String> map);
+
+	int selectPlaceTotalKeyword(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	List<PlaceVo> selectSearchPlaceList(SqlSessionTemplate sst, PageVo pv, HashMap<String, String> map);
+
 
 }

@@ -7,6 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
+import com.kh.checkmine.reservation.vo.PlaceVo;
 
 public interface AdminDao {
 	
@@ -21,6 +24,14 @@ public interface AdminDao {
 
 	//게시글 리스트
 	List<BoardVo> selectBoardList(SqlSessionTemplate sst);
+
+
+	//사원 리스트
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
+
+
+	//예약 리스트
+	List<PlaceBookVo> selectBookList(SqlSessionTemplate sst);
 	 
 
 }

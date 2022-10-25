@@ -108,5 +108,12 @@
 	  	</choose>
 	  WHERE NO = #{no}
   </update>
+  <!-- <select id="selectMemberByDate" resultType="MemberVo">
+  	
+  
+  
+  
+  </select> -->
+  
   
 </mapper>

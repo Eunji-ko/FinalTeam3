@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.checkmine.admin.service.AdminService;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 @Controller
 @RequestMapping("admin")
@@ -65,10 +67,12 @@ public class AdminController {
 	  public String main(Model model) {
 	  
 		  HashMap<String, Integer> summary = service.summary();
+		  //게시판
 		  List<BoardVo> boardList = service.boardList();
 		  //사원
-		  
+		  List<MemberVo> memberList = service.MemberList();
 		  //예약
+		  List<PlaceBookVo> bookList = service.bookList();
 		  
 		  model.addAttribute("summary", summary);
 		  model.addAttribute("boardList", boardList);
