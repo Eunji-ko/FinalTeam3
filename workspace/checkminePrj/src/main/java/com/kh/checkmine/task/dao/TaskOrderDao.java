@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
 import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
@@ -34,5 +35,11 @@ public interface TaskOrderDao {
 
 	//지시서 디테일 - 수신자 조회
 	TaskOrderAttVo selectAttOne(SqlSessionTemplate sst, String no);
+
+	//지시서 작성 수신자
+	List<MemberVo> selectWriteAttList(SqlSessionTemplate sst);
+
+	//지시서 파일 다운로드
+	List<TaskOrderFileVo> selectFileList(SqlSessionTemplate sst, String no);
 
 }

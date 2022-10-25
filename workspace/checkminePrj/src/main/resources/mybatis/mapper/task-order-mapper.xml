@@ -279,4 +279,28 @@
 		    O.POS_NAME,
 		    O.DEP_NAME
  	</select>
+	
+	<select id="selectWriteAttList" resultType="MemberVo">
+		SELECT
+		    E.NAME,
+		    P.NAME AS POS_NO,
+		    D.NAME AS DEPT_NO
+		FROM EMPLOYEE E
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		WHERE RESIGN_YN = 'N'
+	</select>
+	
+	<select id="selectFileList" resultType="TaskOrderFileVo">
+		SELECT
+		    NO,
+		    TASK_NO,
+		    NAME,
+		    PATH
+		FROM TASK_FILE
+		WHERE TASK_NO = #{no}
+	</select>
+
 </mapper>
