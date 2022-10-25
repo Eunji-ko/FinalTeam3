@@ -131,12 +131,17 @@
 
 		//작성 마지막 확인
 		function approval(){
-			if(confirm("작성하시겠습니까?")){
-				//예
-				return true;
-			}else{
-				//아니오
+			if(window.document.querySelector('#final-approver').value == ""){
+				alert('결재자를 선택해주시기 바랍니다.');
 				return false;
+			}else{
+				if(confirm("작성하시겠습니까?")){
+					//예
+					return true;
+				}else{
+					//아니오
+					return false;
+				}
 			}
 		}
 	</script>
@@ -204,8 +209,11 @@
 	
 	    //작성이 아닌 결재만 할때 모든 input/textarea 비활성화
 	    $('input').prop('readonly', true);
+		$('#in').prop('disabled',true);
+		$('#out').prop('disabled',true);
+		$('#plus-btn').prop('disabled', true);
+		$('#eplus-btn').prop('disabled', true);
 	    $('textarea').prop('readonly',true);
-	    $('select').prop('disabled', true);
 	</script>
 </c:if>
 

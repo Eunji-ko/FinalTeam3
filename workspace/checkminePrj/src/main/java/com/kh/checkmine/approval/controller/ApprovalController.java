@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,6 +31,7 @@ import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
 import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
+import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -99,6 +101,9 @@ public class ApprovalController {
 			ApprovalDocVo docVo = service.selectDocByNo(dno);
 			MemberVo writerVo = service.selectEmpByNo(docVo.getWriterNo());
 			
+			//문서번호로 첨부파일 가져오기
+			List<ApprovalFileVo> fileList = service.selectFilesByNo(dno);
+			
 			switch(docVo.getType()) {
 			case "D":
 				ApprovalDraftVo draftVo = service.selectDraftByNo(dno);
@@ -134,6 +139,7 @@ public class ApprovalController {
 			docVo.setWriterNo(writerVo.getName());
 			
 			model.addAttribute("docVo", docVo);
+			model.addAttribute("fileList", fileList);
 		}
 		
 		//결재자 이름 가져오기
@@ -175,71 +181,146 @@ public class ApprovalController {
 		return gson.toJson(obj);
 	}
 	
-	//기안서 작성
-	@PostMapping(value={"draft/{dno}", "draft"})
-	public String draft(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalDraftVo draftVo,@ModelAttribute ApprovalFileVo fileVo, HttpSession session, HttpServletRequest req) {
+	//결재자 정보 업데이트 메소드
+	public String updateApInfo(String dno, ApprovalVo apVo, HttpSession session) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
-		System.out.println(dno);
-		System.out.println(apVo);
-		System.out.println(docVo);
-		System.out.println(draftVo);
-		System.out.println(fileVo);
+		int reject = 0;
+		int complete = 0;
+		int approval = 0;
+		
+		//문서번호로 DB에서 가져온 결재정보
+		ApprovalVo dbApVo = service.selectApByDocNo(dno);
+		
+		if(!apVo.getReturnReason().isBlank()) {
+			//DB에서 들고온 결재정보에 반려사유 넣기
+			dbApVo.setReturnReason(apVo.getReturnReason());
+			//반려사유 업데이트, 최종 결재일 업데이트
+			reject = service.updateApReturn(dbApVo);
+		}else if(loginMember.getNo().equals(dbApVo.getFinalApprover())){//최종 결재자 비교
+			//상태(대기 -> 승인), 최종 결재일 업데이트
+			complete = service.updateApStatus(dbApVo);
+		}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//1차 결재자 비교
+			//1차 결재일 업데이트
+			approval = service.updateApDate1(dbApVo);
+		}else if(loginMember.getNo().equals(dbApVo.getSecondApprover())){//2차 결재자 비교
+			//2차 결재일 업데이트
+			approval = service.updateApDate2(dbApVo);
+		}else if(loginMember.getNo().equals(dbApVo.getThirdApprover())){//3차 결재자 비교
+			//3차 결재일 업데이트
+			approval = service.updateApDate3(dbApVo);
+		}
+		
+		if(reject == 1) {
+			return "성공적으로 반려되었습니다.";
+		}else if(complete == 1) {
+			return "최종 결재 되었습니다.";
+		}else if(approval == 1) {
+			return "성공적으로 결재되었습니다.";
+		}else {
+			return "처리에 실패하였습니다.";
+		}
+		
+	}
+	
+	//파일 저장 메소드
+	public String saveFile(MultipartFile[] file, ApprovalDocVo docVo, HttpServletRequest req) {
+		
+		int fileResult = 0;
+		for(int i=0; i<file.length; i++) {
+			ApprovalFileVo fileVo = new ApprovalFileVo();
+			MultipartFile f = file[i];
+			
+			//저장경로
+			String savePath = req.getServletContext().getRealPath("/resources/upload/approval/");
+			//파일 업로드 및 파일명 받기
+			String changeName = FileUploader.fileUpload(f, savePath);
+			
+			fileVo.setFileName(changeName);
+			fileVo.setFpath(savePath);
+			fileVo.setDocNo(docVo.getNo());
+			fileResult = service.insertFile(fileVo);
+			fileResult++;
+		}
+		
+		return "";
+	}
+	
+	//기안서 작성 및 결재
+	@PostMapping(value={"draft/{dno}", "draft"})
+	public String draft(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalDraftVo draftVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+		
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
 		//문서번호 존재 여부 확인
 		if(dno != null) {
-			int reject = 0;
-			int complete = 0;
-			int approval = 0;
 			
-			//문서번호로 DB에서 가져온 결재정보
-			ApprovalVo dbApVo = service.selectApByDocNo(dno);
+			//결재자 정보 업데이트 메소드
+			String alertUpdateMsg = updateApInfo(dno, apVo, session);
 			
-			if(!apVo.getReturnReason().isBlank()) {
-				//DB에서 들고온 결재정보에 반려사유 넣기
-				dbApVo.setReturnReason(apVo.getReturnReason());
-				//반려사유 업데이트, 최종 결재일 업데이트
-				reject = service.updateApReturn(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getFinalApprover())){//최종 결재자 비교
-				//상태(대기 -> 승인), 최종 결재일 업데이트
-				complete = service.updateApStatus(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getFirstApprover())){//1차 결재자 비교
-				//1차 결재일 업데이트
-				approval = service.updateApDate1(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getSecondApprover())){//2차 결재자 비교
-				//2차 결재일 업데이트
-				approval = service.updateApDate2(dbApVo);
-			}else if(loginMember.getNo().equals(dbApVo.getThirdApprover())){//3차 결재자 비교
-				//3차 결재일 업데이트
-				approval = service.updateApDate3(dbApVo);
+			session.setAttribute("alertMsg", alertUpdateMsg);
+			
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(기안서)
+			docVo.setType("D");
+			
+			//기안서 결재 및 해당 문서정보 가져오기
+			ApprovalDocVo result = service.approvalDraft(docVo, apVo, draftVo);
+			
+			if(result == null) {
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				return "redirect:/approval";
+			}else {
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
 			}
-			if(reject == 1 || complete == 1 || approval == 1) {
+			
+			//파일 유무 확인
+			if(!file[0].isEmpty()) {
+				
+				String alertFileMsg = saveFile(file, result, req);
+				
+				session.setAttribute("alertMsg", alertFileMsg);
+			}
+			
+			if(result != null) {
 				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
 			}else {
-				session.setAttribute("alertMsg", "처리에 실패하였습니다.");
-			}
-		}else {
-			int docResult = service.insertApDoc(docVo);
-			int apResult = service.insertApproval(apVo);
-			int draftResult = service.insertDraft(draftVo);
-			
-			if(fileVo.getFileName() != null && !fileVo.getFileName().isEmpty()) {
-				//파일 있음
-				//파일 업로드 후 저장된 파일명 얻기
-				String savePath = req.getServletContext().getRealPath("/resources/upload/approval/");
-				String changeName = "";
-			}
-			
-			int fileResult = service.insertFile(fileVo);
-			
-			if(docResult*apResult*draftResult == 1 || docResult*apResult*draftResult*fileResult == 1) {
-				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
-			}else {
-				session.setAttribute("alertMsg", "처리에 실패하였습니다.");
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
 			}
 		}
+		return "redirect:/approval";
+	}
+	
+	//제안서 작성 및 결재
+	@PostMapping(value= {"proposal/{dno}","proposal"})
+	public String proposal(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalProposalVo proposalVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+		
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		//문서번호 존재 여부 확인
+		if(dno != null) {
+			
+			//결재자 정보 업데이트 메소드
+			String alertMsg = updateApInfo(dno, apVo, session);
+			
+			session.setAttribute("alertMsg", alertMsg);
+			
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(제안서)
+			docVo.setType("P");
+			
+			//제안서 결재 및 해당 문서정보 가져오기
+			
+		}
+		
 		return "redirect:/approval";
 	}
 

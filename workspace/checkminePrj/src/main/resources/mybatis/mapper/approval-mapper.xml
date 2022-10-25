@@ -148,5 +148,100 @@
 			THIRD_DATE = SYSDATE
 		WHERE "NO" = #{no}
 	</update>
+	
+	<insert id="insertDoc">
+		INSERT INTO AP_DOC
+		 (
+		     NO
+		    ,WRITER_NO
+		    ,TITLE
+		    ,"DATE"
+		    ,"TYPE"  
+		 )
+		 VALUES
+		 (
+		    SEQ_DOC_NO.NEXTVAL
+		    ,#{writerNo}
+		    ,#{title}
+		    ,SYSDATE
+		    ,#{type}
+		 )
+	</insert>
+	
+	<insert id="insertApproval">
+		INSERT INTO APPROVAL
+		 (
+		     NO
+		    ,DOC_NO
+		    ,FIRST_APPROVER
+		    ,SECOND_APPROVER
+		    ,THIRD_APPROVER
+		    ,FINAL_APPROVER
+		    ,STATUS
+		 )
+		 VALUES
+		 (
+		    SEQ_APP_NO.NEXTVAL
+		    ,SEQ_DOC_NO.CURRVAL
+		    ,#{firstApprover}
+		    ,#{secondApprover}
+		    ,#{thirdApprover}
+		    ,#{finalApprover}
+		    ,'대기'
+		 )
+	</insert>
+	
+	<insert id="insertDraft">
+		INSERT INTO DRAFT
+		(
+		    NO
+		    ,DEPARTMENT
+		    ,"CONTENT"
+		)
+		VALUES
+		(
+		    SEQ_DOC_NO.CURRVAL
+		    ,#{department}
+		    ,#{content}
+		)
+	</insert>
+	
+	<insert id="insertFile">
+		INSERT INTO AP_FILE
+		(
+		    NO
+		    ,DOC_NO
+		    ,"NAME"
+		    ,FPATH
+		)
+		VALUES
+		(
+		    SEQ_AP_FILE_NO.NEXTVAL
+		    ,SEQ_DOC_NO.CURRVAL
+		    ,#{fileName}
+		    ,#{fpath}
+		)
+	</insert>
+	
+	<select id="selectCurrentDoc" resultType="ApprovalDocVo">
+		SELECT *
+		FROM
+		(
+		    SELECT *
+		    FROM AP_DOC
+		    ORDER BY NO DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<select id="selectFiles" resultType="ApprovalFileVo">
+		SELECT
+			NO
+			,DOC_NO
+			,"NAME" FILE_NAME
+			,FPATH
+		FROM AP_FILE
+		WHERE DOC_NO = #{dno}
+	</select>
 
 </mapper>

@@ -32,6 +32,15 @@
 		font-size: 23px;
 		align-items: center;
 	}
+	#write-info input{
+		color: white;
+		background-color:#91b3ac;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+		font-size: 23px;
+	}
 	#approver-info{
 		width: 40%;
 		height: 100%;
@@ -46,6 +55,18 @@
 		border-bottom: 1px solid black;
 		padding: 10px;
 		text-align: center;
+	}
+	#approver-info input{
+		height: 100%;
+		width: 80%;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+	}
+	#approver5, #approver6, #approver7, #approver8{
+		line-height: 80px;
+		font-size: 25px;
 	}
 	#main-bot{
 		height: 80vh;
@@ -106,14 +127,16 @@
 
 
 <main id="draft-wrapper">
+	
+	<form action="${rootPath}/approval/proposal" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
-				작성자 : (작성자영역)
+				작성자 : <input type="text" value="${docVo.writerNo}" name="writerNo" readonly>
 			</div>
 			<div id="write-date-div">
-				작성일 : (작성년월일)
+				작성일 : <input type="text" value="${docVo.date}" name="date" readonly>
 			</div>
 		</div>
 		<div id="approver-info">
@@ -125,15 +148,14 @@
 			<div id="approver6">${apVo.secondApprover}</div>
 			<div id="approver7">${apVo.thirdApprover}</div>
 			<div id="approver8">${apVo.finalApprover}</div>
-			<div id="approver9">${apVo.firstDate}</div>
-			<div id="approver10">${apVo.secondDate}</div>
-			<div id="approver11">${apVo.thirdDate}</div>
-			<div id="approver12">${apVo.finalDate}</div>
+			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
+			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
+			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
+			<div id="approver12"><input type="text" value="${apVo.finalDate}" name="finalDate" readonly></div>
 		</div>
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/proposal" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -159,7 +181,12 @@
 				<textarea id="approval-content" class="form-control" maxlength="500" name="content"></textarea>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="proposalFile" id="" multiple>
+				<c:if test="${fileList eq null}">
+					<input type="file" name="file" id="" multiple>
+				</c:if>
+				<c:forEach items="${fileList}" var="list">
+					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
+				</c:forEach>
 				<!--반려사유-->
 				<input type="hidden" id="return-reason" name="returnReason">
 				<!--결재자 번호-->
@@ -170,9 +197,8 @@
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
-		</form>
-
-	</div>
+			
+		</div>
 	
 	
 	<%@ include file="/WEB-INF/views/approval/proposal-modal.jsp" %>
@@ -181,5 +207,7 @@
 	<script>
 		document.querySelector(".dropdown-item").value
 	</script>
+
+	</form>
 
 </main>

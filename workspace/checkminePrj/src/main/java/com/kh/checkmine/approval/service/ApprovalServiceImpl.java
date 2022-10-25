@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.approval.dao.ApprovalDao;
 import com.kh.checkmine.approval.vo.ApprovalBuyOrderVo;
@@ -21,6 +22,7 @@ import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 
 @Service
+@Transactional
 public class ApprovalServiceImpl implements ApprovalService{
 	
 	private final ApprovalDao dao;
@@ -153,16 +155,31 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return dao.insertApproval(sst, apVo);
 	}
 
-	//기안서 정보 DB에 올리기
-	@Override
-	public int insertDraft(ApprovalDraftVo draftVo) {
-		return dao.insertDraft(sst, draftVo);
-	}
-
 	//파일정보 DB에 올리기
 	@Override
 	public int insertFile(ApprovalFileVo fileVo) {
 		return dao.insertFile(sst, fileVo);
+	}
+
+	//기안서 넣는 작업
+	@Override
+	public ApprovalDocVo approvalDraft(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalDraftVo draftVo) {
+
+		//기안서 관련 문서정보, 결재정보, 기안서 정보 DB에 올리기
+		dao.insertDoc(sst, docVo);
+		dao.insertApproval(sst, apVo);
+		dao.insertDraft(sst, draftVo);
+		
+		//방금 넣은 문서정보 가져오기
+		ApprovalDocVo result = dao.selectCurrentDoc(sst);
+		
+		return result;
+	}
+
+	//문서번호로 첨부파일 가져오기
+	@Override
+	public List<ApprovalFileVo> selectFilesByNo(String dno) {
+		return dao.selectFiles(sst, dno);
 	}
 
 }
