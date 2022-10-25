@@ -42,5 +42,15 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return dao.selectAccByNo(sst, no);
 	}
 
+	@Override
+	public int editEmp(MemberVo vo) {
+		return dao.editEmp(sst, vo);
+	}
+
+	@Override
+	public int editAcc(AccountVo vo) {
+		return dao.editAcc(sst, vo);
+	}
+
 
 }

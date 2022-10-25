@@ -15,4 +15,8 @@ public interface PersonnelService {
 
 	AccountVo selectAccByNo(String no);
 
+	int editEmp(MemberVo vo);
+
+	int editAcc(AccountVo vo);
+
 }

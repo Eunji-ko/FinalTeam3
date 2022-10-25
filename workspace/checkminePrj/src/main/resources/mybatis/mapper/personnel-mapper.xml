@@ -59,5 +59,32 @@
   	WHERE DELETE_YN = 'N'
   	AND NO = #{no}
   </select>
+  
+  <update id="editEmp">
+  	UPDATE
+		EMPLOYEE
+		SET
+			  DEPT_NO = #{deptNo}
+			, POS_NO = #{posNo}
+			, EMAIL = #{email}
+			, PHONE = #{phone}
+		WHERE NO = #{no}
+  </update>
+  
+  <update id="editAcc">
+  	UPDATE
+  		ACCOUNT
+  		SET
+  			  NAME = #{name}
+  			, ADDRESS = #{address}
+  			, TEL = #{tel}
+  			, FAX = #{fax}
+  			, PNAME = #{pname}
+  			, DEPT = #{dept}
+  			, POSITION = #{position}
+  			, PHONE = #{phone}
+  			, EMAIL = #{email}
+  		WHERE NO = #{no}
+  </update>
  
 </mapper>
