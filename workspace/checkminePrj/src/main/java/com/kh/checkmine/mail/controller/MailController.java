@@ -3,19 +3,22 @@ package com.kh.checkmine.mail.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.mail.service.MailService;
-import com.kh.checkmine.mail.vo.MailVo;
-import com.kh.checkmine.mail.vo.ReceveMailVo;
+import com.kh.checkmine.mail.vo.ReceiveMailVo;
+import com.kh.checkmine.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("mail")
@@ -28,105 +31,106 @@ public class MailController {
 		this.service = mailService;
 	}
 	
-	@GetMapping
-	public String mail() {
-		return "mail/mail_main";
-	}
-	
-	@GetMapping("detail")
-	public String mailDetail() {
-		return "mail/mail_detail";
-	}
-	
-	@GetMapping("write")
-	public String mailWrite() {
-		return "mail/mail_write";
-	}
-	
-	@GetMapping("addr")
-	public String mailAddr() {
-		return "mail/mail_addr";
-	}
-	
 	/**
-	 * 메일 리스트 가져오기
-	 * @param type 편지함의 타입(받은편지, 중요편지...)
-	 * @param page 현재 페이지
-	 * @param loginMember 로그인한 사람 번호
-	 * @param response 
+	 * 받은 편지함 화면 보여주기
+	 * @param session
+	 * @param page
 	 * @return
 	 */
-	@PostMapping(value="getlist", produces = "application/text; charset=UTF-8" )
-	@ResponseBody
-	public String getList(String type, String page, String loginMember) {
+	@GetMapping("receive")
+	public String receiveMail(HttpSession session, @RequestParam(value = "p", defaultValue = "1") String page, Model model) {
+		//테스트용 멤버 나중에 없애기
+		com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
+		vo.setNo("1");
+		vo.setEmail("chanrb0966@gmail.com");
+		session.setAttribute("loginMember", vo);
+		//테스트용 멤버 나중에 없애기
 		
-		PageVo pageVo;
-		Gson gson = new Gson();
-		String listStr ="";
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
 		
-		if("receve".equals(type)||"ref".equals(type)) { //받은메일함일 때 참조메일함일 때
-			//데이터 뭉치기
-			if("receve".equals(type)) {type = "A";}
-			else if("ref".equals(type)) {type = "R";}
-			
-			//페이지vo 생성
-			int listCount = service.getListCount(type, loginMember);
-			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
-			
-			HashMap<String , String> listInfo = new HashMap<String, String>();
-			
-			listInfo.put("type", type);
-			listInfo.put("loginMember", loginMember);
-			
-			ArrayList<ReceveMailVo> rcvMailList = (ArrayList<ReceveMailVo>) service.getList(listInfo, pageVo);
-			
-			listStr = gson.toJson(rcvMailList);
-			
-		}else if("send".equals(type)) { //보낸메일함일 때//
-			int listCount = service.getSendListCount(loginMember);
-			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
-			
-			ArrayList<MailVo> sendMailList = (ArrayList<MailVo>) service.getSendList(loginMember, pageVo);
-			
-			listStr = gson.toJson(sendMailList);
-			
-		}else if("imp".equals(type)) { //중요메일함일때
-			int listCount = service.getImpListCount(loginMember);
-			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
-			
-			ArrayList<ReceveMailVo> impMailList = (ArrayList<ReceveMailVo>) service.getImpList(loginMember, pageVo);
-			listStr = gson.toJson(impMailList);
-			
-		}else if("save".equals(type)) { // 임시저장 메일함일때
-			int listCount = service.getSaveListCount(loginMember);
-			pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
-			
-			ArrayList<MailVo> saveMailList = (ArrayList<MailVo>) service.getSaveList(loginMember, pageVo);
-			listStr = gson.toJson(saveMailList);
-		}
-		
-		return listStr;
+		//pageVo생성
+		int listCount = service.getReceiveListCount(memberNo);
+        PageVo pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
+        
+        //리스트 불러오기
+        ArrayList<ReceiveMailVo> receiveMailList = (ArrayList<ReceiveMailVo>) service.getReceiveList(memberNo, pageVo);
+        
+        //안읽은 메일 갯수 가져오기
+        int notReadCountReceive = service.getNotReadCount(memberNo, "A");
+        int notReadCountRef = service.getNotReadCount(memberNo, "R");
+        
+        model.addAttribute("receiveMailList", receiveMailList);
+        model.addAttribute("pageVo", pageVo);
+        model.addAttribute("notReadCountReceive", notReadCountReceive);
+        model.addAttribute("notReadCountRef", notReadCountRef);
+        
+		return "mail/mail_receive";
 	}
 	
 	/**
-	 * 메일 중요도 바꾸기
+	 * 참조 편지함 화면 보여주기
+	 * @param session
+	 * @param page
+	 * @return
+	 */
+	@GetMapping("ref")
+	public String refMail(HttpSession session, @RequestParam(value = "p", defaultValue = "1") String page, Model model) {
+		
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
+		
+		//pageVo생성
+		int listCount = service.getRefListCount(memberNo);
+        PageVo pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
+        
+        //리스트 불러오기
+        ArrayList<ReceiveMailVo> refMailList = (ArrayList<ReceiveMailVo>) service.getRefList(memberNo, pageVo);
+        
+        //안읽은 메일 갯수 가져오기
+        int notReadCountReceive = service.getNotReadCount(memberNo, "A");
+        int notReadCountRef = service.getNotReadCount(memberNo, "R");
+        
+        model.addAttribute("refMailList", refMailList);
+        model.addAttribute("pageVo", pageVo);
+        model.addAttribute("notReadCountReceive", notReadCountReceive);
+        model.addAttribute("notReadCountRef", notReadCountRef);
+        
+		return "mail/mail_ref";
+	}
+	
+	
+	
+	/**
+	 * 중요도 표시 토글
 	 * @param mailNum
 	 * @param importance
 	 * @return
 	 */
 	@PostMapping("importance")
 	@ResponseBody
-	public String setImp(String mailNum, String importance) {
-		HashMap<String, String > impMap = new HashMap<String, String>();
+	public String setImportance(String mailNum, String importance) {
+		HashMap<String, String> impVo = new HashMap<String, String>();
+		impVo.put("mailNum", mailNum);
+		impVo.put("importance", importance);
 		
-		impMap.put("mailNum", mailNum);
-		impMap.put("importance", importance);
-		
-		int result = service.setImp(impMap);
+		int result = service.setImportance(impVo);
 		
 		return Integer.toString(result);
 	}
 	
-	
-	
+	/**
+	 * 받은메일함 휴지통으로 보내기
+	 * @param targetMails
+	 * @return
+	 */
+	@PostMapping("moveRecycleBinReceive")
+	@ResponseBody
+	public String moveRecycleBin(String[] targetMails) {
+		int result = service.moveRecycleBinReceive(targetMails);
+		
+		if(result == 1) {
+			return Integer.toString(targetMails.length);
+		}else {
+			return "[실패]0";
+		}
+	}
 }

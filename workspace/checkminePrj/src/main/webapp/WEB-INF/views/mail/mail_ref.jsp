@@ -3,12 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<% //테스트용 멤버 나중에 없앨것임
-	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
-	vo.setNo("1");
-	vo.setEmail("chanrb0966@gmail.com");
-	session.setAttribute("loginMember", vo);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -139,9 +133,10 @@
                         <span>메일 쓰기</span>
                     </div>
 
+					<!-- 각 메일함마다 바꿔주기 -->
                     <ul>
-                        <li><div class="container-nav-selected"><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>21</span></div></li>
-                        <li><div><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>21</span></div></li>
+                        <li><div><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
+                        <li><div class="container-nav-selected"><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
                         <li><div><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/save?p=1">임시보관함</a></div></li>
@@ -171,9 +166,23 @@
                         <span id="recycle-bin" class="flex-grow-1" ><img src="${imgPath}/trash_icon.png" onclick="gotoRecycleBin();"></span>
                         
                         <!-- 페이지네이션 -->
-                        <span>1 page</span>
-                        <a href="메일 리스트 이전 페이지"><img src="${imgPath}/mail_arrow_pre.png"></a>
-                        <a href="메일 리스트 다음 페이지"><img src="${imgPath}/mail_arrow_next.png"></a>
+                        <span>${pageVo.currentPage } page</span>
+                        <c:choose>
+                        	<c:when test="${pageVo.currentPage eq '1'}">
+                        		<a><img src="${imgPath}/mail_arrow_pre_blank.png"></a>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<a href="/checkmine/mail/receive?p=${pageVo.currentPage - 1}"><img src="${imgPath}/mail_arrow_pre.png"></a>
+                        	</c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                        	<c:when test="${pageVo.currentPage eq pageVo.maxPage}">
+                        		<a><img src="${imgPath}/mail_arrow_next_blank.png"></a>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<a href="/checkmine/mail/receive?p=${pageVo.currentPage + 1}"><img src="${imgPath}/mail_arrow_next.png"></a>
+                        	</c:otherwise>
+                        </c:choose>
                     </div>
 
                     <!-- 메일 리스트 -->
@@ -186,15 +195,35 @@
                         </div>
                         
                         <!-- 리스트 여기부터 받아오기 -->
-						<div id="1" class="mail-item notRead notImp d-flex align-items-center">
-                            <a href="메일_상세보기" class="mail-list-item">
-                                <input type="checkbox" value="1">
-                                <span style="width: 257px;">chan0966@gmail.com</span>
-                                <span style="width: 650px;">제목제목제목제목-내용내용내용내용내용내용내용내용내용내용내용내용내용내용...</span>
-                                <span style="width: 235px;">2022-10-12 12:12</span>
-                            </a>
-                            <span class="d-flex justify-content-center"><img class="impbtn" src="${imgPath}/mail_star_blank.png" style="margin-left: 11px;" onclick="importance(this);"></span>
-                        </div>
+                        <c:forEach items="${refMailList}" var="item">
+                        	<c:if test="${item.read eq 'N'}">
+                        		<c:set var="read" value="notRead"/>
+                        	</c:if>
+                        	<c:if test="${item.read eq 'Y'}">
+                        		<c:set var="read" value="read"/>
+                        	</c:if>
+                        	<c:if test="${item.importance eq 'N'}">
+                        		<c:set var="imp" value="notImp"/>
+                        		<c:set var="impImgPath" value="${imgPath}/mail_star_blank.png"/>
+                        	</c:if>
+                        	<c:if test="${item.importance eq 'Y'}">
+                        		<c:set var="imp" value="imp"/>
+                        		<c:set var="impImgPath" value="${imgPath}/mail_star_sel.png"/>
+                        	</c:if>
+                        	
+                        	<!-- 여기가 리스트 아이템 -->
+							<div id="${item.no}" class="mail-item ${read} ${imp} d-flex align-items-center">
+	                            <a href="메일_상세보기" class="mail-list-item">
+	                                <input type="checkbox" value="${item.no}">
+	                                <span style="width: 257px;">${item.senderEmail}</span>
+	                                <span style="width: 650px;">${item.title}</span>
+	                                <span style="width: 235px;">${item.sendDate}</span>
+	                            </a>
+	                            <span class="d-flex justify-content-center"><img class="impbtn" src="${impImgPath}" style="margin-left: 11px;" onclick="importance(this);"></span>
+	                        </div>
+                        </c:forEach>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -212,12 +241,89 @@
             })
         }
 
+        //특정선택
         function selectSome(type){
             const checkboxes = document.querySelectorAll('#mail-list .'+ type + ' input[type="checkbox"]');
             
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = true;
             });
+        }
+        
+        //중요도 체크
+        function importance(img){
+            let classList = img.parentNode.parentNode.classList;
+            const mailNum = img.parentNode.parentNode.id;
+            if(classList.contains('imp')){
+               
+                $.ajax({
+                    type:'post',
+                    url: '/checkmine/mail/importance',
+                    data:{
+                        'mailNum' : mailNum,
+                        'importance' : 'N'
+                    },
+                    success:function(result){
+                        if(result == '1'){
+                            img.src = '${imgPath}/mail_star_blank.png';
+                            classList.remove('imp');
+                            classList.add('notImp');
+                        }else{
+                            console.log('result is not 1');
+                        }
+                    },
+                    error:function(){
+                        console.log("fail");
+                    }
+                });
+            }else{
+                $.ajax({
+                    type:'post',
+                    url: '/checkmine/mail/importance',
+                    data:{
+                        'mailNum' : mailNum,
+                        'importance' : 'Y'
+                    },
+                    success:function(result){
+                        if(result == '1'){
+                            img.src = '${imgPath}/mail_star_sel.png';
+                            classList.remove('notImp');
+                            classList.add('imp');
+                        }else{
+                            console.log('result is not 1');
+                        }
+                    },
+                    error:function(){
+                        console.log("fail");
+                    }
+                });
+            }
+        }
+        
+        //휴지통으로 보내기
+        function gotoRecycleBin(){
+            const checkboxes = document.querySelectorAll('#mail-list input[type="checkbox"]:checked');
+
+            let mailArr = [];
+            checkboxes.forEach((checkbox) =>{
+                mailArr.push(checkbox.value);
+            });
+            
+            if(confirm("선택된 메일을 휴지통으로 보내시겠습니까?")){
+                $.ajax({
+                    url:'/checkmine/mail/moveRecycleBinReceive',
+                    traditional: true,
+                    type:'post',
+                    data:{'targetMails' : mailArr},
+                    success: function(data){
+                        alert(data + '개의 메일이 삭제되었습니다.');
+                        window.location.reload();
+                    },
+                    error:function(){
+                        alert("실패");
+                    }
+                });
+            }
         }
     </script>
 </body>
