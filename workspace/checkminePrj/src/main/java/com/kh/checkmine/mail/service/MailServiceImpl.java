@@ -1,6 +1,5 @@
 package com.kh.checkmine.mail.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.mail.dao.MailDao;
-import com.kh.checkmine.mail.vo.MailVo;
-import com.kh.checkmine.mail.vo.ReceveMailVo;
+import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 @Service
 public class MailServiceImpl implements MailService{
@@ -26,77 +24,65 @@ public class MailServiceImpl implements MailService{
 	}
 
 	/**
-	 * 로그인한 멤버의 메일 갯수 가져오기
+	 * 보낸 메일 리스트 갯수 가져오기
 	 */
 	@Override
-	public int getListCount(String type, String loginMember) {
-		
-		HashMap<String, String> infoMap = new HashMap<String, String>();
-		infoMap.put("type", type);
-		infoMap.put("loginMember", loginMember);
-		
-		return dao.getMailListCount(sst, infoMap);
+	public int getReceiveListCount(String no) {
+		return dao.getReceiveListCount(sst, no);
 	}
 
 	/**
-	 * 로그인한 멤버의 메일 리스트 가져오기
+	 * 보낸 메일 리스트 가져오기
 	 */
 	@Override
-	public List<ReceveMailVo> getList(HashMap<String, String> listInfo, PageVo pageVo) {
-		return dao.getMailList(sst, listInfo, pageVo);
-	}
-
-	/**
-	 * 로그인한 멤버의 보낸 메일 갯수 가져오기
-	 */
-	@Override
-	public int getSendListCount(String loginMember) {
-		return dao.getSendMailListCount(sst, loginMember);
-	}
-
-	/**
-	 * 보낸메일 리스트 가져오기
-	 */
-	@Override
-	public List<MailVo> getSendList(String loginMember, PageVo pageVo) {
-		return dao.getSendMailList(sst,loginMember, pageVo);
+	public List<ReceiveMailVo> getReceiveList(String memberNo, PageVo pageVo) {
+		return dao.getReceiveList(sst, memberNo, pageVo);
 	}
 
 	/**
 	 * 중요도 설정
 	 */
 	@Override
-	public int setImp(HashMap<String, String> impMap) {
-		return dao.setImp(sst, impMap);
+	public int setImportance(HashMap<String, String> impVo) {
+		return dao.setImportance(sst, impVo);
 	}
 
 	/**
-	 * 중요메일함 갯수 가져오기
+	 * 받은메일함 휴지통으로 보내기
 	 */
 	@Override
-	public int getImpListCount(String loginMember) {
-		return dao.getImpListCount(sst, loginMember);
+	public int moveRecycleBinReceive(String[] targetMails) {
+		int result = 1;
+		for(String targetMail:targetMails) {			
+			result = result*dao.moveRecycleBinReceive(sst, targetMail);
+		}
+		return result;
+	}
+
+	@Override
+	public int getNotReadCount(String memberNo, String type) {
+		HashMap<String, String> vo = new HashMap<String, String>();
+		vo.put("memberNo", memberNo);
+		vo.put("type", type);
+		
+		return dao.getNotReadCount(sst, vo);
 	}
 
 	/**
-	 * 즁요메일함 리스트 가져오기
+	 * 참조 메일 갯수 가져오기
 	 */
 	@Override
-	public List<ReceveMailVo> getImpList(String loginMember, PageVo pageVo) {
-		return dao.getImpList(sst, loginMember);
+	public int getRefListCount(String memberNo) {
+		return dao.getRefListCount(sst,memberNo);
 	}
 
 	/**
-	 * 임시저장 리스트 갯수
+	 * 참조 메일 리스트 가져오기
 	 */
 	@Override
-	public int getSaveListCount(String loginMember) {
-		return dao.getSaveListCount(sst, loginMember);
+	public List<ReceiveMailVo> getRefList(String memberNo, PageVo pageVo) {
+		return dao.getRefList(sst, memberNo, pageVo);
 	}
 
-	@Override
-	public List<MailVo> getSaveList(String loginMember, PageVo pageVo) {
-		return dao.getSaveList(sst, loginMember);
-	}
 
 }

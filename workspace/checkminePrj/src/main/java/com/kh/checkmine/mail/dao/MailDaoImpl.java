@@ -8,88 +8,71 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.common.PageVo;
-import com.kh.checkmine.mail.vo.MailVo;
-import com.kh.checkmine.mail.vo.ReceveMailVo;
+import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 @Repository
 public class MailDaoImpl implements MailDao{
 
 	/**
-	 * 리스트 갯수 가져오기
+	 * 받은 메일 리스트 갯수 가져오기
 	 */
 	@Override
-	public int getMailListCount(SqlSessionTemplate sst, HashMap<String, String> infoMap) {
-		return sst.selectOne("mailMapper.selectListCount", infoMap);
+	public int getReceiveListCount(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("mailMapper.selectReceveListCount", no);
 	}
-	
+
 	/**
-	 * 리스트 가져오기
+	 * 받은 메일 리스트 가져오기
 	 */
 	@Override
-	public List<ReceveMailVo> getMailList(SqlSessionTemplate sst, HashMap<String, String> listInfo, PageVo pageVo) {
+	public List<ReceiveMailVo> getReceiveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
 		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
 		
-		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
-		return sst.selectList("mailMapper.selectList", listInfo, rb);
+		return sst.selectList("mailMapper.selectReceiveList",memberNo, rb);
 	}
 
 	/**
-	 * 보낸메일 리스트 개수 가져오기
+	 * 중요도 설정
 	 */
 	@Override
-	public int getSendMailListCount(SqlSessionTemplate sst, String loginMember) {
-		return sst.selectOne("mailMapper.selectSendListCount", loginMember);
+	public int setImportance(SqlSessionTemplate sst, HashMap<String, String> impVo) {
+		return sst.update("mailMapper.upadteImportance", impVo);
 	}
 
-	
 	/**
-	 * 보낸메일 가져오기
+	 * 받은메일함 휴지통으로 보내기
 	 */
 	@Override
-	public List<MailVo> getSendMailList(SqlSessionTemplate sst, String loginMember, PageVo pageVo) {
+	public int moveRecycleBinReceive(SqlSessionTemplate sst, String targetMail) {
+		return sst.update("mailMapper.upadteMailRefStatus",targetMail);
+	}
+
+	/**
+	 * 안읽은 메일 갯수 가져오기
+	 */
+	@Override
+	public int getNotReadCount(SqlSessionTemplate sst, HashMap<String, String> vo) {
+		return sst.selectOne("mailMapper.selectNotReadCount", vo);
+	}
+
+	/**
+	 * 참조 메일 갯수 가져오기
+	 */
+	@Override
+	public int getRefListCount(SqlSessionTemplate sst, String memberNo) {
+		return sst.selectOne("mailMapper.selectRefListCount",memberNo);
+	}
+
+	/**
+	 * 참조 메일 리스트 가져오기
+	 */
+	@Override
+	public List<ReceiveMailVo> getRefList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
 		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
-		return sst.selectList("mailMapper.selectSendList", loginMember, rb);
-	}
 
-	/**
-	 * 중요도 표시
-	 */
-	@Override
-	public int setImp(SqlSessionTemplate sst, HashMap<String, String> impMap) {
-		return sst.update("mailMapper.updateImp", impMap);
-	}
-
-	/**
-	 * 중요메일 이스트 갯수 가져오기
-	 */
-	@Override
-	public int getImpListCount(SqlSessionTemplate sst, String loginMember) {
-		return sst.selectOne("mailMapper.selectImpListCount", loginMember);
-	}
-
-	/**
-	 * 중요메일 리스트 가져오기
-	 */
-	@Override
-	public List<ReceveMailVo> getImpList(SqlSessionTemplate sst, String loginMember) {
-		return sst.selectList("mailMapper.selectImpList",loginMember);
-	}
-
-	/**
-	 * 임시저장 리스트 갯수 가죠오기
-	 */
-	@Override
-	public int getSaveListCount(SqlSessionTemplate sst, String loginMember) {
-		return sst.selectOne("mailMapper.selectSaveListCount", loginMember);
-	}
-
-	/**
-	 * 임시저장 리스트 가졍오기
-	 */
-	@Override
-	public List<MailVo> getSaveList(SqlSessionTemplate sst, String loginMember) {
-		return sst.selectList("mailMapper.selectSaveList", loginMember);
+		return sst.selectList("mailMapper.selectRefList",memberNo, rb);
 	}
 
 }

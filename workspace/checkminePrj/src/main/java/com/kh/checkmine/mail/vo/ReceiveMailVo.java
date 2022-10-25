@@ -3,7 +3,7 @@ package com.kh.checkmine.mail.vo;
 import lombok.Data;
 
 @Data
-public class ReceveMailVo {
+public class ReceiveMailVo {
 	public String no;
 	public String mailNo;
 	public String receiver;
