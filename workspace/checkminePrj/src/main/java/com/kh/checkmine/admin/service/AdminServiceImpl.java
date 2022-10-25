@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import com.kh.checkmine.admin.dao.AdminDao;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.reservation.vo.PlaceBookVo;
+import com.kh.checkmine.reservation.vo.PlaceVo;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -55,6 +58,20 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardVo> boardList() {
 		List<BoardVo> boardList = dao.selectBoardList(sst);
 		return boardList;
+	}
+
+	//홈 > 사원 리스트
+	@Override
+	public List<MemberVo> MemberList() {
+		List<MemberVo> memberList = dao.selectMemberList(sst);
+		return memberList;
+	}
+
+	//홈 > 예약 리스트
+	@Override
+	public List<PlaceBookVo> bookList() {
+		List<PlaceBookVo> bookList = dao.selectBookList(sst);
+		return bookList;
 	}
 	 
 	 

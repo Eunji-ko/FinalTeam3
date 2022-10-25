@@ -52,6 +52,7 @@
 
     #filter{
         width: 110px;
+        display: inline-block;
     }
     #option{
         width: 183px;
@@ -129,13 +130,16 @@
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
-                    <option value="">-----</option>
-                    <option value="${root}/admin/goods/list?sort=p&p=1">장소</option>
-                    <option value="${root}/admin/goods/list?sort=g&p=1">장비</option>
-                </select>
+                <div>
+                    <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
+                        <option value="">-----</option>
+                        <option value="${root}/admin/goods/list?sort=p&p=1">장소</option>
+                        <option value="${root}/admin/goods/list?sort=g&p=1">장비</option>
+                    </select>
+                    <div style="display: inline-block; margin:10px">'${map.keyword}'의 검색결과입니다.</div>
+                </div>
                 <form action="${root}/admin/goods/searchGoods" method="get">
-                    <select class="form-select" id="option" required style="display: inline-block;">
+                    <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="name">이름</option>
                         <option value="info">설명</option>
                     </select>
