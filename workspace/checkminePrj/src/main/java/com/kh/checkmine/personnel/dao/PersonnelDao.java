@@ -17,4 +17,8 @@ public interface PersonnelDao {
 
 	AccountVo selectAccByNo(SqlSessionTemplate sst, String no);
 
+	int editEmp(SqlSessionTemplate sst, MemberVo vo);
+
+	int editAcc(SqlSessionTemplate sst, AccountVo vo);
+
 }

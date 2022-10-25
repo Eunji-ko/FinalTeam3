@@ -24,62 +24,63 @@
 </style>
 </head>
 <body>
-  <div class="modal fade" id="changeAcc" tabindex="-1" aria-labelledby="changeAccLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="changeAccLabel">거래처 정보</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="modalANo" name="no">
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="name" id="floatingCorp">
-            <label for="floatingCorp">거래처명</label>
+  <form action="${rootPath}/personnel/editAcc" method="post">
+    <div class="modal fade" id="changeAcc" tabindex="-1" aria-labelledby="changeAccLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="changeAccLabel">거래처 정보</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="address" id="floatingCAddress">
-            <label for="floatingCAddress">거래처 주소</label>
+          <div class="modal-body">
+            <input type="hidden" id="modalANo" name="no">
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="name" id="floatingCorp">
+              <label for="floatingCorp">거래처명</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="address" id="floatingCAddress">
+              <label for="floatingCAddress">거래처 주소</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="tel" class="form-control" name="tel" id="floatingTel">
+              <label for="floatingTel">거래처 전화번호</label>
+            </div> 
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="fax" id="floatingFax">
+              <label for="floatingFax">거래처 팩스번호</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="pname" id="floatingPName">
+              <label for="floatingPName">담당자명</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="dept" id="floatingPDept">
+              <label for="floatingPDept">담당자 부서</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="text" class="form-control" name="position" id="floatingPPosition">
+              <label for="floatingPPosition">담당자 직급</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px;">
+              <input type="tel" class="form-control" name="phone" id="floatingPPhone">
+              <label for="floatingPPhone">담당자 전화번호</label>
+            </div> 
+            <div class="form-floating">
+              <input type="email" class="form-control" name="email" id="floatingPEmail">
+              <label for="floatingPEmail">이메일 주소</label>
+            </div>
           </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="tel" class="form-control" name="tel" id="floatingTel">
-            <label for="floatingTel">거래처 전화번호</label>
-          </div> 
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="fax" id="floatingFax">
-            <label for="floatingFax">거래처 팩스번호</label>
+          <div class="modal-footer">
+            <input type="submit" class="btn checkmine-btn">
           </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="pname" id="floatingPName">
-            <label for="floatingPName">담당자명</label>
-          </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="dept" id="floatingPDept">
-            <label for="floatingPDept">담당자 부서</label>
-          </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" name="position" id="floatingPPosition">
-            <label for="floatingPPosition">담당자 직급</label>
-          </div>
-          <div class="form-floating" style="margin-bottom: 10px;">
-            <input type="tel" class="form-control" name="phone" id="floatingPPhone">
-            <label for="floatingPPhone">담당자 전화번호</label>
-          </div> 
-          <div class="form-floating">
-            <input type="email" class="form-control" name="email" id="floatingPEmail">
-            <label for="floatingPEmail">이메일 주소</label>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn checkmine-btn">변경하기</button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <script>
-
-$('.accModal').on("click", function() {
+    $('.accModal').on("click", function() {
       let no = $(this).children('th').html();
       $.ajax({
         url: "/checkmine/personnel/accModal",
@@ -103,7 +104,6 @@ $('.accModal').on("click", function() {
         }
       })
     })
-
   </script>
 </body>
 </html>

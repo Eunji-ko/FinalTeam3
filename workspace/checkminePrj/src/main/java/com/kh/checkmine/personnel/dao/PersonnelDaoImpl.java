@@ -31,4 +31,14 @@ public class PersonnelDaoImpl implements PersonnelDao {
 		return sst.selectOne("personnelMapper.selectAccByNo", no);
 	}
 
+	@Override
+	public int editEmp(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("personnelMapper.editEmp", vo);
+	}
+
+	@Override
+	public int editAcc(SqlSessionTemplate sst, AccountVo vo) {
+		return sst.update("personnelMapper.editAcc", vo);
+	}
+
 }
