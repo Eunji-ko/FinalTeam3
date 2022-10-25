@@ -85,4 +85,10 @@ public interface ApprovalDao {
 	//파일정보 DB에 올리기
 	int insertFile(SqlSessionTemplate sst, ApprovalFileVo fileVo);
 
+	//가장 최근에 등록된 문서 조회
+	ApprovalDocVo selectCurrentDoc(SqlSessionTemplate sst);
+
+	//문서번호로 첨부파일 조회하기
+	List<ApprovalFileVo> selectFiles(SqlSessionTemplate sst, String dno);
+
 }

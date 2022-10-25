@@ -55,6 +55,14 @@
 		padding: 10px;
 		text-align: center;
 	}
+	#approver-info input{
+		height: 100%;
+		width: 80%;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+	}
 	#approver5, #approver6, #approver7, #approver8{
 		line-height: 80px;
 		font-size: 25px;
@@ -120,16 +128,13 @@
 			<div id="approver6">${apVo.secondApprover}</div>
 			<div id="approver7">${apVo.thirdApprover}</div>
 			<div id="approver8">${apVo.finalApprover}</div>
-			<div id="approver9">${apVo.firstDate}</div>
-			<div id="approver10">${apVo.secondDate}</div>
-			<div id="approver11">${apVo.thirdDate}</div>
-			<div id="approver12">${apVo.finalDate}</div>
+			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
+			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
+			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
+			<div id="approver12"><input type="text" value="${apVo.finalDate}" name="finalDate" readonly></div>
 		</div>
 	</div>
 	<div id="main-bot">
-
-		
-
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
 				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
@@ -140,7 +145,12 @@
 				<textarea id="approval-content" class="form-control" maxlength="2000" name="content">${draftVo.content}</textarea>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="fileName" id="" multiple>
+				<c:if test="${fileList eq null}">
+					<input type="file" name="file" id="" multiple>
+				</c:if>
+				<c:forEach items="${fileList}" var="list">
+					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
+				</c:forEach>
 				<!--반려사유-->
 				<input type="hidden" id="return-reason" name="returnReason">
 				<!--결재자 번호-->
@@ -150,8 +160,6 @@
 				<input type="hidden" name="finalApprover" id="final-approver">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
-
-	
 
 	</div>
 </form>

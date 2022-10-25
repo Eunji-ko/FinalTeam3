@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,6 +31,7 @@ import com.kh.checkmine.approval.vo.ApprovalMinutesVo;
 import com.kh.checkmine.approval.vo.ApprovalProposalVo;
 import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
+import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -99,6 +101,9 @@ public class ApprovalController {
 			ApprovalDocVo docVo = service.selectDocByNo(dno);
 			MemberVo writerVo = service.selectEmpByNo(docVo.getWriterNo());
 			
+			//문서번호로 첨부파일 가져오기
+			List<ApprovalFileVo> fileList = service.selectFilesByNo(dno);
+			
 			switch(docVo.getType()) {
 			case "D":
 				ApprovalDraftVo draftVo = service.selectDraftByNo(dno);
@@ -134,6 +139,7 @@ public class ApprovalController {
 			docVo.setWriterNo(writerVo.getName());
 			
 			model.addAttribute("docVo", docVo);
+			model.addAttribute("fileList", fileList);
 		}
 		
 		//결재자 이름 가져오기
@@ -177,16 +183,10 @@ public class ApprovalController {
 	
 	//기안서 작성
 	@PostMapping(value={"draft/{dno}", "draft"})
-	public String draft(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalDraftVo draftVo,@ModelAttribute ApprovalFileVo fileVo, HttpSession session, HttpServletRequest req) {
+	public String draft(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalDraftVo draftVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		
-		System.out.println(dno);
-		System.out.println(apVo);
-		System.out.println(docVo);
-		System.out.println(draftVo);
-		System.out.println(fileVo);
 		
 		//문서번호 존재 여부 확인
 		if(dno != null) {
@@ -220,21 +220,44 @@ public class ApprovalController {
 			}else {
 				session.setAttribute("alertMsg", "처리에 실패하였습니다.");
 			}
-		}else {
-			int docResult = service.insertApDoc(docVo);
-			int apResult = service.insertApproval(apVo);
-			int draftResult = service.insertDraft(draftVo);
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(기안서)
+			docVo.setType("D");
 			
-			if(fileVo.getFileName() != null && !fileVo.getFileName().isEmpty()) {
-				//파일 있음
-				//파일 업로드 후 저장된 파일명 얻기
-				String savePath = req.getServletContext().getRealPath("/resources/upload/approval/");
-				String changeName = "";
+			//기안서 결재 및 해당 문서정보 가져오기
+			ApprovalDocVo result = service.approvalDraft(docVo, apVo, draftVo);
+			
+			//파일 유무 확인
+			if(!file[0].isEmpty()) {
+				int fileResult = 0;
+				for(int i=0; i<file.length; i++) {
+					ApprovalFileVo fileVo = new ApprovalFileVo();
+					MultipartFile f = file[i];
+					
+					//저장경로
+					String savePath = req.getServletContext().getRealPath("/resources/upload/approval/");
+					//파일 업로드 및 파일명 받기
+					String changeName = FileUploader.fileUpload(f, savePath);
+					
+					fileVo.setFileName(changeName);
+					fileVo.setFpath(savePath);
+					fileVo.setDocNo(result.getNo());
+					fileResult = service.insertFile(fileVo);
+					fileResult++;
+				}
+				if(result == null) {
+					session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				}else if(fileResult != file.length){
+					session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+				}else {
+					session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+				}
+				return "redirect:/approval";
 			}
 			
-			int fileResult = service.insertFile(fileVo);
-			
-			if(docResult*apResult*draftResult == 1 || docResult*apResult*draftResult*fileResult == 1) {
+			if(result != null) {
 				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
 			}else {
 				session.setAttribute("alertMsg", "처리에 실패하였습니다.");

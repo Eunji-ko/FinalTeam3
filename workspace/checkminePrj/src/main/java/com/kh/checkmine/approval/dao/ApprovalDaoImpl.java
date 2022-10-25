@@ -84,7 +84,7 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	//문서번호로 구매품의서 조회하기
 	@Override
 	public ApprovalBuyOrderVo selectBuyOrder(SqlSessionTemplate sst, String dno) {
-		return sst.selectOne("apprvalMapper.selectBuyOrder", dno);
+		return sst.selectOne("approvalMapper.selectBuyOrder", dno);
 	}
 
 	//문서번호로 전표 조회하기
@@ -138,29 +138,37 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	//문서정보 DB에 올리기
 	@Override
 	public int insertDoc(SqlSessionTemplate sst, ApprovalDocVo docVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sst.insert("approvalMapper.insertDoc", docVo);
 	}
 
 	//결재정보 DB에 올리기
 	@Override
 	public int insertApproval(SqlSessionTemplate sst, ApprovalVo apVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sst.insert("approvalMapper.insertApproval", apVo);
 	}
 
 	//기안서 정보 DB에 올리기
 	@Override
 	public int insertDraft(SqlSessionTemplate sst, ApprovalDraftVo draftVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sst.insert("approvalMapper.insertDraft", draftVo);
 	}
 
 	//파일정보 DB에 올리기
 	@Override
 	public int insertFile(SqlSessionTemplate sst, ApprovalFileVo fileVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sst.insert("approvalMapper.insertFile", fileVo);
+	}
+
+	//가장 최근 등록된 문서 정보 조회
+	@Override
+	public ApprovalDocVo selectCurrentDoc(SqlSessionTemplate sst) {
+		return sst.selectOne("approvalMapper.selectCurrentDoc");
+	}
+
+	//문서번호로 첨부파일 조회하기
+	@Override
+	public List<ApprovalFileVo> selectFiles(SqlSessionTemplate sst, String dno) {
+		return sst.selectList("approvalMapper.selectFiles", dno);
 	}
 
 }

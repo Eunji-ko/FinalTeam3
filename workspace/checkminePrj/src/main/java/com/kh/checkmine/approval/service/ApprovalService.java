@@ -77,11 +77,14 @@ public interface ApprovalService {
 	//결재 정보 DB에 올리기
 	int insertApproval(ApprovalVo apVo);
 
-	//기안서 정보 DB에 올리기
-	int insertDraft(ApprovalDraftVo draftVo);
-
 	//파일 정보 DB에 올리기
 	int insertFile(ApprovalFileVo fileVo);
+
+	//기안서 결재하기
+	ApprovalDocVo approvalDraft(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalDraftVo draftVo);
+
+	//문서번호로 첨부파일 가져오기
+	List<ApprovalFileVo> selectFilesByNo(String dno);
 
 
 }
