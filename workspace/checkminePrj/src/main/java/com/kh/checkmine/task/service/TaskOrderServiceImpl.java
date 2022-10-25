@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.task.dao.TaskOrderDao;
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
 import com.kh.checkmine.task.vo.TaskOrderFileVo;
@@ -83,6 +84,18 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Override
 	public TaskOrderAttVo selectAttOne(String no) {
 		return orderDao.selectAttOne(sst, no);
+	}
+
+	//지시서 수신자 리스트
+	@Override
+	public List<MemberVo> selectWriteAttList() {
+		return orderDao.selectWriteAttList(sst);
+	}
+
+	//지시서 파일 다운로드
+	@Override
+	public List<TaskOrderFileVo> selectFileList(String no) {
+		return orderDao.selectFileList(sst, no);
 	}
 	
 

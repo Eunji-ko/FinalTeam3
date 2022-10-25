@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,13 +13,19 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.NameList;
 
 import com.google.gson.Gson;
 import com.kh.checkmine.common.FileUploader;
@@ -86,7 +93,16 @@ public class TaskOrderController {
 	
 	//지시서 작성(화면)
 	@GetMapping("write")
-	public String orderWrite() {
+	public String orderWrite(Model model) {
+		
+		List<MemberVo> memberList = orderService.selectWriteAttList();
+		List<String> nameList = new ArrayList<String>();
+		for(int i = 0; i < memberList.size(); i++) {
+			String name = memberList.get(i).getName();
+			nameList.add(name);
+		}
+		
+		model.addAttribute("nameList", nameList);
 		return "task/order-write";
 	}
 	
@@ -177,6 +193,30 @@ public class TaskOrderController {
 		}
 	}
 	
+	//지시서 첨부파일 다운로드
+	@GetMapping("download/{no}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable(required = false) String no, HttpServletRequest req, HttpSession session, Model model) throws IOException {
+		//String no = (String) session.getAttribute("taskNo");
+		//String taskNo = (String) model.getAttribute("taskNo");
+		
+		List<TaskOrderFileVo> fileVo = orderService.selectFileList(no);
+		System.out.println(fileVo);
+		//파일 객체 준비
+		String rootPath = req.getServletContext().getRealPath("/resources/upload/task/order/");
+		String name = fileVo.get(0).getName();
+
+		File target = new File(rootPath+name);
+			
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		return ResponseEntity
+				.ok()
+				.contentType(null)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.body(res);
+	}
 	
 	
 }

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.task.vo.TaskOrderAttVo;
 import com.kh.checkmine.task.vo.TaskOrderFileVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
@@ -66,6 +67,18 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 	@Override
 	public TaskOrderAttVo selectAttOne(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("taskOrderMapper.selectAttOne", no);
+	}
+
+	//지시서 작성 수신자 리스트
+	@Override
+	public List<MemberVo> selectWriteAttList(SqlSessionTemplate sst) {
+		return sst.selectList("taskOrderMapper.selectWriteAttList");
+	}
+
+	//지시서 파일 다운로드
+	@Override
+	public List<TaskOrderFileVo> selectFileList(SqlSessionTemplate sst, String no) {
+		return sst.selectList("taskOrderMapper.selectFileList", no);
 	}
 
 }
