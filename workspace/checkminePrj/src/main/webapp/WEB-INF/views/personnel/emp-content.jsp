@@ -9,6 +9,7 @@
 <style>
     #emp-area {
         width: 1400px;
+        height: 800px;
         margin: 0 auto;
     }
     .resign-select {
@@ -30,11 +31,13 @@
         color: #767676;
         margin-right: 20px;
         outline: none;
+        float: left;
     }
     .emp-search {
         width: 200px;
         height: 35px;
         border: 1px black solid;
+        float: left;
     }
     .emp-search input{
         vertical-align: top;
@@ -90,23 +93,25 @@
     }
 </style>
 </head>
-<body>
+<body onload="checkRsn()">
     <br>
     <div id="emp-area">
-        <select name="resignYn" class="resign-select">
+        <select name="resignYn" class="resign-select" onchange="selectResign()" id="selectResign">
             <option value="">모두</option>
             <option value="N">재직</option>
             <option value="Y">퇴직</option>
         </select>
-        <form class="align-right emp-search" action="" method="post">
-            <input id="emp-search-text" type="text" placeholder="검색">
-            <input id="emp-search-submit" type="submit" value=""></input>
+        <form class="align-right search-form" action="${rootPath}/personnel/searchEmp" method="post">
+            <select name="searchType" class="search-type-select align-right">
+                <option value="E.NAME">이름</option>
+                <option value="D.NAME">부서</option>
+                <option value="E.ID">아이디</option>
+            </select>
+            <div class="emp-search">
+                <input id="emp-search-text" type="text" name="searchText" placeholder="검색">
+                <input id="emp-search-submit" type="submit" value=""></input>
+            </div>
         </form>
-        <select name="searchType" class="search-type-select align-right">
-            <option value="name">이름</option>
-            <option value="deptName">부서</option>
-            <option value="id">아이디</option>
-        </select>
         <br><br>
         <div class="out-line">
             <table class="table table-hover psn-emp-table">
@@ -154,6 +159,34 @@
             <a href="">&gt;</a>
         </div>
     </div>
+
+    <script>
+        function selectResign(){
+            let selectRsn = document.getElementById("selectResign");
+            let rsn = selectRsn.options[selectRsn.selectedIndex].value;
+            if(rsn == ""){
+                location.href="${rootPath}/personnel/main";
+            }else{
+                location.href="${rootPath}/personnel/selectRsn/"+rsn;
+            }
+        }
+    </script>
+
+    <script>
+        function checkRsn(){
+            let psnLink = location.href;
+            let rsnCheck = psnLink.slice(-1);
+            console.log(rsnCheck);
+
+            if(rsnCheck == 'N') {
+                $("#selectResign").val("N").prop("selected", true);
+            }else if(rsnCheck == 'Y'){
+                $("#selectResign").val("Y").prop("selected", true);
+            }else{
+                $("#selectResign").val("").prop("selected", true);
+            }
+        }
+    </script>
 
     <%@ include file="/WEB-INF/views/personnel/emp-modal.jsp" %>
 </body>

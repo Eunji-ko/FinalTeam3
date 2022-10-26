@@ -1,5 +1,6 @@
 package com.kh.checkmine.personnel.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,5 +21,11 @@ public interface PersonnelDao {
 	int editEmp(SqlSessionTemplate sst, MemberVo vo);
 
 	int editAcc(SqlSessionTemplate sst, AccountVo vo);
+
+	List<MemberVo> selectMemberListByRsn(SqlSessionTemplate sst, String rsn);
+
+	List<MemberVo> selectMemberListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap);
+
+	List<AccountVo> selectAccountListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap);
 
 }

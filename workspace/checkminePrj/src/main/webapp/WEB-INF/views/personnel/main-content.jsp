@@ -56,7 +56,7 @@
     }
 </style>
 </head>
-<body>
+<body onload="checkAcc()">
     <br><br>
     <div class="list-group list-group-horizontal left-space btn-zone" id="list-tab" role="tablist">
         <a class="list-group-item active top-radius-btn" id="list-emp-list" data-bs-toggle="list" href="#list-emp" role="tab" aria-controls="list-emp">사원</a>
@@ -71,5 +71,24 @@
             <%@ include file="/WEB-INF/views/personnel/account-content.jsp" %>
         </div>
     </div>
+
+    <script>
+        function checkAcc(){
+            let accLink = location.href;
+            let accCheck = accLink.slice(-3);
+            console.log(accCheck);
+
+            if(accCheck == 'Acc'){
+                $("#list-emp-list").removeClass("active");
+                $("#list-emp-list").attr("aria-selected", "false");
+                $("#list-emp").removeClass("active");
+                $("#list-emp").removeClass("show");
+                $("#list-account-list").addClass("active");
+                $("#list-account-list").attr("aria-selected", "true");
+                $("#list-account").addClass("active");
+                $("#list-account").addClass("show");
+            }
+        }
+    </script>
 </body>
 </html>

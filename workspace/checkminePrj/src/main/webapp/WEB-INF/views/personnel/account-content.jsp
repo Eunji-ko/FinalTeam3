@@ -25,14 +25,16 @@
 <body>
     <div id="acc-area">
         <br>
-        <form class="align-right emp-search" action="" method="post">
-            <input id="emp-search-text" type="text" placeholder="검색">
-            <input id="emp-search-submit" type="submit" value=""></input>
+        <form class="align-right search-form" action="${rootPath}/personnel/searchAcc" method="post">
+            <select name="searchType" class="search-type-select align-right">
+                <option value="CORPORATE">거래처명</option>
+                <option value="PNAME">담당자명</option>
+            </select>
+            <div class="emp-search">
+                <input id="emp-search-text" name="searchText" type="text" placeholder="검색">
+                <input id="emp-search-submit" type="submit" value=""></input>
+            </div>
         </form>
-        <select name="searchType" class="search-type-select align-right">
-            <option value="name">거래처명</option>
-            <option value="deptName">담당자명</option>
-        </select>
         <br><br>
         <div class="out-line">
             <table class="table table-hover psn-acc-table">
