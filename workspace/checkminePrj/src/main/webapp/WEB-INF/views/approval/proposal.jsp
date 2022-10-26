@@ -64,7 +64,7 @@
 		padding: none;
 		cursor: default;
 	}
-	#approver5, #approver6, #approver7, #approver8{
+	.approver5, .approver6, .approver7, .approver8{
 		line-height: 80px;
 		font-size: 25px;
 	}
@@ -144,10 +144,10 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">${apVo.firstApprover}</div>
-			<div id="approver6">${apVo.secondApprover}</div>
-			<div id="approver7">${apVo.thirdApprover}</div>
-			<div id="approver8">${apVo.finalApprover}</div>
+			<div class="approver5">${apVo.firstApprover}</div>
+			<div class="approver6">${apVo.secondApprover}</div>
+			<div class="approver7">${apVo.thirdApprover}</div>
+			<div classd="approver8">${apVo.finalApprover}</div>
 			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
 			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
 			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
@@ -162,23 +162,23 @@
 				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
 			</div>
 			<div id="approval-content-div">
-				<select id="proposal-type" class="form-select" name="proposalType">
-				  <option value="제휴">제휴</option>
-				  <option value="영업">영업</option>
-				  <option value="용역">용역</option>
-				  <option value="투자">투자</option>
-				  <option value="개발">개발</option>
-				  <option value="컨설팅">컨설팅</option>
-				  <option value="입점">입점</option>
+				<select id="proposal-type" class="form-select" name="typeNo">
+				  <option value="1">제휴</option>
+				  <option value="2">영업</option>
+				  <option value="3">용역</option>
+				  <option value="4">투자</option>
+				  <option value="5">개발</option>
+				  <option value="6">컨설팅</option>
+				  <option value="7">입점</option>
 				</select>
 				<!-- Button to Open the Modal -->
 				<div id="account-div">
 					<button type="button" id="account-btn" class="btn" data-bs-toggle="modal" data-bs-target="#proposal-modal">
 						거래처
 					</button>
-					<div id="account-name-div">(거래처명)</div>
+					<div id="account-name-div">${accountVo.corporate}</div>
 				</div>
-				<textarea id="approval-content" class="form-control" maxlength="500" name="content"></textarea>
+				<textarea id="approval-content" class="form-control" maxlength="500" name="content">${proposalVo.content}</textarea>
 			</div>
 			<div id="approval-btn-div">
 				<c:if test="${fileList eq null}">
@@ -190,10 +190,12 @@
 				<!--반려사유-->
 				<input type="hidden" id="return-reason" name="returnReason">
 				<!--결재자 번호-->
-				<input type="hidden" name="firstApprover" id="first-approver">
-				<input type="hidden" name="secondApprover" id="second-approver">
-				<input type="hidden" name="thirdApprover" id="third-approver">
-				<input type="hidden" name="finalApprover" id="final-approver">
+				<input type="hidden" name="firstApprover" class="first-approver">
+				<input type="hidden" name="secondApprover" class="second-approver">
+				<input type="hidden" name="thirdApprover" class="third-approver">
+				<input type="hidden" name="finalApprover" class="final-approver">
+				<!-- 거래처 번호 -->
+				<input type="hidden" name="no" id="accountNo">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 

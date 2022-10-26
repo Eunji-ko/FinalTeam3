@@ -126,7 +126,7 @@
   				error : function(){
   					alert("서버요청실패..");
   				}
-  			})
+  			});
         }
 
         //2차 결재자 검색
@@ -161,7 +161,7 @@
   				error : function(){
   					alert("서버요청실패..");
   				}
-  			})
+  			});
         }
 
         //3차 결재자 검색
@@ -196,7 +196,7 @@
   				error : function(){
   					alert("서버요청실패..");
   				}
-  			})
+  			});
         }
 
         //최종 결재자 검색
@@ -231,7 +231,7 @@
   				error : function(){
   					alert("서버요청실패..");
   				}
-  			})
+  			});
         }
 
         const footerNode = document.querySelector('#footer');
@@ -278,31 +278,29 @@
             var searchSecond = $('#search-second').val();
             var searchThird = $('#search-third').val();
             var searchFinal = $('#search-final').val();
-            console.log(window.opener.document.querySelector('#approver8-input'));
-            console.log(searchFinal);
             if($('#search-final').val() != null && $('#search-final').val() != ""){
                 //결재자 이름 넘기기
                 if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('#approver5').innerHTML = searchFirst.split(" ")[1];
+                    window.opener.document.querySelector('.approver5').innerHTML = searchFirst.split(" ")[1];
                 }
                 if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('#approver6').innerHTML = searchSecond.split(" ")[1];
+                    window.opener.document.querySelector('.approver6').innerHTML = searchSecond.split(" ")[1];
                 }
                 if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('#approver7').innerHTML = searchThird.split(" ")[1];
+                    window.opener.document.querySelector('.approver7').innerHTML = searchThird.split(" ")[1];
                 }
-                window.opener.document.querySelector('#approver8').innerHTML = searchFinal.split(" ")[1];
+                window.opener.document.querySelector('.approver8').innerHTML = searchFinal.split(" ")[1];
                 //결재자 번호 넘기기
                 if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('#first-approver').value = searchFirst.split(" ")[0];
+                    window.opener.document.querySelector('.first-approver').value = searchFirst.split(" ")[0];
                 }
                 if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('#second-approver').value = searchSecond.split(" ")[0];
+                    window.opener.document.querySelector('.second-approver').value = searchSecond.split(" ")[0];
                 }
                 if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('#third-approver').value = searchThird.split(" ")[0];
+                    window.opener.document.querySelector('.third-approver').value = searchThird.split(" ")[0];
                 }
-                window.opener.document.querySelector('#final-approver').value = searchFinal.split(" ")[0];
+                window.opener.document.querySelector('.final-approver').value = searchFinal.split(" ")[0];
                 window.close();
             }else{
                 alert('최종 결재자를 선택하시기 바랍니다.');

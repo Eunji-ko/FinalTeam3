@@ -18,6 +18,7 @@ import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.personnel.vo.AccountVo;
 
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao{
@@ -169,6 +170,18 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public List<ApprovalFileVo> selectFiles(SqlSessionTemplate sst, String dno) {
 		return sst.selectList("approvalMapper.selectFiles", dno);
+	}
+
+	//제안서 DB에 올리기
+	@Override
+	public int insertProposal(SqlSessionTemplate sst, ApprovalProposalVo proposalVo) {
+		return sst.insert("approvalMapper.insertProposal", proposalVo);
+	}
+
+	//이름으로 거래처 검색
+	@Override
+	public List<AccountVo> selectAccountList(SqlSessionTemplate sst, String corporate) {
+		return sst.selectList("approvalMapper.selectAccountList", corporate);
 	}
 
 }

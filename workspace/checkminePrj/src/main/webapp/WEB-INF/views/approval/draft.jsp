@@ -63,7 +63,7 @@
 		padding: none;
 		cursor: default;
 	}
-	#approver5, #approver6, #approver7, #approver8{
+	.approver5, .approver6, .approver7, .approver8{
 		line-height: 80px;
 		font-size: 25px;
 	}
@@ -124,10 +124,10 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">${apVo.firstApprover}</div>
-			<div id="approver6">${apVo.secondApprover}</div>
-			<div id="approver7">${apVo.thirdApprover}</div>
-			<div id="approver8">${apVo.finalApprover}</div>
+			<div class="approver5">${apVo.firstApprover}</div>
+			<div class="approver6">${apVo.secondApprover}</div>
+			<div class="approver7">${apVo.thirdApprover}</div>
+			<div class="approver8">${apVo.finalApprover}</div>
 			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
 			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
 			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
@@ -154,10 +154,10 @@
 				<!--반려사유-->
 				<input type="hidden" id="return-reason" name="returnReason">
 				<!--결재자 번호-->
-				<input type="hidden" name="firstApprover" id="first-approver">
-				<input type="hidden" name="secondApprover" id="second-approver">
-				<input type="hidden" name="thirdApprover" id="third-approver">
-				<input type="hidden" name="finalApprover" id="final-approver">
+				<input type="hidden" name="firstApprover" class="first-approver">
+				<input type="hidden" name="secondApprover" class="second-approver">
+				<input type="hidden" name="thirdApprover" class="third-approver">
+				<input type="hidden" name="finalApprover" class="final-approver">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 

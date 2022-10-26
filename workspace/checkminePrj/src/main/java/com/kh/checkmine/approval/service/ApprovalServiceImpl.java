@@ -20,6 +20,7 @@ import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.personnel.vo.AccountVo;
 
 @Service
 @Transactional
@@ -166,20 +167,43 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ApprovalDocVo approvalDraft(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalDraftVo draftVo) {
 
 		//기안서 관련 문서정보, 결재정보, 기안서 정보 DB에 올리기
-		dao.insertDoc(sst, docVo);
-		dao.insertApproval(sst, apVo);
-		dao.insertDraft(sst, draftVo);
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		int draftResult = dao.insertDraft(sst, draftVo);
 		
-		//방금 넣은 문서정보 가져오기
-		ApprovalDocVo result = dao.selectCurrentDoc(sst);
-		
-		return result;
+		if(docResult*apResult*draftResult == 1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
 	}
 
 	//문서번호로 첨부파일 가져오기
 	@Override
 	public List<ApprovalFileVo> selectFilesByNo(String dno) {
 		return dao.selectFiles(sst, dno);
+	}
+
+	@Override
+	public ApprovalDocVo approvalProposal(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalProposalVo proposalVo) {
+		
+		//제안서 관련 문서정보, 결재정보, 제안서 정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		int proResult = dao.insertProposal(sst, proposalVo);
+		
+		if(docResult*apResult*proResult == 1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<AccountVo> selectAccountByName(String corporate) {
+		return dao.selectAccountList(sst, corporate);
 	}
 
 }

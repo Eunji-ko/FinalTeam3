@@ -35,6 +35,7 @@ import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.personnel.vo.AccountVo;
 
 @Controller
 @RequestMapping("approval")
@@ -182,7 +183,7 @@ public class ApprovalController {
 	}
 	
 	//결재자 정보 업데이트 메소드
-	public String updateApInfo(String dno, ApprovalVo apVo, HttpSession session) {
+	private String updateApInfo(String dno, ApprovalVo apVo, HttpSession session) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
@@ -226,7 +227,7 @@ public class ApprovalController {
 	}
 	
 	//파일 저장 메소드
-	public String saveFile(MultipartFile[] file, ApprovalDocVo docVo, HttpServletRequest req) {
+	private int saveFile(MultipartFile[] file, ApprovalDocVo docVo, HttpServletRequest req) {
 		
 		int fileResult = 0;
 		for(int i=0; i<file.length; i++) {
@@ -245,7 +246,7 @@ public class ApprovalController {
 			fileResult++;
 		}
 		
-		return "";
+		return fileResult;
 	}
 	
 	//기안서 작성 및 결재
@@ -276,21 +277,17 @@ public class ApprovalController {
 				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
 				return "redirect:/approval";
 			}else {
+				//파일 유무 확인
+				if(!file[0].isEmpty()) {
+					
+					int saveFile = saveFile(file, result, req);
+					
+					if(saveFile != file.length) {
+						session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+						return "redirect:/approval";
+					}
+				}
 				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
-			}
-			
-			//파일 유무 확인
-			if(!file[0].isEmpty()) {
-				
-				String alertFileMsg = saveFile(file, result, req);
-				
-				session.setAttribute("alertMsg", alertFileMsg);
-			}
-			
-			if(result != null) {
-				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
-			}else {
-				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
 			}
 		}
 		return "redirect:/approval";
@@ -298,18 +295,24 @@ public class ApprovalController {
 	
 	//제안서 작성 및 결재
 	@PostMapping(value= {"proposal/{dno}","proposal"})
-	public String proposal(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalProposalVo proposalVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+	public String proposal(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalProposalVo proposalVo, @ModelAttribute AccountVo accVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		System.out.println(dno);
+		System.out.println(apVo);
+		System.out.println(docVo);
+		System.out.println(proposalVo);
+		System.out.println(accVo);
 		
 		//문서번호 존재 여부 확인
 		if(dno != null) {
 			
 			//결재자 정보 업데이트 메소드
-			String alertMsg = updateApInfo(dno, apVo, session);
+			String alertUpdateMsg = updateApInfo(dno, apVo, session);
 			
-			session.setAttribute("alertMsg", alertMsg);
+			session.setAttribute("alertMsg", alertUpdateMsg);
 			
 		}else {//문서번호 없음
 			//작성자 번호 세팅
@@ -318,10 +321,57 @@ public class ApprovalController {
 			docVo.setType("P");
 			
 			//제안서 결재 및 해당 문서정보 가져오기
+			ApprovalDocVo result = service.approvalProposal(docVo, apVo, proposalVo);
 			
+			if(result == null) {
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				return "redirect:/approval";
+			}else {
+				//파일 유무 확인
+				if(!file[0].isEmpty()) {
+					
+					int saveFile = saveFile(file, result, req);
+					
+					if(saveFile != file.length) {
+						session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+						return "redirect:/approval";
+					}
+				}
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}
 		}
 		
 		return "redirect:/approval";
+	}
+	
+	//거래처 선택 ajax
+	@PostMapping("account")
+	@ResponseBody
+	public String account(String corporate) {
+		
+		//이름으로 거래처 검색
+		List<AccountVo> accountList = service.selectAccountByName(corporate);
+		
+		Gson gson = new Gson();
+		JsonObject obj = new JsonObject();
+		if(accountList != null) {
+			for(int i=0; i<accountList.size(); i++) {
+				obj.addProperty("no" + i, accountList.get(i).getNo());
+				obj.addProperty("corporate" + i, accountList.get(i).getCorporate());
+				obj.addProperty("address" + i, accountList.get(i).getAddress());
+				obj.addProperty("tel" + i, accountList.get(i).getTel());
+				obj.addProperty("fax" + i, accountList.get(i).getFax());
+				obj.addProperty("pname" + i, accountList.get(i).getPname());
+				obj.addProperty("dept" + i, accountList.get(i).getDept());
+				obj.addProperty("position" + i, accountList.get(i).getPosition());
+				obj.addProperty("email" + i, accountList.get(i).getEmail());
+				obj.addProperty("phone" + i, accountList.get(i).getPhone());
+			}
+		}
+		String allAccCnt = Integer.toString(service.selectAccountByName("").size());
+		obj.addProperty("allAccCnt", allAccCnt);
+	
+		return gson.toJson(obj);
 	}
 
 }//class
