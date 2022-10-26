@@ -108,12 +108,18 @@
 	  	</choose>
 	  WHERE NO = #{no}
   </update>
-  <!-- <select id="selectMemberByDate" resultType="MemberVo">
-  	
+  <select id="selectMemberByDate" resultType="MemberVo">
+  	SELECT e.name, to_char(MODIFY_DATE, 'YYYY.MM.DD HH24:MI') MODIFY_DATE, 
+  	to_char(ENROLL_DATE, 'YYYY.MM.DD HH24:MI') ENROLL_DATE,
+  	MODIFY_DATE||ENROLL_DATE sort FROM EMPLOYEE e
+    ORDER BY sort DESC
+  </select>
   
+  <select id="selectMemberCnt" resultType="map">
+  SELECT P.NO, COUNT(POS_NO) CNT FROM EMPLOYEE E
+	RIGHT OUTER JOIN POSITION P ON E.POS_NO = P.NO
+	GROUP BY P.NO
   
-  
-  </select> -->
-  
+  </select>
   
 </mapper>

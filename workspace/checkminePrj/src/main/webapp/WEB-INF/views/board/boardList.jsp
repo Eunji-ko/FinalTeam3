@@ -37,6 +37,8 @@
         border-radius: 30px;
         color: white;
         margin-left: 15px;
+        border: none;
+
     }
     input[type="text"]{
         width: 230px;
@@ -46,19 +48,24 @@
     #search{
         background:url(${rootPath}/resources/img/admin/search.png);
         background-repeat: no-repeat;
-        width:25px;
-        height:23px;
+        width:20px;
+        height:17px;
         border: none;
+        
     }
     #searchArea{
         display: flex;
-        justify-content: right;
+        justify-content: space-around;
+        height: 42px;
     }
     #listArea > table{
         width: 100%;
         border-collapse: collapse;
         text-align: center;
         
+    }
+    #filter{
+        width: 110px;
     }
 
     #pageArea > a{
@@ -142,17 +149,20 @@
                 <!-- 공지사항 -->
                 <div id="notice" class="container tab-pane active"><br>
                     <div id="searchArea">
-                        <div style="width: 267px; border: 1px solid lightgray;">
-                        <form action="">
-                        	<select>
-                        		<option>최신순</option>
-                        		<option>추천순</option>
-                        	</select>
-                            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="공지사항 검색" required>
-                            <input type="submit" id="search" value="">
+                        <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
+                            <option value="${root}/admin/board/list?sort=a&p=1">-----</option>
+                            <option value="${root}/admin/board/list?sort=a&p=1">최신순</option>
+                            <option value="${root}/admin/board/list?sort=n&p=1">추천순</option>
+                        </select>
+                        <div>
+                        <form action="${root}/board/search" method="get">
+                            <div style="width: 267px; border: 1px solid lightgray; display: inline-block;" >
+                                <input type="text" name="keyword" id="keyword" class="form-control" required>
+                                <input type="submit" id="search" value="">
+                            </div>
                         </form>
-                        </div> 
-                        <button type="button" class="btn" id="btn">글 작성</button> 
+                        <button id="btn">글 작성</button>
+                        </div>
                     </div>
                     <div id="listArea">
                         <table class="table table-hover">

@@ -89,6 +89,12 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	public int edit(MemberVo vo) {
 		return dao.updateMember(sst, vo);
 	}
+
+	//조직도
+	@Override
+	public List<Map<String, String>> memberChart() {
+		return dao.selectMemberCnt(sst);
+	}
 	
 	
 

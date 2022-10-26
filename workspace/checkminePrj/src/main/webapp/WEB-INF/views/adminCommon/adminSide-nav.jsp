@@ -36,11 +36,12 @@
             <div id="adminName">${loginAdmin.name} 관리자</div>
             
             <a href="${root}/admin/logout" id="logout">로그아웃</a>
-            <a href="${root}/admin/main" id="side-nav-home">HOME</a>
+            <a href="${root}/admin/main" class="side-nav-home">HOME</a>
             <a href="${root}/admin/member/list">사원관리</a>
             <a href="${root}/admin/board/list?sort=a&p=1">게시판관리</a>
             <a href="${root}/admin/goods/list">공유물관리</a>
-            <a href="${root}/board/list/notice/1">조직도</a>
+            <a href="${root}/admin/chart">조직도</a>
         </nav>
 </body>
+
 </html>

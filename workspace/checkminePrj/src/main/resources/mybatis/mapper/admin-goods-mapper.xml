@@ -134,13 +134,14 @@
 	
 	<select id="selectBookListByDate" resultType="com.kh.checkmine.reservation.vo.PlaceBookVo">
 		SELECT PP.NAME PL_NO, E.NAME EMP_NO, TO_CHAR(P.RSV_BEGIN, 'YYYY.MM.DD HH24:MI') RSV_BEGIN, 
-	    TO_CHAR(P.RSV_END, 'YYYY.MM.DD HH24:MI') RSV_END FROM PLACE_RESERVATION P 
+	    TO_CHAR(P.RSV_END, 'YYYY.MM.DD HH24:MI') RSV_END, 
+	    TO_CHAR(P.RSV_DATE, 'YYYY.MM.DD HH24:MI') RSV_DATE
+	    FROM PLACE_RESERVATION P 
 	    JOIN EMPLOYEE E ON P.EMP_NO = E.NO
-	    JOIN PUBLIC_PLACE PP ON p.pl_no = PP.NO    
+	    JOIN PUBLIC_PLACE PP ON p.pl_no = PP.NO   
+	    WHERE P.RSV_DATE >= TO_CHAR(SYSDATE, 'YYYY.MM.DD') 
 	    ORDER BY P.RSV_DATE DESC
 
 	</select>
-	
-	
-	
+
 </mapper>

@@ -41,4 +41,7 @@ public interface AdminMemberDao {
 	//사원 수정
 	int updateMember(SqlSessionTemplate sst, MemberVo vo);
 
+	//조직도
+	List<Map<String, String>> selectMemberCnt(SqlSessionTemplate sst);
+
 }
