@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 public interface MailDao {
@@ -67,5 +68,64 @@ public interface MailDao {
 	 * @return
 	 */
 	List<ReceiveMailVo> getRefList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
+
+	/**
+	 * 보낸 메일 리스트 갯수 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @return
+	 */
+	int getSendListCount(SqlSessionTemplate sst, String memberNo);
+
+	/**
+	 * 보낸 메일 리스트 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @param pageVo
+	 * @return
+	 */
+	List<MailVo> getSendList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
+
+	/**
+	 * 보낸 메일함 휴지통으로 보내기
+	 * @param sst
+	 * @param targetMail
+	 * @return
+	 */
+	int moveRecycleBinSend(SqlSessionTemplate sst, String targetMail);
+
+	/**
+	 * 중요 메일함 갯수 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @return
+	 */
+	int getImpListCount(SqlSessionTemplate sst, String memberNo);
+
+	/**
+	 * 중요 메일함 리스트 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @param pageVo
+	 * @return
+	 */
+	List<ReceiveMailVo> getImpList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
+
+	/**
+	 * 임시보관함 갯수 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @return
+	 */
+	int getSaveListCount(SqlSessionTemplate sst, String memberNo);
+
+	/**
+	 * 임시보관 리스트 가져오기
+	 * @param sst
+	 * @param memberNo
+	 * @param pageVo
+	 * @return
+	 */
+	List<MailVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
 
 }

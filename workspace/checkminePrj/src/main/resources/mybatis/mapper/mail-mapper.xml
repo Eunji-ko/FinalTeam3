@@ -10,6 +10,18 @@
 		SELECT COUNT(*) FROM MAIL_REF WHERE STATUS='N' AND TYPE='R' AND RECEIVER=#{memberNo}
 	</select>
 	
+	<select id="selectSendListCount" resultType="int">
+		SELECT COUNT(*) FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NOT NULL AND SENDER=#{memberNo}
+	</select>
+	
+	<select id="selectImpListCount" resultType="int">
+		SELECT COUNT(*) FROM MAIL_REF WHERE STATUS='N' AND IMPORTANCE='Y' AND RECEIVER=#{memberNo}
+	</select>
+	
+	<select id="selectSaveListCount" resultType="int">
+		SELECT COUNT(*) FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NULL AND SENDER=#{memberNo}
+	</select>
+	
 	<select id="selectReceiveList" resultType="com.kh.checkmine.mail.vo.ReceiveMailVo">
 		SELECT 
 		    MR.NO,
@@ -62,6 +74,40 @@
 		ORDER BY M.SEND_DATE DESC
 	</select>
 	
+	<select id="selecImpList" resultType="com.kh.checkmine.mail.vo.ReceiveMailVo">
+		SELECT 
+		    MR.NO,
+		    MR.MAIL_NO,
+		    MR.RECEIVER,
+		    MR.TYPE,
+		    MR.READ,
+		    MR.STATUS,
+		    MR.IMPORTANCE,
+		    M.SENDER,
+		    M.TITLE,
+		    M.CONTENT,
+		    M.S_STATUS,
+		    M.SEND_DATE,
+		    E.EMAIL AS SENDER_EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M
+		ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E
+		ON M.SENDER = E.NO
+		WHERE MR.STATUS = 'N'
+		AND MR.IMPORTANCE = 'Y'
+		AND mr.receiver = #{memberNo}
+		ORDER BY M.SEND_DATE DESC
+	</select>
+	
+	<select id="selectSendList" resultType="com.kh.checkmine.mail.vo.MailVo">
+		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NOT NULL AND SENDER=#{memberNo}
+	</select>
+	
+	<select id="selectSaveList" resultType="com.kh.checkmine.mail.vo.MailVo">
+		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NULL AND SENDER=#{memberNo}
+	</select>
+	
 	<update id="upadteImportance">
 		UPDATE MAIL_REF
 		SET
@@ -74,7 +120,13 @@
 		UPDATE MAIL_REF SET STATUS='Y' WHERE NO=#{targetMail}
 	</update>
 	
+	<update id="upadteMailStatus">
+		UPDATE MAIL SET S_STATUS='Y' WHERE NO=#{targetMail}
+	</update>
+	
 	<select id="selectNotReadCount" resultType="int">
 		SELECT COUNT(*) FROM MAIL_REF WHERE STATUS='N' AND READ = 'N' AND RECEIVER=#{memberNo} AND TYPE=#{type}
 	</select>
+	
+	
 </mapper>

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 @Repository
@@ -47,6 +48,14 @@ public class MailDaoImpl implements MailDao{
 	public int moveRecycleBinReceive(SqlSessionTemplate sst, String targetMail) {
 		return sst.update("mailMapper.upadteMailRefStatus",targetMail);
 	}
+	
+	/**
+	 * 보낸메일함 휴지통으로 보내기
+	 */
+	@Override
+	public int moveRecycleBinSend(SqlSessionTemplate sst, String targetMail) {
+		return sst.update("mailMapper.upadteMailStatus",targetMail);
+	}
 
 	/**
 	 * 안읽은 메일 갯수 가져오기
@@ -74,5 +83,64 @@ public class MailDaoImpl implements MailDao{
 
 		return sst.selectList("mailMapper.selectRefList",memberNo, rb);
 	}
+
+	/**
+	 * 보낸 메일 리스트 갯수 가져오기
+	 */
+	@Override
+	public int getSendListCount(SqlSessionTemplate sst, String memberNo) {
+		return sst.selectOne("mailMapper.selectSendListCount",memberNo);
+	}
+
+	/**
+	 * 보낸 메일 리스트 가져오기
+	 */
+	@Override
+	public List<MailVo> getSendList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
+		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectSendList", memberNo, rb);
+	}
+
+	/**
+	 * 중요 메일함 갯수 가져오기
+	 */
+	@Override
+	public int getImpListCount(SqlSessionTemplate sst, String memberNo) {
+		return sst.selectOne("mailMapper.selectImpListCount",memberNo);
+	}
+
+	/**
+	 * 중요 메일함 리스트 가져오기
+	 */
+	@Override
+	public List<ReceiveMailVo> getImpList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
+		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selecImpList", memberNo, rb);
+	}
+
+	/**
+	 * 임시보관함 갯수 가져오기
+	 */
+	@Override
+	public int getSaveListCount(SqlSessionTemplate sst, String memberNo) {
+		return sst.selectOne("mailMapper.selectSaveListCount",memberNo);
+	}
+
+	/**
+	 * 임시보관 리스트 가져오기
+	 */
+	@Override
+	public List<MailVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
+		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
+		
+		return sst.selectList("mailMapper.selectSaveList", memberNo, rb);
+	}
+
+	
 
 }
