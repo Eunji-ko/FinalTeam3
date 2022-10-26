@@ -162,7 +162,7 @@
                         		<a><img src="${imgPath}/mail_arrow_pre_blank.png"></a>
                         	</c:when>
                         	<c:otherwise>
-                        		<a href="/checkmine/mail/send?p=${pageVo.currentPage - 1}"><img src="${imgPath}/mail_arrow_pre.png"></a>
+                        		<a href="/checkmine/mail/save?p=${pageVo.currentPage - 1}"><img src="${imgPath}/mail_arrow_pre.png"></a>
                         	</c:otherwise>
                         </c:choose>
                         <c:choose>
@@ -170,7 +170,7 @@
                         		<a><img src="${imgPath}/mail_arrow_next_blank.png"></a>
                         	</c:when>
                         	<c:otherwise>
-                        		<a href="/checkmine/mail/send?p=${pageVo.currentPage + 1}"><img src="${imgPath}/mail_arrow_next.png"></a>
+                        		<a href="/checkmine/mail/save?p=${pageVo.currentPage + 1}"><img src="${imgPath}/mail_arrow_next.png"></a>
                         	</c:otherwise>
                         </c:choose>
                     </div>
