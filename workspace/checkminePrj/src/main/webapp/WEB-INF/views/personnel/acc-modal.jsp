@@ -35,7 +35,7 @@
           <div class="modal-body">
             <input type="hidden" id="modalANo" name="no">
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="name" id="floatingCorp">
+              <input type="text" class="form-control" name="corporate" id="floatingCorp">
               <label for="floatingCorp">거래처명</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn checkmine-btn">
+            <input type="submit" class="btn checkmine-btn" value="변경하기">
           </div>
         </div>
       </div>

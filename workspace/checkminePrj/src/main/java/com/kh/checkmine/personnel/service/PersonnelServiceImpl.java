@@ -1,5 +1,6 @@
 package com.kh.checkmine.personnel.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -50,6 +51,21 @@ public class PersonnelServiceImpl implements PersonnelService {
 	@Override
 	public int editAcc(AccountVo vo) {
 		return dao.editAcc(sst, vo);
+	}
+
+	@Override
+	public List<MemberVo> selectMemberListByRsn(String rsn) {
+		return dao.selectMemberListByRsn(sst, rsn);
+	}
+
+	@Override
+	public List<MemberVo> selectMemberListBySearch(HashMap<String, String> searchMap) {
+		return dao.selectMemberListBySearch(sst, searchMap);
+	}
+
+	@Override
+	public List<AccountVo> selectAccountListBySearch(HashMap<String, String> searchMap) {
+		return dao.selectAccountListBySearch(sst, searchMap);
 	}
 
 
