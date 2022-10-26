@@ -76,11 +76,10 @@ public class AdminController {
 		  
 		  model.addAttribute("summary", summary);
 		  model.addAttribute("boardList", boardList);
+		  model.addAttribute("memberList", memberList);
+		  model.addAttribute("bookList", bookList);
 		  return "admin/adminMain"; 
 	}
-	 
-	
-	
 	
 
 }

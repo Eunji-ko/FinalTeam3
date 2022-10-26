@@ -39,4 +39,7 @@ public interface AdminMemberService {
 	//사원 수정
 	int edit(MemberVo vo);
 
+	//조직도 인원
+	List<Map<String, String>> memberChart();
+
 }

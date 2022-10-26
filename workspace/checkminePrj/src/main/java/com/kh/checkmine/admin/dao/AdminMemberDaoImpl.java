@@ -80,6 +80,12 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 	public int updateMember(SqlSessionTemplate sst, MemberVo vo) {
 		return sst.update("adminMemberMapper.updateMember", vo);
 	}
+
+	//조직도
+	@Override
+	public List<Map<String, String>> selectMemberCnt(SqlSessionTemplate sst) {
+		return sst.selectList("adminMemberMapper.selectMemberCnt");
+	}
 	
 	
 

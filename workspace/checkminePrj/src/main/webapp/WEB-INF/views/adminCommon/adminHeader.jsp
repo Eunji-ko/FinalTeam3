@@ -61,7 +61,7 @@
         .side-nav-selected{
             color: #ffffff;
         }
-        #side-nav-home{
+        .side-nav-home{
             font-size: 25px;
             text-decoration: none;
             font-weight: bold;
@@ -104,5 +104,16 @@
 
 
 </body>
+<script>
+		service();
+
+    	function service(){
+    		let loginAdmin = "${loginAdmin}";
+    		if (loginAdmin == ""){
+    			alert("로그인 후 이용하실 수 있습니다.");
+    			location.href="${root}/admin/login";
+    		} 
+    	}
+    </script>
 
 </html>

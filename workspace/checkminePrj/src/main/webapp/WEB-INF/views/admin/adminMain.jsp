@@ -101,6 +101,8 @@
         margin: 16px 15px;
         color: gray;
         font-size: 13px;
+        background-color: white;
+        border: none;
     }
 
     #currentTime{
@@ -124,6 +126,9 @@
         height: 500px;
         padding: 20px;
     }
+    .modal-body{
+        overflow: auto;
+    }
     .list-header{
         text-align: left;
     }
@@ -136,6 +141,7 @@
     .book-list *{
         width: 250px;
         text-align: center;
+        padding: 5px;
     }
 
 </style>
@@ -170,18 +176,39 @@
             <div class="area">
                 <div id="memberChangeArea">
                     <div class="header">사원정보 변동</div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
+                    <c:forEach items="${memberList}" var="m" end="2">
+                    <div class="list">
+                        <span>${m.name}님이 
+                        <c:choose>
+                            <c:when test="${m.modifyDate ne null}">
+                                수정
+                            </c:when>
+                            <c:otherwise>
+                                등록
+                            </c:otherwise>
+                        </c:choose>
+                        되었습니다.</span>  
+                        <span id="date">
+                            <c:choose>
+                            <c:when test="${m.modifyDate ne null}">
+                                ${m.modifyDate}
+                            </c:when>
+                            <c:otherwise>
+                                ${m.enrollDate}
+                            </c:otherwise>
+                        </c:choose>
+
+                        </span></div>
+                    </c:forEach>
                 </div>
     
                 <div id="bookArea">
-                    <div class="header">예약 현황</div><a href="" id="more" data-bs-toggle="modal" data-bs-target="#myModal">더보기</a>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-                    <div class="list"><span>000 님이 등록되었습니다.</span>  <span id="date">2022.10.12 09:14</span></div>
-
-                    
+                    <div class="header">예약 현황</div><button id="more" data-bs-toggle="modal" data-bs-target="#myModal">더보기</button>
+                    <c:forEach items="${bookList}" var="r" end="2">
+                    <div class="list">
+                        <span>[${r.plNo}] ${r.empNo}님이 예약하였습니다.</span>  
+                        <span id="date">${r.rsvDate}</span></div>
+                    </c:forEach>
                 </div>
 
 
@@ -191,7 +218,6 @@
                     <div class="header">게시판 현황</div><a href="${root}/admin/board/list" id="more">더보기</a>
                     <c:forEach items="${boardList}" var="b" end="8">
                     	<div class="list"><a href="${root}/admin/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
-                    
                     </c:forEach>
                   
 
@@ -223,22 +249,29 @@
             
                     <!-- Modal body -->
                     <div class="modal-body" align="center">
-                    <div class="list-header">[회의실A]000님의 예약 내역입니다.</div><hr>
+                    <c:forEach items="${bookList}" var="r">
+                    <div class="list-header">[${r.plNo}] ${r.empNo}님의 예약 내역입니다.</div><hr>
                     <table class="book-list">
                         <tr>
                             <th>예약자</th>
-                            <td>000 사원</td>
+                            <td>${r.empNo}</td>
+                        </tr>
+                        <tr>
+                            <th>등록일자</th>
+                            <td>${r.rsvDate}</td>
                         </tr>
                         <tr>
                             <th>예약일자</th>
-                            <td>2022.10.12 21:42</td>
+                            <td>${r.rsvBegin}</td>
                         </tr>
                         <tr>
                             <th>종료일자</th>
-                            <td>2022.10.12 21:42</td>
+                            <td>${r.rsvEnd}</td>
                         </tr>
 
                     </table>
+                    <br><br>
+                    </c:forEach>
                     </div>
             
                     <!-- Modal footer -->
