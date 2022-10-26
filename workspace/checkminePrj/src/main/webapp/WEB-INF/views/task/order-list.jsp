@@ -202,7 +202,7 @@
 		                    	<c:if test="${vo.importance eq 'I'}"> <span>긴급</span></c:if>
 		                    </div>
 		                    <div class="list">
-		                    		${vo.attName}
+		                    	${vo.attName}
 		                    </div>
 		                    <div class="list" id="title"><a href="${root}/task/order/detail/${vo.no}">${vo.title}</a></div>
 		                    <div class="list">${vo.orderer}</div>

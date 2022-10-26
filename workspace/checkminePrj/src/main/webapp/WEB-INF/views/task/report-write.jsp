@@ -55,7 +55,7 @@
         height: 90%;
         display: grid;
         grid-template-columns: 100px;
-        grid-template-rows: 40px 40px 40px 40px 550px 40px 40px;
+        grid-template-rows: 40px 40px 40px 40px 40px 550px 40px 40px;
 		border: 1px solid #5D736F;
         border-radius: 10px;
 	}
@@ -78,7 +78,6 @@
         height: 100%;
         border: none;
         resize: none;
-        border-radius: 0 0 10px 10px;
     }
 
     #submit-area{
@@ -99,6 +98,14 @@
 
     input[type="submit"]:hover{
         background-color: #5D736F;
+    }
+
+    #order {
+        border-radius: 10px 0 0 0 ;
+    }
+
+    #select, #select > select{
+        border-radius: 0 10px 0 0;
     }
 
 	/*구분 css*/
@@ -131,8 +138,8 @@
     input[type=file]::file-selector-button:hover{background: #5D736F;}
 
     .attachments{
-        grid-row-start: 6;
-        grid-row-end: 8;
+        grid-row-start: 7;
+        grid-row-end: 9;
         line-height: 40px;
         line-height: 80px;
         border-radius: 0 0 0 10px;
@@ -238,8 +245,17 @@
 			        </li>
 			    </ul>
 
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data" onsubmit="return check();">
                     <div id="table">
+                        <div class="division" id="order">지시서</div>
+                        <div id="select">
+                            <select>
+                                <option value="1">1 테스트</option>
+                                <option value="2">2 테스트트</option>
+                                <option value="3">3 테스스스트</option>
+                                <option value="4">4 테텥스스트</option>
+                            </select>
+                        </div>
                         <div class="division" id="title-diveision">제　목</div><div id="title"><input type="text" name="title"></div>
                         <div class="division">수　신</div>
                         <div class="destination">

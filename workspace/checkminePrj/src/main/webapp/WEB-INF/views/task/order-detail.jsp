@@ -47,7 +47,7 @@
     #table{
         display: grid;
         grid-template-columns: 100px 1fr 100px 1fr 100px 1fr;
-        grid-template-rows: 30px 30px 30px 30px 30px 600px 30px;
+        grid-template-rows: 30px 30px 30px 30px 30px 30px 600px;
 
         margin: 10px auto;
         width:95%;
@@ -67,12 +67,24 @@
         text-align: center;
         font-weight: 700;
     }
+    
+    #file-wrap{
+    	height: auto;
+    }
 
     #title{
         grid-column-start: 2;
         grid-column-end: 7;
     }
-
+    
+    #att, #ratt{
+		grid-column-start: 2;
+        grid-column-end: 7;
+    }
+	.ratt{
+		grid-row-start: 5;
+        grid-row-end: 6;
+	}
     .title{
         border-radius: 10px 0 0 0 ;
     }
@@ -156,17 +168,24 @@
                         <c:if test="${vo.importance eq 'I'}"> <span>긴급</span></c:if>
                     </div>
                     <div class="division">작성자</div><div class="value">${vo.orderer}</div>
-                    <div class="division">부서 / 직위</div><div class="value"> ${vo.depName} / ${vo.posName}</div>
+                    <div class="division">부서 / 직위</div><div class="value"> ${vo.deptNo} / ${vo.posName}</div>
                     <div class="division">작성 일시</div><div class="value">${vo.enrollDate}</div>
                     <div class="division">시작일</div><div class="value">${vo.startDate}</div>
-                    <div class="division">종료일</div><div class="value">${vo.startDate}</div>
-                    <div class="division">수　신</div><div class="value">${vo.attName}</div>
-                    <div class="division">참　조</div><div class="value">${vo.rattName}</div>
-                    <div class="division">첨부 파일</div><div class="value"><a href="${root}/task/order/download/${vo.no}">테스트 문서 다운로드</a></div>
+                    <div class="division">종료일</div><div class="value">${vo.endDate}</div>
+                    <div class="division">수　신</div><div class="value" id="att">${aVo.empNo}</div>
+                    <div class="division ratt">참　조</div><div class="value" id="ratt">${rVo.empNo}</div>
+                    
                     <div class="division content">내용</div>
                     <div class="content value bot">
                         ${vo.content}
                     </div>
+                    
+                    <div class="division">첨부 파일</div>
+                    <div class="value" id="file-wrap">
+	                    <c:forEach items="${fileVo}" var="fv">                    	                    	
+	                    	<a href="${root}/task/order/download/${vo.no}/${fv.no}" id="file">${fv.name}</a>
+	                    </c:forEach>
+                   	</div>
                     
                 </div>
                 <div class="btn-area"> 

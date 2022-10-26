@@ -19,7 +19,6 @@ public class TaskOrderVo {
 	private String rattName;
 	
 	//작성자 데이터
-	private String depName;
 	private String posName;
 	
 }

@@ -26,14 +26,18 @@ public interface TaskOrderService {
 	List<TaskOrderAttVo> selectAttList(TaskOrderAttVo attVo);
 	
 	//지시서 디테일
-	TaskOrderVo selectOne(String no);
+	TaskOrderVo selectOneByNo(String no);
 	
 	//지시서 디테일 - 수신자 조회
 	TaskOrderAttVo selectAttOne(String no);
+	TaskOrderAttVo selectAttROne(String no);
 	
 	//지시서 수신자 리스트
 	List<MemberVo> selectWriteAttList();
 	
-	//지시서 파일 다운로드
+	//지시서 파일 목록 조회
 	List<TaskOrderFileVo> selectFileList(String no);
+	
+	//지시서 파일 다운로드
+	List<TaskOrderFileVo> selectFile(String pno);
 }
