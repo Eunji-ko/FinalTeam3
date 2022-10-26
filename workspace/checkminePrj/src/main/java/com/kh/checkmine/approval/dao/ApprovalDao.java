@@ -16,6 +16,7 @@ import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface ApprovalDao {
 
@@ -90,5 +91,11 @@ public interface ApprovalDao {
 
 	//문서번호로 첨부파일 조회하기
 	List<ApprovalFileVo> selectFiles(SqlSessionTemplate sst, String dno);
+
+	//제안서 정보 DB에 올리기
+	int insertProposal(SqlSessionTemplate sst, ApprovalProposalVo proposalVo);
+
+	//이름으로 거래처 검색
+	List<AccountVo> selectAccountList(SqlSessionTemplate sst, String corporate);
 
 }

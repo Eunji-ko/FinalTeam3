@@ -243,5 +243,29 @@
 		FROM AP_FILE
 		WHERE DOC_NO = #{dno}
 	</select>
+	
+	<insert id="insertProposal">
+		INSERT INTO PROPOSAL
+		(
+			NO
+			,TYPE_NO
+			,ACC_NO
+			,CONTENT
+		)
+		VALUES
+		(
+			SEQ_DOC_NO.CURRVAL
+			,1
+			,1
+			,#{content}
+		)
+	</insert>
+	
+	<select id="selectAccountList" resultType="AccountVo">
+		SELECT *
+		FROM ACCOUNT
+		WHERE CORPORATE LIKE '%${corporate}%'
+		AND DELETE_YN = 'N'
+	</select>
 
 </mapper>

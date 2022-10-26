@@ -14,6 +14,7 @@ import com.kh.checkmine.approval.vo.ApprovalStateVo;
 import com.kh.checkmine.approval.vo.ApprovalVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface ApprovalService {
 
@@ -85,6 +86,12 @@ public interface ApprovalService {
 
 	//문서번호로 첨부파일 가져오기
 	List<ApprovalFileVo> selectFilesByNo(String dno);
+
+	//제안서 결재하기
+	ApprovalDocVo approvalProposal(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalProposalVo proposalVo);
+
+	//이름으로 거래처 검색
+	List<AccountVo> selectAccountByName(String corporate);
 
 
 }
