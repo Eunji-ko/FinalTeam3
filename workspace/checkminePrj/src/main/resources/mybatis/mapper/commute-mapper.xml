@@ -5,13 +5,23 @@
 	<select id="selectList" resultType="CommuteVo">
 		SELECT
 		    C.NO
-		    , C.ARRIVED, TO_CHAR(SYSDATE, 'HH-MI')
-		    , C.LEAVE, TO_CHAR(SYSDATE, 'HH-MI')
-		    , C.WORK_DATE, TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		    , TO_CHAR(C.ARRIVED, 'HH : MI AM') AS ARRIVED
+		    , TO_CHAR(C.LEAVE, 'HH : MI PM') AS LEAVE
+		    , TO_CHAR(C.WORK_DATE, 'YYYY - MM - DD') AS WORK_DATE
 		    , E.NAME AS EMP_NO
 		FROM COMMUTE C
 		JOIN EMPLOYEE E
 		ON C.EMP_NO = E.NO
+		WHERE C.EMP_NO = #{empNo}
+		ORDER BY C.WORK_DATE DESC
 	</select>
+	
+	<insert id="insertArrived">
+		INSERT INTO COMMUTE(NO, EMP_NO, ARRIVED) VALUES(SEQ_COMMUTE_NO.NEXTVAL, #{empNo}, SYSDATE)
+	</insert>
+	
+	<update id="updateLeave">
+		UPDATE COMMUTE SET LEAVE = SYSDATE
+	</update>
 	
 </mapper>
