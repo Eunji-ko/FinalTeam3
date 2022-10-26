@@ -136,9 +136,9 @@
 					<!-- 각 메일함마다 바꿔주기 -->
                     <ul>
                         <li><div><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
-                        <li><div class="container-nav-selected"><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
+                        <li><div><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
                         <li><div><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
-                        <li><div><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
+                        <li><div class="container-nav-selected"><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/save?p=1">임시보관함</a></div></li>
                         <li><div><a href="/checkmine/mail/bin?p=1">휴지통</a></div></li>
                         <li><div><a href="/checkmine/mail/addr?p=1">주소록</a></div></li>
@@ -146,7 +146,7 @@
                 </div>
 
                 <div>
-                    <div id="list-name" style="margin-left: 12px; margin-bottom: 3px;">참조편지함</div> <!-- 편지함마다 바꾸기 -->
+                    <div id="list-name" style="margin-left: 12px; margin-bottom: 3px;">중요편지함</div> <!-- 편지함마다 바꾸기 -->
 
                     <div id="mid-nav" class="d-flex" style="width: 1258px;">
                         <!-- 전체 체크박스 -->
@@ -158,7 +158,6 @@
                             <div class="dropdown-content">
                                 <span onclick="selectSome('read');">읽은메일</span>
                                 <span onclick="selectSome('notRead');">안읽은메일</span>
-                                <span onclick="selectSome('imp');">중요메일</span>
                             </div>
                         </div> 
 
@@ -195,7 +194,7 @@
                         </div>
                         
                         <!-- 리스트 여기부터 받아오기 -->
-                        <c:forEach items="${refMailList}" var="item">
+                        <c:forEach items="${ImpMailList}" var="item">
                         	<c:if test="${item.read eq 'N'}">
                         		<c:set var="read" value="notRead"/>
                         	</c:if>
@@ -216,14 +215,19 @@
 	                            <a href="메일_상세보기" class="mail-list-item">
 	                                <input type="checkbox" value="${item.no}">
 	                                <span style="width: 257px;">${item.senderEmail}</span>
-	                                <span style="width: 650px;">[참조] ${item.title}</span>
+	                                
+	                                <c:if test="${item.type eq 'A'}">
+		                                <span style="width: 650px;">${item.title}</span>	                                
+	                                </c:if>
+	                                <c:if test="${item.type eq 'R'}">
+		                                <span style="width: 650px;">[참조]${item.title}</span>	                                
+	                                </c:if>
+	                                
 	                                <span style="width: 235px;">${item.sendDate}</span>
 	                            </a>
 	                            <span class="d-flex justify-content-center"><img class="impbtn" src="${impImgPath}" style="margin-left: 11px;" onclick="importance(this);"></span>
 	                        </div>
                         </c:forEach>
-                        
-                        
                     </div>
                 </div>
             </div>
