@@ -279,8 +279,8 @@
                     </div>
                 </div>
                 <div id="attend-btn-zone">
-                    <div id="attend-btn" onclick="location.href='${rootPath}/근태/출근';">출근 확인</div>
-                    <div id="attend-btn" onclick="location.href='${rootPath}/근태/퇴근';">퇴근 확인</div>
+                    <div id="attend-btn" onclick="arrived();">출근 확인</div>
+                    <div id="attend-btn" onclick="leave();">퇴근 확인</div>
                 </div>
             </div>
         </div>
@@ -414,6 +414,40 @@
 	    });
 	    calendar.render();
 	    });
+    </script>
+
+    <script>
+        //출퇴근 버튼
+
+        //출근버튼
+        function arrived(){
+            $.ajax({
+                url : "${rootPath}/commute/arrived",
+                type : "post",
+                //data : {"k1":"v1"},
+                success : function(){
+                    alert("통신 성공");
+                },
+                error : function(){
+                    alert("arrived 실패");
+                }
+            });
+        }
+
+        //퇴근버튼
+        function leave(){
+            $.ajax({
+                url : "${rootPath}/commute/leave",
+                type : "post",
+                //data : {"k1":"v1"},
+                success : function(){
+                    alert("통신 성공");
+                },
+                error : function(){
+                    alert("leave 실패");
+                }
+            });
+        }
     </script>
 </body>
 </html>

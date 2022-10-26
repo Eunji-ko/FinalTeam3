@@ -16,4 +16,16 @@ public class CommuteDaoImpl implements CommuteDao {
 		return sst.selectList("commuteMapper.selectList");
 	}
 
+	//출근 확인
+	@Override
+	public int insertArrived(CommuteVo vo, SqlSessionTemplate sst) {
+		return sst.insert("commuteMapper.insertArrived", vo);
+	}
+
+	//퇴근 확인
+	@Override
+	public int updateLeave(CommuteVo vo, SqlSessionTemplate sst) {
+		return sst.update("commuteMapper.updateLeave", vo);
+	}
+
 }

@@ -11,4 +11,10 @@ public interface CommuteDao {
 	//나의근태조회
 	List<CommuteVo> selectList(SqlSessionTemplate sst);
 
+	//출근 확인
+	int insertArrived(CommuteVo vo, SqlSessionTemplate sst);
+
+	//퇴근 확인
+	int updateLeave(CommuteVo vo, SqlSessionTemplate sst);
+
 }

@@ -27,4 +27,16 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.selectList(sst);
 	}
 
+	//출근 확인
+	@Override
+	public int arrived(CommuteVo vo) {
+		return dao.insertArrived(vo, sst);
+	}
+
+	//퇴근 확인
+	@Override
+	public int leave(CommuteVo vo) {
+		return dao.updateLeave(vo, sst);
+	}
+
 }
