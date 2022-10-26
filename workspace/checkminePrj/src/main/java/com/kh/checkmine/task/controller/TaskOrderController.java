@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.NameList;
@@ -58,11 +59,9 @@ public class TaskOrderController {
 		int totalCount = orderService.selectTotalCnt();
 
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
-		TaskOrderAttVo attVo = new TaskOrderAttVo();
 		
 		List<TaskOrderVo> voList = orderService.selectList(pv);
-		List<TaskOrderAttVo> attList = orderService.selectAttList(attVo);
-		
+
 		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
 		model.addAttribute("loginMember", loginMember);
@@ -72,20 +71,18 @@ public class TaskOrderController {
 		
 	//지시서 조회
 	@GetMapping(value = {"detail/{no}", "detail"})
-	public String orderDetail(@PathVariable(required = false) String no, Model model, HttpSession session) {
+	public String orderDetail(@PathVariable(required = false) String no, Model model, HttpSession session) throws Exception {
 		
-		TaskOrderVo vo = orderService.selectOne(no);
-		//MemberVo eVo = memberService.selectOneByNo(vo.getOrderer()); //TODO 이름으로 가져와져서 숫자로 가져오게 찾아보기. 
-		//TaskOrderAttVo attVo = orderService.selectAttOne(vo.getNo());
-		
-		//orderVo에 task_att join해서 해보고 안되면 복구~~~
-		
-		//여기까지~~ 삭제~~~
-		
+		TaskOrderVo vo = orderService.selectOneByNo(no);
+		TaskOrderAttVo aVo = orderService.selectAttOne(no);
+		TaskOrderAttVo rVo = orderService.selectAttROne(no);
+		List<TaskOrderFileVo> fileVo = orderService.selectFileList(no);
+
 		model.addAttribute("vo", vo);
-		//model.addAttribute("eVo", eVo);
-		//model.addAttribute("attVo", attVo);
-		
+		model.addAttribute("aVo", aVo);
+		model.addAttribute("rVo", rVo);
+		model.addAttribute("fileVo", fileVo);
+		System.out.println(fileVo);
 		return "task/order-detail";
 	}
 	
@@ -194,12 +191,11 @@ public class TaskOrderController {
 	}
 	
 	//지시서 첨부파일 다운로드
-	@GetMapping("download/{no}")
-	public ResponseEntity<ByteArrayResource> download(@PathVariable(required = false) String no, HttpServletRequest req, HttpSession session, Model model) throws IOException {
-		//String no = (String) session.getAttribute("taskNo");
-		//String taskNo = (String) model.getAttribute("taskNo");
+	@GetMapping("download/{no}/{pno}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String no, @PathVariable String pno, HttpServletRequest req) throws Exception {
+
+		List<TaskOrderFileVo> fileVo = orderService.selectFile(pno);
 		
-		List<TaskOrderFileVo> fileVo = orderService.selectFileList(no);
 		System.out.println(fileVo);
 		//파일 객체 준비
 		String rootPath = req.getServletContext().getRealPath("/resources/upload/task/order/");

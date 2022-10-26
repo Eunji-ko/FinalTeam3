@@ -76,14 +76,19 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 
 	//지시서 디테일
 	@Override
-	public TaskOrderVo selectOne(String no) {
-		return orderDao.selectOne(sst, no);
+	public TaskOrderVo selectOneByNo(String no) {
+		return orderDao.selectOneByNo(sst, no);
 	}
 
 	//지시서 디테일 - 수신자 조회
 	@Override
 	public TaskOrderAttVo selectAttOne(String no) {
 		return orderDao.selectAttOne(sst, no);
+	}
+	
+	@Override
+	public TaskOrderAttVo selectAttROne(String no) {
+		return orderDao.selectAttROne(sst, no);
 	}
 
 	//지시서 수신자 리스트
@@ -92,11 +97,19 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		return orderDao.selectWriteAttList(sst);
 	}
 
-	//지시서 파일 다운로드
+	//지시서 파일 목록 조회
 	@Override
 	public List<TaskOrderFileVo> selectFileList(String no) {
 		return orderDao.selectFileList(sst, no);
 	}
+
+	//지시서 파일 다운로드
+	@Override
+	public List<TaskOrderFileVo> selectFile(String pno) {
+		return orderDao.selectFile(sst, pno);
+	}
+
+
 	
 
 }

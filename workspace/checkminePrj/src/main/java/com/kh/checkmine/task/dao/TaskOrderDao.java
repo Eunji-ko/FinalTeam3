@@ -31,15 +31,20 @@ public interface TaskOrderDao {
 	List<TaskOrderAttVo> selectAttList(SqlSessionTemplate sst, TaskOrderAttVo attVo);
 
 	//지시서 디테일
-	TaskOrderVo selectOne(SqlSessionTemplate sst, String no);
+	TaskOrderVo selectOneByNo(SqlSessionTemplate sst, String no);
 
 	//지시서 디테일 - 수신자 조회
 	TaskOrderAttVo selectAttOne(SqlSessionTemplate sst, String no);
+	TaskOrderAttVo selectAttROne(SqlSessionTemplate sst, String no);
 
 	//지시서 작성 수신자
 	List<MemberVo> selectWriteAttList(SqlSessionTemplate sst);
 
-	//지시서 파일 다운로드
+	//지시서 파일 목록 조회
 	List<TaskOrderFileVo> selectFileList(SqlSessionTemplate sst, String no);
+
+	//지시서 파일 다운로드
+	List<TaskOrderFileVo> selectFile(SqlSessionTemplate sst, String pno);
+
 
 }
