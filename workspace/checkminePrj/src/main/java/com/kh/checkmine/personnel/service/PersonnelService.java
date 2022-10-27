@@ -26,4 +26,8 @@ public interface PersonnelService {
 
 	List<AccountVo> selectAccountListBySearch(HashMap<String, String> searchMap);
 
+	int insertAcc(AccountVo vo);
+
+	int delAcc(String no);
+
 }

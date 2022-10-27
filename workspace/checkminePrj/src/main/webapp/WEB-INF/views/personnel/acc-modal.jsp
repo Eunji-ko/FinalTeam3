@@ -5,26 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-  #emp-img {
-        margin: 0 auto;
-        width: 180px;
-        height: 180px;
-        border: 8px solid #B0D9D1;
-        border-radius: 20px;
-        background-color: white;
-        margin-bottom: 15px;
-        overflow: hidden;
-    }
-  #emp-img > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-  }
-</style>
 </head>
 <body>
-  <form action="${rootPath}/personnel/editAcc" method="post">
+  <form action="${rootPath}/personnel/editAcc" method="post" onsubmit="return checkAcc();">
     <div class="modal fade" id="changeAcc" tabindex="-1" aria-labelledby="changeAccLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -36,7 +19,7 @@
             <input type="hidden" id="modalANo" name="no">
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="text" class="form-control" name="corporate" id="floatingCorp">
-              <label for="floatingCorp">거래처명</label>
+              <label for="floatingCorp">거래처명 *</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="text" class="form-control" name="address" id="floatingCAddress">
@@ -44,7 +27,7 @@
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="tel" class="form-control" name="tel" id="floatingTel">
-              <label for="floatingTel">거래처 전화번호</label>
+              <label for="floatingTel">거래처 전화번호 *</label>
             </div> 
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="text" class="form-control" name="fax" id="floatingFax">
@@ -52,7 +35,7 @@
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="text" class="form-control" name="pname" id="floatingPName">
-              <label for="floatingPName">담당자명</label>
+              <label for="floatingPName">담당자명 *</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
               <input type="text" class="form-control" name="dept" id="floatingPDept">
@@ -63,7 +46,7 @@
               <label for="floatingPPosition">담당자 직급</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="tel" class="form-control" name="phone" id="floatingPPhone">
+              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPPhone">
               <label for="floatingPPhone">담당자 전화번호</label>
             </div> 
             <div class="form-floating">
@@ -72,6 +55,7 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button class="btn checkmine-btn" id="accDelBtn">삭제하기</button>
             <input type="submit" class="btn checkmine-btn" value="변경하기">
           </div>
         </div>
@@ -100,10 +84,39 @@
             $('#floatingPPosition').val(data.position);
             $('#floatingPPhone').val(data.phone);
             $('#floatingPEmail').val(data.email);
+            $('#accDelBtn').attr("onclick", "location.href='${rootPath}/personnel/deleteAcc/'" + no);
           }
         }
       })
     })
+  </script>
+
+  <script>
+    
+    function checkAcc() {
+
+      let floatingCorp = $('#floatingCorp').val();
+      let floatingTel = $('#floatingTel').val();
+      let floatingPName = $('#floatingPName').val()
+
+      if(floatingCorp.length == 0){
+            alert("거래처명을 작성해주세요 !");
+            return false;
+      }
+
+      if(floatingTel.length == 0){
+            alert("거래처 전화번호를 작성해주세요 !");
+            return false;
+      }
+
+      if(floatingPName.length == 0){
+            alert("담당자명을 작성해주세요 !");
+            return false;
+      }
+
+      return true;
+
+      }
   </script>
 </body>
 </html>

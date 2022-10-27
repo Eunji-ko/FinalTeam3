@@ -61,6 +61,32 @@ public class PersonnelController {
 		return acc;
 	}
 	
+	//거래처 추가
+	@PostMapping("insertAcc")
+	public String insertAcc(AccountVo vo, HttpSession session, Model model) {
+		
+		int result = ps.insertAcc(vo);
+		
+		if(result == 1) {
+			//정보수정 성공
+			
+			//디비 다녀오기
+			List<MemberVo> memList = ps.selectMemberList();
+			List<AccountVo> accList = ps.selectAccountList();
+
+			//model에 데이터 담기
+			model.addAttribute("memList", memList);
+			model.addAttribute("accList", accList);
+			
+			//화면 선택
+			return "personnel/main";
+		}else {
+			//정보수정 실패
+			session.setAttribute("alertMsg", "거래처를 추가하는 데 실패하였습니다 !");
+			return "redirect:/personnel/main";
+		}
+	}
+	
 	//사원정보 수정
 	@PostMapping("editEmp")
 	public String editEmp(MemberVo vo, HttpSession session) {
@@ -92,6 +118,31 @@ public class PersonnelController {
 			session.setAttribute("alertMsg", "거래처 정보를 수정하는 데 실패하였습니다 !");
 			return "redirect:/personnel/main";
 		}
+	}
+	
+	@GetMapping("deleteAcc/{no}")
+	public String deleteAcc(HttpSession session, Model model, @PathVariable String no) {
+		
+		int result = ps.delAcc(no);
+		
+		if(result == 1) {
+			//삭제 성공
+			
+			//디비 다녀오기
+			List<MemberVo> memList = ps.selectMemberList();
+			List<AccountVo> accList = ps.selectAccountList();
+
+			//model에 데이터 담기
+			model.addAttribute("memList", memList);
+			model.addAttribute("accList", accList);
+			
+			return "personnel/main";
+		}else {
+			//삭제 실패
+			session.setAttribute("alertMsg", "거래처를 삭제하는 데 실패하였습니다 !");
+			return "redirect:/personnel/main";
+		}
+		
 	}
 	
 	//사원 재직상태에 따른 조회
