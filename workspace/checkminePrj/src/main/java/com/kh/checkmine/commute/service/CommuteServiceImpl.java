@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.commute.dao.CommuteDao;
 import com.kh.checkmine.commute.vo.CommuteVo;
 
@@ -23,8 +24,8 @@ public class CommuteServiceImpl implements CommuteService {
 	
 	//나의근태조회
 	@Override
-	public List<CommuteVo> selectList() {
-		return dao.selectList(sst);
+	public List<CommuteVo> selectListOne(String no, PageVo pv) {
+		return dao.selectListOne(no, pv, sst);
 	}
 
 	//출근 확인
@@ -37,6 +38,18 @@ public class CommuteServiceImpl implements CommuteService {
 	@Override
 	public int leave(CommuteVo vo) {
 		return dao.updateLeave(vo, sst);
+	}
+
+	//전체 근태기록
+	@Override
+	public List<CommuteVo> selectList(PageVo pv) {
+		return dao.selectList(sst, pv);
+	}
+
+	//전체 근태 갯수 조회
+	@Override
+	public int selectTotalCnt() {
+		return dao.selectCountAll(sst);
 	}
 
 }

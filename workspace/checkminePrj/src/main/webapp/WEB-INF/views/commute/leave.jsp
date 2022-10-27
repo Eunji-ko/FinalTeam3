@@ -79,10 +79,10 @@
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                      <a class="nav-link" href="/checkmine/commute/mycommute">나의 근태기록</a>
+                      <a class="nav-link" href="/checkmine/commute/mycommute/1">나의 근태기록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/checkmine/commute/commute">전체 근태기록</a>
+                      <a class="nav-link" href="/checkmine/commute/commute/1">전체 근태기록</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="/checkmine/commute/leave">연차내역</a>

@@ -11,4 +11,7 @@ public class CommuteVo {
 	private String leave;
 	private String workDate;
 	
+	private String posName;
+	private String deptName;
+	
 }

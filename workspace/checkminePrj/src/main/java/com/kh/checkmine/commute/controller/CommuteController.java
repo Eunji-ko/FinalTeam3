@@ -7,10 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.commute.service.CommuteService;
 import com.kh.checkmine.commute.vo.CommuteVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -28,21 +31,40 @@ public class CommuteController {
 	}
 
 	//나의 근태기록
-	@GetMapping("mycommute")
-	public String mycommute(HttpSession session) {
+	@GetMapping("mycommute/{pno}")
+	public String mycommute(Model model, HttpSession session, @PathVariable int pno) {
 		
-		List<CommuteVo> voList = cs.selectList();
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
+		int totalCount = cs.selectTotalCnt();
+		
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<CommuteVo> voList = cs.selectListOne(no, pv);
 		
 		session.setAttribute("voList", voList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("loginMember", loginMember);
 		
 		return "commute/mycommute";
 		
 	}
 	
 	//전체 근태기록
-	@GetMapping("commute")
-	public String commute() {
+	@GetMapping("commute/{pno}")
+	public String commute(Model model, @PathVariable int pno) {
+		
+		int totalCount = cs.selectTotalCnt();
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<CommuteVo> voList = cs.selectList(pv);
+		
+		model.addAttribute("voList", voList);
+		model.addAttribute("pv", pv);
+		
 		return "commute/commute";
+		
 	}
 	
 	//연차신청
@@ -52,13 +74,12 @@ public class CommuteController {
 	}
 	
 	//출근 버튼
-	@ResponseBody
 	@PostMapping("arrived")
 	public String arrived(CommuteVo vo, HttpSession session) {
 		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setNo("1");
-		session.setAttribute("loginMember", memberVo);
+		//MemberVo memberVo = new MemberVo();
+		//memberVo.setNo("1");
+		//session.setAttribute("loginMember", memberVo);
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
@@ -78,13 +99,8 @@ public class CommuteController {
 	}
 	
 	//퇴근 버튼
-	@ResponseBody
 	@PostMapping("leave")
 	public String leave(CommuteVo vo, HttpSession session) {
-		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setNo("1");
-		session.setAttribute("loginMember", memberVo);
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();

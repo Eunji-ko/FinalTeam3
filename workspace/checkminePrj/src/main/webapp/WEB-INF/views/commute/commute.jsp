@@ -62,10 +62,10 @@
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                      <a class="nav-link" href="/checkmine/commute/mycommute">나의 근태기록</a>
+                      <a class="nav-link" href="/checkmine/commute/mycommute/1">나의 근태기록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/commute">전체 근태기록</a>
+                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/commute/1">전체 근태기록</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/checkmine/commute/leave">연차내역</a>
@@ -99,7 +99,7 @@
                       <div id="search">
                         <select>
                             <option value="">부서전체</option>
-                            <option value="없음">없음</option>
+                            <option value="-">없음</option>
                             <option value="인사부">인사부</option>
                             <option value="총무부">총무부</option>
                             <option value="회계부">회계부</option>
@@ -142,46 +142,34 @@
                               </tr>
                             </thead>
                             <tbody>
+                            <c:forEach items="${voList}" var="vo">
                               <tr>
-                                <td>김과장</td>
-                                <td>인사부</td>
-                                <td>과장</td>
-                                <td>2022.10.18</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
+                                <td>${vo.empNo}</td>
+                                <td>${vo.deptName}</td>
+                                <td>${vo.posName}</td>
+                                <td>${vo.workDate}</td>
+                                <td>${vo.arrived}</td>
+                                <td>${vo.leave}</td>
                                 <td>08:00</td>
                                 <td>정상출근</td>
                               </tr>
-                              <tr>
-                                <td>박차장</td>
-                                <td>인사부</td>
-                                <td>차장</td>
-                                <td>2022.10.18</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
-                                <td>08:00</td>
-                                <td>정상출근</td>
-                              </tr>
-                              <tr>
-                                <td>정대리</td>
-                                <td>인사부</td>
-                                <td>대리</td>
-                                <td>2022.10.18</td>
-                                <td>09:00</td>
-                                <td>17:00</td>
-                                <td>08:00</td>
-                                <td>정상출근</td>
-                              </tr>
+                            </c:forEach>
                             </tbody>
                           </table>
 
                           <div id="page-btn">
 
-                            <button type="button" class="btn btn-sm">&lt;</button>
-                            <a class="btn btn-sm" href="">1</a>
-                            <a class="btn btn-sm" href="">2</a>
-                            <a class="btn btn-sm" href="">3</a>
-                            <button type="button" class="btn btn-sm">&gt;</button>
+							<c:if test="${pv.startPage ne 1}">
+                            	<button onclick="location.href='${rootPath}/commute/commute/${pv.startPage - 1}'" type="button" class="btn btn-sm">&lt;</button>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                            	<a class="btn btn-sm" href="${rootPath}/commute/commute/${i}">${i}</a>
+							</c:forEach>
+                            
+							<c:if test="${pv.endPage ne pv.maxPage}">
+                            	<button onclick="location.href='${rootPath}/commute/commute/${pv.endPage + 1}'" type="button" class="btn btn-sm">&gt;</button>
+							</c:if>                            
 
                           </div>
 

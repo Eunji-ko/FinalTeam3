@@ -57,10 +57,10 @@
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/mycommute">나의 근태기록</a>
+                      <a class="nav-link active" aria-current="page" href="/checkmine/commute/mycommute/1">나의 근태기록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/checkmine/commute/commute">전체 근태기록</a>
+                      <a class="nav-link" href="/checkmine/commute/commute/1">전체 근태기록</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/checkmine/commute/leave">연차내역</a>
@@ -93,7 +93,7 @@
 
                       <div></div>
 
-                      <div id="name">${c.empNo} 님</div>
+                      <div id="name">${loginMember.name} 님</div>
 
                     </div>
 
@@ -110,11 +110,11 @@
                               </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${cVo}" var="c">
+                            <c:forEach items="${voList}" var="vo">
                               <tr>
-                                <td>${c.workDate}</td>
-                                <td>${c.arrived}</td>
-                                <td>${c.leave}</td>
+                                <td>${vo.workDate}</td>
+                                <td>${vo.arrived}</td>
+                                <td>${vo.leave}</td>
                                 <td>08:00</td>
                                 <td>정상출근</td>
                               </tr>
@@ -124,11 +124,17 @@
 
                           <div id="page-btn">
 
-                            <button type="button" class="btn btn-sm">&lt;</button>
-                            <a class="btn btn-sm" href="">1</a>
-                            <a class="btn btn-sm" href="">2</a>
-                            <a class="btn btn-sm" href="">3</a>
-                            <button type="button" class="btn btn-sm">&gt;</button>
+                            <c:if test="${pv.startPage ne 1}">
+                            	<button onclick="location.href='${rootPath}/commute/mycommute/${pv.startPage - 1}'" type="button" class="btn btn-sm">&lt;</button>
+							</c:if>
+
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                            	<a class="btn btn-sm" href="${rootPath}/commute/mycommute/${i}">${i}</a>
+							</c:forEach>
+                            
+							<c:if test="${pv.endPage ne pv.maxPage}">
+                            	<button onclick="location.href='${rootPath}/commute/mycommute/${pv.endPage + 1}'" type="button" class="btn btn-sm">&gt;</button>
+							</c:if>
 
                           </div>
 
@@ -141,7 +147,7 @@
         </main>
     </div>
 
-    <!-- 날짜 스크립트 -->
+	<!-- 날짜 스크립트 -->
     <script>
 
       document.addEventListener("DOMContentLoaded", function() {
@@ -197,9 +203,6 @@
       }
 
     </script>
-
-
-
 
 </body>
 </html>
