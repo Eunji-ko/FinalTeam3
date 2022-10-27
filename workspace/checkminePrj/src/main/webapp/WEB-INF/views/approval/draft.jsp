@@ -152,7 +152,7 @@
 					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
 				</c:forEach>
 				<!--반려사유-->
-				<input type="hidden" id="return-reason" name="returnReason">
+				<input type="hidden" class="return-reason" name="returnReason">
 				<!--결재자 번호-->
 				<input type="hidden" name="firstApprover" class="first-approver">
 				<input type="hidden" name="secondApprover" class="second-approver">

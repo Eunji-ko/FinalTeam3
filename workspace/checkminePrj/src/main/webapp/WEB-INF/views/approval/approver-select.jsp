@@ -281,26 +281,26 @@
             if($('#search-final').val() != null && $('#search-final').val() != ""){
                 //결재자 이름 넘기기
                 if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('.approver5').innerHTML = searchFirst.split(" ")[1];
+                    window.opener.document.querySelectorAll('.approver5').forEach(x=>{x.innerHTML = searchFirst.split(" ")[1];});
                 }
-                if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('.approver6').innerHTML = searchSecond.split(" ")[1];
+                if(searchSecond.split(" ")[1] != undefined){
+                    window.opener.document.querySelectorAll('.approver6').forEach(x=>{x.innerHTML = searchSecond.split(" ")[1];});
                 }
-                if(searchFirst.split(" ")[1] != undefined){
-                    window.opener.document.querySelector('.approver7').innerHTML = searchThird.split(" ")[1];
+                if(searchThird.split(" ")[1] != undefined){
+                    window.opener.document.querySelectorAll('.approver7').forEach(x=>{x.innerHTML = searchThird.split(" ")[1];});
                 }
-                window.opener.document.querySelector('.approver8').innerHTML = searchFinal.split(" ")[1];
+                window.opener.document.querySelectorAll('.approver8').forEach(x=>{x.innerHTML = searchFinal.split(" ")[1];});
                 //결재자 번호 넘기기
                 if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('.first-approver').value = searchFirst.split(" ")[0];
+                    window.opener.document.querySelectorAll('.first-approver').forEach(x=>{x.value = searchFirst.split(" ")[0];});
                 }
-                if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('.second-approver').value = searchSecond.split(" ")[0];
+                if(searchSecond.split(" ")[0] != undefined){
+                    window.opener.document.querySelectorAll('.second-approver').forEach(x=>{x.value = searchSecond.split(" ")[0];});
                 }
-                if(searchFirst.split(" ")[0] != undefined){
-                    window.opener.document.querySelector('.third-approver').value = searchThird.split(" ")[0];
+                if(searchThird.split(" ")[0] != undefined){
+                    window.opener.document.querySelectorAll('.third-approver').forEach(x=>{x.value = searchThird.split(" ")[0];});
                 }
-                window.opener.document.querySelector('.final-approver').value = searchFinal.split(" ")[0];
+                window.opener.document.querySelectorAll('.final-approver').forEach(x=>{x.value = searchFinal.split(" ")[0];});
                 window.close();
             }else{
                 alert('최종 결재자를 선택하시기 바랍니다.');

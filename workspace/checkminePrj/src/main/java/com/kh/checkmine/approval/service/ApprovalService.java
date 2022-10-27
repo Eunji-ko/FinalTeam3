@@ -93,5 +93,8 @@ public interface ApprovalService {
 	//이름으로 거래처 검색
 	List<AccountVo> selectAccountByName(String corporate);
 
+	//회의록 결재하기
+	ApprovalDocVo approvalMinutes(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalMinutesVo minutesVo);
+
 
 }

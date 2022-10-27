@@ -184,4 +184,10 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.selectList("approvalMapper.selectAccountList", corporate);
 	}
 
+	//회의록 DB에 올리기
+	@Override
+	public int insertMinutes(SqlSessionTemplate sst, ApprovalMinutesVo minutesVo) {
+		return sst.insert("approvalMapper.insertMinutes", minutesVo);
+	}
+
 }

@@ -128,7 +128,7 @@
 
 <main id="draft-wrapper">
 	
-	<form action="${rootPath}/approval/proposal" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
+	<form action="${rootPath}/approval/proposal/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return checkAccount();'>
 
 	<div id="main-top">
 		<div id="write-info">
@@ -147,7 +147,7 @@
 			<div class="approver5">${apVo.firstApprover}</div>
 			<div class="approver6">${apVo.secondApprover}</div>
 			<div class="approver7">${apVo.thirdApprover}</div>
-			<div classd="approver8">${apVo.finalApprover}</div>
+			<div class="approver8">${apVo.finalApprover}</div>
 			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
 			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
 			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
@@ -176,7 +176,7 @@
 					<button type="button" id="account-btn" class="btn" data-bs-toggle="modal" data-bs-target="#proposal-modal">
 						거래처
 					</button>
-					<div id="account-name-div">${accountVo.corporate}</div>
+					<div id="account-name-div">${proposalVo.accName}</div>
 				</div>
 				<textarea id="approval-content" class="form-control" maxlength="500" name="content">${proposalVo.content}</textarea>
 			</div>
@@ -188,14 +188,14 @@
 					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
 				</c:forEach>
 				<!--반려사유-->
-				<input type="hidden" id="return-reason" name="returnReason">
+				<input type="hidden" class="return-reason" name="returnReason">
 				<!--결재자 번호-->
 				<input type="hidden" name="firstApprover" class="first-approver">
 				<input type="hidden" name="secondApprover" class="second-approver">
 				<input type="hidden" name="thirdApprover" class="third-approver">
 				<input type="hidden" name="finalApprover" class="final-approver">
 				<!-- 거래처 번호 -->
-				<input type="hidden" name="no" id="accountNo">
+				<input type="hidden" name="accNo" id="account-no" value="${proposalVo.accNo}">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
@@ -207,9 +207,34 @@
 	
 	
 	<script>
-		document.querySelector(".dropdown-item").value
+		
+		function checkAccount(){
+			console.log(document.querySelector("#account-no").value);
+			if(document.querySelector("#account-no").value == ""){
+				alert('거래처를 선택해주시기 바랍니다.');
+				return false;
+			}else{
+				return approval();
+			}
+		}
+		
 	</script>
 
 	</form>
+
+	<c:if test="${proposalVo.typeNo ne null}">
+		<script>
+			window.onload = function(){
+				document.querySelectorAll('option').forEach(function(x){
+					if(x.value == '${proposalVo.typeNo}'){
+						x.selected = true;
+					}else{
+						x.selected = false;
+						x.disabled = true;
+					}
+				});
+			}
+		</script>
+	</c:if>
 
 </main>

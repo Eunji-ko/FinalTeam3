@@ -119,6 +119,7 @@ public class ApprovalController {
 				model.addAttribute("minutesVo", minutesVo);
 				break;
 			case "E":
+				//TODO : List로 바꾸기
 				ApprovalExpenditureVo expenditureVo = service.selectExpenditureByNo(dno);
 				model.addAttribute("expenditureVo", expenditureVo);
 				break;
@@ -295,16 +296,10 @@ public class ApprovalController {
 	
 	//제안서 작성 및 결재
 	@PostMapping(value= {"proposal/{dno}","proposal"})
-	public String proposal(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalProposalVo proposalVo, @ModelAttribute AccountVo accVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+	public String proposal(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalProposalVo proposalVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
 		
 		//현재 로그인한 사원 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		
-		System.out.println(dno);
-		System.out.println(apVo);
-		System.out.println(docVo);
-		System.out.println(proposalVo);
-		System.out.println(accVo);
 		
 		//문서번호 존재 여부 확인
 		if(dno != null) {
@@ -372,6 +367,51 @@ public class ApprovalController {
 		obj.addProperty("allAccCnt", allAccCnt);
 	
 		return gson.toJson(obj);
+	}
+	
+	//회의록 작성 및 결재
+	@PostMapping(value={"minutes/{dno}","minutes"})
+	public String minutes(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalMinutesVo minutesVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+		
+		//현재 로그인한 사원 가져오기
+				MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+				
+				//문서번호 존재 여부 확인
+				if(dno != null) {
+					
+					//결재자 정보 업데이트 메소드
+					String alertUpdateMsg = updateApInfo(dno, apVo, session);
+					
+					session.setAttribute("alertMsg", alertUpdateMsg);
+					
+				}else {//문서번호 없음
+					//작성자 번호 세팅
+					docVo.setWriterNo(loginMember.getNo());
+					//결재 타입 세팅(회의록)
+					docVo.setType("M");
+					
+					//회의록 결재 및 해당 문서정보 가져오기
+					ApprovalDocVo result = service.approvalMinutes(docVo, apVo, minutesVo);
+					
+					if(result == null) {
+						session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+						return "redirect:/approval";
+					}else {
+						//파일 유무 확인
+						if(!file[0].isEmpty()) {
+							
+							int saveFile = saveFile(file, result, req);
+							
+							if(saveFile != file.length) {
+								session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+								return "redirect:/approval";
+							}
+						}
+						session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+					}
+				}
+		
+		return "redirect:/approval";
 	}
 
 }//class

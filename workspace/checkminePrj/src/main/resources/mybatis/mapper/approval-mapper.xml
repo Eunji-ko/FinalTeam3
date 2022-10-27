@@ -6,13 +6,16 @@
 		SELECT COUNT(*)
 		FROM APPROVAL
 		WHERE
-			(
-			FIRST_APPROVER = #{employeeNo}
-			OR SECOND_APPROVER = #{employeeNo}
-			OR THIRD_APPROVER = #{employeeNo}
-			OR FINAL_APPROVER = #{employeeNo}
+			STATUS = '대기'
+		    AND (
+			    (FINAL_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
+			    OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+			    OR (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
+			    OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
 			)
-			AND STATUS = '대기'
 	</select>
 	
 	<select id="selectApListAll" resultType="ApprovalDocVo">
@@ -30,7 +33,8 @@
 		JOIN AP_TYPE T
 		ON D."TYPE" = T."TYPE"
 		WHERE
-		    (
+			A.STATUS = '대기'
+		    AND (
 			    (FINAL_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
 			    OR (FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
 			    OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
@@ -39,8 +43,7 @@
 			    OR (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
 			    OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
 			)
-		    AND A.STATUS = '대기'
-		ORDER BY D."DATE" DESC
+		ORDER BY D."DATE" ASC
 	</select>
 	
 	<select id="selectDoc" resultType="ApprovalDocVo">
@@ -70,9 +73,16 @@
 	</select>
 	
 	<select id="selectProposal" resultType="ApprovalProposalVo">
-		SELECT *
-		FROM PROPOSAL
-		WHERE NO = #{dno}
+		SELECT
+		    P.NO
+		    ,P.TYPE_NO
+		    ,P.ACC_NO
+		    ,P.CONTENT
+		    ,A.CORPORATE ACC_NAME
+		FROM PROPOSAL P
+		JOIN ACCOUNT A
+		ON P.ACC_NO = A.NO
+		WHERE P.NO = #{dno}
 	</select>
 	
 	<select id="selectMinutes" resultType="ApprovalMinutesVo">
@@ -255,8 +265,8 @@
 		VALUES
 		(
 			SEQ_DOC_NO.CURRVAL
-			,1
-			,1
+			,#{typeNo}
+			,#{accNo}
 			,#{content}
 		)
 	</insert>
@@ -267,5 +277,22 @@
 		WHERE CORPORATE LIKE '%${corporate}%'
 		AND DELETE_YN = 'N'
 	</select>
+	
+	<insert id="insertMinutes">
+		INSERT INTO "MINUTES"
+		(
+		    NO
+		    ,EMP
+		    ,PURPOSE
+		    ,CONTENT
+		)
+		VALUES
+		(
+		    SEQ_DOC_NO.CURRVAL
+		    ,#{emp}
+		    ,#{purpose}
+		    ,#{content}
+		)
+	</insert>
 
 </mapper>
