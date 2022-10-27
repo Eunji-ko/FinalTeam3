@@ -2,7 +2,7 @@ workspace/Servers/
 workspace/checkminePrj/.settings/
 workspace/checkminePrj/target/
 workspace/checkminePrj/.springBeans
-
+*.properties
 #이하 내용은 사이트에서 가져옴
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse

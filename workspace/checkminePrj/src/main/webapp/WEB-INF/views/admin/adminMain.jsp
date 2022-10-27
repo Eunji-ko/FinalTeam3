@@ -249,6 +249,7 @@
             
                     <!-- Modal body -->
                     <div class="modal-body" align="center">
+                    <div style="color: gray; font-size: smaller;">* 장소 예약만 조회됩니다. 자세한 사항은 공유물 관리 메뉴를 이용해주세요.</div><br>
                     <c:forEach items="${bookList}" var="r">
                     <div class="list-header">[${r.plNo}] ${r.empNo}님의 예약 내역입니다.</div><hr>
                     <table class="book-list">
