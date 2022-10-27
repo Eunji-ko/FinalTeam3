@@ -57,4 +57,14 @@ public class PersonnelDaoImpl implements PersonnelDao {
 		return sst.selectList("personnelMapper.selectAccountListBySearch", searchMap);
 	}
 
+	@Override
+	public int insertAcc(SqlSessionTemplate sst, AccountVo vo) {
+		return sst.insert("personnelMapper.insertAcc", vo);
+	}
+
+	@Override
+	public int delAcc(SqlSessionTemplate sst, String no) {
+		return sst.update("personnelMapper.delAcc", no);
+	}
+
 }

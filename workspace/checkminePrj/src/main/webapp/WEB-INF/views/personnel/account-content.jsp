@@ -10,6 +10,12 @@
         width: 1450px;
         margin: 0 auto;
     }
+    .insert-acc-btn {
+        margin-left: 10px;
+        padding: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     .psn-acc-table {
         outline: 1px;
         margin-bottom: 0;
@@ -25,6 +31,7 @@
 <body>
     <div id="acc-area">
         <br>
+        <button type="button" class="btn checkmine-btn insert-acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
         <form class="align-right search-form" action="${rootPath}/personnel/searchAcc" method="post">
             <select name="searchType" class="search-type-select align-right">
                 <option value="CORPORATE">거래처명</option>
@@ -89,5 +96,6 @@
     </div>
 
     <%@ include file="/WEB-INF/views/personnel/acc-modal.jsp" %>
+    <%@ include file="/WEB-INF/views/personnel/insert-acc-modal.jsp" %>
 </body>
 </html>

@@ -60,6 +60,36 @@
   	AND NO = #{no}
   </select>
   
+  <insert id="insertAcc">
+  	INSERT
+  		INTO ACCOUNT
+  		(
+  			  NO
+  			, CORPORATE
+  			, ADDRESS
+  			, TEL
+  			, FAX
+  			, PNAME
+  			, DEPT
+  			, POSITION
+  			, PHONE
+  			, EMAIL
+  		)
+  		VALUES
+  		(
+  			  SEQ_ACC_NO.NEXTVAL
+  			, #{corporate}
+  			, #{address}
+  			, #{tel}
+  			, #{fax}
+  			, #{pname}
+  			, #{dept}
+  			, #{position}
+  			, #{phone}
+  			, #{email}  
+  		)	
+  </insert>
+  
   <update id="editEmp">
   	UPDATE
 		EMPLOYEE
@@ -84,6 +114,14 @@
   			, POSITION = #{position}
   			, PHONE = #{phone}
   			, EMAIL = #{email}
+  		WHERE NO = #{no}
+  </update>
+  
+  <update id="delAcc">
+  	UPDATE
+  		ACCOUNT
+  		SET
+  			DELETE_YN = 'Y'
   		WHERE NO = #{no}
   </update>
   

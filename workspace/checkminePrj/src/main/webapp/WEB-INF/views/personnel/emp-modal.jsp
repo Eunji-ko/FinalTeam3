@@ -66,7 +66,7 @@
               <label for="floatingEmail">이메일 주소</label>
             </div>
             <div class="form-floating">
-              <input type="tel" class="form-control" name="phone" id="floatingPhone" value="010-1234-1234">
+              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPhone" value="010-1234-1234">
               <label for="floatingPhone">휴대폰 번호</label>
             </div> 
           </div>
@@ -102,5 +102,14 @@
     })
 
 	</script>
+
+  <script>
+    const phone = document.querySelector('input[name=phone]');
+
+    $(document).on("keyup", ".phoneNumber", function() { 
+      $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+    });
+
+  </script>
 </body>
 </html>

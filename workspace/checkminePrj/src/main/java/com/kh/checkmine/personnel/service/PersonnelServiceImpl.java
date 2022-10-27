@@ -68,5 +68,15 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return dao.selectAccountListBySearch(sst, searchMap);
 	}
 
+	@Override
+	public int insertAcc(AccountVo vo) {
+		return dao.insertAcc(sst, vo);
+	}
+
+	@Override
+	public int delAcc(String no) {
+		return dao.delAcc(sst, no);
+	}
+
 
 }

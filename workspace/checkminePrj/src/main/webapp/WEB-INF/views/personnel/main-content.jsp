@@ -56,7 +56,7 @@
     }
 </style>
 </head>
-<body onload="checkAcc()">
+<body onload="checkPsn()">
     <br><br>
     <div class="list-group list-group-horizontal left-space btn-zone" id="list-tab" role="tablist">
         <a class="list-group-item active top-radius-btn" id="list-emp-list" data-bs-toggle="list" href="#list-emp" role="tab" aria-controls="list-emp">사원</a>
@@ -73,9 +73,9 @@
     </div>
 
     <script>
-        function checkAcc(){
-            let accLink = location.href;
-            let accCheck = accLink.slice(-3);
+        function checkPsn(){
+            let psnLink = location.href;
+            let accCheck = psnLink.slice(-3);
             console.log(accCheck);
 
             if(accCheck == 'Acc'){
@@ -87,6 +87,17 @@
                 $("#list-account-list").attr("aria-selected", "true");
                 $("#list-account").addClass("active");
                 $("#list-account").addClass("show");
+            }
+
+            let rsnCheck = psnLink.slice(-1);
+            console.log(rsnCheck);
+
+            if(rsnCheck == 'N') {
+                $("#selectResign").val("N").prop("selected", true);
+            }else if(rsnCheck == 'Y'){
+                $("#selectResign").val("Y").prop("selected", true);
+            }else{
+                $("#selectResign").val("").prop("selected", true);
             }
         }
     </script>

@@ -28,4 +28,8 @@ public interface PersonnelDao {
 
 	List<AccountVo> selectAccountListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap);
 
+	int insertAcc(SqlSessionTemplate sst, AccountVo vo);
+
+	int delAcc(SqlSessionTemplate sst, String no);
+
 }
