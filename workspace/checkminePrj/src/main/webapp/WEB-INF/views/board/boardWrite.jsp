@@ -56,6 +56,10 @@
         margin: 10px;
         border: 1px solid #5D736F;
     }
+    select[name="type"]{
+        border-top: none;
+        border-left: none;
+    }
   
 
     #regist{
@@ -99,13 +103,15 @@
             <div id="infoWrap">
                 <form action="" method="post">
             
-                <div id="title">
-                    <div><select style="width: 200px;"class="form-select" name="type" onchange=attach(); required>
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <select style="width: 200px;" class="form-select" name="type" onchange=attach(); required>
                         <option value="n">공지사항</option>
                         <option value="c">커뮤니티</option>
                         <option value="g">갤러리</option>
-                    </select></div>
-                    <div><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
+                        </select>
+                    </div>
+                    <div id="title"><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
                     
                </div>
                 <div id="content-box">

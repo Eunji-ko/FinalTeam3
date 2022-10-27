@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
+
+	<!-- 관리자 게시판 -->
    <select id="selectBoardList" resultType="BoardVo">
   	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
   	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
@@ -122,5 +124,79 @@
   <delete id="deleteAtt">
   	DELETE FROM BOARD_ATT WHERE B_NO = #{no}
   </delete>
+  
+  <!-- 사용자 게시판 -->
+  
+  <select id="selectBoardListByType" parameterType="HashMap" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
+  	LEFT OUTER JOIN (SELECT B_NO, MAX(NAME) THUMBNAIL FROM BOARD_ATT GROUP BY B_NO ORDER BY NAME ASC) A ON B.NO = A.B_NO 
+  	WHERE DELETE_YN = 'N' 
+  	<choose>
+  		<when test='type == "notice"'>
+  			AND TYPE = 'N'
+  		</when>
+  		<when test='type == "community"'>
+  			AND TYPE = 'C'
+  		</when>
+  		<when test='type == "gallery"'>
+  			AND TYPE = 'G'
+  		</when>
+  	</choose>
+  	<choose>
+  		<when test='sort=="l"'>
+  			ORDER BY B.ENROLL_DATE DESC
+  		</when>
+  		<when test='sort=="r"'>
+  			ORDER BY recommendCnt DESC
+  		</when>
+  	</choose>
+  </select>
+  
+  <select id="selectTotalCnt" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
+  	<choose>
+  		<when test='TYPE == "notice"'>
+  		AND TYPE = 'N'
+  		</when>
+  		<when test='TYPE == "community"'>
+  		AND TYPE = 'C'
+  		</when>
+  		<when test='TYPE == "gallery"'>
+  		AND TYPE = 'G'
+  		</when>	
+  	</choose>
+  </select>
+  
+  
+   <select id="selectBoardListByKeyword" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
+  	WHERE DELETE_YN = 'N' AND (TITLE LIKE '%'||#{keyword}||'%' OR CONTENT LIKE '%'||#{keyword}||'%')
+    ORDER BY B.ENROLL_DATE DESC
+  	
+  </select>
+  
+  
+   <select id="selectTotalCntByKeyword" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
+  	AND (TITLE LIKE '%'||#{keyword}||'%' OR CONTENT LIKE '%'||#{keyword}||'%')
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </mapper>

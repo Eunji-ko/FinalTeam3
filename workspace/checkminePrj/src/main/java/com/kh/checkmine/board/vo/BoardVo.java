@@ -23,5 +23,8 @@ public class BoardVo {
 	
 	//사원번호
 	private String wno;
+	
+	//썸네일
+	private String thumbnail;
 
 }
