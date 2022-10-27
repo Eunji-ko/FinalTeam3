@@ -8,4 +8,7 @@ public class TaskReportAttVo {
 	private String reportNo;
 	private String eNo;
 	private String type;
+	
+	private String attNoA;
+	private String attNoR;
 }

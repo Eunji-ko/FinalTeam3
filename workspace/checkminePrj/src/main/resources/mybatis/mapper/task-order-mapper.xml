@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="taskOrderMapper">
- 	<insert id="insertReport">
+ 	
+ 	<!-- 지시서 등록 -->
+ 	<insert id="insertOrder">
  		INSERT INTO TASK
 		(
 		    NO,
@@ -26,7 +28,22 @@
 		)
  	</insert>
  	
- 	<insert id="insertReportAtt">
+	<!-- 작성 수신자 리스트 -->
+	<select id="selectWriteAttList" resultType="MemberVo">
+		SELECT
+		    E.NAME,
+		    P.NAME AS POS_NO,
+		    D.NAME AS DEPT_NO
+		FROM EMPLOYEE E
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		WHERE RESIGN_YN = 'N'
+	</select>
+ 	
+ 	<!-- 지시서 수신참조 -->
+ 	<insert id="insertOrderAtt">
  		INSERT INTO TASK_ATT
  		(
 	 		NO,
@@ -43,6 +60,7 @@
 		)
  	</insert>
  	
+ 	<!-- 지시서 파일 첨부 -->
  	<insert id="insertFile">
  		INSERT INTO TASK_FILE
  		(
@@ -60,11 +78,13 @@
  		)
  	</insert>
  	
+ 	<!-- 전체 게시글 수 조회 -->
  	<select id="selectCountAll" resultType="int">
  		SELECT COUNT(NO)
  		FROM TASK
  	</select>
  	
+ 	<!-- 지시서 목록 조회 -->
  	<select id="selectList" resultType="TaskOrderVo">
 		SELECT 
 		    T.NO,
@@ -94,67 +114,7 @@
 		ORDER BY T.NO DESC
  	</select>
  	
- 	<select id="selectAttList" resultType="TaskOrderAttVo">
- 		SELECT
-		    A.TASK_NO,
-		    LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO
-		FROM TASK_ATT A
-		JOIN EMPLOYEE E
-		ON A.EMP_NO = E.NO
-		GROUP BY A.TASK_NO
- 	</select>
- 	
- 	<select id="selectOne" resultType="TaskOrderVo">
- 		SELECT 
-		    T.NO,
-		    E.NAME AS ORDERER,
-		    T.DEPT_NO,
-		    T.TITLE,
-		    T.CONTENT,
-		    T.ENROLL_DATE,
-		    T.START_DATE,
-		    T.END_DATE,
-		    T.IMPORTANCE
-		FROM TASK T
-		JOIN EMPLOYEE E
-		ON T.ORDERER = E.NO
-		WHERE T.NO = #{no}
- 	</select>
- 	
- 	<select id="selectAttOne" resultType="TaskOrderAttVo">
- 		SELECT
-		    A.TASK_NO,
-		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
-		    A.TYPE
-		FROM TASK_ATT A
-		JOIN EMPLOYEE E
-		ON A.EMP_NO = E.NO
-		JOIN POSITION P
-		ON E.POS_NO = P.NO
-		WHERE TYPE = 'A'
-		AND A.TASK_NO = #{no}
-		GROUP BY
-		    A.TASK_NO,
-		    A.TYPE
- 	</select>
- 	
- 	<select id="selectAttROne" resultType="TaskOrderAttVo">
- 		SELECT
-		    A.TASK_NO,
-		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
-		    A.TYPE
-		FROM TASK_ATT A
-		JOIN EMPLOYEE E
-		ON A.EMP_NO = E.NO
-		JOIN POSITION P
-		ON E.POS_NO = P.NO
-		WHERE TYPE = 'R'
-		AND A.TASK_NO = #{no}
-		GROUP BY
-		    A.TASK_NO,
-		    A.TYPE
- 	</select>
- 	
+ 	<!-- 상세 조회 -->
  	<select id="selectOneByNo" resultType="TaskOrderVo">
  		SELECT 
     		T.NO,
@@ -176,90 +136,44 @@
 		ON P.NO = E.POS_NO
 		WHERE T.NO = #{no}
  	</select>
- 	
- 	<select id="selectListAddAtt" resultType="TaskOrderVo">
- 		SELECT 
- 			T.NO,
-		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME,
-		    NVL(LISTAGG(CONCAT(CONCAT(R.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY R.NAME), '없음') AS RATT_NAME,
+ 	 	
+ 	<!-- 상세 - 수신 -->
+ 	<select id="selectAttOne" resultType="TaskOrderAttVo">
+ 		SELECT
 		    A.TASK_NO,
-		    T.TITLE,
-		    T.CONTENT,
-		    T.ENROLL_DATE,
-		    T.START_DATE,
-		    T.END_DATE,
-		    T.IMPORTANCE,
-		    O.ORDERER,
-		    O.POS_NAME,
-		    O.DEP_NAME
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
+		    A.TYPE
 		FROM TASK_ATT A
-		JOIN TASK T
-		ON A.TASK_NO = T.NO
 		JOIN EMPLOYEE E
 		ON A.EMP_NO = E.NO
 		JOIN POSITION P
 		ON E.POS_NO = P.NO
-		JOIN DEPARTMENT D
-		ON E.DEPT_NO = D.NO
-		JOIN(
-		    SELECT
-		        A.NO,
-		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS NAME,
-		        A.TASK_NO,
-		        A.TYPE
-		    FROM TASK_ATT A
-		    JOIN EMPLOYEE E
-		    ON A.EMP_NO = E.NO
-		    WHERE TYPE = 'R'
-		    GROUP BY
-		        A.NO,
-		        A.TASK_NO,
-		        A.TYPE
-		) R
-		ON A.TASK_NO = R.TASK_NO
-		JOIN(
-		    SELECT
-		        TAS.NO,
-		        EMP.NAME AS ORDERER,
-		        POS.NAME AS POS_NAME,
-		        DEP.NAME AS DEP_NAME
-		    FROM EMPLOYEE EMP
-		    JOIN DEPARTMENT DEP
-		    ON EMP.DEPT_NO = DEP.NO
-		    JOIN POSITION POS
-		    ON EMP.POS_NO = POS.NO
-		    JOIN TASK TAS
-		    ON TAS.ORDERER = EMP.NO
-		) O
-		ON O.NO = T.NO
-		WHERE A.TYPE = 'A'
+		WHERE TYPE = 'A'
+		AND A.TASK_NO = #{no}
 		GROUP BY
-			T.NO,
 		    A.TASK_NO,
-		    T.TITLE,
-		    T.CONTENT,
-		    T.ENROLL_DATE,
-		    T.START_DATE,
-		    T.END_DATE,
-		    T.IMPORTANCE,
-		    O.ORDERER,
-		    O.POS_NAME,
-		    O.DEP_NAME
+		    A.TYPE
  	</select>
-	
-	<select id="selectWriteAttList" resultType="MemberVo">
-		SELECT
-		    E.NAME,
-		    P.NAME AS POS_NO,
-		    D.NAME AS DEPT_NO
-		FROM EMPLOYEE E
+ 	
+ 	<!-- 상세 - 참조 -->
+ 	<select id="selectAttROne" resultType="TaskOrderAttVo">
+ 		SELECT
+		    A.TASK_NO,
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
+		    A.TYPE
+		FROM TASK_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
 		JOIN POSITION P
 		ON E.POS_NO = P.NO
-		JOIN DEPARTMENT D
-		ON E.DEPT_NO = D.NO
-		WHERE RESIGN_YN = 'N'
-	</select>
-	
+		WHERE TYPE = 'R'
+		AND A.TASK_NO = #{no}
+		GROUP BY
+		    A.TASK_NO,
+		    A.TYPE
+ 	</select>
+ 	
+ 	<!-- 상세 - 파일 목록 -->
 	<select id="selectFileList" resultType="TaskOrderFileVo">
 		SELECT
 		    NO,
@@ -270,6 +184,7 @@
 		WHERE TASK_NO = #{no}
 	</select>
 	
+	<!-- 상세 - 파일 다운로드 -->
 	<select id="selectFile" resultType="TaskOrderFileVo">
 		SELECT
 		    NO,
@@ -280,4 +195,18 @@
 		WHERE NO = #{no}
 	</select>
 
+	<!-- 보고서 작성할 때 지시서 연결 -->
+	<select id="selectListForAtt" resultType="TaskOrderVo">
+		SELECT 
+		    T.NO AS NO,
+		    E.NAME AS ORDERER,
+		    T.TITLE
+		FROM TASK T
+		JOIN TASK_ATT A
+		ON T.NO = A.TASK_NO
+		JOIN EMPLOYEE E
+		ON E.NO = T.ORDERER
+		WHERE A.EMP_NO = #{no}
+		ORDER BY T.NO DESC
+	</select>
 </mapper>

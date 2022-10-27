@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class TaskOrderController {
 	private final TaskOrderService orderService;
 	private final MemberService memberService;
 	
+	@Autowired
 	public TaskOrderController(TaskOrderService orderService, MemberService memberService) {
 		this.orderService = orderService;
 		this.memberService = memberService;
@@ -89,6 +91,12 @@ public class TaskOrderController {
 		
 	
 	//지시서 작성(화면)
+	//TODO tagify 수정해야함
+	/* 
+	 * json 형태로 data 여러개 담아서 보여줄 수 있게
+	 * 안되면
+	 * no로 받아오는 걸 name으로 받아서 넘길 수 있게 
+	 */
 	@GetMapping("write")
 	public String orderWrite(Model model) {
 		
@@ -152,7 +160,6 @@ public class TaskOrderController {
 				}
 			}
 			
-			//테스트 해보고 att때문에 오류나면 이 아래로는 삭제하기 전에 if문 바깥으로 빼서 복구해야함.
 			if(!fArr[0].isEmpty() && fArr != null) {
 				String savePath = req.getServletContext().getRealPath("/resources/upload/task/order/");
 				
@@ -165,12 +172,10 @@ public class TaskOrderController {
 					fileVo.setPath(savePath);
 					fileVoList.add(fileVo);
 				}
-				
 				orderResult = orderService.write(orderVo, attVoList, fileVoList);
 			}else {
 				orderResult = orderService.write(orderVo, attVoList);
 			}
-			//여기까지.
 		}
 		
 		
@@ -191,10 +196,10 @@ public class TaskOrderController {
 	}
 	
 	//지시서 첨부파일 다운로드
-	@GetMapping("download/{no}/{pno}")
-	public ResponseEntity<ByteArrayResource> download(@PathVariable String no, @PathVariable String pno, HttpServletRequest req) throws Exception {
+	@GetMapping("download/{no}/{fno}")
+	public ResponseEntity<ByteArrayResource> download(@PathVariable String no, @PathVariable String fno, HttpServletRequest req) throws Exception {
 
-		List<TaskOrderFileVo> fileVo = orderService.selectFile(pno);
+		List<TaskOrderFileVo> fileVo = orderService.selectFile(fno);
 		
 		System.out.println(fileVo);
 		//파일 객체 준비

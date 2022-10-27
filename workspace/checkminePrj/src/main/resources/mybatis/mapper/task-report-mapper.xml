@@ -2,4 +2,184 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="taskReportMapper">
 
+	<select id="selectWriteAttList" resultType="MemberVo">
+		SELECT
+		    E.NAME,
+		    P.NAME AS POS_NO,
+		    D.NAME AS DEPT_NO
+		FROM EMPLOYEE E
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		WHERE RESIGN_YN = 'N'
+	</select>
+	
+	<!-- 보고서 등록 -->
+	<insert id="insertReport">
+		INSERT INTO REPORT
+		(
+		    NO,
+			TASK_NO,
+			SENDER,
+			TITLE,
+			CONTENT
+		)
+		VALUES
+		(
+		    SEQ_REPORT_NO.NEXTVAL,
+		    #{taskNo},
+		    #{sender},
+		    #{title},
+		    #{content}
+		)
+	</insert>
+	
+	<!-- 수신참조 등록 -->
+	<insert id="insertReportAtt">
+		INSERT INTO REPORT_ATT
+ 		(
+	 		NO,
+			E_NO,
+			REPORT_NO,
+			TYPE
+		)
+		VALUES
+		(
+			SEQ_REPORT_ATT_NO.NEXTVAL,
+			#{eNo},
+			SEQ_REPORT_NO.CURRVAL,
+			#{type}
+		)
+	</insert>
+	
+	<!-- 파일 등록 -->
+	<insert id="insertFile">
+		INSERT INTO REPORT_FILE
+ 		(
+ 			NO,
+			REP_NO,
+			NAME,
+			PATH
+ 		)
+ 		VALUES
+ 		(
+ 			SEQ_REPORT_FILE_NO.NEXTVAL,
+ 			SEQ_REPORT_NO.CURRVAL,
+ 			#{name},
+ 			#{path}
+ 		)
+	</insert>
+	
+	<!-- 전체 갯수 -->
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(NO)
+ 		FROM REPORT
+	</select>
+	
+	<!-- 목록 조회 -->
+	<select id="selectList"	resultType="TaskReportVo">
+		SELECT 
+		    R.NO,
+		    R.TASK_NO,
+		    A.ATT_NAME,
+		    E.NAME AS SENDER,
+		    R.TITLE,
+		    R.CONTENT,
+		    R.ENROLL_DATE
+		FROM REPORT R
+		JOIN EMPLOYEE E
+		ON R.SENDER = E.NO
+		JOIN (
+		    SELECT
+		        A.REPORT_NO,
+		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME
+		    FROM REPORT_ATT A
+		    JOIN EMPLOYEE E
+		    ON A.E_NO = E.NO
+		    WHERE A.TYPE = 'A'
+		    GROUP BY A.REPORT_NO
+		) A
+		ON R.NO = A.REPORT_NO
+		WHERE R.DEL = 'N'
+		ORDER BY R.NO DESC
+	</select>
+	
+	<!-- 보고서 상세 조회 -->
+	<select id="selectOneByNo" resultType="TaskReportVo">
+ 		SELECT 
+    		R.NO,
+		    E.NAME AS ORDERER,
+		    D.NAME AS DEPT_NO,
+		    P.NAME AS POS_NAME,
+		    R.TITLE,
+		    R.CONTENT,
+		    R.ENROLL_DATE
+		FROM REPORT R
+		JOIN EMPLOYEE E
+		ON E.NO = R.SENDER
+		JOIN DEPARTMENT D
+		ON D.NO = E.DEPT_NO
+		JOIN POSITION P
+		ON P.NO = E.POS_NO
+		WHERE R.NO = #{no}
+		AND R.DEL = 'N'
+	</select>
+	
+	<!-- 보고서 상세 - 수신 -->
+	<select id="selectAttOne" resultType="TaskReportAttVo">
+ 		SELECT
+		    A.REPORT_NO,
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO,
+		    A.TYPE
+		FROM REPORT_ATT A
+		JOIN EMPLOYEE E
+		ON A.E_NO = E.NO
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		WHERE A.TYPE = 'A'
+		AND A.REPORT_NO = #{no}
+		GROUP BY
+		    A.REPORT_NO,
+		    A.TYPE
+	</select>
+	
+	<select id="selectAttROne" resultType="TaskReportAttVo">
+		SELECT
+		    A.REPORT_NO,
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO,
+		    A.TYPE
+		FROM REPORT_ATT A
+		JOIN EMPLOYEE E
+		ON A.E_NO = E.NO
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		WHERE A.TYPE = 'R'
+		AND A.REPORT_NO = #{no}
+		GROUP BY
+		    A.REPORT_NO,
+		    A.TYPE
+	</select>
+	
+	<!-- 파일 목록 -->
+	<select id="selectFileForReportNo" resultType="TaskReportFileVo">
+		SELECT
+		    NO,
+		    REP_NO,
+		    NAME,
+		    PATH
+		FROM REPORT_FILE
+		WHERE REP_NO = #{no}
+	</select>
+	
+	<!-- 파일 다운로드 -->
+	<select id="selectFileForNo" resultType="TaskReportFileVo">
+		SELECT
+		    NO,
+		    REP_NO,
+		    NAME,
+		    PATH
+		FROM REP_FILE
+		WHERE NO = #{no}
+	</select>
 </mapper>

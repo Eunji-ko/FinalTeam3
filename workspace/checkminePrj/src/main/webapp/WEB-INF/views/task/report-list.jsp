@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<% //테스트용 멤버
+	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
+	vo.setNo("10");
+	vo.setName("박정규");
+	vo.setPosNo("6");
+	vo.setDeptNo("5");
+	session.setAttribute("loginMember", vo);
+%>
+
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
@@ -89,7 +99,7 @@
         margin: auto;
 
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 3fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
         grid-template-rows: repeat(16, 40px);
     }
     
@@ -152,7 +162,7 @@
                 <!--카테고리-->
 				<ul class="nav nav-tabs">
 			        <li class="nav-item">
-			          <a class="nav-link active" href="${root}/task/report/list">보고</a>
+			          <a class="nav-link active" href="${root}/task/report/list/1">보고</a>
 			        </li>
 			        <li class="nav-item">
 			          <a class="nav-link" href="${root}/task/order/list/1">지시</a>
@@ -172,33 +182,37 @@
                 
                 <!--보고서 목록-->
                 <div id="center">
-                    <div class="list-header">보고서 번호</div>
-                    <div class="list-header">중요도</div>
+                    <div class="list-header">번호</div>
                     <div class="list-header">받은이</div>
                     <div class="list-header">제목</div>
                     <div class="list-header">작성자</div>
                     <div class="list-header">날짜</div>
     
-                    <div class="list">111</div>
-                    <div class="list">긴급</div>
-                    <div class="list">과장님</div>
-                    <div class="list" id="title"><a href="${root}/task/report/detail">테스트 진행 현황</a></div>
-                    <div class="list">테스트 사원</div>
-                    <div class="list">2022-10-12</div>
+                    <c:forEach items="${voList}" var="vo">
+ 	                   <c:if test="${vo.sender eq loginMember.name or vo.attName eq loginMember.name}">
+		                    <div class="list">${vo.no}</div>
+		                    <div class="list">
+		                    	${vo.attName}
+		                    </div>
+		                    <div class="list" id="title"><a href="${root}/task/report/detail/${vo.no}">${vo.title}</a></div>
+		                    <div class="list">${vo.sender}</div>
+		                    <div class="list">${vo.enrollDate}</div>
+	                    </c:if>
+                    </c:forEach>
 
                 </div>
                 
                 <!--페이징-->
                 <div id="page-area">
-                    <a href=""><<</a>
-                    <a href=""><</a>
-                    <a href="">1</a>
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">4</a>
-                    <a href="">5</a>
-                    <a href="">></a>
-                    <a href="">>></a>
+                	<c:if test="${pv.startPage ne 1}">                	
+	                    <a href="${root}/task/report/list/${pv.startPage-1}"><</a>
+                	</c:if>
+                    <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                    	<a href="${root}/task/report/list/${i}">${i}</a>
+                    </c:forEach>
+                    <c:if test="${pv.endPage ne pv.maxPage}">
+                    	<a href="${root}/task/report/list/${pv.endPage + 1}">></a>
+                    </c:if>
                 </div>
             </div>
         

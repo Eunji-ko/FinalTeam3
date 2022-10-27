@@ -22,8 +22,6 @@ public interface TaskOrderService {
 	//지시서 목록 조회
 	List<TaskOrderVo> selectList(PageVo pv);
 	
-	//지시서 수신자 조회
-	List<TaskOrderAttVo> selectAttList(TaskOrderAttVo attVo);
 	
 	//지시서 디테일
 	TaskOrderVo selectOneByNo(String no);
@@ -40,4 +38,7 @@ public interface TaskOrderService {
 	
 	//지시서 파일 다운로드
 	List<TaskOrderFileVo> selectFile(String pno);
+	
+	//보고서 작성할 때 지시서 연결
+	List<TaskOrderVo> selectListForAtt(String empNo);
 }

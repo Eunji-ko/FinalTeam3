@@ -26,7 +26,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	}
 
 	//지시서 작성
-	//지시서 + 수신참조 + 파일
+		//지시서 + 수신참조 + 파일
 	@Override
 	public int write(TaskOrderVo orderVo, List<TaskOrderAttVo> attVoList, List<TaskOrderFileVo> fileVoList) {
 		int result1 = orderDao.insertOrder(sst, orderVo);
@@ -43,7 +43,7 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		
 		return result1 * result2 * result3;
 	}
-	//지시서 + 수신참조
+		//지시서 + 수신참조
 	@Override
 	public int write(TaskOrderVo orderVo, List<TaskOrderAttVo> attVoList) {
 		int result1 = orderDao.insertOrder(sst, orderVo);
@@ -66,12 +66,6 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Override
 	public List<TaskOrderVo> selectList(PageVo pv) {
 		return orderDao.selectList(sst, pv);
-	}
-
-	//지시서 수신자 조회
-	@Override
-	public List<TaskOrderAttVo> selectAttList(TaskOrderAttVo attVo) {
-		return orderDao.selectAttList(sst, attVo);
 	}
 
 	//지시서 디테일
@@ -109,7 +103,10 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		return orderDao.selectFile(sst, pno);
 	}
 
-
-	
+	//보고서 작성할 때 지시서 연결
+	@Override
+	public List<TaskOrderVo> selectListForAtt(String empNo) {
+		return orderDao.selectListForAtt(sst, empNo);
+	}
 
 }
