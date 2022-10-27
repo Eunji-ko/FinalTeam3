@@ -146,8 +146,6 @@ public class MailController {
         int notReadCountReceive = service.getNotReadCount(memberNo, "A");
         int notReadCountRef = service.getNotReadCount(memberNo, "R");
         
-        System.out.println(ImpMailList);
-        
         model.addAttribute("ImpMailList", ImpMailList);
         model.addAttribute("pageVo", pageVo);
         model.addAttribute("notReadCountReceive", notReadCountReceive);
