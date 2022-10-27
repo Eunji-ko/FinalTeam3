@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="commuteMapper">
 	
-	<select id="selectList" resultType="CommuteVo">
+	<select id="selectListOne" resultType="CommuteVo">
 		SELECT
 		    C.NO
 		    , TO_CHAR(C.ARRIVED, 'HH : MI AM') AS ARRIVED
@@ -21,7 +21,31 @@
 	</insert>
 	
 	<update id="updateLeave">
-		UPDATE COMMUTE SET LEAVE = SYSDATE
+		UPDATE COMMUTE SET LEAVE = SYSDATE WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<select id="selectList" resultType="CommuteVo">
+		SELECT
+		    C.NO
+		    , TO_CHAR(C.ARRIVED, 'HH:MI AM') AS ARRIVED
+		    , TO_CHAR(C.LEAVE, 'HH:MI PM') AS LEAVE
+		    , TO_CHAR(C.WORK_DATE, 'YYYY-MM-DD') AS WORK_DATE
+		    , E.NAME AS EMP_NO
+		    , P.NAME POS_NAME
+		    , D.NAME DEPT_NAME
+		FROM COMMUTE C
+		JOIN EMPLOYEE E
+		    ON C.EMP_NO = E.NO
+		JOIN POSITION P
+		    ON P.NO = E.POS_NO
+		JOIN DEPARTMENT D 
+		    ON D.NO = E.DEPT_NO
+		ORDER BY C.WORK_DATE DESC
+	</select>
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(*)
+      	FROM COMMUTE
+	</select>
 	
 </mapper>
