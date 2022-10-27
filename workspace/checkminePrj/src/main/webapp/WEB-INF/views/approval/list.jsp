@@ -57,7 +57,7 @@
                     <div class="list-title">작성자</div>
     
     				<c:forEach items="${voList}" var="vo">
-	    				<div class="list-content">${vo.no}</div>
+	    				<div class="list-content"><a href="${rootPath}/approval/${vo.no}">${vo.no}</a></div>
 	                    <div class="list-content">${vo.type}</div>
 	                    <div class="list-content"><a href="${rootPath}/approval/${vo.no}">${vo.title}</a></div>
 	                    <div class="list-content">${vo.writerNo}</div>

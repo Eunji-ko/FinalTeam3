@@ -37,7 +37,7 @@
       <div class="modal-body">
         <div id="account-name" class="input-group mb-3">
           <span class="input-group-text">거래처명</span>
-          <input type="text" id="corporate" class="form-control" name="corporate" required>
+          <input type="text" id="corporate" class="form-control" name="corporate">
           <button type="button" id="search-account" class="btn" onclick="selectAccount();">찾기</button>
         </div>
         <div id="account-info-div">
@@ -60,7 +60,6 @@
         </div>  
         <hr>
         <input type="text" class="select-account" readonly>
-        <input type="hidden" name="no" id="accountNo">    
       </div>
 
       <!-- Modal footer -->
@@ -87,6 +86,7 @@
   					}else if((Object.keys(data).length - 1)/10 > 1){
                 //거래처 존재, 동명회사 있음
                 alert('거래처를 선택해주세요.');
+                //선택인풋 늘리는 반복문
                 for(var i=0; i<((Object.keys(data).length-1)/10); i++){
                     $($('.select-account')[i]).val((i+1) + "|" + data['corporate' + i] + "|" + data['address' + i] + "|" + data['pname' + i]);
                     var oriInput = document.getElementsByClassName('select-account')[i];
@@ -94,7 +94,9 @@
                     var newInput = oriInput.cloneNode(true);
                     oriInput.after(newInput);
                 }
+                //클릭시 발동하는 함수 설정
                 $('.select-account').on('click', selectName);
+                //함수 리턴값으로 값채우기
                 $('.select-account').click(function(e){
                   $('#corporate').val(data['corporate' + e.result]);
                   $('#addr').val(data['address' + e.result]);
@@ -106,7 +108,7 @@
                   $('#phone').val(data['phone' + e.result]);
                   $('#mail').val(data['email' + e.result]);
                   $('.select-account').hide();
-                  $('#accountNo').val(data['no' + e.result]);
+                  $('#account-no').val(data['no' + e.result]);
                 });
                 $($('.select-member')[((Object.keys(data).length-1)/10)-1]).hide();
   					}else{
@@ -120,7 +122,7 @@
               $('#position').val(data.position0);
               $('#phone').val(data.phone0);
               $('#mail').val(data.email0);
-              $('#accountNo').val(data.no0);
+              $('#account-no').val(data.no0);
             }
   				},
   				error : function(){

@@ -131,7 +131,7 @@
 
 		//작성 마지막 확인
 		function approval(){
-			if(window.document.querySelector('#final-approver').value == ""){
+			if(window.document.querySelectorAll('.final-approver')[0].value == ""){
 				alert('결재자를 선택해주시기 바랍니다.');
 				return false;
 			}else{
@@ -161,11 +161,11 @@
 	            const result = prompt('반려사유 :');
 	            if(result == null){
 	                return false;
-	            }else if(result == ''){
+	            }else if(result.length == 0){
 					alert('반려사유를 작성해주시기 바랍니다.');
 					return false;
 				}else{
-	                $('#return-reason').val(result);
+					window.document.querySelectorAll('.return-reason').forEach(x=>{x.value = result;});
 	                return true;
 	            }
 	        }

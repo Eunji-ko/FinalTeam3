@@ -206,4 +206,20 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return dao.selectAccountList(sst, corporate);
 	}
 
-}
+	@Override
+	public ApprovalDocVo approvalMinutes(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalMinutesVo minutesVo) {
+		
+		//회의록 관련 문서정보, 결재정보, 회의록 정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		int minResult = dao.insertMinutes(sst, minutesVo);
+		
+		if(docResult*apResult*minResult == 1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
+}//class

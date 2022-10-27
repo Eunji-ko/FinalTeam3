@@ -98,4 +98,7 @@ public interface ApprovalDao {
 	//이름으로 거래처 검색
 	List<AccountVo> selectAccountList(SqlSessionTemplate sst, String corporate);
 
+	//회의록 정보 DB에 올리기
+	int insertMinutes(SqlSessionTemplate sst, ApprovalMinutesVo minutesVo);
+
 }

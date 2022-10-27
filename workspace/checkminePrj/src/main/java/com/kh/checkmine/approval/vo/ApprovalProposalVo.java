@@ -9,5 +9,6 @@ public class ApprovalProposalVo {
 	private String typeNo;
 	private String accNo;
 	private String content;
+	private String accName;
 
 }
