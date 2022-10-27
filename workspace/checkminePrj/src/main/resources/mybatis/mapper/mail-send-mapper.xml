@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mailSendMapper">
+	<insert id="insertMail">
+		INSERT INTO MAIL(
+			NO,
+			SENDER,
+			TITLE,
+			CONTENT
+		)VALUES(
+			SEQ_MAIL.NEXTVAL,
+			#{empNo},
+			#{title},
+			#{content}
+		)
+	</insert>
+	
+	<select id="selectCurruntMailNum" resultType="string">
+		SELECT 
+	</select>
+</mapper>

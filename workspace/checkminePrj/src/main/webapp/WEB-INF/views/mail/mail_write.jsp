@@ -191,13 +191,13 @@
                     </div>
 
                     <ul>
-                        <li><div><a href="/checkmine/mail?t=rc">받은편지함</a><span>21</span></div></li>
-                        <li><div><a href="/checkmine/mail?t=rf">참조편지함</a><span>21</span></div></li>
-                        <li><div><a href="/checkmine/mail?t=sd">보낸편지함</a></div></li>
-                        <li><div><a href="/checkmine/mail?t=im">중요편지함</a></div></li>
-                        <li><div><a href="/checkmine/mail?t=sv">임시보관함</a></div></li>
-                        <li><div><a href="/checkmine/mail?t=rb">휴지통</a></div></li>
-                        <li><div><a href="/checkmine/mail/addr">주소록</a></div></li>
+                        <li><div><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
+                        <li><div><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
+                        <li><div><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
+                        <li><div><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
+                        <li><div><a href="/checkmine/mail/save?p=1">임시보관함</a></div></li>
+                        <li><div><a href="/checkmine/mail/bin?p=1">휴지통</a></div></li>
+                        <li><div><a href="/checkmine/mail/addr?p=1">주소록</a></div></li>
                     </ul>
                 </div>
                 <!-- 여기까지 -->
@@ -254,11 +254,15 @@
     const referInput = document.querySelector("input[name='refer']");
 
     new Tagify(receiverInput,{
-        pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-    });
+        	pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+        	originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+    	}
+    );
     new Tagify(referInput,{
-        pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-    });
+        	pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+       		originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')    
+    	}
+    );
 
     //tinymce 설정
     tinymce.init({
