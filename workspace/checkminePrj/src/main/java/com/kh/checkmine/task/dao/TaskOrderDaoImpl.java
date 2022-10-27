@@ -18,13 +18,19 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 	//지시서 작성
 	@Override
 	public int insertOrder(SqlSessionTemplate sst, TaskOrderVo vo) {
-		return sst.insert("taskOrderMapper.insertReport", vo);
+		return sst.insert("taskOrderMapper.insertOrder", vo);
+	}
+	
+	//지시서 작성 수신자 리스트
+	@Override
+	public List<MemberVo> selectWriteAttList(SqlSessionTemplate sst) {
+		return sst.selectList("taskOrderMapper.selectWriteAttList");
 	}
 
 	//수신,참조 등록
 	@Override
 	public int insertOrderAtt(SqlSessionTemplate sst, TaskOrderAttVo orderAttVo) {
-		return sst.insert("taskOrderMapper.insertReportAtt", orderAttVo);
+		return sst.insert("taskOrderMapper.insertOrderAtt", orderAttVo);
 	}
 
 	//파일 등록
@@ -49,17 +55,9 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 		return sst.selectList("taskOrderMapper.selectList", null, rb);
 	}
 
-	//수신자 목록 조회
-	@Override
-	public List<TaskOrderAttVo> selectAttList(SqlSessionTemplate sst, TaskOrderAttVo attVo) {
-		return sst.selectList("taskOrderMapper.selectAttList", attVo);
-	}
-
 	//지시서 디테일
 	@Override
 	public TaskOrderVo selectOneByNo(SqlSessionTemplate sst, String no) {
-		//return sst.selectOne("taskOrderMapper.selectOne", no);
-		
 		return sst.selectOne("taskOrderMapper.selectOneByNo", no);
 	}
 
@@ -72,23 +70,23 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 	public TaskOrderAttVo selectAttROne(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("taskOrderMapper.selectAttROne", no);
 	}
-
-
-	//지시서 작성 수신자 리스트
-	@Override
-	public List<MemberVo> selectWriteAttList(SqlSessionTemplate sst) {
-		return sst.selectList("taskOrderMapper.selectWriteAttList");
-	}
-
-	//지시서 파일 다운로드
+	
+	//지시서 파일 목록
 	@Override
 	public List<TaskOrderFileVo> selectFileList(SqlSessionTemplate sst, String no) {
 		return sst.selectList("taskOrderMapper.selectFileList", no);
 	}
-
+	
+	//지시서 파일 다운로드
 	@Override
 	public List<TaskOrderFileVo> selectFile(SqlSessionTemplate sst, String pno) {
 		return sst.selectList("taskOrderMapper.selectFile", pno);
+	}
+
+	//보고서 작성할 때 지시서 연결
+	@Override
+	public List<TaskOrderVo> selectListForAtt(SqlSessionTemplate sst, String empNo) {
+		return sst.selectList("taskOrderMapper.selectListForAtt", empNo);
 	}
 
 

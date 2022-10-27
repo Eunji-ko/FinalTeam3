@@ -305,7 +305,7 @@
                 <!--카테고리-->
 				<ul class="nav nav-tabs">
 			        <li class="nav-item">
-			          <a class="nav-link" id="report" href="${root}/task/report/list">보고</a>
+			          <a class="nav-link" id="report" href="${root}/task/report/list/1">보고</a>
 			        </li>
 			        <li class="nav-item">
 			          <a class="nav-link active" id="order" href="${root}/task/order/list/1">지시</a>

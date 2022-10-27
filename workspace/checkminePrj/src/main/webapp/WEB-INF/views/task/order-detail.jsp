@@ -70,6 +70,13 @@
     
     #file-wrap{
     	height: auto;
+    	border: none;
+    }
+    
+    .file{
+    	height: auto;
+    	border-radius: 0 0 0 10px;
+    	border: none;
     }
 
     #title{
@@ -152,7 +159,7 @@
                 <!--카테고리-->
 				<ul class="nav nav-tabs">
 			        <li class="nav-item">
-			          <a class="nav-link" id="report" href="${root}/task/report/list">보고</a>
+			          <a class="nav-link" id="report" href="${root}/task/report/list/1">보고</a>
 			        </li>
 			        <li class="nav-item">
 			          <a class="nav-link active" id="order" href="${root}/task/order/list/1">지시</a>
@@ -180,7 +187,7 @@
                         ${vo.content}
                     </div>
                     
-                    <div class="division">첨부 파일</div>
+                    <div class="division file">첨부 파일</div>
                     <div class="value" id="file-wrap">
 	                    <c:forEach items="${fileVo}" var="fv">                    	                    	
 	                    	<a href="${root}/task/order/download/${vo.no}/${fv.no}" id="file">${fv.name}</a>

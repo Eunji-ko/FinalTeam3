@@ -27,8 +27,6 @@ public interface TaskOrderDao {
 	//게시글 목록 조회
 	List<TaskOrderVo> selectList(SqlSessionTemplate sst, PageVo pv);
 
-	//수신자 목록 조회
-	List<TaskOrderAttVo> selectAttList(SqlSessionTemplate sst, TaskOrderAttVo attVo);
 
 	//지시서 디테일
 	TaskOrderVo selectOneByNo(SqlSessionTemplate sst, String no);
@@ -45,6 +43,9 @@ public interface TaskOrderDao {
 
 	//지시서 파일 다운로드
 	List<TaskOrderFileVo> selectFile(SqlSessionTemplate sst, String pno);
+
+	//보고서 작성할 때 지시서 연결
+	List<TaskOrderVo> selectListForAtt(SqlSessionTemplate sst, String empNo);
 
 
 }

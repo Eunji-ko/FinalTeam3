@@ -8,7 +8,7 @@
 	vo.setNo("10");
 	vo.setName("박정규");
 	vo.setPosNo("6");
-	vo.setDeptNo("2");
+	vo.setDeptNo("5");
 	session.setAttribute("loginMember", vo);
 %>
 
@@ -165,7 +165,7 @@
                 <!--카테고리-->
 				<ul class="nav nav-tabs">
 			        <li class="nav-item">
-			          <a class="nav-link" id="report" href="${root}/task/report/list">보고</a>
+			          <a class="nav-link" id="report" href="${root}/task/report/list/1">보고</a>
 			        </li>
 			        <li class="nav-item">
 			          <a class="nav-link active" id="order" href="${root}/task/order/list/1">지시</a>
@@ -185,7 +185,7 @@
                     </c:if>
                 </div>
                 
-                <!--보고서 목록-->
+                <!--지시서 목록-->
                 <div id="center">
                     <div class="list-header">번호</div>
                     <div class="list-header">중요도</div>
