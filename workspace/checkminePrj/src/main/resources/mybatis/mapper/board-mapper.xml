@@ -129,10 +129,11 @@
   
   <select id="selectBoardListByType" parameterType="HashMap" resultType="BoardVo">
   	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE,
+  	THUMBNAIL 
   	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
   	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
-  	LEFT OUTER JOIN (SELECT B_NO, MAX(NAME) THUMBNAIL FROM BOARD_ATT GROUP BY B_NO ORDER BY NAME ASC) A ON B.NO = A.B_NO 
+  	LEFT OUTER JOIN (SELECT B_NO, MIN(NAME) THUMBNAIL FROM BOARD_ATT GROUP BY B_NO) A ON B.NO = A.B_NO 
   	WHERE DELETE_YN = 'N' 
   	<choose>
   		<when test='type == "notice"'>
@@ -187,12 +188,23 @@
   	AND (TITLE LIKE '%'||#{keyword}||'%' OR CONTENT LIKE '%'||#{keyword}||'%')
   </select>
   
+  <insert id="recommend" parameterType="HashMap">
+  	INSERT INTO BOARD_RECOMMEND(NO, M_NO)
+  	VALUES(#{bNo}, #{memberNo})
   
+  </insert>
   
+  <select id="selectBoardRecommend" resultType="String">
+  	SELECT COUNT(NO) FROM BOARD_RECOMMEND WHERE NO = #{bNo}
+  </select>
   
+  <select id="selectRecommend" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD_RECOMMEND WHERE NO = #{bNo} AND M_NO = #{memberNo}
+  </select>
   
-  
-  
+  <delete id="recommendDelete">
+  	DELETE FROM BOARD_RECOMMEND WHERE NO = #{bNo} AND M_NO = #{memberNo}
+  </delete>
   
   
   

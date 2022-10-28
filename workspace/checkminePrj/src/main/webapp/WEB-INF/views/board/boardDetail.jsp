@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,9 +115,10 @@
         background-color: #5D736F;
         border: none;
         color: white;
-        height: 30px;
+        height: 55px;
         width: 60px;
-        margin: auto;
+        margin: 5px;
+        border-radius: 20px;    
     }
     #write {
         display: flex;
@@ -136,15 +138,6 @@
     #buttonArea > button{
         margin-right: 10px;
     }
-
-  
-
-
-  
-    
-    
-   
-
 </style>
 </head>
 <body>
@@ -160,25 +153,48 @@
             </div>
             
             <div id="infoWrap">
-                <div id="title"><div>공지사항 기타 내용</div></div>
-                <div id="info"><div>추천수 5</div><div id="writer"><b>관리자</b></div><div>2022.10.13</div></div>
+                <div id="title">
+                	<div>
+                	<c:if test="${board.type eq 'N'}">[공지]&nbsp</c:if>
+                		${board.title}
+                	</div>
+                </div>
+                <div id="info">
+                	<div id="recommendCnt">추천 ${board.recommendCnt}</div>
+	                <div>조회수 ${board.hit}</div>
+	                <div id="writer"><b>${board.department}&nbsp${board.writer}</b></div>
+	                <div>${board.enrollDate}</div>
+                </div>
                 <div id="content-box">
                     <div id="content">
-                 
-                        <div>ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</div>
+                    	<c:if test="${fn:length(attList) != 0}">
+                    		<c:forEach items="${attList}" var="a">
+                    			<c:choose>
+                    				<c:when test="${fn:endsWith(a.name, '.png')}">
+                    					<img src="${rootPath}/resources/upload/board/${a.name}">
+                    				</c:when>
+                    				<c:when test="${fn:endsWith(a.name, '.jpg')}">
+                    					<img src="${rootPath}/resources/upload/board/${a.name}">
+                    				</c:when>
+                    				<c:when test="${fn:endsWith(a.name, '.gif')}">
+                    					<img src="${rootPath}/resources/upload/board/${a.name}">
+                    				</c:when>
+	                    			<c:otherwise>
+	                    				<a download href="${rootPath}/resources/upload/board/${a.name}">${a.name}</a><br>
+	                    			</c:otherwise>
+                    		</c:choose>
+                    		</c:forEach>
+                    	</c:if>
+                        ${board.content}
                     </div>
                     <div id="replyArea">
                         <div id="replyTitle">댓글</div>
-                        <div id="reply-bot">
-                            <div id="replyWriter"><div>테스트 사원</div><div>2022.10.13</div><button type="button" id="deleteReply" onclick="deleteReply()">삭제</button></div>
-                            <div>댓글 내용 어쩌구 </div>
+                        <div id="replyList">
+
                         </div>
-                        
                         <div id="write">
-                            <textarea name="content" id="text" placeholder="댓글을 남겨보세요."></textarea><button type="button" id="add">등록</button>
+                            <textarea name="content" id="replyText" placeholder="댓글을 남겨보세요."></textarea><button type="button" onclick="replyAdd()" id="add">등록</button>
                         </div>
-
-
                     </div>
                     
 
@@ -186,9 +202,11 @@
                 </div>
                 <div id="buttonArea">
                 <!-- 임시로 추천 상태 on으로 설정함 -->
-                <button type="button" class="btn" id="recommend" style="background-color: white; color:#5D736F" onclick ="location.href = '#'">추천</button>
-                    <button type="button" class="btn" id="correct" onclick ="location.href = '#'">수정</button>
+                <button type="button" class="btn" id="recommend" onclick="recommendBoard()">추천</button>
+                <c:if test="${loginMember.no eq board.wno}">   
+                    <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/edit/${board.no}'">수정</button>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
+                </c:if> 
                 </div>
                 
             </div>
@@ -197,18 +215,161 @@
             
         </main>
     </div>
+    <script>
+        //추천
+        function recommendBoard(){
+            $.ajax({
+                url: "${rootPath}/board/recommend",
+                type : "POST",
+                data : {
+                    "bNo" : "${board.no}",
+                    "memberNo" : "${loginMember.no}"
+                },
+                success: function(str){
+                    console.log(str);
+                    console.log(str[recommendCnt]);
+                    console.log(str.recommendCnt);
+                    if(str[0] == 1){
+                        document.querySelector('#recommend').style.cssText = "background-color: white; color:#5D736F";
+                    }else{
+                        document.querySelector('#recommend').style.cssText = " ";
+                    }
+                    $('#recommendCnt').html("추천 "+ str.recommendCnt);
+                },
+                error: function(result){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+            });
 
+        }
+
+
+
+    </script>
     <script>
         //게시물 삭제 시 컨펌으로 한번더 확인
         function deleteBoard(){
             const answer = confirm('해당 게시물을 삭제할까요?');
-            if(answer == true){
-                location.href="##";
-            }
+	        if(answer == true){
+	            location.href="${rootPath}/board/delete/${board.no}";
+	        }
         }
         
+    </script>
+    <script>
+        $(function(){
+            replyList();
+        })
 
+        //댓글 조회 ajax
+        function replyList(){
+            $.ajax({
+                url : "${rootPath}/reply/list/${board.no}",
+                type : 'POST',
+                success : function(list){
+                    var result = "";
+                    for(var i in list){
+                        var a = list[i].mno;
+                       if("${loginMember.no}" == a){
+                           result +=
+                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                                       '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div>'+ list[i].replyDate +'</div>'+
+                                       '<button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>'+                              
+                                       '</div><div>'+list[i].content+'</div></div>'
+                       }else{
+                        result +=
+                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                                       '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div>'+ list[i].replyDate +'</div>'+                  
+                                       '</div><div>'+list[i].content+'</div></div>'
+                       }
+                                    
+                    }
+                    $("#replyList").html(result);
+                },
+                error : function(e){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
 
+            });
+
+        }
+
+    </script>
+    <script>
+        //댓글 추가 ajax
+        function replyAdd(){
+            const replyText = document.querySelector('#replyText').value;
+
+            if(replyText == ''){
+                alert("댓글 내용을 입력해주세요");
+                return;
+            }
+            const boardNo = "${board.no}";
+            const replierName = '${sessionScope.loginMember.name}';
+            
+            $.ajax({
+                url: "${rootPath}/reply/write",
+                type : "POST",
+                data : {
+        
+                    "content" : replyText,
+                    "bNo" : boardNo
+                    
+                },
+                success: function(result){
+                    if(result == 'ok'){
+                        alert("등록되었습니다.");
+                        
+                        replyList();
+                        
+                        //기존에 입력한 내용 지우기
+                        document.querySelector('#replyText').value = '';
+                    
+                    }else{
+                        alert("처리 중 문제가 발생하였습니다.");
+                        
+                    }
+                },
+                error: function(result){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        //댓글 삭제 ajax
+        function deleteReply(){
+            let answer = confirm("삭제하시겠습니까?");
+            if(!answer){
+                return;
+            }
+
+            const replyNo = document.querySelector('#replyNo').value;
+	
+            $.ajax({
+                url: "${rootPath}/reply/delete",
+                type : "POST",
+                data : {
+                    "no" : replyNo
+                },
+                success: function(result){
+                    if(result == 'ok'){
+                        alert("삭제되었습니다.");
+                        replyList();
+                   
+                    }else{
+                        alert("처리 중 문제가 발생하였습니다.");
+                    }
+                },
+                error: function(result){
+                    alert("통신 중 문제가 발생하였습니다.");
+                }
+            });
+            
+        }
     </script>
 </body>
 </html>

@@ -26,7 +26,6 @@
         font-weight: bolder;
     }
     #area2{
-        height: 815px;
         margin: 100px auto;
     }
     #chart_div{
@@ -39,7 +38,7 @@
     .google-visualization-orgchart-node{
         width: 100px;
     }
-
+    
 
     
 

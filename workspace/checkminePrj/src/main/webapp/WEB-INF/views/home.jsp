@@ -136,7 +136,7 @@
 	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
 	                <input type="submit" value="로그인">
 	            </form>
-	            <div id="bottom"><a href="" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="${root}/member/findIdPwd" id="findIdPwd">아이디/비밀번호 찾기</a></div>
+	            <div id="bottom"><a href="${root}/admin/login" id="userLogin">관리자로 로그인</a>&nbsp&nbsp<a href="${root}/member/findIdPwd" id="findIdPwd">아이디/비밀번호 찾기</a></div>
 	           
 	
 	        </div>

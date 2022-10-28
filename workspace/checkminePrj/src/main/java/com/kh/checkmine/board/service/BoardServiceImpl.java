@@ -6,8 +6,10 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.board.dao.BoardDao;
+import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 
@@ -47,6 +49,73 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardVo> selectBoardKeyword(PageVo pv, String keyword) {
 		List<BoardVo> boardList = dao.selectBoardKeyword(sst, pv, keyword);
 		return boardList;
+	}
+
+	//글 작성
+	@Override
+	@Transactional
+	public int insertBoard(BoardVo vo, List<BoardAttVo> attVoList) {
+		int result1 = dao.insertBoard(sst, vo);
+
+		//첨부파일
+		int result2 = 1;
+		for(int i = 0; i < attVoList.size(); i++) {
+			
+			result2 *= dao.insertBoardAtt(sst, attVoList.get(i));
+		}
+	
+		return result1 * result2;
+	}
+
+	@Override
+	public int insertBoard(BoardVo vo) {
+		int result = dao.insertBoard(sst, vo);
+		return result;
+	}
+
+	//게시글 상세보기 + 조회수
+	@Override
+	public BoardVo selectOne(String no) {
+		int result = dao.increaseHit(sst, no);
+		
+		if(result == 1) {
+			return dao.selectOne(sst, no);			
+		}
+		return null;
+	}
+
+	@Override
+	public List<BoardAttVo> selectAttList(String no) {
+		List<BoardAttVo> attList = dao.selectAtt(sst, no);
+		return attList;
+	}
+
+	//추천
+	@Override
+	public int recommend(Map<String, String> map) {
+		int result = dao.recommend(sst, map);
+		return result;
+	}
+
+	//추천수만 가져오기
+	@Override
+	public String selectBoardRecommend(String bNo) {
+		String result = dao.selectBoardRecommend(sst, bNo);
+		return result;
+	}
+
+	//추천 기록 가져오기
+	@Override
+	public int selectRecommend(Map<String, String> map) {
+		int result = dao.selectRecommend(sst, map);
+		return result;
+	}
+
+	//추천 삭제
+	@Override
+	public int recommendDelete(Map<String, String> map) {
+		int result = dao.recommendDelete(sst, map);
+		return result;
 	}
 
 	
