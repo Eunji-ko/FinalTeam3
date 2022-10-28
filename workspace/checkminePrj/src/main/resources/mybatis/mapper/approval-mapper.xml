@@ -294,5 +294,62 @@
 		    ,#{content}
 		)
 	</insert>
+	
+	<insert id="insertExpenditure">
+		INSERT INTO EXPENDITURE
+		(
+			NO
+			,DOC_NO
+			,BRIEF
+			,AMOUNT
+			,NOTE
+		)
+		VALUES
+		(
+			SEQ_EXP_NO.NEXTVAL
+			,#{dno}
+			,#{brief}
+			,#{amount}
+			,#{note}
+		)
+	</insert>
+	
+	<insert id="insertExpenditureList">
+		INSERT ALL
+		<foreach collection="list" item="e" open="INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" separator=") INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" close=") SELECT * FROM DUAL">
+		SEQ_EXP_NO.NEXTVAL
+		,SEQ_DOC_NO.CURRVAL
+		,#{e.brief}
+		,#{e.amount}
+		,#{e.note}
+		</foreach>
+	</insert>
+	
+	<insert id="insertBuyOrder">
+		INSERT INTO BUY_ORDER
+		(
+			NO
+			,DEPARTMENT
+			,CONSERVATION
+			,NAME
+			,AMOUNT
+			,PRICE
+			,START_DATE
+			,END_DATE
+			,CONTENT
+		)
+		VALUES
+		(
+			#{dno}
+			,#{department}
+			,#{conservation}
+			,#{name}
+			,#{amount}
+			,#{price}
+			,#{startDate}
+			,#{endDate}
+			,#{content}
+		)
+	</insert>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.kh.checkmine.approval.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -86,7 +87,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	//문서번호로 지출결의서 조회하기
 	@Override
-	public ApprovalExpenditureVo selectExpenditureByNo(String dno) {
+	public List<ApprovalExpenditureVo> selectExpenditureByNo(String dno) {
 		return dao.selectExpenditure(sst, dno);
 	}
 
@@ -185,6 +186,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return dao.selectFiles(sst, dno);
 	}
 
+	//제안서 결재 및 문서정보 가져오기
 	@Override
 	public ApprovalDocVo approvalProposal(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalProposalVo proposalVo) {
 		
@@ -201,11 +203,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 		}
 	}
 
+	//거래처 이름으로 조회하기
 	@Override
 	public List<AccountVo> selectAccountByName(String corporate) {
 		return dao.selectAccountList(sst, corporate);
 	}
 
+	//회의록 결재 및 문서정보 가져오기
 	@Override
 	public ApprovalDocVo approvalMinutes(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalMinutesVo minutesVo) {
 		
@@ -215,6 +219,60 @@ public class ApprovalServiceImpl implements ApprovalService{
 		int minResult = dao.insertMinutes(sst, minutesVo);
 		
 		if(docResult*apResult*minResult == 1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
+	//지출결의서 결재 및 문서정보 가져오기
+	@Override
+	public ApprovalDocVo approvalExpenditure(ApprovalDocVo docVo, ApprovalVo apVo,
+			ApprovalExpenditureVo expenditureVo) {
+
+		//지출결의서 관련 문서정보, 결재정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		
+		//지출결의서 값 나누기
+		List<ApprovalExpenditureVo> expList = new ArrayList<ApprovalExpenditureVo>();
+		String dno = expenditureVo.getDocNo();
+		String[] briefList = expenditureVo.getBrief().split(",", -1);
+		String[] amountList = expenditureVo.getAmount().split(",", -1);
+		String[] noteList = expenditureVo.getNote().split(",", -1);
+		if(amountList.length == 0) {
+			return null;
+		}
+		for(int i=0; i<amountList.length;i++) {
+			ApprovalExpenditureVo vo = new ApprovalExpenditureVo();
+			vo.setDocNo(dno);
+			vo.setBrief(briefList[i]);
+			vo.setAmount(amountList[i]);
+			vo.setNote(noteList[i]);
+			expList.add(vo);
+		}
+		
+		int expResult = dao.insertExpenditureList(sst, expList);
+		
+		if(docResult*apResult*expResult == expList.size()) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
+	//구매품의서 결재하기
+	@Override
+	public ApprovalDocVo approvalBuyOrder(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalBuyOrderVo buyOrderVo) {
+		
+		//구매품의서 관련 문서정보, 결재정보, 회의록 정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		int orderResult = dao.insertBuyOrder(sst, buyOrderVo);
+		
+		if(docResult*apResult*orderResult == 1) {
 			//방금 넣은 문서정보 가져오기
 			return dao.selectCurrentDoc(sst);		
 		}else {

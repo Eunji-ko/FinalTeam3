@@ -59,7 +59,6 @@
 
     <main id="wrapper">
         <div>
-            ${memberList}
             <div>선택항목</div>
             <div class="input-group mb-3">
                 <input id="search-first" name="first" type="text" class="form-control" placeholder="1차 결재자">
@@ -69,14 +68,14 @@
         <div>
             <div>선택항목</div>
             <div class="input-group mb-3">
-                <input id="search-second" name="second" type="text" class="form-control" placeholder="2차 결재자">
+                <input id="search-second" name="second" type="text" class="form-control" placeholder="2차 결재자" readonly>
                 <button id="search-second-btn" class="btn" onclick="searchSecond();">검색</button>
             </div>
         </div>
         <div>
             <div>선택항목</div>
             <div class="input-group mb-3">
-                <input id="search-third" name="third" type="text" class="form-control" placeholder="3차 결재자">
+                <input id="search-third" name="third" type="text" class="form-control" placeholder="3차 결재자" readonly>
                 <button id="search-third-btn" class="btn" onclick="searchThird();">검색</button>
             </div>
         </div>
@@ -94,6 +93,19 @@
     </footer>
 
     <script>
+        //최종&1차 -> 2차 -> 3차 순으로 사용가능
+        $('#search-first').blur(function(){
+            if($('#search-first').val() != ""){
+                $('#search-second').prop('readonly', false);
+            }
+        });
+        $('#search-second').blur(function(){
+            if($('#search-second').val() != ""){
+                $('#search-third').prop('readonly', false);
+            }
+        });
+        
+
         //1차 결재자 검색
         function searchFirst(){
             var approver = $('#search-first').val();

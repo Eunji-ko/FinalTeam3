@@ -47,6 +47,18 @@
 		padding: 10px;
 		text-align: center;
 	}
+	#approver-info input{
+		height: 100%;
+		width: 80%;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+	}
+	.approver5, .approver6, .approver7, .approver8{
+		line-height: 80px;
+		font-size: 25px;
+	}
 	#main-bot{
 		height: 80vh;
 		margin-top : 30px;
@@ -110,13 +122,14 @@
 
 <main id="draft-wrapper">
 
+	<form action="${rootPath}/approval/leave/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
-				작성자 : (작성자영역)
+				작성자 : <input type="text" value="${docVo.writerNo}" name="writerNo" readonly>
 			</div>
 			<div id="write-date-div">
-				작성일 : (작성년월일)
+				작성일 : <input type="text" value="${docVo.date}" name="date" readonly>
 			</div>
 		</div>
 		<div id="approver-info">
@@ -124,19 +137,18 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">${apVo.firstApprover}</div>
-			<div id="approver6">${apVo.secondApprover}</div>
-			<div id="approver7">${apVo.thirdApprover}</div>
-			<div id="approver8">${apVo.finalApprover}</div>
-			<div id="approver9">${apVo.firstDate}</div>
-			<div id="approver10">${apVo.secondDate}</div>
-			<div id="approver11">${apVo.thirdDate}</div>
-			<div id="approver12">${apVo.finalDate}</div>
+			<div class="approver5">${apVo.firstApprover}</div>
+			<div class="approver6">${apVo.secondApprover}</div>
+			<div class="approver7">${apVo.thirdApprover}</div>
+			<div class="approver8">${apVo.finalApprover}</div>
+			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
+			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
+			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
+			<div id="approver12"><input type="text" value="${apVo.finalDate}" name="finalDate" readonly></div>
 		</div>
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/leave" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -157,9 +169,9 @@
 				<div id="approval-content">
 					<div id="leave-content">
 						<div class="input-group-text">시작일</div>
-						<input type="date" name="apply-date" id="start-date" class="form-control">
+						<input type="date" name="apply-date" id="start-date" class="form-control" name="begin" value="${leaveVo.begin}">
 						<div class="input-group-text">종료일</div>
-						<input type="date" name="apply-date" id="end-date" class="form-control">
+						<input type="date" name="apply-date" id="end-date" class="form-control" name="end" value="${leaveVo.end}">
 						<div class="input-group-text">반차 시간</div>
 						<div>
 							<select id="l-time-select" class="form-select" name="lTime" disabled>
@@ -174,20 +186,24 @@
 				</div>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="leaveFile" id="" multiple>
+				<c:if test="${fileList eq null}">
+					<input type="file" name="file" id="" multiple>
+				</c:if>
+				<c:forEach items="${fileList}" var="list">
+					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
+				</c:forEach>
 				<!--반려사유-->
-				<input type="hidden" id="return-reason" name="returnReason">
+				<input type="hidden" class="return-reason" name="returnReason">
 				<!--결재자 번호-->
-				<input type="hidden" name="firstApprover" id="first-approver">
-				<input type="hidden" name="secondApprover" id="second-approver">
-				<input type="hidden" name="thirdApprover" id="third-approver">
-				<input type="hidden" name="finalApprover" id="final-approver">
+				<input type="hidden" name="firstApprover" class="first-approver">
+				<input type="hidden" name="secondApprover" class="second-approver">
+				<input type="hidden" name="thirdApprover" class="third-approver">
+				<input type="hidden" name="finalApprover" class="final-approver">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
-		</form>
-
-	</div>
+			
+		</div>
 
 	<script>
 		//신청 연차 계산식
@@ -219,4 +235,5 @@
 		});
 	</script>
 
+	</form>
 </main>

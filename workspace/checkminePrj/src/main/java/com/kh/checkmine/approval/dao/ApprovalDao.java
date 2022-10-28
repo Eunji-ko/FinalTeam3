@@ -45,7 +45,7 @@ public interface ApprovalDao {
 	ApprovalMinutesVo selectMinutes(SqlSessionTemplate sst, String dno);
 
 	//문서번호로 지출결의서 조회하기
-	ApprovalExpenditureVo selectExpenditure(SqlSessionTemplate sst, String dno);
+	List<ApprovalExpenditureVo> selectExpenditure(SqlSessionTemplate sst, String dno);
 
 	//문서번호로 구매품의서 조회하기
 	ApprovalBuyOrderVo selectBuyOrder(SqlSessionTemplate sst, String dno);
@@ -100,5 +100,15 @@ public interface ApprovalDao {
 
 	//회의록 정보 DB에 올리기
 	int insertMinutes(SqlSessionTemplate sst, ApprovalMinutesVo minutesVo);
+
+	//지출결의서 정보 DB에 올리기
+	int insertExpenditure(SqlSessionTemplate sst, ApprovalExpenditureVo expenditureVo);
+
+	//지출결의서 리스트 DB에 올리기
+	int insertExpenditureList(SqlSessionTemplate sst, List<ApprovalExpenditureVo> expList);
+
+	//구매품의서 정보 DB에 올리기
+	int insertBuyOrder(SqlSessionTemplate sst, ApprovalBuyOrderVo buyOrderVo);
+
 
 }
