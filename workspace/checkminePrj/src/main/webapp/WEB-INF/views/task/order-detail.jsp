@@ -106,6 +106,19 @@
         padding-left: 10px;
     }
 
+    #file-wrap{
+        grid-column-start: 2; grid-column-end: 7;
+    }
+    
+    .file{
+        border-radius: 0 0 0 10px;
+    }
+
+    .file, #file-wrap{
+        border-top: 1px solid #5D736F;
+        border-bottom: none;
+    }
+
     /*스크롤바 설정*/
     .bot{
         border-bottom: none !important;

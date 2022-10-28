@@ -126,7 +126,7 @@ public class TaskReportController {
 			for(Map m : listAttNoA) {
 				TaskReportAttVo attVo = new TaskReportAttVo();
 				String value = (String)m.get("value");
-				attVo.setENo(value);
+				attVo.setEmpNo(value);
 				attVo.setType("A");
 				attVoList.add(attVo); 
 			}
@@ -135,7 +135,7 @@ public class TaskReportController {
 				for(Map m : listAttNoR) {
 					TaskReportAttVo attVo = new TaskReportAttVo();
 					String value = (String)m.get("value");
-					attVo.setENo(value);
+					attVo.setEmpNo(value);
 					attVo.setType("R");
 					attVoList.add(attVo);
 				}
@@ -165,7 +165,7 @@ public class TaskReportController {
 		
 		if(reportResult == 1) {
 			session.setAttribute("alertMsg", "보고서가 작성되었습니다.");
-			return "redirect:/task/report/list";
+			return "redirect:/task/report/list/1";
 		}else {
 			//문제 발생 시 파일 제거
 			if(!fileVoList.isEmpty()) {
@@ -175,7 +175,7 @@ public class TaskReportController {
 				}
 			}
 			session.setAttribute("alertMsg", "보고서가 작성되지 못했습니다.");
-			return "redirect:/task/report/list";
+			return "redirect:/task/report/list/1";
 		}
 		
 		

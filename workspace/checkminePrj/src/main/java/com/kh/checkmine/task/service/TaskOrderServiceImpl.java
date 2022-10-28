@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +108,21 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	@Override
 	public List<TaskOrderVo> selectListForAtt(String empNo) {
 		return orderDao.selectListForAtt(sst, empNo);
+	}
+
+	//지시서 검색 게시글 수
+	@Override
+	public int selectKeywordCnt(Map<String, String> map) {
+		int total = orderDao.selectTotalKeyword(sst, map);
+		return total;
+	}
+
+	//지시서 검색
+	@Override
+	public List<TaskOrderVo> selectTaskKeyword(PageVo pv, Map<String, String> map) {
+		List<TaskOrderVo> orderList = orderDao.selectOrderKeyword(sst, pv, map);
+		
+		return orderList;
 	}
 
 }

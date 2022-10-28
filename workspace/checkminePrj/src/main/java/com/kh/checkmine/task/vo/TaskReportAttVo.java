@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TaskReportAttVo {
 	private String no;
-	private String reportNo;
-	private String eNo;
+	private String reptNo;
+	private String empNo;
 	private String type;
 	
 	private String attNoA;

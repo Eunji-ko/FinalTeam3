@@ -43,8 +43,8 @@
 
     #table{
         display: grid;
-        grid-template-columns: 100px 2fr 100px 2fr 100px 1fr;
-        grid-template-rows: 30px 30px 30px 30px 600px;
+        grid-template-columns: 100px 1fr 100px 2fr 100px 1fr;
+        grid-template-rows: 30px 30px 30px 30px 30px 600px;
 
         margin: 10px auto;
         width:95%;
@@ -66,8 +66,7 @@
     }
 
     #title{
-        grid-column-start: 2;
-        grid-column-end: 5;
+        grid-column-start: 2; grid-column-end: 7;
     }
 
     .title{
@@ -75,8 +74,15 @@
     }
 
     .content{
-        grid-column-start: 1;
-        grid-column-end: 7;
+        grid-column-start: 1; grid-column-end: 7;
+    }
+
+    .reference, .destination{
+        grid-column-start: 2; grid-column-end: 7;
+    }
+
+    #file-wrap{
+        grid-column-start: 2; grid-column-end: 7;
     }
 
     .value{
@@ -84,6 +90,14 @@
         padding-left: 10px;
     }
 
+    .file{
+        border-radius: 0 0 0 10px;
+    }
+
+    .file, #file-wrap{
+        border-top: 1px solid #5D736F;
+        border-bottom: none;
+    }
     /*스크롤바 설정*/
     .bot{
         border-bottom: none !important;
@@ -148,22 +162,24 @@
                     <div class="division">작성자</div><div class="value">${vo.sender}</div>
                     <div class="division">부서 / 직위</div><div class="value">${vo.deptNo} / ${vo.posName}</div>
                     <div class="division">작성 일시</div><div class="value">${vo.enrollDate}</div>
-                    <div class="division">수　신</div><div class="value">${aVo.eNo}</div>
-                    <div class="division">참　조</div><div class="value">${rVo.eNo}</div>
+                    <div class="division">수　신</div><div class="value destination">${aVo.empNo}</div>
+                    <div class="division">참　조</div><div class="value reference">${rVo.empNo}</div>
+                    <div class="division content">내용</div>
+                    <div class="content value bot">
+                        ${vo.content}
+                    </div>
                     <div class="division file">첨부 파일</div>
                     <div class="value" id="file-wrap">
 	                    <c:forEach items="${fileVo}" var="fv">                    	                    	
 	                    	<a href="${root}/task/order/download/${vo.no}/${fv.no}" id="file">${fv.name}</a>
 	                    </c:forEach>
                    	</div>
-                    <div class="division content">내용</div>
-                    <div class="content value bot">
-                        ${vo.content}
-                    </div>
                 </div>
                 <div class="btn-area">
-                    <a href="${root}/task/report/edit">수정</a>
-                    <a href="">삭제</a>
+                    <c:if test="${vo.sender eq loginMember.name}">
+                        <a href="${root}/task/report/edit">수정</a>
+                        <a href="${root}/task/report/delete">삭제</a>
+                    </c:if>
                     <a href="${root}/task/report/list/1">목록</a>
                 </div>
             </div>

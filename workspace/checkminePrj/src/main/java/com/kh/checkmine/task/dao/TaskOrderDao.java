@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -46,6 +47,12 @@ public interface TaskOrderDao {
 
 	//보고서 작성할 때 지시서 연결
 	List<TaskOrderVo> selectListForAtt(SqlSessionTemplate sst, String empNo);
+
+	//게시글 검색 + 조회된 게시글 수
+	int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map);
+
+	//게시글 검색
+	List<TaskOrderVo> selectOrderKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
 
 }
