@@ -20,6 +20,9 @@ public interface CommuteService {
 	List<CommuteVo> selectList(PageVo pv);
 
 	//전체 근태 갯수 조회
-	int selectTotalCnt();
+	int selectcommuteTotalCount();
+
+	//나의 근태 갯수 조회
+	int selectMycommuteTotalCnt(String no);
 
 }

@@ -22,6 +22,9 @@ public interface CommuteDao {
 	List<CommuteVo> selectList(SqlSessionTemplate sst, PageVo pv);
 
 	//전체 근태 갯수 조회
-	int selectCountAll(SqlSessionTemplate sst);
+	int selectCommuteCountAll(SqlSessionTemplate sst);
+
+	//나의 근태 갯수 조회
+	int selectMycommuteCountAll(String no, SqlSessionTemplate sst);
 
 }

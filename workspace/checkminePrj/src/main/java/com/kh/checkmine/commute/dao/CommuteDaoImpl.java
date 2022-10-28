@@ -46,8 +46,14 @@ public class CommuteDaoImpl implements CommuteDao {
 
 	//전체 근태 갯수 조회
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("commuteMapper.selectCountAll");
+	public int selectCommuteCountAll(SqlSessionTemplate sst) {
+		return sst.selectOne("commuteMapper.selectCommuteCountAll");
+	}
+
+	//나의 전체 근태 갯수 조회
+	@Override
+	public int selectMycommuteCountAll(String no, SqlSessionTemplate sst) {
+		return sst.selectOne("commuteMapper.selectMycommuteCountAll", no);
 	}
 
 }

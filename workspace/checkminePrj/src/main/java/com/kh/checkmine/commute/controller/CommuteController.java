@@ -37,9 +37,8 @@ public class CommuteController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
-		int totalCount = cs.selectTotalCnt();
-		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		int mycommuteTotalCount = cs.selectMycommuteTotalCnt(no);
+		PageVo pv = Pagination.getPageVo(mycommuteTotalCount, pno, 5, 10);
 		
 		List<CommuteVo> voList = cs.selectListOne(no, pv);
 		
@@ -55,8 +54,8 @@ public class CommuteController {
 	@GetMapping("commute/{pno}")
 	public String commute(Model model, @PathVariable int pno) {
 		
-		int totalCount = cs.selectTotalCnt();
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		int commuteTotalCount = cs.selectcommuteTotalCount();
+		PageVo pv = Pagination.getPageVo(commuteTotalCount, pno, 5, 10);
 		
 		List<CommuteVo> voList = cs.selectList(pv);
 		

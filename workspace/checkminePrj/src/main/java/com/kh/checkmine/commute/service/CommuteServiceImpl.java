@@ -48,8 +48,14 @@ public class CommuteServiceImpl implements CommuteService {
 
 	//전체 근태 갯수 조회
 	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
+	public int selectcommuteTotalCount() {
+		return dao.selectCommuteCountAll(sst);
+	}
+
+	//나의 근태 갯수 조회
+	@Override
+	public int selectMycommuteTotalCnt(String no) {
+		return dao.selectMycommuteCountAll(no, sst);
 	}
 
 }
