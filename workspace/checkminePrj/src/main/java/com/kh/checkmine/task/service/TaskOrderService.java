@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -22,7 +23,6 @@ public interface TaskOrderService {
 	//지시서 목록 조회
 	List<TaskOrderVo> selectList(PageVo pv);
 	
-	
 	//지시서 디테일
 	TaskOrderVo selectOneByNo(String no);
 	
@@ -41,4 +41,10 @@ public interface TaskOrderService {
 	
 	//보고서 작성할 때 지시서 연결
 	List<TaskOrderVo> selectListForAtt(String empNo);
+
+	//지시서 검색 게시글 수
+	int selectKeywordCnt(Map<String, String> map);
+	
+	//지시서 검색
+	List<TaskOrderVo> selectTaskKeyword(PageVo pv, Map<String, String> map);
 }

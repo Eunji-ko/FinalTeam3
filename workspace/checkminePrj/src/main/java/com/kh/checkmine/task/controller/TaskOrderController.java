@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -217,6 +218,26 @@ public class TaskOrderController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name)
 				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
 				.body(res);
+	}
+	
+	//게시물 검색
+	@GetMapping("search")
+	public String search(@RequestParam(name = "p") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
+		Map<String, String> map = new HashMap<>(2);
+		map.put("option", keyword);
+		map.put("keyword", keyword);
+		int totalCount = orderService.selectKeywordCnt(map);
+		
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
+		
+		List<TaskOrderVo> boardList = orderService.selectTaskKeyword(pv,map);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
+		return "task/order-search";
 	}
 	
 	

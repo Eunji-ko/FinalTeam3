@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <!--폰트어썸 최신 CDN-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -11,8 +12,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<script defer src="${root}/resources/js/tagify-att.js"></script>
+<script defer src="${root}/resources/js/tagify-ratt.js"></script>
+
 <!DOCTYPE html>
-<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -256,9 +260,6 @@
         height: 100%;
     }
 
-    .tag:focus{
-    }
-
     .tagify__input{
         padding: 4px;
         text-align: left;
@@ -294,6 +295,8 @@
 </style>
 </head>
 <body>
+
+
 	<div class="d-flex">
         <%@ include file="/WEB-INF/views/common/side-nav.jsp" %>
         
@@ -317,7 +320,7 @@
                         <div class="division" id="title-diveision">제　목</div><div class="title"><input class="title" id="title" type="text" name="title"></div>
                         <div class="division">수　신</div>
                         <div class="destination">
-                            <input type="text" class="tag" id="att" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
+                            <input class="tag"  id="att" name='attNoA' placeholder="수신받을 직원의 이름을 적으세요.">
                         </div>
                         <div class="division">참　조</div>
                         <div class="reference">
@@ -409,40 +412,6 @@
         }
     </script>
 
-    <!--tagify-->
-    <script>
-        const input = document.querySelector('input[name=attNoA]');
-        const input2 = document.querySelector('input[name=attNoR]');
-        let tagify = new Tagify(input, {//드롭다운
-            whitelist: [
-            	
-            ], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "destination-tags", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        }); // initialize Tagify
-
-        let tagify2 = new Tagify(input2, {
-            whitelist: ["..."], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "reference-tag", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        })
-        // 태그가 추가되면 이벤트 발생
-        tagify.on('add', function() {
-          console.log(tagify.value); // 입력된 태그 정보 객체
-        })
-    </script>
 </body>
 </html>
 

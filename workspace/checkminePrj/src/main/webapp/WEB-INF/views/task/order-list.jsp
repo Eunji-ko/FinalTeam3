@@ -67,6 +67,12 @@
         border: 1px solid gray;
         border-radius: 50px;
     }
+
+    .search-btn{
+        border-radius: 100px;
+        border: none;
+        padding: 5px;
+    }
     
     /*검색 이미지*/
     form > div > img{
@@ -173,15 +179,28 @@
 			      </ul>
 
                 <!--검색 기능-->
+
                 <div id="search-write-box">
-                    <form action="" id="search">
-                        <div>
-                            <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px">
-                            <input type="text" placeholder="지시서 검색">
-                        </div>
+                    <form method="get" id="search" action="searchbbs.jsp">
+                        <table class="pull-right">
+                            <tr>
+                                <td>
+                                    <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px">
+                                </td>
+                                <td><select class="form-control" name="searchField">
+                                        <option value="title">제목</option>
+                                        <option value="content">내용</option>
+                                        <option value="orderer">작성자</option>
+                                </select></td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                    placeholder="지시서 검색" name="searchText" maxlength="100"></td>
+                                <td><button type="submit" class="search-btn">검색</button></td>
+                            </tr>
+                        </table>
                     </form>
                     <c:if test="${not empty loginMember}">
-                    	<div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
+                        <div id="write-box"><a href="${root}/task/order/write" id="write">지시서 작성</a></div>
                     </c:if>
                 </div>
                 

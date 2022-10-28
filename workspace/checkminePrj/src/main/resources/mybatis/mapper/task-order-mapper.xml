@@ -209,4 +209,47 @@
 		WHERE A.EMP_NO = #{no}
 		ORDER BY T.NO DESC
 	</select>
+	
+	<select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
+		SELECT COUNT(T.NO)
+		FROM TASK T
+		JOIN EMPLOYEE E
+		ON E.NO = T.ORDERER
+		<choose>
+	  		<when test='option=="title"'>
+	  			WHERE T.TITLE LIKE '%'||#{keyword}||'%'
+	  		</when>
+	  		<when test='option=="content"'>
+	  			AND T.CONTENT LIKE '%'||#{keyword}||'%'
+	  		</when>
+	  		<when test='option=="writer"'>
+	  			AND E.NAME LIKE '%'||#{keyword}||'%'
+	  		</when>
+  		</choose>
+	</select>
+	
+	<select id="selectOrderKeyword"  parameterType="HashMap" resultType="TaskOrderVo">
+		SELECT
+			T.NO,
+			E.NAME AS ORDERER,
+			T.TITLE,
+			T.CONTENT,
+			T.ENROLL_DATE,
+			T.START_DATE,
+			T.END_DATE
+		FROME TASK T
+		JOIN EMPLOYEE E
+		ON T.ORDERER = E.NO
+		<choose>
+	  		<when test='option=="title"'>
+	  			WHERE T.TITLE LIKE '%'||#{keyword}||'%'
+	  		</when>
+	  		<when test='option=="content"'>
+	  			AND T.CONTENT LIKE '%'||#{keyword}||'%'
+	  		</when>
+	  		<when test='option=="writer"'>
+	  			AND E.NAME LIKE '%'||#{keyword}||'%'
+	  		</when>
+  		</choose>
+	</select>
 </mapper>

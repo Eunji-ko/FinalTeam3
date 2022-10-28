@@ -27,7 +27,7 @@
 		)
 		VALUES
 		(
-		    SEQ_REPORT_NO.NEXTVAL,
+			SEQ_REP_NO.NEXTVAL,
 		    #{taskNo},
 		    #{sender},
 		    #{title},
@@ -40,15 +40,15 @@
 		INSERT INTO REPORT_ATT
  		(
 	 		NO,
-			E_NO,
-			REPORT_NO,
+			EMP_NO,
+			REP_NO,
 			TYPE
 		)
 		VALUES
 		(
-			SEQ_REPORT_ATT_NO.NEXTVAL,
-			#{eNo},
-			SEQ_REPORT_NO.CURRVAL,
+			SEQ_REP_ATT_NO.NEXTVAL,
+			#{empNo},
+			SEQ_REP_NO.CURRVAL,
 			#{type}
 		)
 	</insert>
@@ -64,8 +64,8 @@
  		)
  		VALUES
  		(
- 			SEQ_REPORT_FILE_NO.NEXTVAL,
- 			SEQ_REPORT_NO.CURRVAL,
+ 			SEQ_REP_FILE_NO.NEXTVAL,
+ 			SEQ_REP_NO.CURRVAL,
  			#{name},
  			#{path}
  		)
@@ -92,15 +92,15 @@
 		ON R.SENDER = E.NO
 		JOIN (
 		    SELECT
-		        A.REPORT_NO,
+		        A.REP_NO,
 		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME
 		    FROM REPORT_ATT A
 		    JOIN EMPLOYEE E
-		    ON A.E_NO = E.NO
+		    ON A.EMP_NO = E.NO
 		    WHERE A.TYPE = 'A'
-		    GROUP BY A.REPORT_NO
+		    GROUP BY A.REP_NO
 		) A
-		ON R.NO = A.REPORT_NO
+		ON R.NO = A.REP_NO
 		WHERE R.DEL = 'N'
 		ORDER BY R.NO DESC
 	</select>
@@ -109,7 +109,7 @@
 	<select id="selectOneByNo" resultType="TaskReportVo">
  		SELECT 
     		R.NO,
-		    E.NAME AS ORDERER,
+		    E.NAME AS SENDER,
 		    D.NAME AS DEPT_NO,
 		    P.NAME AS POS_NAME,
 		    R.TITLE,
@@ -129,35 +129,35 @@
 	<!-- 보고서 상세 - 수신 -->
 	<select id="selectAttOne" resultType="TaskReportAttVo">
  		SELECT
-		    A.REPORT_NO,
-		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO,
+		    A.REP_NO,
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
 		    A.TYPE
 		FROM REPORT_ATT A
 		JOIN EMPLOYEE E
-		ON A.E_NO = E.NO
+		ON A.EMP_NO = E.NO
 		JOIN POSITION P
 		ON E.POS_NO = P.NO
 		WHERE A.TYPE = 'A'
-		AND A.REPORT_NO = #{no}
+		AND A.REP_NO = #{no}
 		GROUP BY
-		    A.REPORT_NO,
+		    A.REP_NO,
 		    A.TYPE
 	</select>
 	
 	<select id="selectAttROne" resultType="TaskReportAttVo">
 		SELECT
-		    A.REPORT_NO,
-		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS E_NO,
+		    A.REP_NO,
+		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
 		    A.TYPE
 		FROM REPORT_ATT A
 		JOIN EMPLOYEE E
-		ON A.E_NO = E.NO
+		ON A.EMP_NO = E.NO
 		JOIN POSITION P
 		ON E.POS_NO = P.NO
 		WHERE A.TYPE = 'R'
-		AND A.REPORT_NO = #{no}
+		AND A.REP_NO = #{no}
 		GROUP BY
-		    A.REPORT_NO,
+		    A.REP_NO,
 		    A.TYPE
 	</select>
 	
