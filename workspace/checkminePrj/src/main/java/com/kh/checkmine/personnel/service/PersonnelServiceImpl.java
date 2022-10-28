@@ -74,7 +74,7 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 
 	@Override
-	public int delAcc(String no) {
+	public int delAcc(List<String> no) {
 		return dao.delAcc(sst, no);
 	}
 

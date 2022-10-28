@@ -117,12 +117,15 @@
   		WHERE NO = #{no}
   </update>
   
-  <update id="delAcc">
+  <update id="delAcc" parameterType="java.util.List">
   	UPDATE
   		ACCOUNT
   		SET
   			DELETE_YN = 'Y'
-  		WHERE NO = #{no}
+  		WHERE NO IN
+  		<foreach collection="abc" item="item" index="index" separator="," open="(" close=")">
+  			#{item}
+  		</foreach>
   </update>
   
   <select id="selectMemberListByRsn" resultType="MemberVo">

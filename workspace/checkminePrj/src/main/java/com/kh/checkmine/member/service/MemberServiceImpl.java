@@ -28,8 +28,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		MemberVo dbMember = dao.selectOneById(sst, vo);
 		
-		if(pwdEnc.matches(vo.getPwd(), dbMember.getPwd())) {			
-			return dbMember;
+		if(dbMember != null) {
+			if(pwdEnc.matches(vo.getPwd(), dbMember.getPwd())) {			
+				return dbMember;
+			}else {
+				return null;
+			}
 		}else {
 			return null;
 		}

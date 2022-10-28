@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.member.vo.MemberVo;
@@ -120,10 +121,12 @@ public class PersonnelController {
 		}
 	}
 	
-	@GetMapping("deleteAcc/{no}")
-	public String deleteAcc(HttpSession session, Model model, @PathVariable String no) {
+	@GetMapping("delAcc")
+	public String deleteAcc(@RequestParam List<String> no , HttpSession session, Model model) {
 		
 		int result = ps.delAcc(no);
+		
+		System.out.println(result);
 		
 		if(result == 1) {
 			//삭제 성공

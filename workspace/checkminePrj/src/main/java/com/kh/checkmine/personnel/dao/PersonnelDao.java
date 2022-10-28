@@ -30,6 +30,6 @@ public interface PersonnelDao {
 
 	int insertAcc(SqlSessionTemplate sst, AccountVo vo);
 
-	int delAcc(SqlSessionTemplate sst, String no);
+	int delAcc(SqlSessionTemplate sst, List<String> no);
 
 }

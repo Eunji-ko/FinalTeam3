@@ -28,6 +28,6 @@ public interface PersonnelService {
 
 	int insertAcc(AccountVo vo);
 
-	int delAcc(String no);
+	int delAcc(List<String> no);
 
 }
