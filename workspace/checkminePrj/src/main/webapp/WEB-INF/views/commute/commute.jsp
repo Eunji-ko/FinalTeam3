@@ -99,23 +99,23 @@
                       <div id="search">
                         <select>
                             <option value="">부서전체</option>
-                            <option value="-">없음</option>
-                            <option value="인사부">인사부</option>
-                            <option value="총무부">총무부</option>
-                            <option value="회계부">회계부</option>
-                            <option value="영업부">영업부</option>
-                            <option value="마케팅부">마케팅부</option>
+                            <option value="1">-</option>
+                            <option value="2">인사부</option>
+                            <option value="3">총무부</option>
+                            <option value="4">회계부</option>
+                            <option value="5">영업부</option>
+                            <option value="6">마케팅부</option>
                         </select>
 
                         <select>
                             <option value="">직급전체</option>
-                            <option value="없음">사원</option>
-                            <option value="인사부">주임</option>
-                            <option value="총무부">대리</option>
-                            <option value="회계부">과장</option>
-                            <option value="영업부">차장</option>
-                            <option value="마케팅부">부장</option>
-                            <option value="마케팅부">사장</option>
+                            <option value="1">사원</option>
+                            <option value="2">주임</option>
+                            <option value="3">대리</option>
+                            <option value="4">과장</option>
+                            <option value="5">차장</option>
+                            <option value="6">부장</option>
+                            <option value="7">사장</option>
                         </select>
 
                       </div>

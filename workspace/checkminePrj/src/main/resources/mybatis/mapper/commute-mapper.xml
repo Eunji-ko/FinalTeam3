@@ -21,7 +21,7 @@
 	</insert>
 	
 	<update id="updateLeave">
-		UPDATE COMMUTE SET LEAVE = SYSDATE WHERE EMP_NO = #{empNo}
+		UPDATE COMMUTE SET LEAVE = SYSDATE WHERE EMP_NO = #{empNo} AND NO = (SELECT MAX(NO) FROM COMMUTE)
 	</update>
 	
 	<select id="selectList" resultType="CommuteVo">
@@ -43,9 +43,15 @@
 		ORDER BY C.WORK_DATE DESC
 	</select>
 	
-	<select id="selectCountAll" resultType="int">
+	<select id="selectCommuteCountAll" resultType="int">
 		SELECT COUNT(*)
       	FROM COMMUTE
+	</select>
+	
+	<select id="selectMycommuteCountAll" resultType="int">
+		SELECT COUNT(*)
+      	FROM COMMUTE
+      	WHERE EMP_NO = #{empNo}
 	</select>
 	
 </mapper>
