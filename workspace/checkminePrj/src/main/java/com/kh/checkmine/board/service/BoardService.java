@@ -3,6 +3,7 @@ package com.kh.checkmine.board.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 
@@ -17,6 +18,28 @@ public interface BoardService {
 	int selectKeywordCnt(String keyword);
 
 	List<BoardVo> selectBoardKeyword(PageVo pv, String keyword);
+
+	//글 작성
+	int insertBoard(BoardVo vo, List<BoardAttVo> attVoList);
+
+	int insertBoard(BoardVo vo);
+
+	//게시글 상세보기
+	BoardVo selectOne(String no);
+
+	List<BoardAttVo> selectAttList(String no);
+
+	//추천
+	int recommend(Map<String, String> map);
+
+	//추천수만 가져오기
+	String selectBoardRecommend(String bNo);
+
+	//추천 기록
+	int selectRecommend(Map<String, String> map);
+
+	//추천 삭제
+	int recommendDelete(Map<String, String> map);
 
 
 	

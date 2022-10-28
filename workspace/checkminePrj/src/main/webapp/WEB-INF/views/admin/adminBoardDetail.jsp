@@ -180,7 +180,7 @@
                     					<img src="${root}/resources/upload/board/${a.name}">
                     				</c:when>
 	                    			<c:otherwise>
-	                    				<a download href="${root}/resources/upload/board/${a.name}">${a.name}</a>
+	                    				<a download href="${root}/resources/upload/board/${a.name}">${a.name}</a><br>
 	                    			</c:otherwise>
                     		</c:choose>
                     		</c:forEach>

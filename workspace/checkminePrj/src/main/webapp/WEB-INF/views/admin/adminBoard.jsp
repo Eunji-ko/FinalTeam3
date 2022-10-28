@@ -28,7 +28,7 @@
     }
 
     #listArea{
-        height: 622px;
+        height: 617px;
         margin: 20px auto;
         border: 1px solid lightgray;
     }
@@ -84,6 +84,9 @@
     table{
         table-layout: fixed;
     }
+    tr{
+        height: 41px;
+    }
     td{
         white-space: nowrap;
         overflow: hidden;
@@ -115,7 +118,7 @@
                     <option value="${root}/admin/board/list?sort=g&p=1">갤러리</option>
                 </select>
                 
-                <form action="${root}/admin/board/search" method="get">
+                <form action="${root}/admin/board/search" method="get" style="margin:0px;">
                     <input type="hidden" name="p" value="1">
                     <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="title">제목</option>
@@ -161,7 +164,7 @@
                             <td>${b.writer}</td>
                             <td>${b.enrollDate}</td>
                             <td>${b.hit}</td>
-                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="check" value="${b.no}"></td>
+                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="check" value="${b.no}" style="margin: 5px;"></td>
                         
                         </tr>
                     

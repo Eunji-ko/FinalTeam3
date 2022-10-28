@@ -156,7 +156,7 @@
                             <option value="${rootPath}/board/list/gallery?sort=r&p=1">추천순</option>
                         </select>
                         <div style="display: flex;">
-                        <form action="${root}/board/search" method="get">
+                        <form action="${rootPath}/board/search" method="get">
                             <div style="width: 267px; border: 1px solid lightgray; display: inline-block;" >
                                 <input type="text" name="keyword" id="keyword" placeholder="통합 검색"  class="form-control" required>
                                 <input type="submit" id="search" value="">
@@ -167,7 +167,7 @@
                     </div>
                     <div id="listArea">
                         <c:forEach items="${boardList}" var="b">
-                        <div class="board-item" style="cursor: pointer;" onclick="location.href='${rootPath}/admin/board/detail/${n.no}';">
+                        <div class="board-item" style="cursor: pointer;" onclick="location.href='${rootPath}/board/detail/${b.no}';">
                             <div class="thumbnail"><img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}"></div>
                             <div class="info"><div class="title">${b.title}</div><div class="writer">${b.writer}</div></div>
                         </div>

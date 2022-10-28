@@ -101,14 +101,14 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
             
                 <div style="display: flex; justify-content: space-between;">
                     <div>
                         <select style="width: 200px;" class="form-select" name="type" onchange=attach(); required>
-                        <option value="n">공지사항</option>
-                        <option value="c">커뮤니티</option>
-                        <option value="g">갤러리</option>
+                        <option value="N">공지사항</option>
+                        <option value="C">커뮤니티</option>
+                        <option value="G">갤러리</option>
                         </select>
                     </div>
                     <div id="title"><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
@@ -120,7 +120,7 @@
                        
                     </div>
                     <div id="footer">
-                        <div id="attach"><input type="file" name="file" multiple></div>
+                        <div id="attach"><input type="file" name="attach" multiple></div>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
                     </div>
 

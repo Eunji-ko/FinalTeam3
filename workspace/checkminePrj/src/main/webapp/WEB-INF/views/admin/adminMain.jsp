@@ -61,7 +61,7 @@
 
     .area > div{
         border: 1px solid lightgray;
-        height: 100%;
+        height: 500px;
         margin: 10px;
     }
 
@@ -69,15 +69,17 @@
         font-size: 20px;
         font-weight: bolder;
         grid-column: span 6;
-        margin : 15px 13px;
-        margin-bottom: 30px;
+        margin : 18px 20px;
         display: inline-block;
+        margin-bottom : 40px;
     }
     .list{
         font-size: 13px;
-        margin: 18px 20px;
-        width: 90%;
+        margin: 0px 20px;
+        margin-bottom: 18px;
         border-bottom: 1px solid lightgray;
+        width: 428px;
+        height: 26px
        
     }
     .list > span, .list a{
@@ -216,10 +218,11 @@
             <div class="area">
                 <div id="boardArea">
                     <div class="header">게시판 현황</div><a href="${root}/admin/board/list" id="more">더보기</a>
+                    <div>
                     <c:forEach items="${boardList}" var="b" end="8">
                     	<div class="list"><a href="${root}/admin/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
                     </c:forEach>
-                  
+                </div>
 
                 </div>
 

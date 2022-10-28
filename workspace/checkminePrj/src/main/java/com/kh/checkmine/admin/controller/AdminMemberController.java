@@ -173,7 +173,6 @@ public class AdminMemberController {
 			String permission = vo.getPermission().replace(",", "").toUpperCase();
 			vo.setPermission(permission);			
 		}
-		System.out.println(vo);
 		int result = service.edit(vo);
 		if(result == 1) {
 			session.setAttribute("msg", "정상적으로 수정되었습니다.");

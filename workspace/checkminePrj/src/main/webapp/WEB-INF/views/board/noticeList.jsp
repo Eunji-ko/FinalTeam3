@@ -158,7 +158,7 @@
                             </thead>
                             <tbody style="border-top: none;">
                                 <c:forEach items="${boardList}" var="b">
-                                <tr onclick="location.href='${rootPath}/admin/board/detail/${n.no}'">
+                                <tr onclick="location.href='${rootPath}/board/detail/${b.no}'">
                                     <td>${b.no}</td>
                                     <td>${b.title}</td>
                                     <td>${b.writer}</td>
