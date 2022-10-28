@@ -100,7 +100,14 @@
 		grid-row: 1/3;
 	}
 	#eplus-btn{
-        color: white;
+		color: white;
+		background-color: #5d736f;
+        margin: auto;
+		display: block;
+        margin-top: 10px;
+    }
+	#eminus-btn{
+		color: white;
 		background-color: #5d736f;
         margin: auto;
 		display: block;
@@ -111,7 +118,8 @@
 
 
 <main id="draft-wrapper">
-
+	
+	<form action="${rootPath}/approval/expenditure/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
@@ -138,7 +146,6 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/expenditure/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -154,15 +161,22 @@
 					
 					<c:if test="${expenditureVo eq null}">
 						<div class="table-content-div" id="etable-div">
-							<input type="text" class="form-control" id="name-input" name="brief">
-							<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="amount">
+							<input type="text" class="form-control" id="name-input" name="brief" required>
+							<input type="number" class="form-control money-form" id="money-input" value="0" min="0" name="amount" required>
 							<input type="text" class="form-control" id="brief-input" name="note">
 						</div>
 						<div id="eplus-btn-div">
 							<button type="button" class="btn" id="eplus-btn">+</button>
+							<button type="button" class="btn" id="eminus-btn">-</button>
 						</div>
 					</c:if>
-					<c:forEach items="${expenditureVo}" var="list"></c:forEach>
+					<c:forEach items="${expenditureVo}" var="list">
+						<div class="table-content-div" id="etable-div">
+							<input type="text" class="form-control" id="name-input" name="brief" value="${list.brief}">
+							<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="amount" value="${list.amount}">
+							<input type="text" class="form-control" id="brief-input" name="note" value="${list.note}">
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 				
@@ -183,25 +197,52 @@
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
-		</form>
-
-	</div>
-
+			
+		</div>
+		
 	<script>
 
+		$('input[type=number]').blur(function(){
+			if(this.value == null){
+				this.value = 0;
+			}
+		})
+
+		function expApproval(){
+			
+			return approval();
+		}
+		
 		let eidNum = 0;
 		$('#eplus-btn').click(function(){
-			const eoriDiv = document.querySelector('#etable-div');
-			const ebtnDiv = document.querySelector('#eplus-btn-div');
-			const enewDiv = eoriDiv.cloneNode(true);
-			enewDiv.id = eoriDiv.id + eidNum;
-			ebtnDiv.before(enewDiv);
-			eidNum++;
-			if(eidNum > 5){
+			if(eidNum <5){
+				$('#eplus-btn').prop('disabled', false);
+				$('#eminus-btn').prop('disabled', false);
+				const eoriDiv = document.querySelector('#etable-div');
+				const ebtnDiv = document.querySelector('#eplus-btn-div');
+				const enewDiv = eoriDiv.cloneNode(true);
+				enewDiv.id = eoriDiv.id + eidNum;
+				ebtnDiv.before(enewDiv);
+				eidNum++;
+			}else{
 				$('#eplus-btn').prop('disabled', true);
+				$('#eminus-btn').prop('disabled', false);
+			}
+		});
+		$('#eminus-btn').click(function(){
+			if(eidNum > 0){
+				$('#eminus-btn').prop('disabled', false);
+				$('#eplus-btn').prop('disabled', false);
+				const ebtnDiv = document.querySelector('#eplus-btn-div');
+				ebtnDiv.previousSibling.remove();
+				eidNum--;
+			}else{
+				$('#eminus-btn').prop('disabled', true);
+				$('#eplus-btn').prop('disabled', false);
 			}
 		});
 
 	</script>
 
+	</form>
 </main>

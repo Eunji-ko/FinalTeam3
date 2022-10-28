@@ -78,7 +78,7 @@ public class ApprovalDaoImpl implements ApprovalDao{
 
 	//문서번호로 지출결의서 조회하기
 	@Override
-	public ApprovalExpenditureVo selectExpenditure(SqlSessionTemplate sst, String dno) {
+	public List<ApprovalExpenditureVo> selectExpenditure(SqlSessionTemplate sst, String dno) {
 		return sst.selectOne("approvalMapper.selectExpenditure", dno);
 	}
 
@@ -188,6 +188,21 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int insertMinutes(SqlSessionTemplate sst, ApprovalMinutesVo minutesVo) {
 		return sst.insert("approvalMapper.insertMinutes", minutesVo);
+	}
+
+	@Override
+	public int insertExpenditure(SqlSessionTemplate sst, ApprovalExpenditureVo expenditureVo) {
+		return sst.insert("approvalMapper.insertExpenditure", expenditureVo);
+	}
+
+	@Override
+	public int insertBuyOrder(SqlSessionTemplate sst, ApprovalBuyOrderVo buyOrderVo) {
+		return sst.insert("approvalMapper.insertBuyOrder", buyOrderVo);
+	}
+
+	@Override
+	public int insertExpenditureList(SqlSessionTemplate sst, List<ApprovalExpenditureVo> expList) {
+		return sst.insert("approvalMapper.insertExpenditureList", expList);
 	}
 
 }

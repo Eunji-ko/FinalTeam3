@@ -119,8 +119,7 @@ public class ApprovalController {
 				model.addAttribute("minutesVo", minutesVo);
 				break;
 			case "E":
-				//TODO : List로 바꾸기
-				ApprovalExpenditureVo expenditureVo = service.selectExpenditureByNo(dno);
+				List<ApprovalExpenditureVo> expenditureVo = service.selectExpenditureByNo(dno);
 				model.addAttribute("expenditureVo", expenditureVo);
 				break;
 			case "B":
@@ -374,43 +373,144 @@ public class ApprovalController {
 	public String minutes(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalMinutesVo minutesVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
 		
 		//현재 로그인한 사원 가져오기
-				MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-				
-				//문서번호 존재 여부 확인
-				if(dno != null) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		//문서번호 존재 여부 확인
+		if(dno != null) {
+			
+			//결재자 정보 업데이트 메소드
+			String alertUpdateMsg = updateApInfo(dno, apVo, session);
+			
+			session.setAttribute("alertMsg", alertUpdateMsg);
+			
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(회의록)
+			docVo.setType("M");
+			
+			//회의록 결재 및 해당 문서정보 가져오기
+			ApprovalDocVo result = service.approvalMinutes(docVo, apVo, minutesVo);
+			
+			if(result == null) {
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				return "redirect:/approval";
+			}else {
+				//파일 유무 확인
+				if(!file[0].isEmpty()) {
 					
-					//결재자 정보 업데이트 메소드
-					String alertUpdateMsg = updateApInfo(dno, apVo, session);
+					int saveFile = saveFile(file, result, req);
 					
-					session.setAttribute("alertMsg", alertUpdateMsg);
-					
-				}else {//문서번호 없음
-					//작성자 번호 세팅
-					docVo.setWriterNo(loginMember.getNo());
-					//결재 타입 세팅(회의록)
-					docVo.setType("M");
-					
-					//회의록 결재 및 해당 문서정보 가져오기
-					ApprovalDocVo result = service.approvalMinutes(docVo, apVo, minutesVo);
-					
-					if(result == null) {
-						session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+					if(saveFile != file.length) {
+						session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
 						return "redirect:/approval";
-					}else {
-						//파일 유무 확인
-						if(!file[0].isEmpty()) {
-							
-							int saveFile = saveFile(file, result, req);
-							
-							if(saveFile != file.length) {
-								session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
-								return "redirect:/approval";
-							}
-						}
-						session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
 					}
 				}
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}
+		}
 		
+		return "redirect:/approval";
+	}
+	
+	//지출결의서 작성 및 결재
+	@PostMapping(value={"expenditure/{dno}", "expenditure"})
+	public String expenditure(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalExpenditureVo expenditureVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+		
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		System.out.println(dno);
+		System.out.println(apVo);
+		System.out.println(docVo);
+		System.out.println(expenditureVo);
+		System.out.println(file);
+		
+		//문서번호 존재 여부 확인
+		if(dno != null) {
+			
+			//결재자 정보 업데이트 메소드
+			String alertUpdateMsg = updateApInfo(dno, apVo, session);
+			
+			session.setAttribute("alertMsg", alertUpdateMsg);
+			
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(지출결의서)
+			docVo.setType("E");
+			
+			//지출결의서 결재 및 해당 문서정보 가져오기
+			//memo : expenditureVo(여러 값 들어옴)는 값을 쉼표를 기준으로 split 해줘야함
+			ApprovalDocVo result = service.approvalExpenditure(docVo, apVo, expenditureVo);
+			
+			if(result == null) {
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				return "redirect:/approval";
+			}else {
+				//파일 유무 확인
+				if(!file[0].isEmpty()) {
+					
+					int saveFile = saveFile(file, result, req);
+					
+					if(saveFile != file.length) {
+						session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+						return "redirect:/approval";
+					}
+				}
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}
+		}
+		return "redirect:/approval";
+	}
+	
+	//구매품의서 작성 및 결재
+	@PostMapping(value={"order/{dno}", "order"})
+	public String buyOrder(@PathVariable(required = false) String dno, @ModelAttribute ApprovalVo apVo, @ModelAttribute ApprovalDocVo docVo,@ModelAttribute ApprovalBuyOrderVo buyOrderVo,@ModelAttribute MultipartFile[] file, HttpSession session, HttpServletRequest req) {
+		
+		//현재 로그인한 사원 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		System.out.println(dno);
+		System.out.println(apVo);
+		System.out.println(docVo);
+		System.out.println(buyOrderVo);
+		System.out.println(file);
+		
+		//문서번호 존재 여부 확인
+		if(dno != null) {
+			
+			//결재자 정보 업데이트 메소드
+			String alertUpdateMsg = updateApInfo(dno, apVo, session);
+			
+			session.setAttribute("alertMsg", alertUpdateMsg);
+			
+		}else {//문서번호 없음
+			//작성자 번호 세팅
+			docVo.setWriterNo(loginMember.getNo());
+			//결재 타입 세팅(구매품의서)
+			docVo.setType("B");
+			
+			//구매품의서 결재 및 해당 문서정보 가져오기
+			ApprovalDocVo result = service.approvalBuyOrder(docVo, apVo, buyOrderVo);
+			
+			if(result == null) {
+				session.setAttribute("alertMsg", "문서 처리에 실패하였습니다.");
+				return "redirect:/approval";
+			}else {
+				//파일 유무 확인
+				if(!file[0].isEmpty()) {
+					
+					int saveFile = saveFile(file, result, req);
+					
+					if(saveFile != file.length) {
+						session.setAttribute("alertMsg", "파일 처리에 실패하였습니다.");
+						return "redirect:/approval";
+					}
+				}
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			}
+		}
 		return "redirect:/approval";
 	}
 

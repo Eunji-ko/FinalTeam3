@@ -47,6 +47,18 @@
 		padding: 10px;
 		text-align: center;
 	}
+	#approver-info input{
+		height: 100%;
+		width: 80%;
+		border: none;
+		margin: none;
+		padding: none;
+		cursor: default;
+	}
+	.approver5, .approver6, .approver7, .approver8{
+		line-height: 80px;
+		font-size: 25px;
+	}
 	#main-bot{
 		height: 80vh;
 		margin-top : 30px;
@@ -98,14 +110,15 @@
 
 
 <main id="draft-wrapper">
-
+	
+	<form action="${rootPath}/approval/order/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
-				작성자 : (작성자영역)
+				작성자 : <input type="text" value="${docVo.writerNo}" name="writerNo" readonly>
 			</div>
 			<div id="write-date-div">
-				작성일 : (작성년월일)
+				작성일 : <input type="text" value="${docVo.date}" name="date" readonly>
 			</div>
 		</div>
 		<div id="approver-info">
@@ -113,19 +126,18 @@
 			<div id="approver2">2차</div>
 			<div id="approver3">3차</div>
 			<div id="approver4">최종</div>
-			<div id="approver5">${apVo.firstApprover}</div>
-			<div id="approver6">${apVo.secondApprover}</div>
-			<div id="approver7">${apVo.thirdApprover}</div>
-			<div id="approver8">${apVo.finalApprover}</div>
-			<div id="approver9">${apVo.firstDate}</div>
-			<div id="approver10">${apVo.secondDate}</div>
-			<div id="approver11">${apVo.thirdDate}</div>
-			<div id="approver12">${apVo.finalDate}</div>
+			<div class="approver5">${apVo.firstApprover}</div>
+			<div class="approver6">${apVo.secondApprover}</div>
+			<div class="approver7">${apVo.thirdApprover}</div>
+			<div class="approver8">${apVo.finalApprover}</div>
+			<div id="approver9"><input type="text" value="${apVo.firstDate}" name="firstDate" readonly></div>
+			<div id="approver10"><input type="text" value="${apVo.secondDate}" name="secondDate" readonly></div>
+			<div id="approver11"><input type="text" value="${apVo.thirdDate}" name="thirdDate" readonly></div>
+			<div id="approver12"><input type="text" value="${apVo.finalDate}" name="finalDate" readonly></div>
 		</div>
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/order" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
@@ -133,37 +145,42 @@
 			</div>
 			<div id="approval-content-div">
 				<div class="input-group-text">품의부서</div>
-				<input type="text" maxlength="25" class="form-control" name="department" required>
+				<input type="text" maxlength="25" class="form-control" name="department" required value="${buyOrderVo.department}">
 				<div id="approval-content" class="buy-order-content">
 					<div class="input-group-text">목적</div>
-					<input type="text" maxlength="100" class="form-control" name="conservation">
+					<input type="text" maxlength="100" class="form-control" name="conservation" value="${buyOrderVo.conservation}">
 					<div class="input-group-text">품명</div>
-					<input type="text" maxlength="50" class="form-control" name="name" required>
+					<input type="text" maxlength="50" class="form-control" name="name" value="${buyOrderVo.name}" required>
 					<div class="input-group-text">수량</div>
-					<input type="number" class="form-control" name="amount" min="0" required>
+					<input type="number" class="form-control" name="amount" min="0" value="${buyOrderVo.amount}" required>
 					<div class="input-group-text">단가</div>
-					<input type="number" class="form-control" name="price" min="0" required>
+					<input type="number" class="form-control" name="price" min="0" value="${buyOrderVo.price}" required>
 					<div class="input-group-text">납품기간</div>
-					<input type="date" maxlength="25" class="form-control" name="startDate">
+					<input type="date" class="form-control" name="startDate" value="${buyOrderVo.startDate}">
 					<div class="input-group-text">완납일자</div>
-					<input type="date" maxlength="25" class="form-control" name="endDate">
-					<textarea class="form-control" maxlength="250"></textarea>
+					<input type="date" class="form-control" name="endDate" value="${buyOrderVo.endDate}">
+					<textarea class="form-control" maxlength="250" name="content">${buyOrderVo.content}</textarea>
 				</div>
 			</div>
 			<div id="approval-btn-div">
-				<input type="file" name="orderFile" id="" multiple>
+				<c:if test="${fileList eq null}">
+					<input type="file" name="file" id="" multiple>
+				</c:if>
+				<c:forEach items="${fileList}" var="list">
+					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
+				</c:forEach>
 				<!--반려사유-->
-				<input type="hidden" id="return-reason" name="returnReason">
+				<input type="hidden" class="return-reason" name="returnReason">
 				<!--결재자 번호-->
-				<input type="hidden" name="firstApprover" id="first-approver">
-				<input type="hidden" name="secondApprover" id="second-approver">
-				<input type="hidden" name="thirdApprover" id="third-approver">
-				<input type="hidden" name="finalApprover" id="final-approver">
+				<input type="hidden" name="firstApprover" class="first-approver">
+				<input type="hidden" name="secondApprover" class="second-approver">
+				<input type="hidden" name="thirdApprover" class="third-approver">
+				<input type="hidden" name="finalApprover" class="final-approver">
 				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
 			</div>
 
-		</form>
-
-	</div>
-
+			
+		</div>
+		
+	</form>
 </main>

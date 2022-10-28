@@ -43,7 +43,7 @@ public interface ApprovalService {
 	ApprovalMinutesVo selectMinutesByNo(String dno);
 
 	//문서번호로 지출결의서 조회하기
-	ApprovalExpenditureVo selectExpenditureByNo(String dno);
+	List<ApprovalExpenditureVo> selectExpenditureByNo(String dno);
 
 	//문서번호로 구매품의서 조회하기
 	ApprovalBuyOrderVo selectBuyOrderByNo(String dno);
@@ -95,6 +95,12 @@ public interface ApprovalService {
 
 	//회의록 결재하기
 	ApprovalDocVo approvalMinutes(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalMinutesVo minutesVo);
+
+	//지출결의서 결재하기
+	ApprovalDocVo approvalExpenditure(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalExpenditureVo expenditureVo);
+
+	//구매품의서 결재하기
+	ApprovalDocVo approvalBuyOrder(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalBuyOrderVo buyOrderVo);
 
 
 }

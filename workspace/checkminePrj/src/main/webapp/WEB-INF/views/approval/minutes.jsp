@@ -109,7 +109,8 @@
 
 
 <main id="draft-wrapper">
-
+	
+	<form action="${rootPath}/approval/minutes/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 	<div id="main-top">
 		<div id="write-info">
 			<div id="writer-div">
@@ -136,41 +137,40 @@
 	</div>
 	<div id="main-bot">
 
-		<form action="${rootPath}/approval/minutes/${docVo.no}" method="post" enctype="multipart/form-data" onsubmit='return approval();'>
 
-			<div id="approval-title-div">
-				<div id="approval-title" class="input-group-text">제목</div>
-				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
+		<div id="approval-title-div">
+			<div id="approval-title" class="input-group-text">제목</div>
+			<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
+		</div>
+		<div id="approval-content-div">
+			<div id="minutes-purpose" class="input-group-text">목적</div>
+			<input type="text" maxlength="500" class="form-control" name="purpose" value="${minutesVo.purpose}">
+			<div id="approval-content" class="minutes-grid">
+				<div id="minutes-purpose" class="input-group-text">참석자</div>
+				<input type="text" maxlength="50" class="form-control" name="emp">
+				<textarea class="form-control" maxlength="2000" name="content">${minutesVo.content}</textarea>
 			</div>
-			<div id="approval-content-div">
-				<div id="minutes-purpose" class="input-group-text">목적</div>
-				<input type="text" maxlength="500" class="form-control" name="purpose" value="${minutesVo.purpose}">
-				<div id="approval-content" class="minutes-grid">
-					<div id="minutes-purpose" class="input-group-text">참석자</div>
-					<input type="text" maxlength="50" class="form-control" name="emp">
-					<textarea class="form-control" maxlength="2000" name="content">${minutesVo.content}</textarea>
-				</div>
-				
-			</div>
-			<div id="approval-btn-div">
-				<c:if test="${fileList eq null}">
-					<input type="file" name="file" id="" multiple>
-				</c:if>
-				<c:forEach items="${fileList}" var="list">
-					<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
-				</c:forEach>
-				<!--반려사유-->
-				<input type="hidden" class="return-reason" name="returnReason">
-				<!--결재자 번호-->
-				<input type="hidden" name="firstApprover" class="first-approver">
-				<input type="hidden" name="secondApprover" class="second-approver">
-				<input type="hidden" name="thirdApprover" class="third-approver">
-				<input type="hidden" name="finalApprover" class="final-approver">
-				<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
-			</div>
+			
+		</div>
+		<div id="approval-btn-div">
+			<c:if test="${fileList eq null}">
+				<input type="file" name="file" id="" multiple>
+			</c:if>
+			<c:forEach items="${fileList}" var="list">
+				<a download="${list.fileName}" href="${rootPath}/resources/upload/approval/${list.fileName}">${list.fileName}</a>
+			</c:forEach>
+			<!--반려사유-->
+			<input type="hidden" class="return-reason" name="returnReason">
+			<!--결재자 번호-->
+			<input type="hidden" name="firstApprover" class="first-approver">
+			<input type="hidden" name="secondApprover" class="second-approver">
+			<input type="hidden" name="thirdApprover" class="third-approver">
+			<input type="hidden" name="finalApprover" class="final-approver">
+			<button type="submit" id="approval-btn" class="btn btn-lg">결재</button>
+		</div>
 
-		</form>
-
+			
 	</div>
-
+		
+	</form>
 </main>
