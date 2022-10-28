@@ -10,7 +10,7 @@
         width: 1450px;
         margin: 0 auto;
     }
-    .insert-acc-btn {
+    .acc-btn {
         margin-left: 10px;
         padding: 7px;
         padding-left: 10px;
@@ -31,7 +31,8 @@
 <body>
     <div id="acc-area">
         <br>
-        <button type="button" class="btn checkmine-btn insert-acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
+        <button type="button" class="btn checkmine-btn acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
+        <button type="button" class="btn checkmine-btn acc-btn" id="acc-del-btn" disabled="disabled" onclick="delAcc();">삭제하기</button>
         <form class="align-right search-form" action="${rootPath}/personnel/searchAcc" method="post">
             <select name="searchType" class="search-type-select align-right">
                 <option value="CORPORATE">거래처명</option>
@@ -53,16 +54,17 @@
                         <th>TEL</th>
                         <th>FAX</th>
                         <th>메일주소</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="acc" items="${accList}">
-                        <tr data-bs-toggle="modal" data-bs-target="#changeAcc" class="accModal">
-                            <th>${acc.no}</th>
-                            <td>${acc.corporate}</td>
-                            <td>${acc.pname}</td>
-                            <td>${acc.tel}</td>
-                            <td>
+                        <tr class="accModal">
+                            <th data-bs-toggle="modal" data-bs-target="#changeAcc" >${acc.no}</th>
+                            <td data-bs-toggle="modal" data-bs-target="#changeAcc" >${acc.corporate}</td>
+                            <td data-bs-toggle="modal" data-bs-target="#changeAcc" >${acc.pname}</td>
+                            <td data-bs-toggle="modal" data-bs-target="#changeAcc" >${acc.tel}</td>
+                            <td data-bs-toggle="modal" data-bs-target="#changeAcc" >
                                 <c:if test="${empty acc.fax}">
                                     -
                                 </c:if>
@@ -70,13 +72,16 @@
                                     ${acc.fax}
                                 </c:if>
                             </td>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#changeAcc" >
                                 <c:if test="${empty acc.email}">
                                     -
                                 </c:if>
                                 <c:if test="${not empty acc.email}">
                                     ${acc.email}
                                 </c:if>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="no" value="${acc.no}">
                             </td>
                         </tr>
                     </c:forEach>
@@ -94,6 +99,33 @@
             <a href="">&gt;</a>
         </div>
     </div>
+
+    <script>
+        $('.accModal input[type="checkbox"]').click(function(){
+            let tmpp = $(this).prop('checked');
+
+            if(tmpp){
+                $("#acc-del-btn").prop("disabled", false);
+            }else{
+                if($(".accModal :checkbox:checked").length == 0){
+                    $("#acc-del-btn").prop("disabled", true);
+                }
+            }
+        });
+    </script>
+
+    <script>
+        function delAcc() {
+            if(confirm("체크하신 거래처(들)을 정말 삭제하시겠습니까?")) {
+                let checkNo = "";
+                $("input:checkbox[name=no]:checked").each(function(i, iVal) {
+                    checkNo = checkNo + iVal.value + ",";
+                });
+                checkNo = checkNo.slice(0, -1);
+                location.href="/checkmine/personnel/delAcc?no=" + checkNo;
+            }
+        }
+    </script>
 
     <%@ include file="/WEB-INF/views/personnel/acc-modal.jsp" %>
     <%@ include file="/WEB-INF/views/personnel/insert-acc-modal.jsp" %>

@@ -55,7 +55,6 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn checkmine-btn" id="accDelBtn">삭제하기</button>
             <input type="submit" class="btn checkmine-btn" value="변경하기">
           </div>
         </div>
@@ -84,7 +83,6 @@
             $('#floatingPPosition').val(data.position);
             $('#floatingPPhone').val(data.phone);
             $('#floatingPEmail').val(data.email);
-            $('#accDelBtn').attr("onclick", "location.href='${rootPath}/personnel/deleteAcc/'" + no);
           }
         }
       })

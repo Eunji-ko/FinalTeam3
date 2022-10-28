@@ -2,6 +2,7 @@ package com.kh.checkmine.personnel.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -63,8 +64,10 @@ public class PersonnelDaoImpl implements PersonnelDao {
 	}
 
 	@Override
-	public int delAcc(SqlSessionTemplate sst, String no) {
-		return sst.update("personnelMapper.delAcc", no);
+	public int delAcc(SqlSessionTemplate sst, List<String> no) {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		map.put("abc", no);
+		return sst.update("personnelMapper.delAcc", map);
 	}
 
 }
