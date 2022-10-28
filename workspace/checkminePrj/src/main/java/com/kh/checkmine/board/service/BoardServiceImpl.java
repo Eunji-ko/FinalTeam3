@@ -118,5 +118,12 @@ public class BoardServiceImpl implements BoardService{
 		return result;
 	}
 
+	//게시글 삭제
+	@Override
+	public int delete(String boardNo) {
+		int result = dao.delete(sst, boardNo);
+		return result;
+	}
+
 	
 }

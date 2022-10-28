@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
-import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.service.BoardService;
 import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
-import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
@@ -96,7 +93,7 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 
-	//공지사항 작성
+	//게시물 작성
 	@PostMapping("write")
 	public String write(BoardVo vo, BoardAttVo attVo, HttpServletRequest req, HttpSession session) {
 		String loginMemberNo = ((MemberVo)session.getAttribute("loginMember")).getNo();
@@ -160,44 +157,51 @@ public class BoardController {
 	
 	//상세보기
 	@GetMapping("detail/{no}")
-	public String detail(@PathVariable String no, Model model) {
+	public String detail(@PathVariable String no, Model model, HttpSession session) {
+		MemberVo member = (MemberVo)session.getAttribute("loginMember");
+		
+		Map<String, String> map = new HashMap<String, String>(2);
+		map.put("bNo", no);
+		map.put("memberNo", member.getNo());
+		
+		
 		BoardVo vo = service.selectOne(no);
 		List<BoardAttVo> attList = service.selectAttList(no);
+		int recommendList = service.selectRecommend(map);
 	
 		model.addAttribute("board", vo);
 		model.addAttribute("attList", attList);
+		model.addAttribute("recommendList", recommendList);
 			
 		return "board/boardDetail";
 	}
 	
 	
 	//게시글 추천
-	@PostMapping("recommend")
+	@PostMapping(value="recommend", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String recommend(String bNo, String memberNo, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>(2);
 		map.put("bNo", bNo);
 		map.put("memberNo", memberNo);
 
-		int result = 0;
 		//추천 기록이 있는지 확인
 		int recommendList = service.selectRecommend(map);
 		
 		if(recommendList == 0) {
-			result = service.recommend(map);	
+			service.recommend(map);	
 		}else {
-			result = service.recommendDelete(map);	
+			service.recommendDelete(map);	
 		}
-		
 		
 		String recommendCnt = service.selectBoardRecommend(bNo);
 		
 		Gson g = new Gson();
-		Map<String, String> test = new HashMap<String, String>();
-		test.put("recommendList", String.valueOf(recommendList));
-		test.put("recommendCnt", recommendCnt);
-		
-		String str = g.toJson(test);
+		Map<String, String> recommend = new HashMap<String, String>(2);
+		recommend.put("recommendCnt", recommendCnt);
+		recommend.put("recommendList", String.valueOf(recommendList));
+
+		String str = g.toJson(recommend);
 
 		return str;
 
@@ -205,7 +209,26 @@ public class BoardController {
 	}
 	
 	
-	
+	//게시물 삭제
+	@GetMapping("delete/{type}/{no}")
+	public String delete(@PathVariable String no, @PathVariable String type, HttpSession session, Model model) {
+		int result = service.delete(no);
+		
+		if("N".equals(type)) {
+			type = "notice";
+		}else if("C".equals(type)){
+			type = "community";
+		}else {
+			type = "gallery";
+		}
+		if(result == 1) {
+			session.setAttribute("alertMsg", "게시물을 삭제하였습니다.");
+			return "redirect:/board/list/"+type;
+		}else {
+			session.setAttribute("alertMsg", "삭제 처리 중 문제가 발생하였습니다.");
+			return "redirect:/board/list/"+type;
+		}
+	}
 	
 	
 	

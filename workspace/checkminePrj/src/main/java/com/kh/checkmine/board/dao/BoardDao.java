@@ -45,4 +45,7 @@ public interface BoardDao {
 	//추천 삭제
 	int recommendDelete(SqlSessionTemplate sst, Map<String, String> map);
 
+	//게시글 삭제
+	int delete(SqlSessionTemplate sst, String boardNo);
+
 }

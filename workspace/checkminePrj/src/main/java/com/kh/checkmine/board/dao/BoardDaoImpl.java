@@ -94,4 +94,10 @@ public class BoardDaoImpl implements BoardDao{
 		return sst.delete("boardMapper.recommendDelete", map);
 	}
 
+	//게시글 삭제
+	@Override
+	public int delete(SqlSessionTemplate sst, String boardNo) {
+		return sst.update("boardMapper.deleteBoard", boardNo);
+	}
+
 }
