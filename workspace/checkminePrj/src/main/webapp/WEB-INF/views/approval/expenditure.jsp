@@ -201,7 +201,7 @@
 		</div>
 		
 	<script>
-
+		//금액 안적고 나오면 0원으로
 		$('input[type=number]').blur(function(){
 			if(this.value == null){
 				this.value = 0;
@@ -213,6 +213,7 @@
 			return approval();
 		}
 		
+		//칸 추가
 		let eidNum = 0;
 		$('#eplus-btn').click(function(){
 			if(eidNum <5){
@@ -229,6 +230,7 @@
 				$('#eminus-btn').prop('disabled', false);
 			}
 		});
+		//칸 삭제
 		$('#eminus-btn').click(function(){
 			if(eidNum > 0){
 				$('#eminus-btn').prop('disabled', false);
