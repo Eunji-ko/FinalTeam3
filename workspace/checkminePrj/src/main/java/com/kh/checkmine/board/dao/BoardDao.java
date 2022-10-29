@@ -48,4 +48,12 @@ public interface BoardDao {
 	//게시글 삭제
 	int delete(SqlSessionTemplate sst, String boardNo);
 
+	//게시글 수정
+	int edit(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+
+	int edit(SqlSessionTemplate sst, BoardVo vo);
+	
+	int deleteAtt(SqlSessionTemplate sst, BoardVo vo);
+
+
 }

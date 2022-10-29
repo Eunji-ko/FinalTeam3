@@ -100,4 +100,22 @@ public class BoardDaoImpl implements BoardDao{
 		return sst.update("boardMapper.deleteBoard", boardNo);
 	}
 
+	//게시글 수정
+	@Override
+	public int edit(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.update("boardMapper.edit", vo);
+	}
+
+	//파일 수정
+	@Override
+	public int edit(SqlSessionTemplate sst, BoardAttVo attVo) {
+		return sst.insert("boardMapper.updateBoardAtt", attVo);
+	}
+
+	//기존 파일 삭제
+	@Override
+	public int deleteAtt(SqlSessionTemplate sst, BoardVo vo) {
+		return sst.delete("boardMapper.deleteAtt", vo);
+	}
+
 }

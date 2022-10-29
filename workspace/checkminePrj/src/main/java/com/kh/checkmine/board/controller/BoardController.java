@@ -231,7 +231,70 @@ public class BoardController {
 	}
 	
 	
+	//게시물 수정
+	@GetMapping("edit/{no}")
+	public String edit(@PathVariable String no, Model model) {
+		BoardVo vo = service.selectOne(no);
+		model.addAttribute("board", vo);
+		
+		return "board/boardEdit";
+		
+	}
 	
+	
+	//게시물 수정
+	@PostMapping("edit/{no}")
+	public String edit(@PathVariable String no, BoardVo vo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
+		//기존 파일 삭제 (저장소 내 파일)
+		List<BoardAttVo> attList = service.selectAttList(no);
+		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+		
+		if(!attList.isEmpty()) {
+			for(int i = 0; i < attList.size(); i++) {
+				File file = new File(savePath + attList.get(i).getName());
+				if(file.exists()) {
+					file.delete();
+				}
+				
+			}
+					
+		}
+		
+		//새로 첨부된 파일 처리
+		int result = 0;
+		
+		MultipartFile[] fArr =  attVo.getAttach();
+		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
+		
+		if(!fArr[0].isEmpty()) { //전달받은 파일있음
+			for(int i = 0; i < fArr.length; i++) {
+				BoardAttVo att = new BoardAttVo();
+				MultipartFile f = fArr[i];
+				
+				String changeName = FileUploader.fileUpload(f, savePath);
+				att.setName(changeName);
+				att.setFilePath(savePath);
+				att.setBNo(no);
+				attVoList.add(att);
+			}
+		
+			result = service.edit(vo, attVoList);
+			
+		}else {
+			//제목 또는 내용만 수정 시
+			result = service.edit(vo);
+		}
+
+		if(result == 1) {
+			session.setAttribute("msg", "게시물을 수정하였습니다.");
+			return "redirect:/board/detail/" + no;
+			
+		}else {
+			session.setAttribute("msg", "처리 중 문제가 발생하였습니다.");
+			return "redirect:/board/list/notice";
+		}
+	
+	}
 	
 	
 	
