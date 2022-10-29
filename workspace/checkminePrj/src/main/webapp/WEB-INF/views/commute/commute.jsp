@@ -97,7 +97,7 @@
                       <div></div>
 
                       <div id="search">
-                        <select>
+                        <select id="">
                             <option value="">부서전체</option>
                             <option value="1">-</option>
                             <option value="2">인사부</option>
@@ -107,7 +107,7 @@
                             <option value="6">마케팅부</option>
                         </select>
 
-                        <select>
+                        <select id="">
                             <option value="">직급전체</option>
                             <option value="1">사원</option>
                             <option value="2">주임</option>
@@ -237,6 +237,16 @@
           return num;
       }
 
+    </script>
+
+    <script>
+      //부서별 조회
+      $('')
+    </script>
+
+    <script>
+      //직급별 조회
+      $('')
     </script>
 
 </body>
