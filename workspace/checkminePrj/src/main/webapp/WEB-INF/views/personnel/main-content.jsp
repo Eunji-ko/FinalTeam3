@@ -76,7 +76,6 @@
         function checkPsn(){
             let psnLink = location.href;
             let accCheck = psnLink.slice(-3);
-            console.log(accCheck);
 
             if(accCheck == 'Acc'){
                 $("#list-emp-list").removeClass("active");
@@ -90,7 +89,6 @@
             }
 
             let rsnCheck = psnLink.slice(-1);
-            console.log(rsnCheck);
 
             if(rsnCheck == 'N') {
                 $("#selectResign").val("N").prop("selected", true);

@@ -1,13 +1,18 @@
 package com.kh.checkmine.member.controller;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.member.service.MemberService;
 import com.kh.checkmine.member.vo.MemberVo;
 
@@ -97,6 +102,41 @@ public class MemberController {
 			return "redirect:/member/mypage";
 		}
 		
+	}
+	
+	@PostMapping("changePhoto")
+	public String changePhoto(MemberVo vo, HttpServletRequest req, HttpSession session, Model model) {
+		
+		//파일 처리
+		
+		//기존파일 삭제
+		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+		MemberVo loginMember = (MemberVo)(session.getAttribute("loginMember"));
+		String fileName = loginMember.getPhotoName();
+		File f = new File(savePath + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+		
+		//신규로 받은 파일 업로드, 저장된 파일명 얻기
+		if(!vo.getProfile().isEmpty()) {
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setPhotoName(changeName);
+		}
+		
+		vo.setNo(loginMember.getNo());
+		
+		MemberVo updatedMember = ms.edit(vo);
+		
+		if(updatedMember != null) {
+			//정보수정 성공
+			session.setAttribute("loginMember", updatedMember);
+			return "redirect:/";
+		}else {
+			//정보수정 실패
+			session.setAttribute("alertMsg", updatedMember);
+			return "redirect:/mypage";
+		}
 	}
 
 }
