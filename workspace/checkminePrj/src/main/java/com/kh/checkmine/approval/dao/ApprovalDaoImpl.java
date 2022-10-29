@@ -190,16 +190,19 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.insert("approvalMapper.insertMinutes", minutesVo);
 	}
 
+	//지출결의서 db에 올리기
 	@Override
 	public int insertExpenditure(SqlSessionTemplate sst, ApprovalExpenditureVo expenditureVo) {
 		return sst.insert("approvalMapper.insertExpenditure", expenditureVo);
 	}
 
+	//구매품의서 DB에 올리기
 	@Override
 	public int insertBuyOrder(SqlSessionTemplate sst, ApprovalBuyOrderVo buyOrderVo) {
 		return sst.insert("approvalMapper.insertBuyOrder", buyOrderVo);
 	}
 
+	//지출결의서 리스트 DB에 올리기
 	@Override
 	public int insertExpenditureList(SqlSessionTemplate sst, List<ApprovalExpenditureVo> expList) {
 		return sst.insert("approvalMapper.insertExpenditureList", expList);

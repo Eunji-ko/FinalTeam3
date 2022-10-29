@@ -202,6 +202,7 @@
 								</div>
 								<div id="plus-btn-div">
 									<button type="button" class="btn" id="plus-btn">+</button>
+									<button type="button" class="btn" id="minus-btn">-</button>
 								</div>
 							</c:if>
 							<c:forEach items="${stateVo}" var="list">
@@ -235,17 +236,34 @@
 
 
 	<script>
-		//전표 추가
+		//칸 추가
 		let idNum = 0;
-		$('#plus-btn').click(function(e){
-			const oriDiv = document.querySelector('#table-div');
-			const btnDiv = document.querySelector('#plus-btn-div');
-			const newDiv = oriDiv.cloneNode(true);
-			newDiv.id = oriDiv.id + idNum;
-			btnDiv.before(newDiv);
-			idNum++;
-			if(idNum > 5){
+		$('#plus-btn').click(function(){
+			if(idNum <5){
+				$('#plus-btn').prop('disabled', false);
+				$('#minus-btn').prop('disabled', false);
+				const oriDiv = document.querySelector('#table-div');
+				const btnDiv = document.querySelector('#plus-btn-div');
+				const newDiv = eoriDiv.cloneNode(true);
+				newDiv.id = oriDiv.id + idNum;
+				btnDiv.before(newDiv);
+				idNum++;
+			}else{
 				$('#plus-btn').prop('disabled', true);
+				$('#minus-btn').prop('disabled', false);
+			}
+		});
+		//칸 삭제
+		$('#minus-btn').click(function(){
+			if(eidNum > 0){
+				$('#minus-btn').prop('disabled', false);
+				$('#plus-btn').prop('disabled', false);
+				const btnDiv = document.querySelector('#plus-btn-div');
+				btnDiv.previousSibling.remove();
+				idNum--;
+			}else{
+				$('#minus-btn').prop('disabled', true);
+				$('#plus-btn').prop('disabled', false);
 			}
 		});
 

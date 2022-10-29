@@ -315,13 +315,30 @@
 	</insert>
 	
 	<insert id="insertExpenditureList">
-		INSERT ALL
+		<!-- INSERT ALL
 		<foreach collection="list" item="e" open="INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" separator=") INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" close=") SELECT * FROM DUAL">
 		SEQ_EXP_NO.NEXTVAL
 		,SEQ_DOC_NO.CURRVAL
 		,#{e.brief}
 		,#{e.amount}
 		,#{e.note}
+		</foreach> -->
+		
+		INSERT INTO EXPENDITURE
+		<foreach collection="list" item="e" open="(" separator="," close=")">
+			NO
+			,DOC_NO
+			,BRIEF
+			,AMOUNT
+			,NOTE
+		</foreach>
+		VALUES
+		<foreach collection="list" item="e" open="(" separator="," close=")">
+			SEQ_EXP_NO.NEXTVAL
+			,SEQ_DOC_NO.CURRVAL
+			,#{e.brief}
+			,#{e.amount}
+			,#{e.note}
 		</foreach>
 	</insert>
 	
@@ -340,7 +357,7 @@
 		)
 		VALUES
 		(
-			#{dno}
+			SEQ_DOC_NO.CURRVAL
 			,#{department}
 			,#{conservation}
 			,#{name}
