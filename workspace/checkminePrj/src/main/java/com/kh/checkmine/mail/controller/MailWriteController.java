@@ -1,16 +1,25 @@
 package com.kh.checkmine.mail.controller;
 
-import java.util.Arrays;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.mail.service.MailSendService;
 import com.kh.checkmine.mail.service.MailService;
 import com.kh.checkmine.mail.vo.MailSendFormVo;
@@ -70,5 +79,35 @@ public class MailWriteController {
 		}else{
 			return "redirect:/mail/receive";
 		}
+	}
+	
+	/**
+	 * 파일 업로드
+	 * @param files
+	 * @return
+	 */
+	@PostMapping(value = "mail/write/fileUpload", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String mailWriteFileUpload(@RequestParam(value = "files", required = false) MultipartFile[] files, HttpServletRequest req) {
+		Gson gson = new Gson();
+		String savePath = req.getServletContext().getRealPath("/resources/upload/mail/");
+		List<HashMap<String, String>> fileNameMapList = new ArrayList<HashMap<String,String>>();
+		
+		if(files != null) {	
+			
+			for(MultipartFile file : files) {
+				System.out.println(file.getOriginalFilename());
+				String originName = file.getOriginalFilename();
+				String SaveName = FileUploader.fileUpload(file, savePath);
+				
+				HashMap<String, String> fileNameMap = new HashMap<String, String>();
+				fileNameMap.put("originName", originName);
+				fileNameMap.put("SaveName", SaveName);
+				
+				fileNameMapList.add(fileNameMap);
+			}
+		}
+		
+		return gson.toJson(fileNameMapList);
 	}
 }
