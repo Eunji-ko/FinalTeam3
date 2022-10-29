@@ -255,7 +255,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		
 		int expResult = dao.insertExpenditureList(sst, expList);
 		
-		if(docResult*apResult*expResult == expList.size()) {
+		if(docResult*apResult*expResult == -1) {
 			//방금 넣은 문서정보 가져오기
 			return dao.selectCurrentDoc(sst);		
 		}else {

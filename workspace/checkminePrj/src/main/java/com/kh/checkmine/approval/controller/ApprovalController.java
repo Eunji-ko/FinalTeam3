@@ -424,7 +424,6 @@ public class ApprovalController {
 		System.out.println(apVo);
 		System.out.println(docVo);
 		System.out.println(expenditureVo);
-		System.out.println(file);
 		
 		//문서번호 존재 여부 확인
 		if(dno != null) {
