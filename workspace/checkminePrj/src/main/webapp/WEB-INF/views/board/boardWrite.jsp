@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,13 +107,14 @@
                 <div style="display: flex; justify-content: space-between;">
                     <div>
                         <select style="width: 200px;" class="form-select" name="type" onchange=attachType(); required>
-                        <option value="N">공지사항</option>
+                        <c:if test="${fn:contains(loginMember.permission, 'N')}">
+                            <option value="N">공지사항</option>
+                        </c:if>
                         <option value="C">커뮤니티</option>
                         <option value="G">갤러리</option>
                         </select>
                     </div>
                     <div id="title"><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
-                    
                </div>
                 <div id="content-box">
                     <div id="content">
@@ -141,7 +143,6 @@
         function attachType(){
             const select = document.querySelector("select[name=type]").value;
             const attachArea = document.querySelector("#attach");
-            console.log(select);
             if(select == 'G' || select == 'C'){
                 attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="attach" multiple>';
             }else{

@@ -22,7 +22,7 @@
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -94,7 +94,7 @@
         border-radius: 20px;
         margin: 10px;
         width: 250px;
-        height: 270px;
+        height: 285px;
         border: 1px solid lightgray;
         display: inline-block;
         margin-left: 70px;
@@ -114,6 +114,11 @@
     .info{
         display: flex;
         justify-content: space-around;
+    }
+    .info2{
+        display: flex;
+        justify-content: right;
+        margin-right: 13px;
     }
     .title, .writer{
         display: inline-block;
@@ -170,6 +175,7 @@
                         <div class="board-item" style="cursor: pointer;" onclick="location.href='${rootPath}/board/detail/${b.no}';">
                             <div class="thumbnail"><img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}"></div>
                             <div class="info"><div class="title">${b.title}</div><div class="writer">${b.writer}</div></div>
+                            <div class="info2">${b.enrollDate}</div>
                         </div>
                         </c:forEach>
                     </div>
