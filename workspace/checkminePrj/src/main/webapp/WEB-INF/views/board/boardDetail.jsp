@@ -201,14 +201,21 @@
 
                 </div>
                 <div id="buttonArea">
-                <!-- 임시로 추천 상태 on으로 설정함 -->
-                <button type="button" class="btn" id="recommend" onclick="recommendBoard()">추천</button>
+                    <c:choose>
+                        <c:when test="${recommendList eq '1'}">
+                            <button type="button" class="btn" id="recommend" style="background-color: white; color:#5D736F"
+                            onclick="recommendBoard()">추천!</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" class="btn" id="recommend" onclick="recommendBoard()">추천</button>
+                        </c:otherwise>
+                    </c:choose>
                 <c:if test="${loginMember.no eq board.wno}">   
                     <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/edit/${board.no}'">수정</button>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </c:if> 
                 </div>
-                
+              
             </div>
             
  
@@ -226,12 +233,11 @@
                     "memberNo" : "${loginMember.no}"
                 },
                 success: function(str){
-                    console.log(str);
-                    console.log(str[recommendCnt]);
-                    console.log(str.recommendCnt);
-                    if(str[0] == 1){
+                    if(str.recommendList == 0){
+                        document.querySelector('#recommend').innerHTML = "추천!";
                         document.querySelector('#recommend').style.cssText = "background-color: white; color:#5D736F";
                     }else{
+                        document.querySelector('#recommend').innerHTML = "추천";
                         document.querySelector('#recommend').style.cssText = " ";
                     }
                     $('#recommendCnt').html("추천 "+ str.recommendCnt);
@@ -251,7 +257,7 @@
         function deleteBoard(){
             const answer = confirm('해당 게시물을 삭제할까요?');
 	        if(answer == true){
-	            location.href="${rootPath}/board/delete/${board.no}";
+	            location.href="${rootPath}/board/delete/${board.type}/${board.no}";
 	        }
         }
         

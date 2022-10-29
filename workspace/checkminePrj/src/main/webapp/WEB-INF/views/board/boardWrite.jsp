@@ -105,7 +105,7 @@
             
                 <div style="display: flex; justify-content: space-between;">
                     <div>
-                        <select style="width: 200px;" class="form-select" name="type" onchange=attach(); required>
+                        <select style="width: 200px;" class="form-select" name="type" onchange=attachType(); required>
                         <option value="N">공지사항</option>
                         <option value="C">커뮤니티</option>
                         <option value="G">갤러리</option>
@@ -138,14 +138,14 @@
    
     <script>
         //커뮤니티, 갤러리 선택 시 사진만 첨부 가능하게 함
-        function attach(){
+        function attachType(){
             const select = document.querySelector("select[name=type]").value;
             const attachArea = document.querySelector("#attach");
             console.log(select);
-            if(select == 'g' || select == 'c'){
-                attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="file" multiple>';
+            if(select == 'G' || select == 'C'){
+                attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="attach" multiple>';
             }else{
-                attachArea.innerHTML = '<input type="file" name="file" multiple>';
+                attachArea.innerHTML = '<input type="file" name="attach" multiple>';
             }
 
         }

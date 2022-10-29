@@ -118,5 +118,39 @@ public class BoardServiceImpl implements BoardService{
 		return result;
 	}
 
+	//게시글 삭제
+	@Override
+	public int delete(String boardNo) {
+		int result = dao.delete(sst, boardNo);
+		return result;
+	}
+	
+	//게시물 수정 (+첨부파일)
+	@Override
+	@Transactional
+	public int edit(BoardVo vo, List<BoardAttVo> attVoList) {
+		//게시글
+		int result1 = dao.edit(sst, vo);
+
+		//기존 첨부파일 삭제
+		int result2 = dao.deleteAtt(sst, vo);
+		
+		//첨부파일
+		int result3 = 1;
+		for(int i = 0; i < attVoList.size(); i++) {
+			
+			result3 *= dao.edit(sst, attVoList.get(i));
+		}
+	
+		return result1 * result3;
+	}
+
+	//게시글만 수정
+	@Override
+	public int edit(BoardVo vo) {
+		return dao.edit(sst, vo);
+
+	}
+
 	
 }

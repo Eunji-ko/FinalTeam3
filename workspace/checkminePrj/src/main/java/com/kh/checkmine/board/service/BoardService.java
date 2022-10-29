@@ -41,6 +41,15 @@ public interface BoardService {
 	//추천 삭제
 	int recommendDelete(Map<String, String> map);
 
+	//게시글 삭제
+	int delete(String boardNo);
+
+	
+	//게시글 수정
+	int edit(BoardVo vo, List<BoardAttVo> attVoList);
+
+	int edit(BoardVo vo);
+
 
 	
 

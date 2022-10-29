@@ -97,24 +97,24 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
             
                 <div id="title">
-                    <div><select style="width: 200px;"class="form-select" name="type"  disabled>
-                        <option value="n">공지사항</option>
-                        <option value="c">커뮤니티</option>
-                        <option value="g" >갤러리</option>
+                    <div><select style="width: 200px;" class="form-select" name="type" id="type" onchange=attachType();>
+                        <option value="N">공지사항</option>
+                        <option value="C">커뮤니티</option>
+                        <option value="G">갤러리</option>
                     </select></div>
-                    <div><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
+                    <div><input type="text" class="form-control" name="title" value=${board.title} required></div>
                     
                </div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;"name="content" style="width:650px; height:350px;" required></textarea>
+                        <textarea style="width: 100%; height: 100%;"name="content" style="width:650px; height:350px;" required>${board.content}</textarea>
                        
                     </div>
                     <div id="footer">
-                        <div id="attach"><input type="file" name="file" multiple></div>
+                        <div id="attach"><input type="file" name="attach" multiple></div>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">수정하기</button></div>
                     </div>
 
@@ -132,18 +132,18 @@
    
     <script>
         //커뮤니티, 갤러리 선택 시 사진만 첨부 가능하게 함
-        function attach(){
+        function attachType(){
             const select = document.querySelector("select[name=type]").value;
             const attachArea = document.querySelector("#attach");
-            console.log(select);
-            if(select == 'g' || select == 'c'){
-                attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="file" multiple>';
+            if(select == 'G' || select == 'C'){
+                attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="attach" multiple>';
             }else{
-                attachArea.innerHTML = '<input type="file" name="file" multiple>';
+                attachArea.innerHTML = '<input type="file" name="attach" multiple>';
             }
 
         }
         
+        $('#type').val('${board.type}').prop("selected",true);
        
     </script>
     
