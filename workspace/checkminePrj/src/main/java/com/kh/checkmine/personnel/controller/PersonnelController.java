@@ -126,9 +126,7 @@ public class PersonnelController {
 		
 		int result = ps.delAcc(no);
 		
-		System.out.println(result);
-		
-		if(result == 1) {
+		if(result >= 1) {
 			//삭제 성공
 			
 			//디비 다녀오기
@@ -139,6 +137,7 @@ public class PersonnelController {
 			model.addAttribute("memList", memList);
 			model.addAttribute("accList", accList);
 			
+			session.setAttribute("alertMsg", result + "개의 거래처를 모두 삭제하였습니다 !");
 			return "personnel/main";
 		}else {
 			//삭제 실패
