@@ -101,11 +101,13 @@
 	</select>
 	
 	<select id="selectSendList" resultType="com.kh.checkmine.mail.vo.MailVo">
-		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NOT NULL AND SENDER=#{memberNo}
+		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NOT NULL AND SENDER=#{memberNo} 
+		ORDER BY SEND_DATE DESC
 	</select>
 	
 	<select id="selectSaveList" resultType="com.kh.checkmine.mail.vo.MailVo">
 		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NULL AND SENDER=#{memberNo}
+		ORDER BY SEND_DATE DESC
 	</select>
 	
 	<update id="upadteImportance">

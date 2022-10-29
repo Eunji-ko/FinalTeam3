@@ -15,7 +15,39 @@
 		)
 	</insert>
 	
-	<select id="selectCurruntMailNum" resultType="string">
-		SELECT 
+	<select id="selectCurrentMailNum" resultType="string">
+		SELECT SEQ_MAIL.CURRVAL FROM DUAL
 	</select>
+	
+	<select id="selectEmpNoToEmail" resultType="string">
+		SELECT NO FROM EMPLOYEE WHERE EMAIL = #{empEmail}
+	</select>
+	
+	<insert id="insertMailRefA">
+		INSERT INTO MAIL_REF(
+			NO,
+			MAIL_NO,
+			RECEIVER,
+			TYPE
+		)VALUES(
+			SEQ_MAIL_REF.NEXTVAL,
+			#{currentMailNum},
+			#{receiver},
+			'A'
+		)
+	</insert>
+	
+	<insert id="insertMailRefR">
+		INSERT INTO MAIL_REF(
+			NO,
+			MAIL_NO,
+			RECEIVER,
+			TYPE
+		)VALUES(
+			SEQ_MAIL_REF.NEXTVAL,
+			#{currentMailNum},
+			#{refer},
+			'R'
+		)
+	</insert>
 </mapper>

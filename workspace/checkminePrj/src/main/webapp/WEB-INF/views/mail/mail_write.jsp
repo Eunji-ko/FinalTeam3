@@ -159,6 +159,13 @@
         min-width: 970px;
         border: none;
     }
+    .file-delete-btn{
+        border: none;
+        border-radius: 5px;
+        background-color: #B0D9D1;
+        font-size: 10px;
+        margin-left: 10px;
+    }
    
 </style>
 <link rel="stylesheet" type="text/css" href="/checkmine/resources/css/mail/mail_addr_modal.css">
@@ -233,7 +240,7 @@
                             </div>
                             <div id="file-preview">
                                 <input type="file" name="file" id="file-upload" multiple>
-
+                                
                             </div>
                             <div id="grow"></div>
                             <input type="submit" value="임시저장" id="send-submit-button" onclick="sendMail('save');">
@@ -284,24 +291,47 @@
     const input = document.querySelector('#file-upload');
     const preview = document.querySelector('#file-preview');
     input.addEventListener("change",function(){
-        const prePreview = document.querySelectorAll('#file-preview div');
-
-        for(var i=0;i<prePreview.length;i++){
-            preview.removeChild(prePreview[i]);
-        }
 
         const uploadFiles = input.files;
-
+        
+        // formData 만들고 파일 넣기
+        const formData = new FormData();
         for(var i = 0;i<uploadFiles.length;i++){
-            let preItem = document.createElement('div');
-            preItem.innerText = uploadFiles[i].name;
-
-            preview.appendChild(preItem);
+            formData.append("files", uploadFiles[i]);
         }
 
-        
+        $.ajax({
+            url : "/checkmine/mail/write/fileUpload",
+            method : "post",
+            processData : false,
+            contentType : false,
+            enctype: 'multipart/form-data',
+            data : formData,
+            success:function(fileNames){
+                const fileNames_ = JSON.parse(fileNames);
+
+                console.log(fileNames_);
+                for(var i = 0;i<fileNames_.length;i++){
+                    preview.innerHTML = preview.innerHTML
+                        + '<div>'
+                        +   '<span>'+ fileNames_[i].originName +'</span>'
+                        +   '<button type="button" class="file-delete-btn" onclick="fileDelete(this);">삭제</button>'
+                        +   '<input type="hidden" name="fileNames" value="'+ fileNames_[i].originName + ',' + fileNames_[i].SaveName +'">'
+                        + '</div>';
+                }
+            },
+            error : function(error){
+                console.log(error);
+                console.log('에러남');
+            }
+        });
 
     });
+    
+    //파일 삭제 버튼 동작
+    function fileDelete(deleteEle){
+        console.log(deleteEle.parentNode);
+    }
 
     // submit시 TODO:유효성 검사
     function sendMail(str){

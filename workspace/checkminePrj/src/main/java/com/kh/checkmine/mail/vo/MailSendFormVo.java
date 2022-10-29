@@ -11,4 +11,5 @@ public class MailSendFormVo {
 	private String content;
 	private String[] receiverArr;
 	private String[] referArr;
+	private String currentMailNum;
 }
