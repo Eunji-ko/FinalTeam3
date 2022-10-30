@@ -307,7 +307,7 @@
 		VALUES
 		(
 			SEQ_EXP_NO.NEXTVAL
-			,#{dno}
+			,SEQ_DOC_NO.CURRVAL
 			,#{brief}
 			,#{amount}
 			,#{note}
@@ -361,6 +361,29 @@
 		        (SEQ_STATE_NO.NEXTVAL,SEQ_DOC_NO.CURRVAL,#{l.account},#{l.name},#{l.brief},#{l.stateRp},#{l.money})
 		    </foreach>
 		END;
+	</insert>
+	
+	<insert id="insertLeave">
+		INSERT INTO LEAVE
+		(
+			NO
+			,TYPE
+			,"BEGIN"
+			,"END"
+			,LEAVE_TIME
+			,LEAVE_DAY
+			,APPLY
+		)
+		VALUES
+		(
+			SEQ_DOC_NO.CURRVAL
+			,#{type}
+			,#{begin}
+			,#{end}
+			,#{leaveTime}
+			,#{leaveDay}
+			,#{apply}
+		)
 	</insert>
 
 </mapper>

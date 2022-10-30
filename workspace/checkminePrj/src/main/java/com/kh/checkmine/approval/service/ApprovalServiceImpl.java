@@ -267,7 +267,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public ApprovalDocVo approvalBuyOrder(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalBuyOrderVo buyOrderVo) {
 		
-		//구매품의서 관련 문서정보, 결재정보, 회의록 정보 DB에 올리기
+		//구매품의서 관련 문서정보, 결재정보, 구매품의서 정보 DB에 올리기
 		int docResult = dao.insertDoc(sst, docVo);
 		int apResult = dao.insertApproval(sst, apVo);
 		int orderResult = dao.insertBuyOrder(sst, buyOrderVo);
@@ -312,6 +312,22 @@ public class ApprovalServiceImpl implements ApprovalService{
 		int stateResult = dao.insertStateList(sst, stateList);
 		
 		if(docResult*apResult*stateResult == -1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
+	//휴가원 결재하기
+	@Override
+	public ApprovalDocVo approvalLeave(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalLeaveVo leaveVo) {
+		//휴가원 관련 문서정보, 결재정보, 휴가원 정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		int leaveResult = dao.insertLeave(sst, leaveVo);
+		
+		if(docResult*apResult*leaveResult == 1) {
 			//방금 넣은 문서정보 가져오기
 			return dao.selectCurrentDoc(sst);		
 		}else {

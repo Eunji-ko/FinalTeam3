@@ -113,5 +113,8 @@ public interface ApprovalDao {
 	//전표 리스트 DB에 올리기
 	int insertStateList(SqlSessionTemplate sst, List<ApprovalStateVo> stateList);
 
+	//휴가원 정보 DB에 올리기
+	int insertLeave(SqlSessionTemplate sst, ApprovalLeaveVo leaveVo);
+
 
 }

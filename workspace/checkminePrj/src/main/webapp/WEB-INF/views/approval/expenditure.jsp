@@ -208,11 +208,6 @@
 			}
 		})
 
-		function expApproval(){
-			
-			return approval();
-		}
-		
 		//칸 추가
 		let eidNum = 0;
 		$('#eplus-btn').click(function(){

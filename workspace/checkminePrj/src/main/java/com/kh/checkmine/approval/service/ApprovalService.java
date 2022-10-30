@@ -105,5 +105,8 @@ public interface ApprovalService {
 	//전표 결재하기
 	ApprovalDocVo approvalState(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalStateVo stateVo);
 
+	//휴가원 결재하기
+	ApprovalDocVo approvalLeave(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalLeaveVo leaveVo);
+
 
 }

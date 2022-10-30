@@ -214,4 +214,10 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.insert("approvalMapper.insertStateList", stateList);
 	}
 
+	//휴가원 DB에 올리기
+	@Override
+	public int insertLeave(SqlSessionTemplate sst, ApprovalLeaveVo leaveVo) {
+		return sst.insert("approvalMapper.insertLeave", leaveVo);
+	}
+
 }
