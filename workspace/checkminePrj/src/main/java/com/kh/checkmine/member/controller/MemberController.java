@@ -126,16 +126,16 @@ public class MemberController {
 		
 		vo.setNo(loginMember.getNo());
 		
-		MemberVo updatedMember = ms.edit(vo);
+		MemberVo updatedMember = ms.changePhoto(vo);
 		
 		if(updatedMember != null) {
 			//정보수정 성공
 			session.setAttribute("loginMember", updatedMember);
-			return "redirect:/";
+			return "member/mypage";
 		}else {
 			//정보수정 실패
 			session.setAttribute("alertMsg", updatedMember);
-			return "redirect:/mypage";
+			return "redirect:/member/mypage";
 		}
 	}
 

@@ -43,6 +43,14 @@
  		WHERE NO = #{no} 
   </update>
   
+  <update id="updatePhoto">
+  	UPDATE EMPLOYEE
+  		SET
+  			  PHOTO_NAME = #{photoName}
+  			, MODIFY_DATE = SYSDATE
+  		WHERE NO = #{no}
+  </update>
+  
   <select id="selectOneByNo" resultType="MemberVo">
   	SELECT
 	          E.NO

@@ -12,4 +12,6 @@ public interface MemberService {
 
 	MemberVo selectOneByNo(String no);
 
+	MemberVo changePhoto(MemberVo vo);
+
 }
