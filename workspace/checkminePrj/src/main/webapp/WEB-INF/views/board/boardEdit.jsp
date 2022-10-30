@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+     
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +104,9 @@
             
                 <div id="title">
                     <div><select style="width: 200px;" class="form-select" name="type" id="type">
-                        <option value="N">공지사항</option>
+                        <c:if test="${fn:contains(loginMember.permission, 'N')}">
+                            <option value="N">공지사항</option>
+                        </c:if>
                         <option value="C">커뮤니티</option>
                         <option value="G">갤러리</option>
                     </select></div>
@@ -146,7 +151,7 @@
        
     </script>
     
-
+    
 
 
 

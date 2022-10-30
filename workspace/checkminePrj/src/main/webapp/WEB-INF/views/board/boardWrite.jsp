@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+     <!-- 서머노트를 위해 추가해야할 부분 -->
+        <script src="${rootPath}/resources/summernote/summernote-lite.js"></script>
+        <script src="${rootPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+        <link rel="stylesheet" href="${rootPath}/resources/summernote/summernote-lite.css">
+     <!--  -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +123,7 @@
                </div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;"name="content" style="width:650px; height:350px;" required></textarea>
+                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;" required></textarea>
                        
                     </div>
                     <div id="footer">
@@ -152,6 +157,43 @@
         }
         
        
+    </script>
+
+    <script>
+        //썸머노트 적용
+        $('.summernote').summernote({
+            height: 533,
+            lang: "ko-KR",
+            disableResizeEditor: true,
+           
+            //콜백 함수
+            callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+            // 파일 업로드(다중업로드를 위해 반복문 사용)
+            for (var i = files.length - 1; i >= 0; i--) {
+            uploadSummernoteImageFile(files[i],
+            this);
+            		}
+            	}
+            }
+	});
+           
+    function uploadSummernoteImageFile(file, el) {
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "${rootPath}/board/uploadSummernoteImageFile",
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+					$(el).summernote('editor.insertImage', '${rootPath}'+ "/resources/upload/board/" +data.fileName);
+				}
+			});
+		}
+   
     </script>
     
 
