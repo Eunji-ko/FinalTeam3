@@ -2,6 +2,7 @@ package com.kh.checkmine.mail.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.checkmine.mail.vo.MailAttVo;
 import com.kh.checkmine.mail.vo.MailSendFormVo;
 
 public interface MailSendDao {
@@ -43,5 +44,13 @@ public interface MailSendDao {
 	 * @return
 	 */
 	String getEmpNoToEmail(SqlSessionTemplate sst, String empEmail);
+
+	/**
+	 * 파일 이름 디비에 저장
+	 * @param sst
+	 * @param map
+	 * @return
+	 */
+	int insertMailAtt(SqlSessionTemplate sst, MailAttVo vo);
 
 }

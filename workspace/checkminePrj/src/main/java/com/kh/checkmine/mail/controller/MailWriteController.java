@@ -1,10 +1,13 @@
 package com.kh.checkmine.mail.controller;
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +25,7 @@ import com.google.gson.Gson;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.mail.service.MailSendService;
 import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailAttVo;
 import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.member.vo.MemberVo;
 
@@ -62,7 +66,24 @@ public class MailWriteController {
 	 * @return
 	 */
 	@PostMapping("mail/send")
-	public String mailWriteSend(MailSendFormVo formVo,HttpSession session) {
+	public String mailWriteSend(MailSendFormVo formVo,HttpSession session, String[] fileNames, HttpServletRequest req) {
+		System.out.println(Arrays.toString(fileNames));
+
+		//파일이름 데이터 뭉치기
+		String savePath = "/checkmine/resources/upload/mail";
+		List<MailAttVo> mailAttVoList = new ArrayList<MailAttVo>();
+		
+		for(int i = 0;i<fileNames.length;i++) {
+			String[] arr = fileNames[i].split(",");
+			
+			MailAttVo mailAttVo = new MailAttVo();
+			mailAttVo.setRealName(arr[0]);
+			mailAttVo.setName(arr[1]);
+			mailAttVo.setPath(savePath);
+			
+			mailAttVoList.add(mailAttVo);
+		}
+		formVo.setMailAttVoList(mailAttVoList);
 
 		// 데이터 뭉치기
 		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
@@ -96,7 +117,7 @@ public class MailWriteController {
 		if(files != null) {	
 			
 			for(MultipartFile file : files) {
-				System.out.println(file.getOriginalFilename());
+//				System.out.println(file.getOriginalFilename());
 				String originName = file.getOriginalFilename();
 				String SaveName = FileUploader.fileUpload(file, savePath);
 				
@@ -109,5 +130,28 @@ public class MailWriteController {
 		}
 		
 		return gson.toJson(fileNameMapList);
+	}
+	
+	/**
+	 * 파일 삭제
+	 * @param filenames
+	 * @param req
+	 * @return
+	 */
+	@PostMapping(value = "mail/write/fileDelete", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String mailWriteFileDelete(String filenames, HttpServletRequest req) {
+		String savePath = req.getServletContext().getRealPath("/resources/upload/mail/");
+		String[] filenameArr = filenames.split(",");
+		
+		File file = new File(savePath+"/"+filenameArr[1]);
+		
+		boolean result = file.delete();
+		if(result) {			
+			return "성공";
+		}else {
+			return "실패";
+		}
+		
 	}
 }
