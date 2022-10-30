@@ -99,7 +99,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	//문서번호로 전표 조회하기
 	@Override
-	public ApprovalStateVo selectStateByNo(String dno) {
+	public List<ApprovalStateVo> selectStateByNo(String dno) {
 		return dao.selectState(sst, dno);
 	}
 

@@ -155,12 +155,12 @@
 				<input type="text" maxlength="250" class="form-control" value="${docVo.title}">
 			</div>
 			<div id="approval-content-div">
-				<select id="leave-type" class="form-select" name="leaveType">
-					<option value="연차">연차</option>
-					<option value="반차" id="l-time">반차</option>
-					<option value="공가">공가</option>
-					<option value="병가">병가</option>
-					<option value="특별휴가">특별휴가</option>
+				<select id="leave-type" class="form-select" name="type">
+					<option class="leave-type-option" value="연차">연차</option>
+					<option class="leave-type-option" value="반차" id="l-time">반차</option>
+					<option class="leave-type-option" value="공가">공가</option>
+					<option class="leave-type-option" value="병가">병가</option>
+					<option class="leave-type-option" value="특별휴가">특별휴가</option>
 				</select>
 				<div id="l-day-div">
 					<div id="draft-team" class="input-group-text">휴가일수</div>
@@ -175,9 +175,9 @@
 						<div class="input-group-text">반차 시간</div>
 						<div>
 							<select id="l-time-select" class="form-select" name="lTime" disabled>
-								<option value="">없음</option>
-								<option value="오전">오전</option>
-								<option value="오후">오후</option>
+								<option class="lt-option" value="">없음</option>
+								<option class="lt-option" value="오전">오전</option>
+								<option class="lt-option" value="오후">오후</option>
 							</select>
 						</div>
 						<div class="input-group-text">신청 연차</div>
@@ -221,7 +221,7 @@
 		$('#leave-type').blur(function(){
 			if($('#leave-type').val() == '반차'){
 				$("#l-time-select").prop("disabled", false);
-				document.querySelector('#leave-apply').value = 0.5;
+				document.querySelector('#leave-apply').value += 0.5;
 			}else{
 				$("#l-time-select").prop("disabled", true);
 				var date1 = new Date(document.querySelector('#start-date').value);
@@ -234,6 +234,36 @@
 			}
 		});
 	</script>
+
+	<c:if test="${levaeVo.type ne null}">
+		<script>
+			window.onload = function(){
+				document.querySelectorAll('.leave-type-option').forEach(function(x){
+					if(x.value == '${levaeVo.type}'){
+						x.selected = true;
+					}else{
+						x.selected = false;
+						x.disabled = true;
+					}
+				});
+			}
+		</script>
+	</c:if>
+
+	<c:if test="${levaeVo.lTime ne null}">
+		<script>
+			window.onload = function(){
+				document.querySelectorAll('.lt-option').forEach(function(x){
+					if(x.value == '${levaeVo.lTime}'){
+						x.selected = true;
+					}else{
+						x.selected = false;
+						x.disabled = true;
+					}
+				});
+			}
+		</script>
+	</c:if>
 
 	</form>
 </main>

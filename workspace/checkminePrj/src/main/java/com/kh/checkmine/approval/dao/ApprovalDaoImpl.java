@@ -79,7 +79,7 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	//문서번호로 지출결의서 조회하기
 	@Override
 	public List<ApprovalExpenditureVo> selectExpenditure(SqlSessionTemplate sst, String dno) {
-		return sst.selectOne("approvalMapper.selectExpenditure", dno);
+		return sst.selectList("approvalMapper.selectExpenditure", dno);
 	}
 
 	//문서번호로 구매품의서 조회하기
@@ -90,8 +90,8 @@ public class ApprovalDaoImpl implements ApprovalDao{
 
 	//문서번호로 전표 조회하기
 	@Override
-	public ApprovalStateVo selectState(SqlSessionTemplate sst, String dno) {
-		return sst.selectOne("approvalMapper.selectState", dno);
+	public List<ApprovalStateVo> selectState(SqlSessionTemplate sst, String dno) {
+		return sst.selectList("approvalMapper.selectState", dno);
 	}
 
 	//문서번호로 휴가 조회하기

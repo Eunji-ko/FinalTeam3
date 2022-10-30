@@ -94,7 +94,7 @@
 	<select id="selectExpenditure" resultType="ApprovalExpenditureVo">
 		SELECT *
 		FROM EXPENDITURE
-		WHERE NO = #{dno}
+		WHERE DOC_NO = #{dno}
 	</select>
 	
 	<select id="selectBuyOrder" resultType="ApprovalBuyOrderVo">
@@ -106,7 +106,7 @@
 	<select id="selectState" resultType="ApprovalStateVo">
 		SELECT *
 		FROM STATE
-		WHERE NO = #{dno}
+		WHERE DOC_NO = #{dno}
 	</select>
 	
 	<select id="selectLeave" resultType="ApprovalLeaveVo">

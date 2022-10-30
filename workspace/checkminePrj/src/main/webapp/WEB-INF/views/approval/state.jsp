@@ -173,7 +173,7 @@
 
 			<div id="approval-title-div">
 				<div id="approval-title" class="input-group-text">제목</div>
-				<input type="text" maxlength="250" class="form-control" value="${docVo.title}">
+				<input type="text" maxlength="250" class="form-control" name="title" value="${docVo.title}">
 			</div>
 			<div id="approval-content-div">
 				<div id="form-check-div" class="form-control">
@@ -213,9 +213,11 @@
 								</div>
 							</c:if>
 							<c:forEach items="${stateVo}" var="list">
-								<input type="text" class="form-control" id="name-input" name="name" value="${list.name}">
-								<input type="text" class="form-control" id="brief-input" name="brief" value="${list.brief}">
-								<input type="number" class="form-control" id="money-input" placeholder="0" min="0" name="money" value="${list.money}">
+								<div class="table-content-div" id="table-div">
+									<input type="text" class="form-control" id="name-input" name="name" value="${list.name}">
+									<input type="text" class="form-control" id="brief-input" name="brief" value="${list.brief}">
+									<input type="number" class="form-control" id="money-input" placeholder="0" min="0" name="money" value="${list.money}">
+								</div>
 							</c:forEach>
 						</div>
 					</div>

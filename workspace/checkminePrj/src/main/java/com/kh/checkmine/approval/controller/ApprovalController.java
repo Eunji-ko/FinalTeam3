@@ -127,7 +127,7 @@ public class ApprovalController {
 				model.addAttribute("buyOrderVo", buyOrderVo);
 				break;
 			case "S":
-				ApprovalStateVo stateVo = service.selectStateByNo(dno);
+				List<ApprovalStateVo> stateVo = service.selectStateByNo(dno);
 				model.addAttribute("stateVo", stateVo);
 				break;
 			case "L":
