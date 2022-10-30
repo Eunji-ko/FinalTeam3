@@ -9,8 +9,8 @@ public class ApprovalLeaveVo {
 	private String type;
 	private String begin;
 	private String end;
-	private String lTime;
-	private String lDay;
+	private String leaveTime;
+	private String leaveDay;
 	private String apply;
 
 }

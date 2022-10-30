@@ -49,7 +49,7 @@ public interface ApprovalService {
 	ApprovalBuyOrderVo selectBuyOrderByNo(String dno);
 
 	//문서번호로 전표 조회하기
-	ApprovalStateVo selectStateByNo(String dno);
+	List<ApprovalStateVo> selectStateByNo(String dno);
 
 	//문서번호로 휴가 조회하기
 	ApprovalLeaveVo selectLeaveByNo(String dno);
@@ -101,6 +101,12 @@ public interface ApprovalService {
 
 	//구매품의서 결재하기
 	ApprovalDocVo approvalBuyOrder(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalBuyOrderVo buyOrderVo);
+
+	//전표 결재하기
+	ApprovalDocVo approvalState(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalStateVo stateVo);
+
+	//휴가원 결재하기
+	ApprovalDocVo approvalLeave(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalLeaveVo leaveVo);
 
 
 }

@@ -51,7 +51,7 @@ public interface ApprovalDao {
 	ApprovalBuyOrderVo selectBuyOrder(SqlSessionTemplate sst, String dno);
 
 	//문서번호로 전표 조회하기
-	ApprovalStateVo selectState(SqlSessionTemplate sst, String dno);
+	List<ApprovalStateVo> selectState(SqlSessionTemplate sst, String dno);
 
 	//문서번호로 휴가 조회하기
 	ApprovalLeaveVo selectLeave(SqlSessionTemplate sst, String dno);
@@ -109,6 +109,12 @@ public interface ApprovalDao {
 
 	//구매품의서 정보 DB에 올리기
 	int insertBuyOrder(SqlSessionTemplate sst, ApprovalBuyOrderVo buyOrderVo);
+
+	//전표 리스트 DB에 올리기
+	int insertStateList(SqlSessionTemplate sst, List<ApprovalStateVo> stateList);
+
+	//휴가원 정보 DB에 올리기
+	int insertLeave(SqlSessionTemplate sst, ApprovalLeaveVo leaveVo);
 
 
 }

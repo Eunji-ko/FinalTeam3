@@ -94,7 +94,7 @@
 	<select id="selectExpenditure" resultType="ApprovalExpenditureVo">
 		SELECT *
 		FROM EXPENDITURE
-		WHERE NO = #{dno}
+		WHERE DOC_NO = #{dno}
 	</select>
 	
 	<select id="selectBuyOrder" resultType="ApprovalBuyOrderVo">
@@ -106,7 +106,7 @@
 	<select id="selectState" resultType="ApprovalStateVo">
 		SELECT *
 		FROM STATE
-		WHERE NO = #{dno}
+		WHERE DOC_NO = #{dno}
 	</select>
 	
 	<select id="selectLeave" resultType="ApprovalLeaveVo">
@@ -307,7 +307,7 @@
 		VALUES
 		(
 			SEQ_EXP_NO.NEXTVAL
-			,#{dno}
+			,SEQ_DOC_NO.CURRVAL
 			,#{brief}
 			,#{amount}
 			,#{note}
@@ -315,31 +315,14 @@
 	</insert>
 	
 	<insert id="insertExpenditureList">
-		<!-- INSERT ALL
-		<foreach collection="list" item="e" open="INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" separator=") INTO EXPENDITURE(NO,DOC_NO,BRIEF,AMOUNT,NOTE) VALUES(" close=") SELECT * FROM DUAL">
-		SEQ_EXP_NO.NEXTVAL
-		,SEQ_DOC_NO.CURRVAL
-		,#{e.brief}
-		,#{e.amount}
-		,#{e.note}
-		</foreach> -->
-		
-		INSERT INTO EXPENDITURE
-		<foreach collection="list" item="e" open="(" separator="," close=")">
-			NO
-			,DOC_NO
-			,BRIEF
-			,AMOUNT
-			,NOTE
-		</foreach>
-		VALUES
-		<foreach collection="list" item="e" open="(" separator="," close=")">
-			SEQ_EXP_NO.NEXTVAL
-			,SEQ_DOC_NO.CURRVAL
-			,#{e.brief}
-			,#{e.amount}
-			,#{e.note}
-		</foreach>
+		BEGIN
+		    <foreach collection="list" item="l" separator=";" close=";">
+		        INSERT INTO EXPENDITURE
+		        (NO,DOC_NO,BRIEF,AMOUNT,NOTE)
+		        VALUES
+		        (SEQ_EXP_NO.NEXTVAL,SEQ_DOC_NO.CURRVAL,#{l.brief},#{l.amount},#{l.note})
+		    </foreach>
+		END;
 	</insert>
 	
 	<insert id="insertBuyOrder">
@@ -366,6 +349,40 @@
 			,#{startDate}
 			,#{endDate}
 			,#{content}
+		)
+	</insert>
+	
+	<insert id="insertStateList">
+		BEGIN
+		    <foreach collection="list" item="l" separator=";" close=";">
+		        INSERT INTO STATE
+		        (NO,DOC_NO,ACCOUNT,NAME,BRIEF,STATE_RP,MONEY)
+		        VALUES
+		        (SEQ_STATE_NO.NEXTVAL,SEQ_DOC_NO.CURRVAL,#{l.account},#{l.name},#{l.brief},#{l.stateRp},#{l.money})
+		    </foreach>
+		END;
+	</insert>
+	
+	<insert id="insertLeave">
+		INSERT INTO LEAVE
+		(
+			NO
+			,TYPE
+			,"BEGIN"
+			,"END"
+			,LEAVE_TIME
+			,LEAVE_DAY
+			,APPLY
+		)
+		VALUES
+		(
+			SEQ_DOC_NO.CURRVAL
+			,#{type}
+			,#{begin}
+			,#{end}
+			,#{leaveTime}
+			,#{leaveDay}
+			,#{apply}
 		)
 	</insert>
 

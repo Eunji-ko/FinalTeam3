@@ -163,13 +163,13 @@
 			</div>
 			<div id="approval-content-div">
 				<select id="proposal-type" class="form-select" name="typeNo">
-				  <option value="1">제휴</option>
-				  <option value="2">영업</option>
-				  <option value="3">용역</option>
-				  <option value="4">투자</option>
-				  <option value="5">개발</option>
-				  <option value="6">컨설팅</option>
-				  <option value="7">입점</option>
+				  <option class="pro-type-option" value="1">제휴</option>
+				  <option class="pro-type-option" value="2">영업</option>
+				  <option class="pro-type-option" value="3">용역</option>
+				  <option class="pro-type-option" value="4">투자</option>
+				  <option class="pro-type-option" value="5">개발</option>
+				  <option class="pro-type-option" value="6">컨설팅</option>
+				  <option class="pro-type-option" value="7">입점</option>
 				</select>
 				<!-- Button to Open the Modal -->
 				<div id="account-div">
@@ -225,7 +225,7 @@
 	<c:if test="${proposalVo.typeNo ne null}">
 		<script>
 			window.onload = function(){
-				document.querySelectorAll('option').forEach(function(x){
+				document.querySelectorAll('.pro-type-option').forEach(function(x){
 					if(x.value == '${proposalVo.typeNo}'){
 						x.selected = true;
 					}else{
