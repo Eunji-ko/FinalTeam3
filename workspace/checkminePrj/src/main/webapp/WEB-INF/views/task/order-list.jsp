@@ -71,18 +71,29 @@
     .search-btn{
         border-radius: 100px;
         border: none;
-        padding: 5px;
+        margin-right: 5px;
+        margin-left: 10px;
+    }
+
+    .search-btn:hover{
+        background-color: #5D736F;
+        color: white;
+    }
+
+    .form-control{
+        border-radius: 100px;
+        margin-left: 5px;
     }
     
     /*검색 이미지*/
-    form > div > img{
+    #search-img{
         margin-left: 10px;
-        margin-bottom: 4px;
     }
 
     /*작성 버튼*/
     #write-box {
-        margin: 25px;
+        margin: 20px;
+        margin-top: 30px
     }
 
     #write{
@@ -181,11 +192,11 @@
                 <!--검색 기능-->
 
                 <div id="search-write-box">
-                    <form method="get" id="search" action="searchbbs.jsp">
+                    <form id="search" action="${root}/order/list/search" method="get" >
                         <table class="pull-right">
                             <tr>
                                 <td>
-                                    <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px">
+                                    <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px" id="search-img">
                                 </td>
                                 <td><select class="form-control" name="searchField">
                                         <option value="title">제목</option>

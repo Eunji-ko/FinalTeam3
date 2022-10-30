@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("schedule")
 public class ScheduleController {
 	
-	@GetMapping("main")
+	@GetMapping("")
 	public String main() {
 		return "schedule/main";
 	}
