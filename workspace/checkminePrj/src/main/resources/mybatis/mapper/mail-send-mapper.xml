@@ -50,4 +50,20 @@
 			'R'
 		)
 	</insert>
+	
+	<insert id="insertMailAtt" parameterType="hashMap">
+		INSERT INTO MAIL_ATT(
+			NO
+			,MAIL_NO
+			,NAME
+			,PATH
+			,REAL_NAME
+		)VALUES(
+			SEQ_MAIL_ATT.NEXTVAL
+			, #{mailNo}
+			, #{name}
+			, #{path}
+			, #{realName}
+		)
+	</insert>
 </mapper>

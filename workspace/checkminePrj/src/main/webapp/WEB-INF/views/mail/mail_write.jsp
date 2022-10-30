@@ -214,12 +214,12 @@
                         <div class="info">
                             <span>제목</span>
                             <span>:</span> 
-                            <input type="text" name="title">
+                            <input type="text" name="title" required>
                         </div>
                         <div id="receiver">
                             <span>받는사람</span>
                             <span>:</span> 
-                            <input type="text" name="receiver" class="t-in">
+                            <input type="text" name="receiver" class="t-in" required>
                             <button type="button" id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
                         </div>
                         <div class="info">
@@ -330,7 +330,24 @@
     
     //파일 삭제 버튼 동작
     function fileDelete(deleteEle){
-        console.log(deleteEle.parentNode);
+        // console.log(deleteEle.parentNode);
+        // console.log(deleteEle.nextSibling.value);
+
+        const filenames = deleteEle.nextSibling.value;
+
+        $.ajax({
+            url : "/checkmine/mail/write/fileDelete"
+            , method : "post"
+            , data : {"filenames" : filenames}
+            , success : function(result){
+                console.log(result);
+            }
+            , error : function(){
+                console.log("fileDelete ::: error");
+            }
+        });
+
+        deleteEle.parentNode.remove();
     }
 
     // submit시 TODO:유효성 검사

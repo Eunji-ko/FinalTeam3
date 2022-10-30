@@ -1,11 +1,14 @@
 package com.kh.checkmine.mail.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.mail.dao.MailSendDao;
+import com.kh.checkmine.mail.vo.MailAttVo;
 import com.kh.checkmine.mail.vo.MailSendFormVo;
 
 @Service
@@ -32,6 +35,13 @@ public class MailSendServiceImpl implements MailSendService{
 		String currentMailNum = dao.getCurrentMailNum(sst);
 		formVo.setCurrentMailNum(currentMailNum);
 		
+		//파일 이름 디비에 저장
+		for(MailAttVo vo : formVo.getMailAttVoList()) {
+			vo.setMailNo(currentMailNum);
+			result = result * dao.insertMailAtt(sst, vo);
+		}
+		
+		
 		for(String receiver:formVo.getReceiverArr()) {
 			//보낼사람 이메일로 번호 가져오기
 			String receiverNum = dao.getEmpNoToEmail(sst, receiver);
@@ -41,7 +51,7 @@ public class MailSendServiceImpl implements MailSendService{
 			}
 			formVo.setReceiver(receiverNum);
 			
-			System.out.println("insertMailRefA:::"+formVo);
+//			System.out.println("insertMailRefA:::"+formVo);
 			
 			//결과에 곱하기
 			result = result * dao.insertMailRefA(sst, formVo);
@@ -53,7 +63,7 @@ public class MailSendServiceImpl implements MailSendService{
 			}
 			formVo.setRefer(referNum);
 			
-			System.out.println("insertMailRefR:::"+formVo);
+//			System.out.println("insertMailRefR:::"+formVo);
 			
 			result = result * dao.insertMailRefR(sst, formVo);
 		}

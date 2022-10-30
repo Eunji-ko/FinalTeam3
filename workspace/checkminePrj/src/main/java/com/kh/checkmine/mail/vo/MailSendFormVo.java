@@ -1,5 +1,7 @@
 package com.kh.checkmine.mail.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -12,4 +14,5 @@ public class MailSendFormVo {
 	private String[] receiverArr;
 	private String[] referArr;
 	private String currentMailNum;
+	private List<MailAttVo> mailAttVoList;
 }
