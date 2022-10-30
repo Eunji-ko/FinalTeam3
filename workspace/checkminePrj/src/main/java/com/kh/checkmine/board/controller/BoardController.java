@@ -1,14 +1,18 @@
 package com.kh.checkmine.board.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.checkmine.board.service.BoardService;
 import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;
@@ -296,6 +301,23 @@ public class BoardController {
 	
 	}
 	
+	
+	
+	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
+		JsonObject jsonObject = new JsonObject();
+	
+		// 내부경로로 저장
+		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+		String changeName = FileUploader.fileUpload(multipartFile, savePath);
+
+			jsonObject.addProperty("fileName", changeName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("responseCode", "success");
+		
+		String a = jsonObject.toString();
+		return a;
+	}
 	
 	
 }
