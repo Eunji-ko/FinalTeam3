@@ -129,7 +129,12 @@
                 <div id="mp-profile-out">
                     <div id="mp-profile-in">
                         <div id="mp-profile-img">
-                            <img src="${imgPath}/none-profile.jpg">
+                            <c:if test="${not empty loginMember.photoName}">
+                                <img src="${rootPath}/resources/upload/profile/${loginMember.photoName}">
+                            </c:if>
+                            <c:if test="${empty loginMember.photoName}">
+                                <img src="${imgPath}/none-profile.png">
+                            </c:if>
                         </div>
                         <div id="mp-profile-tag">
                             ${loginMember.name}

@@ -14,4 +14,6 @@ public interface MemberDao {
 
 	MemberVo selectOneByNo(SqlSessionTemplate sst, String no);
 
+	int updatePhoto(SqlSessionTemplate sst, MemberVo vo);
+
 }

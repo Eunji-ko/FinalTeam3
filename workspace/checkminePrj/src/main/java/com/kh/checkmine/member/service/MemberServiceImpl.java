@@ -57,4 +57,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.selectOneByNo(sst, no);
 	}
 
+	@Override
+	public MemberVo changePhoto(MemberVo vo) {
+		int result = dao.updatePhoto(sst, vo);
+		
+		MemberVo updatedMember = null;
+		if(result == 1) {
+			updatedMember = dao.selectOneByNo(sst, vo.getNo());
+		}
+		
+		return updatedMember;
+	}
+
 }//class

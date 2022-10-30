@@ -28,4 +28,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sst.selectOne("memberMapper.selectOneByNo", no);
 	}
 
+	@Override
+	public int updatePhoto(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("memberMapper.updatePhoto", vo);
+	}
+
 }
