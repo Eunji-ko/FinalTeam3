@@ -130,6 +130,13 @@
 		display: block;
         margin-top: 10px;
     }
+	#minus-btn{
+		color: white;
+		background-color: #5d736f;
+        margin: auto;
+		display: block;
+        margin-top: 10px;
+    }
 </style>
 
 
@@ -187,7 +194,7 @@
 						<div class="input-group-text">거래처</div>
 						<input type="text" class="form-control" id="state-account" name="account" value="${stateVo[0].account}">
 						<div class="input-group-text">총 금액</div>
-						<input type="number" class="form-control" id="money" name="money" min="0" readonly>
+						<input type="number" class="form-control" id="money-sum" name="moneySum" value="0" min="0" readonly>
 						<div id="state-table-div">
 							<div class="table-content-div">
 								<div class="th-div input-group-text">품목명</div>
@@ -196,9 +203,9 @@
 							</div>
 							<c:if test="${stateVo eq null}">
 								<div class="table-content-div" id="table-div">
-									<input type="text" class="form-control" id="name-input" name="stateName">
-									<input type="text" class="form-control" id="brief-input" name="stateBrief">
-									<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="stateMoney">
+									<input type="text" class="form-control" id="name-input" name="name" required>
+									<input type="text" class="form-control" id="brief-input" name="brief" required>
+									<input type="number" class="form-control money-form" id="money-input" value="0" min="0" name="money">
 								</div>
 								<div id="plus-btn-div">
 									<button type="button" class="btn" id="plus-btn">+</button>
@@ -208,7 +215,7 @@
 							<c:forEach items="${stateVo}" var="list">
 								<input type="text" class="form-control" id="name-input" name="name" value="${list.name}">
 								<input type="text" class="form-control" id="brief-input" name="brief" value="${list.brief}">
-								<input type="number" class="form-control money-form" id="money-input" placeholder="0" min="0" name="money" value="${list.money}">
+								<input type="number" class="form-control" id="money-input" placeholder="0" min="0" name="money" value="${list.money}">
 							</c:forEach>
 						</div>
 					</div>
@@ -244,7 +251,7 @@
 				$('#minus-btn').prop('disabled', false);
 				const oriDiv = document.querySelector('#table-div');
 				const btnDiv = document.querySelector('#plus-btn-div');
-				const newDiv = eoriDiv.cloneNode(true);
+				const newDiv = oriDiv.cloneNode(true);
 				newDiv.id = oriDiv.id + idNum;
 				btnDiv.before(newDiv);
 				idNum++;
@@ -252,10 +259,16 @@
 				$('#plus-btn').prop('disabled', true);
 				$('#minus-btn').prop('disabled', false);
 			}
+			//블러 이벤트에 총금액계산 함수 추가
+			document.querySelectorAll('.money-form').forEach(ele => {
+				ele.addEventListener('blur', calculate);
+			});
+			//총금액계산
+			calculate();
 		});
 		//칸 삭제
 		$('#minus-btn').click(function(){
-			if(eidNum > 0){
+			if(idNum > 0){
 				$('#minus-btn').prop('disabled', false);
 				$('#plus-btn').prop('disabled', false);
 				const btnDiv = document.querySelector('#plus-btn-div');
@@ -265,17 +278,20 @@
 				$('#minus-btn').prop('disabled', true);
 				$('#plus-btn').prop('disabled', false);
 			}
+			calculate();
 		});
 
 		//총 금액 구하기
-		$('.money-form').blur(function(){
-			var arr = document.querySelector('input[name=stateMoney]').value;
-			var result = arr.reduce(function add(sum, currValue) {
-			return sum + currValue;
-			}, 0);
-			if(isNaN(result)){
-				$('#money').val(result);
+		function calculate(){
+			var arr = document.getElementsByClassName('money-form');
+			var sum = 0;
+			for(var i=0; i<arr.length; i++){
+				sum += Number(arr[i].value);
 			}
+			$('#money-sum').val(sum);
+		}
+		document.querySelectorAll('.money-form').forEach(ele => {
+			ele.addEventListener('blur', calculate);
 		});
 	</script>
 

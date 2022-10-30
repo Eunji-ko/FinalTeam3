@@ -208,4 +208,10 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.insert("approvalMapper.insertExpenditureList", expList);
 	}
 
+	//전표 리스트 DB에 올리기
+	@Override
+	public int insertStateList(SqlSessionTemplate sst, List<ApprovalStateVo> stateList) {
+		return sst.insert("approvalMapper.insertStateList", stateList);
+	}
+
 }

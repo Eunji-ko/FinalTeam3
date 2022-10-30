@@ -280,4 +280,43 @@ public class ApprovalServiceImpl implements ApprovalService{
 		}
 	}
 
+	//전표 결재하기
+	@Override
+	public ApprovalDocVo approvalState(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalStateVo stateVo) {
+		//전표 관련 문서정보, 결재정보 DB에 올리기
+		int docResult = dao.insertDoc(sst, docVo);
+		int apResult = dao.insertApproval(sst, apVo);
+		
+		//전표 값 나누기
+		List<ApprovalStateVo> stateList = new ArrayList<ApprovalStateVo>();
+		String dno = stateVo.getDocNo();
+		String stateRp = stateVo.getStateRp();
+		String account = stateVo.getAccount();
+		String[] nameList = stateVo.getName().split(",", -1);
+		String[] briefList = stateVo.getBrief().split(",", -1);
+		String[] moneyList = stateVo.getMoney().split(",", -1);
+		if(nameList.length == 0) {
+			return null;
+		}
+		for(int i=0; i<nameList.length;i++) {
+			ApprovalStateVo vo = new ApprovalStateVo();
+			vo.setDocNo(dno);
+			vo.setStateRp(stateRp);
+			vo.setAccount(account);
+			vo.setName(nameList[i]);
+			vo.setBrief(briefList[i]);
+			vo.setMoney(moneyList[i]);
+			stateList.add(vo);
+		}
+		
+		int stateResult = dao.insertStateList(sst, stateList);
+		
+		if(docResult*apResult*stateResult == -1) {
+			//방금 넣은 문서정보 가져오기
+			return dao.selectCurrentDoc(sst);		
+		}else {
+			return null;
+		}
+	}
+
 }//class

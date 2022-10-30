@@ -110,5 +110,8 @@ public interface ApprovalDao {
 	//구매품의서 정보 DB에 올리기
 	int insertBuyOrder(SqlSessionTemplate sst, ApprovalBuyOrderVo buyOrderVo);
 
+	//전표 리스트 DB에 올리기
+	int insertStateList(SqlSessionTemplate sst, List<ApprovalStateVo> stateList);
+
 
 }

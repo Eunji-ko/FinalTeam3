@@ -316,15 +316,12 @@
 	
 	<insert id="insertExpenditureList">
 		BEGIN
-		    LOOP
 		    <foreach collection="list" item="l" separator=";" close=";">
 		        INSERT INTO EXPENDITURE
 		        (NO,DOC_NO,BRIEF,AMOUNT,NOTE)
 		        VALUES
 		        (SEQ_EXP_NO.NEXTVAL,SEQ_DOC_NO.CURRVAL,#{l.brief},#{l.amount},#{l.note})
 		    </foreach>
-		        EXIT;
-		    END LOOP;
 		END;
 	</insert>
 	
@@ -353,6 +350,17 @@
 			,#{endDate}
 			,#{content}
 		)
+	</insert>
+	
+	<insert id="insertStateList">
+		BEGIN
+		    <foreach collection="list" item="l" separator=";" close=";">
+		        INSERT INTO STATE
+		        (NO,DOC_NO,ACCOUNT,NAME,BRIEF,STATE_RP,MONEY)
+		        VALUES
+		        (SEQ_STATE_NO.NEXTVAL,SEQ_DOC_NO.CURRVAL,#{l.account},#{l.name},#{l.brief},#{l.stateRp},#{l.money})
+		    </foreach>
+		END;
 	</insert>
 
 </mapper>

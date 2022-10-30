@@ -102,5 +102,8 @@ public interface ApprovalService {
 	//구매품의서 결재하기
 	ApprovalDocVo approvalBuyOrder(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalBuyOrderVo buyOrderVo);
 
+	//전표 결재하기
+	ApprovalDocVo approvalState(ApprovalDocVo docVo, ApprovalVo apVo, ApprovalStateVo stateVo);
+
 
 }
