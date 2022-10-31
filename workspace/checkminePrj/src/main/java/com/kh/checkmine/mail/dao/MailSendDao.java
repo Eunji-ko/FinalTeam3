@@ -53,4 +53,27 @@ public interface MailSendDao {
 	 */
 	int insertMailAtt(SqlSessionTemplate sst, MailAttVo vo);
 
+	/**
+	 * 임시저장 테이블에 저장
+	 * @param sst
+	 * @param formVo
+	 * @return
+	 */
+	int insertMailSave(SqlSessionTemplate sst, MailSendFormVo formVo);
+
+	/**
+	 * 현재 임시저장 번호 가져오기
+	 * @param sst
+	 * @return
+	 */
+	String getCurrentMailSaveNum(SqlSessionTemplate sst);
+
+	/**
+	 * 임시저장 파일첨부 테이블에 데이터 추가
+	 * @param sst
+	 * @param vo
+	 * @return
+	 */
+	int insertMailSaveAtt(SqlSessionTemplate sst, MailAttVo vo);
+
 }

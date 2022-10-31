@@ -11,4 +11,11 @@ public interface MailSendService {
 	 */
 	int insertMail(MailSendFormVo formVo);
 
+	/**
+	 * 메일 임시저장
+	 * @param formVo
+	 * @return
+	 */
+	int insertMailSave(MailSendFormVo formVo);
+
 }

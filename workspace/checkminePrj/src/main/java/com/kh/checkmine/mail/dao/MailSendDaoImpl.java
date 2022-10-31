@@ -58,5 +58,29 @@ public class MailSendDaoImpl implements MailSendDao{
 	public int insertMailAtt(SqlSessionTemplate sst, MailAttVo vo) {
 		return sst.insert("mailSendMapper.insertMailAtt", vo);
 	}
+
+	/**
+	 * 임시저장 테이블에 저장
+	 */
+	@Override
+	public int insertMailSave(SqlSessionTemplate sst, MailSendFormVo formVo) {
+		return sst.insert("mailSendMapper.insertMailSave", formVo);
+	}
+
+	/**
+	 * 현재 임시저장 번호 가져오기
+	 */
+	@Override
+	public String getCurrentMailSaveNum(SqlSessionTemplate sst) {
+		return sst.selectOne("mailSendMapper.selectCurrunntMailSaveNum");
+	}
+
+	/**
+	 * 임시저장 파일첨부 테이블에 데이터 추가
+	 */
+	@Override
+	public int insertMailSaveAtt(SqlSessionTemplate sst, MailAttVo vo) {
+		return sst.insert("mailSendMapper.insertMailSaveAtt", vo);
+	}
 	
 }

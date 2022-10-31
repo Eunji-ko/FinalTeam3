@@ -66,4 +66,41 @@
 			, #{realName}
 		)
 	</insert>
+	
+	<insert id="insertMailSave">
+		INSERT INTO MAIL_SAVE(
+			NO
+			,TITLE
+			,RECEIVER
+			,REFER
+			,CONTENT
+		)VALUES(
+			SEQ_MAIL_SAVE.NEXTVAL
+			, #{title}
+			, #{receiver}
+			, #{refer}
+			, #{content}
+		)
+	</insert>
+	
+	<select id="selectCurrunntMailSaveNum" resultType="string">
+		SELECT SEQ_MAIL_SAVE.CURRVAL FROM DUAL
+	</select>
+	
+	<insert id="insertMailSaveAtt">
+		INSERT INTO MAIL_SAVE_ATT(
+			NO
+			,MAIL_NO
+			,NAME
+			,PATH
+			,REAL_NAME
+		)VALUES(
+			SEQ_MAIL_ATT.NEXTVAL
+			, #{mailNo}
+			, #{name}
+			, #{path}
+			, #{realName}
+		)
+	</insert>
+	
 </mapper>
