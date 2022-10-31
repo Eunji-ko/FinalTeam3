@@ -69,12 +69,15 @@
    		width:98%;
    		min-height: 340px;
         margin: 10px;
-        border-bottom: 1px solid #5D736F;
         display: inline-block;
     }
     #content > img {
         max-width: 100%;
         display: block;
+    }
+    #attachArea{
+        margin: 20px;
+        border-bottom: 1px solid #5D736F;
     }
     #replyArea{
         height: 150px;
@@ -86,7 +89,7 @@
         border-bottom: 1px solid lightgrey;
 
     }
-    #replyTitle{
+    #replyTitle, #attachArea > h6{
         color: #5D736F;
         font-weight: bolder;
     }
@@ -167,25 +170,16 @@
                 </div>
                 <div id="content-box">
                     <div id="content">
-                    	<c:if test="${fn:length(attList) != 0}">
+                        ${board.content}
+                    </div>
+                    <div id="attachArea">
+                        <c:if test="${fn:length(attList) != 0}">
+                        <h6>첨부파일</h6>
                     		<c:forEach items="${attList}" var="a">
-                    			<c:choose>
-                    				<c:when test="${fn:endsWith(a.name, '.png')}">
-                    					<img src="${rootPath}/resources/upload/board/${a.name}">
-                    				</c:when>
-                    				<c:when test="${fn:endsWith(a.name, '.jpg')}">
-                    					<img src="${rootPath}/resources/upload/board/${a.name}">
-                    				</c:when>
-                    				<c:when test="${fn:endsWith(a.name, '.gif')}">
-                    					<img src="${rootPath}/resources/upload/board/${a.name}">
-                    				</c:when>
-	                    			<c:otherwise>
-	                    				<a download href="${rootPath}/resources/upload/board/${a.name}">${a.name}</a><br>
-	                    			</c:otherwise>
-                    		</c:choose>
+	                    		<a download href="${rootPath}/resources/upload/board/${a.name}" style="font-size: small;">${a.name}</a><br>
                     		</c:forEach>
                     	</c:if>
-                        ${board.content}
+
                     </div>
                     <div id="replyArea">
                         <div id="replyTitle">댓글</div>
