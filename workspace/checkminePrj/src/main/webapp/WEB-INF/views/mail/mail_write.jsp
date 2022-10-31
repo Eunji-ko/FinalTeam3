@@ -239,7 +239,7 @@
                                 <label for="file-upload">파일선택</label>
                             </div>
                             <div id="file-preview">
-                                <input type="file" name="file" id="file-upload" multiple>
+                                <input type="file" name="file" id="file-upload" multiple onchange="fileUpload(this);">
                                 
                             </div>
                             <div id="grow"></div>
@@ -288,10 +288,10 @@
     });
 
     //파일 업로드시
-    const input = document.querySelector('#file-upload');
     const preview = document.querySelector('#file-preview');
-    input.addEventListener("change",function(){
 
+    function fileUpload(input){
+        console.log('sdfsdfsdf');
         const uploadFiles = input.files;
         
         // formData 만들고 파일 넣기
@@ -324,9 +324,14 @@
                 console.log(error);
                 console.log('에러남');
             }
+
+
         });
 
-    });
+        input.value = "";
+    }
+
+    
     
     //파일 삭제 버튼 동작
     function fileDelete(deleteEle){
