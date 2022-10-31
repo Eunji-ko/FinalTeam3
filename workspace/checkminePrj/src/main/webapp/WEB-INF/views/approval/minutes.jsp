@@ -147,7 +147,7 @@
 			<input type="text" maxlength="500" class="form-control" name="purpose" value="${minutesVo.purpose}">
 			<div id="approval-content" class="minutes-grid">
 				<div id="minutes-purpose" class="input-group-text">참석자</div>
-				<input type="text" maxlength="50" class="form-control" name="emp">
+				<input type="text" maxlength="50" class="form-control" name="emp" value="${minutesVo.emp}">
 				<textarea class="form-control" maxlength="2000" name="content">${minutesVo.content}</textarea>
 			</div>
 			

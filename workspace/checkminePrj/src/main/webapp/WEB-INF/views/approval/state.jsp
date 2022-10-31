@@ -297,5 +297,13 @@
 		});
 	</script>
 
+	<c:if test="${stateVo ne null}">
+		<script>
+			if('${stateVo[0].stateRp}' == 'P'){
+				$('#out').prop('checked', true);
+			}
+		</script>
+	</c:if>
+
 	</form>
 </main>
