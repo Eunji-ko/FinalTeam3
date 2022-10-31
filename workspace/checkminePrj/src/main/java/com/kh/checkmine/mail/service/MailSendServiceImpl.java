@@ -51,7 +51,6 @@ public class MailSendServiceImpl implements MailSendService{
 			}
 			formVo.setReceiver(receiverNum);
 			
-//			System.out.println("insertMailRefA:::"+formVo);
 			
 			//결과에 곱하기
 			result = result * dao.insertMailRefA(sst, formVo);
@@ -63,9 +62,26 @@ public class MailSendServiceImpl implements MailSendService{
 			}
 			formVo.setRefer(referNum);
 			
-//			System.out.println("insertMailRefR:::"+formVo);
-			
 			result = result * dao.insertMailRefR(sst, formVo);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 메일 임시저장
+	 */
+	@Override
+	public int insertMailSave(MailSendFormVo formVo) {
+		int result = 1;
+		result = result * dao.insertMailSave(sst,formVo);
+		
+		String currentMailSaveNum = dao.getCurrentMailSaveNum(sst);
+		formVo.setCurrentMailNum(currentMailSaveNum);
+		
+		for(MailAttVo vo : formVo.getMailAttVoList()) {
+			vo.setMailNo(currentMailSaveNum);
+			result = result * dao.insertMailSaveAtt(sst, vo);
 		}
 		
 		return result;

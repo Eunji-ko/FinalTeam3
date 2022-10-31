@@ -219,7 +219,7 @@
                         <div id="receiver">
                             <span>받는사람</span>
                             <span>:</span> 
-                            <input type="text" name="receiver" class="t-in" required>
+                            <input type="text" name="receiver" class="t-in" required >
                             <button type="button" id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
                         </div>
                         <div class="info">
@@ -316,7 +316,7 @@
                         + '<div>'
                         +   '<span>'+ fileNames_[i].originName +'</span>'
                         +   '<button type="button" class="file-delete-btn" onclick="fileDelete(this);">삭제</button>'
-                        +   '<input type="hidden" name="fileNames" value="'+ fileNames_[i].originName + ',' + fileNames_[i].SaveName +'">'
+                        +   '<input type="hidden" name="fileNames" value="'+ fileNames_[i].originName + '!!' + fileNames_[i].SaveName +'">'
                         + '</div>';
                 }
             },
