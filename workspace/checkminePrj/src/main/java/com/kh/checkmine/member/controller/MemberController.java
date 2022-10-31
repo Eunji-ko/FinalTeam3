@@ -1,6 +1,7 @@
 package com.kh.checkmine.member.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.checkmine.approval.service.ApprovalService;
+import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.common.FileUploader;
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.service.MemberService;
 import com.kh.checkmine.member.vo.MemberVo;
 
@@ -21,14 +26,29 @@ import com.kh.checkmine.member.vo.MemberVo;
 public class MemberController {
 	
 	private final MemberService ms;
+	private final ApprovalService as;
 	
 	@Autowired
-	public MemberController(MemberService ms) {
+	public MemberController(MemberService ms, ApprovalService as) {
 		this.ms = ms;
+		this.as = as;
 	}
 	
 	@GetMapping("main")
-	public String mainHome() {
+	public String mainHome(HttpSession session, Model model) {
+		
+		//로그인 정보 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		if(loginMember != null) {
+			//결재 목록 메인 화면에 보여주기
+			int approvalCnt = as.selectTotalCnt(loginMember.getNo());
+			PageVo pv = Pagination.getPageVo(7, 1, 1, 7);
+			List<ApprovalDocVo> approvalList = as.selectList(loginMember.getNo(), pv);
+			model.addAttribute("approvalList", approvalList);
+			model.addAttribute("approvalCnt", approvalCnt);
+		}
+		
 		return "member/main";
 	}
 	
@@ -38,7 +58,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("login")
-	public String login(MemberVo vo, HttpSession session) {
+	public String login(MemberVo vo, HttpSession session, Model model) {
 		
 		MemberVo loginMember = ms.login(vo);
 		
@@ -46,6 +66,14 @@ public class MemberController {
 			//로그인 성공
 			session.setAttribute("loginPwd", vo.getPwd());
 			session.setAttribute("loginMember", loginMember);
+			
+			//결재 목록 메인 화면에 보여주기
+			int approvalCnt = as.selectTotalCnt(loginMember.getNo());
+			PageVo pv = Pagination.getPageVo(7, 1, 1, 7);
+			List<ApprovalDocVo> approvalList = as.selectList(loginMember.getNo(), pv);
+			model.addAttribute("approvalList", approvalList);
+			model.addAttribute("approvalCnt", approvalCnt);
+			
 			return "member/main";
 		}else {
 			//로그인 실패

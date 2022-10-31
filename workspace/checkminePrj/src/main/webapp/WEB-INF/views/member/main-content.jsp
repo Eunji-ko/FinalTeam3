@@ -242,10 +242,10 @@
                     <div>메일</div>
                     <div>6개</div>
                 </div>
-                <div onclick="location.href='${rootPath}/approval';">
+                <div onclick="location.href='${rootPath}/approval/list';">
                     <img src="${imgPath}/approval_icon.png">
                     <div>결재</div>
-                    <div>2건</div>
+                    <div>${approvalCnt}건</div>
                 </div>
                 <div onclick="location.href='${rootPath}/reservation/myreservation';">
                     <img src="${imgPath}/reservation_icon.png">
@@ -330,21 +330,17 @@
             <div id="main-content2f">
                 <div>
                     <div id="right-box">
-                        <a href="${rootPath}/approval/"><h4>전자결재</h4></a>
+                        <a href="${rootPath}/approval/list"><h4>전자결재</h4></a>
                         <div id="right-box-content">
                             <table class="table">
+                            	<c:forEach items="${approvalList}" var="list">
                                 <tr>
-                                    <td><div class="right-box-dept">마케팅부</div></td>
-                                    <td><a href="" class="right-box-title">마케팅부 박이름 휴가신청서</a></td>
-                                    <td><div class="right-box-name">박이름</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
+                                    <td><div class="right-box-dept">${list.type}</div></td>
+                                    <td><a href="${rootPath}/approval/${list.no}" class="right-box-title">${list.title}</a></td>
+                                    <td><div class="right-box-name">${list.writerNo}</div></td>
+                                    <td><div class="right-box-date">${list.date.substring(0,16)}</div></td>
                                 </tr>
-                                <tr>
-                                    <td><div class="right-box-dept">총무부</div></td>
-                                    <td><a href="" class="right-box-title">OO 관련 구매 또는 렌탈 관련</a></td>
-                                    <td><div class="right-box-name">이이름</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
+                            	</c:forEach>
                             </table>
                         </div>
                     </div>
