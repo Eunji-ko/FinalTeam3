@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -35,5 +36,9 @@ public interface TaskReportService {
 	List<TaskReportFileVo> selectFileForReportNo(String no);
 		//파일 다운로드
 	List<TaskReportFileVo> selectFileForNo(String fno);
+	
+	//검색
+	int selectKeywordCnt(Map<String, String> map);
+	List<TaskReportVo> selectReportKeyword(PageVo pv, Map<String, String> map);
 
 }

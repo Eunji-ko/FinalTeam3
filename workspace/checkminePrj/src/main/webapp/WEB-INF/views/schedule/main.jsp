@@ -115,17 +115,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="taskId" class="col-form-label">일정명</label>
-                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                        <input type="text" class="form-control" id="name" name="name">
                         <label for="taskId" class="col-form-label">일정 내용</label>
-                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                        <input type="text" class="form-control" id="content" name="content">
                         <label for="taskId" class="col-form-label">시작 날짜</label>
-                        <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
+                        <input type="date" class="form-control" id="startDate" name="startDate">
                         <label for="taskId" class="col-form-label">종료 날짜</label>
-                        <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
+                        <input type="date" class="form-control" id="endDate" name="endDate">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn fc-button fc-button-primary" id="addCalendar">추가</button>
+                    <button type="button" class="btn fc-button fc-button-primary" id="addSchedule" >추가</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="sprintSettingModalClose">취소</button>
                 </div>
     
@@ -241,5 +241,24 @@
             calendar.render();
         });
     </script>
+
+	<!-- 일정 추가 스크립트 -->
+	<script>
+		$(function () {
+			$("#addSchedule").click(){
+                var name = $('#name').val();
+                var content = $('#content').val();
+                var startDate = $('#startDate').val();
+                var endDate = $('#endDate').val();
+
+                var insert = $.ajax({
+                    url:"/schedule",
+                    method:"POST",
+                    data:{name, content, startDate, endDate},
+                    dataType:"json"
+                })
+            }
+		})
+	</script>
 </body>
 </html>

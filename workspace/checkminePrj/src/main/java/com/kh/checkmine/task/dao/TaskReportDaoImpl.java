@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -79,6 +80,19 @@ public class TaskReportDaoImpl implements TaskReportDao {
 	@Override
 	public List<TaskReportFileVo> selectFileForNo(SqlSessionTemplate sst, String fno) {
 		return sst.selectList("taskReportMapper.selectFileForNo", fno);
+	}
+
+	@Override
+	public int selectKeywordCnt(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectOne("taskReportMapper.selectKeywordCnt", map);
+	}
+
+	@Override
+	public List<TaskReportVo> selectReportKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("taskReportMapper.selectReportKeyword", map, rb);
 	}
 
 }

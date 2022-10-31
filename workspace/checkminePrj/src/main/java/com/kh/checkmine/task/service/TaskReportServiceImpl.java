@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.task.dao.TaskReportDao;
+import com.kh.checkmine.task.vo.TaskOrderVo;
 import com.kh.checkmine.task.vo.TaskReportAttVo;
 import com.kh.checkmine.task.vo.TaskReportFileVo;
 import com.kh.checkmine.task.vo.TaskReportVo;
@@ -102,6 +104,16 @@ public class TaskReportServiceImpl implements TaskReportService {
 	@Override
 	public List<MemberVo> selectWriteAttList() {
 		return reportDao.selectWriteAttList(sst);
+	}
+
+	@Override
+	public int selectKeywordCnt(Map<String, String> map) {
+		return reportDao.selectKeywordCnt(sst, map);
+	}
+
+	@Override
+	public List<TaskReportVo> selectReportKeyword(PageVo pv, Map<String, String> map) {
+		return reportDao.selectReportKeyword(sst, pv, map);
 	}
 
 }
