@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
 
@@ -14,8 +16,11 @@ import com.kh.checkmine.personnel.vo.AccountVo;
 public class PersonnelDaoImpl implements PersonnelDao {
 
 	@Override
-	public List<MemberVo> selectMemberList(SqlSessionTemplate sst) {
-		return sst.selectList("personnelMapper.selectMemberList");
+	public List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv) {
+		int offset = (epv.getCurrentPage() -1) * epv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, epv.getBoardLimit());
+		
+		return sst.selectList("personnelMapper.selectMemberList", null, rb);
 	}
 
 	@Override
@@ -68,6 +73,16 @@ public class PersonnelDaoImpl implements PersonnelDao {
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		map.put("abc", no);
 		return sst.update("personnelMapper.delAcc", map);
+	}
+
+	@Override
+	public int selectCountAll(SqlSessionTemplate sst) {
+		return sst.selectOne("personnelMapper.selectCountAll");
+	}
+
+	@Override
+	public int selectCountAAll(SqlSessionTemplate sst) {
+		return sst.selectOne("personnelMapper.selectCountAAll");
 	}
 
 }

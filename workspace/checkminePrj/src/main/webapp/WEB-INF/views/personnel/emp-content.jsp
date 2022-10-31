@@ -114,7 +114,7 @@
         </form>
         <br><br>
         <div class="out-line">
-            <table class="table table-hover psn-emp-table">
+            <table class="table table-hover psn-emp-table" id="createTable">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -126,7 +126,7 @@
                         <th>상태</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="empList">
                     <c:forEach var="emp" items="${memList}">
                         <tr data-bs-toggle="modal" data-bs-target="#changeEmp" class="empModal">
                             <th class="empNo">${emp.no}</th>
@@ -158,6 +158,11 @@
             <a href="">5</a>
             <a href="">&gt;</a>
         </div>
+        <div id="createZone">
+            <div class="page-area" id="pageArea">
+
+            </div>
+        </div>
     </div>
 
     <script>
@@ -187,6 +192,124 @@
             }
         }
     </script>
+
+<script>
+	
+    $(document).on("click", ".click-event", function(){
+            
+        $('#pageArea').remove();
+        let createArea = document.getElementById('createZone');
+        let newPage = document.createElement('div');
+        newPage.setAttribute("class", "page-area");
+        newPage.setAttribute("id", "pageArea");
+        createArea.appendChild(newPage);
+        
+        $('#empList').remove();
+        let createArea2 = document.getElementById('createTable');
+        let newTBody = document.createElement('tbody');
+        newTBody.setAttribute("id", "empList");
+        createArea2.appendChild(newTBody);
+                
+                
+        let numPage = $(this).val();
+        $.ajax({
+            url : "/checkmine/personnel/empList/" + numPage,
+            method : "GET",
+            success : function(x){
+                console.log("페이지 "+ numPage +"의 이벤트 출력 성공 !");
+                
+                let map = JSON.parse(x);
+                let pv = JSON.parse(map.pv);
+                let list = JSON.parse(map.list);
+                
+                let listArea = document.getElementById('empList');
+                
+                for(let i in list){
+                           let newTr = document.createElement('tr');
+                           newTr.setAttribute("data-bs-toggle", "modal");
+                           newTr.setAttribute("data-bs-target", "#changeEmp");
+                           newTr.setAttribute("class", "empModal");
+                           listArea.appendChild(newTr);
+                           
+                           let newNo = document.createElement('th');
+                           newNo.setAttribute("class", "empNo");
+                           let newName = document.createElement('td');
+                           let newDept = document.createElement('td');
+                           let newPos = document.createElement('td');
+                           let newId = document.createElement('td');
+                           let newEnroll = document.createElement('td');
+                           let newResign = document.createElement('td');
+                           newNo.innerHTML = list[i].no;
+                           newName.innerHTML = list[i].name;
+                           newDept.innerHTML = list[i].deptNo;
+                           newPos.innerHTML = list[i].posNo;
+                           newId.innerHTML = list[i].id;
+                           newEnroll = list[i].enrollDate.substring(0, 10);
+                           if(list[i].resignYn = 'N'){
+                            newResign = '재직';
+                           }else if(list[i].resignYn = 'Y'){
+                            newResign = '퇴직';
+                           }else{
+                            newResign = '?';
+                           }
+                           
+                        newTr.appendChild(newNo);
+                        newTr.appendChild(newName); 
+                        newTr.appendChild(newDept);
+                        newTr.appendChild(newPos);
+                        newTr.appendChild(newId);
+                        newTr.appendChild(newEnroll);
+                        newTr.appendChild(newResign);
+                     }
+
+                       let pageArea = document.getElementById('pageArea');
+                       
+                       console.log(epv.currentPage);
+                       
+                       if(epv.currentPage != 1) {
+                        let newA = document.createElement('a');
+                        newA.setAttribute("class", "click-event");
+                        newA.setAttribute("href", "javascript:;");
+                        newA.value = epv.startPage-1;
+                        newA.innerHTML = "&lt;";
+                        pageArea.appendChild(newA);
+                       }
+                       
+                       for(let i = epv.startPage; i <= epv.endPage; ++i){
+                           if(i == epv.currentPage){
+                                    let newA2 = document.createElement('a');
+                                    newA2.setAttribute("class", "page-selected");
+                                    newA2.setAttribute("href", "javascript:;");
+                                    newA2.value = i;
+                                    newA2.innerHTML = i;
+                                    pageArea.appendChild(newA2);
+                           }else{
+                                    let newA3 = document.createElement('a');
+                                    newA3.setAttribute("class", "click-event");
+                                    newA3.setAttribute("href", "javascript:;");
+                                    newA3.value = i;
+                                    newA3.innerHTML = i;
+                                    pageArea.appendChild(newA3);
+                           }
+                       }
+                       
+                       if(epv.currentPage != epv.maxPage) {
+                           let currentPlus = epv.endPage + 1;
+                                let newA4 = document.createElement('a');
+                                newA4.setAttribute("class", "click-event");
+                                newA4.value = currentPlus;
+                                newA4.innerHTML = "&gt;";
+                                pageArea.appendChild(newA4);
+                       }
+                
+            },
+            error : function(request, status, error){
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+    
+</script>
 
     <%@ include file="/WEB-INF/views/personnel/emp-modal.jsp" %>
 </body>

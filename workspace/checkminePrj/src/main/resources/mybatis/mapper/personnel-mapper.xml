@@ -174,5 +174,16 @@
   	AND ${type} LIKE '%${text}%'
   	ORDER BY NO DESC
   </select>
+  
+  <select id="selectCountAll" resultType="int">
+  	SELECT COUNT(NO)
+  	FROM EMPLOYEE
+  </select>
+  
+  <select id="selectCountAAll" resultType="int">
+  	SELECT COUNT(NO)
+  	FROM ACCOUNT
+  	WHERE DELETE_YN = 'N'
+  </select>
  
 </mapper>
