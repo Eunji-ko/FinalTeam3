@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.commute.service.CommuteService;
@@ -115,6 +116,32 @@ public class CommuteController {
 			session.setAttribute("alertMsg", "퇴근실패");
 			return "redirect:/member/main";
 		}
+		
+	}
+	
+	//부서별 조회
+	@PostMapping(value="selectDept", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String selectDept(String deptName, Model model) {
+		
+		List<CommuteVo> result = cs.selectDeptList(deptName);
+		
+		Gson g = new Gson();
+		
+		return g.toJson(result);
+		
+	}
+	
+	//직급별 조회
+	@PostMapping(value = "selectPos", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String selectPos(String posName, Model model) {
+		
+		List<CommuteVo> result = cs.selectPosList(posName);
+		
+		Gson g = new Gson();
+		
+		return g.toJson(result);
 		
 	}
 	

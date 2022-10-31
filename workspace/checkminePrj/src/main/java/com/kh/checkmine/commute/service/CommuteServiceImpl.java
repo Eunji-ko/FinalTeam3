@@ -58,4 +58,16 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.selectMycommuteCountAll(no, sst);
 	}
 
+	//부서별 조회
+	@Override
+	public List<CommuteVo> selectDeptList(String deptName) {
+		return dao.selectDeptList(deptName, sst);
+	}
+
+	//직급별 조회
+	@Override
+	public List<CommuteVo> selectPosList(String posName) {
+		return dao.selectPosList(posName, sst);
+	}
+
 }

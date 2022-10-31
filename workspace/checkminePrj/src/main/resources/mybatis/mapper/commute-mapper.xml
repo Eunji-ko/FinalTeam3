@@ -54,4 +54,24 @@
       	WHERE EMP_NO = #{empNo}
 	</select>
 	
+	<select id="selectDeptList" resultType="CommuteVo">
+		SELECT
+		    C.NO
+		    , TO_CHAR(C.ARRIVED, 'HH:MI AM') AS ARRIVED
+		    , TO_CHAR(C.LEAVE, 'HH:MI PM') AS LEAVE
+		    , TO_CHAR(C.WORK_DATE, 'YYYY-MM-DD') AS WORK_DATE
+		    , E.NAME AS EMP_NO
+		    , P.NAME NAME
+		    , D.NAME DEPT
+		FROM COMMUTE C
+		JOIN EMPLOYEE E
+		    ON C.EMP_NO = E.NO
+		JOIN POSITION P
+		    ON P.NO = E.POS_NO
+		JOIN DEPARTMENT D 
+		    ON D.NO = E.DEPT_NO
+		WHERE D.NAME = #{deptName}
+		ORDER BY C.WORK_DATE DESC
+	</select>
+	
 </mapper>

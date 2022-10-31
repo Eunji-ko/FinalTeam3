@@ -25,4 +25,10 @@ public interface CommuteService {
 	//나의 근태 갯수 조회
 	int selectMycommuteTotalCnt(String no);
 
+	//부서별 조회
+	List<CommuteVo> selectDeptList(String deptName);
+
+	//직급별 조회
+	List<CommuteVo> selectPosList(String posName);
+
 }

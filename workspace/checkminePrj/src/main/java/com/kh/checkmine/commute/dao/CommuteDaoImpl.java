@@ -56,4 +56,16 @@ public class CommuteDaoImpl implements CommuteDao {
 		return sst.selectOne("commuteMapper.selectMycommuteCountAll", no);
 	}
 
+	//부서별 조회
+	@Override
+	public List<CommuteVo> selectDeptList(String deptName, SqlSessionTemplate sst) {
+		return sst.selectList("commuteMapper.selectDeptList", deptName);
+	}
+
+	//직급별 조회
+	@Override
+	public List<CommuteVo> selectPosList(String posName, SqlSessionTemplate sst) {
+		return sst.selectList("commuteMapper.selectPosList",posName);
+	}
+
 }

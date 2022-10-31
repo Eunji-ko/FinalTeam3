@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>근태관리</title>
 <style>
     .shadow{
        padding: 20px;

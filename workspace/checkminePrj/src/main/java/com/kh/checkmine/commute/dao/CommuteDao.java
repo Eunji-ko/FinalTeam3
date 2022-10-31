@@ -27,4 +27,10 @@ public interface CommuteDao {
 	//나의 근태 갯수 조회
 	int selectMycommuteCountAll(String no, SqlSessionTemplate sst);
 
+	//부서별 조회
+	List<CommuteVo> selectDeptList(String deptName, SqlSessionTemplate sst);
+
+	//직급별 조회
+	List<CommuteVo> selectPosList(String posName, SqlSessionTemplate sst);
+
 }
