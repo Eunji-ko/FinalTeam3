@@ -5,12 +5,13 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface PersonnelDao {
 
-	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv);
 
 	List<AccountVo> selectAccountList(SqlSessionTemplate sst);
 
@@ -31,5 +32,9 @@ public interface PersonnelDao {
 	int insertAcc(SqlSessionTemplate sst, AccountVo vo);
 
 	int delAcc(SqlSessionTemplate sst, List<String> no);
+
+	int selectCountAll(SqlSessionTemplate sst);
+
+	int selectCountAAll(SqlSessionTemplate sst);
 
 }

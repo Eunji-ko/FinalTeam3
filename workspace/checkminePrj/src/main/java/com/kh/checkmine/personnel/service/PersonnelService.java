@@ -3,12 +3,13 @@ package com.kh.checkmine.personnel.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface PersonnelService {
 
-	List<MemberVo> selectMemberList();
+	List<MemberVo> selectMemberList(PageVo epv);
 
 	List<AccountVo> selectAccountList();
 
@@ -29,5 +30,9 @@ public interface PersonnelService {
 	int insertAcc(AccountVo vo);
 
 	int delAcc(List<String> no);
+
+	int selectTotalCnt();
+
+	int selectTotalACnt();
 
 }

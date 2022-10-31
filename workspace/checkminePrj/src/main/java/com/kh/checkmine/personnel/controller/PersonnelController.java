@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.service.PersonnelService;
 import com.kh.checkmine.personnel.vo.AccountVo;
@@ -34,13 +36,21 @@ public class PersonnelController {
 	@GetMapping("main")
 	public String person(Model model) {
 		
+		int totalCount = ps.selectTotalCnt();
+		int totalACount = ps.selectTotalACnt();
+		
+		PageVo epv = Pagination.getPageVo(totalCount, 1, 5, 10);
+		PageVo apv = Pagination.getPageVo(totalACount, 1, 5, 10);
+		
 		//디비 다녀오기
-		List<MemberVo> memList = ps.selectMemberList();
+		List<MemberVo> memList = ps.selectMemberList(epv);
 		List<AccountVo> accList = ps.selectAccountList();
 		
 		//model에 데이터 담기
 		model.addAttribute("memList", memList);
 		model.addAttribute("accList", accList);
+		model.addAttribute("epv", epv);
+		model.addAttribute("apv", apv);
 		
 		//화면 선택
 		return "personnel/main";

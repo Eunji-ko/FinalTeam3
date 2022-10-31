@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.dao.PersonnelDao;
 import com.kh.checkmine.personnel.vo.AccountVo;
@@ -24,8 +25,8 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 	
 	@Override
-	public List<MemberVo> selectMemberList() {
-		return dao.selectMemberList(sst);
+	public List<MemberVo> selectMemberList(PageVo epv) {
+		return dao.selectMemberList(sst, epv);
 	}
 
 	@Override
@@ -76,6 +77,16 @@ public class PersonnelServiceImpl implements PersonnelService {
 	@Override
 	public int delAcc(List<String> no) {
 		return dao.delAcc(sst, no);
+	}
+
+	@Override
+	public int selectTotalCnt() {
+		return dao.selectCountAll(sst);
+	}
+
+	@Override
+	public int selectTotalACnt() {
+		return dao.selectCountAAll(sst);
 	}
 
 
