@@ -89,8 +89,6 @@ public class TaskOrderController {
 		return "task/order-detail";
 	}
 	
-		
-	
 	//지시서 작성(화면)
 	//TODO tagify 수정해야함
 	/* 
@@ -222,23 +220,26 @@ public class TaskOrderController {
 	
 	//게시물 검색
 	@GetMapping("search")
-	public String search(@RequestParam(name = "p") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
-		Map<String, String> map = new HashMap<>(2);
-		map.put("option", keyword);
-		map.put("keyword", keyword);
-		int totalCount = orderService.selectKeywordCnt(map);
+	public String search(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(name = "type") String type, @RequestParam(name = "keyword") String keyword, Model model) {
 		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("type", type);
+		map.put("keyword", keyword);
+		
+		int totalCount = orderService.selectKeywordCnt(map);
+
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
-		List<TaskOrderVo> boardList = orderService.selectTaskKeyword(pv,map);
-		
-		model.addAttribute("boardList", boardList);
+		List<TaskOrderVo> voList = orderService.selectTaskKeyword(pv, map);
+
+		System.out.println("검색 voList ::: " + voList);
+
+		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
-		model.addAttribute("option", option);
+		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
 		
 		return "task/order-search";
 	}
-	
 	
 }

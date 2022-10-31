@@ -182,4 +182,64 @@
 		FROM REP_FILE
 		WHERE NO = #{no}
 	</select>
+	
+	<!-- 검색 갯수 -->
+	<select id="selectKeywordCnt" parameterType="HashMap" resultType="int">
+		SELECT COUNT(R.NO)
+		FROM REPORT R
+		JOIN EMPLOYEE E
+		ON E.NO = R.SENDER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="type=='title'">
+					AND R.TITLE LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='content'">
+					AND R.CONTENT LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='sender'">
+					AND E.NAME LIKE '%'||#{keyword}||'%'
+				</if>
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 검색 데이터 -->
+	<select id="selectReportKeyword" parameterType="HashMap"  resultType="TaskReportVo">
+		SELECT 
+		    R.NO,
+		    R.TASK_NO,
+		    A.ATT_NAME,
+		    E.NAME AS SENDER,
+		    R.TITLE,
+		    R.CONTENT,
+		    R.ENROLL_DATE
+		FROM REPORT R
+		JOIN EMPLOYEE E
+		ON R.SENDER = E.NO
+		JOIN (
+		    SELECT
+		        A.REP_NO,
+		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME
+		    FROM REPORT_ATT A
+		    JOIN EMPLOYEE E
+		    ON A.EMP_NO = E.NO
+		    WHERE A.TYPE = 'A'
+		    GROUP BY A.REP_NO
+		) A
+		ON R.NO = A.REP_NO
+		WHERE R.DEL = 'N'
+		<choose>
+			<when test="type=='title' and keyword != null and keyword != '' ">
+				AND R.TITLE LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="type=='content' and keyword != null and keyword != '' ">
+				AND R.CONTENT LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="type=='sender' and keyword != null and keyword != '' ">
+				AND E.NAME LIKE '%'||#{keyword}||'%'
+			</when>
+		</choose>
+		ORDER BY R.NO DESC
+	</select>
 </mapper>

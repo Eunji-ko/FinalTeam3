@@ -52,7 +52,7 @@ public interface TaskOrderDao {
 	int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map);
 
 	//게시글 검색
-	List<TaskOrderVo> selectOrderKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
+	List<TaskOrderVo> selectTaskKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
 
 }

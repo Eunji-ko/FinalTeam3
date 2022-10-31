@@ -96,13 +96,13 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 		return sst.selectOne("taskOrderMapper.selectTotalKeyword", map);
 	}
 
-	//게시글 검색
+
 	@Override
-	public List<TaskOrderVo> selectOrderKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map) {
+	public List<TaskOrderVo> selectTaskKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
-		return sst.selectList("taskOrderMapper.selectOrderKeyword", map, rb);
+		return sst.selectList("taskOrderMapper.selectTaskKeyword", map, rb);
 	}
 
 

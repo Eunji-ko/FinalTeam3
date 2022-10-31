@@ -113,16 +113,14 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 	//지시서 검색 게시글 수
 	@Override
 	public int selectKeywordCnt(Map<String, String> map) {
-		int total = orderDao.selectTotalKeyword(sst, map);
-		return total;
+		return orderDao.selectTotalKeyword(sst, map);
 	}
 
 	//지시서 검색
 	@Override
 	public List<TaskOrderVo> selectTaskKeyword(PageVo pv, Map<String, String> map) {
-		List<TaskOrderVo> orderList = orderDao.selectOrderKeyword(sst, pv, map);
-		
-		return orderList;
+		return orderDao.selectTaskKeyword(sst, pv, map);
 	}
+
 
 }

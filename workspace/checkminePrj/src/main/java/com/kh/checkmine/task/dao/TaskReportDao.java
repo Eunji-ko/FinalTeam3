@@ -1,6 +1,7 @@
 package com.kh.checkmine.task.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -40,6 +41,11 @@ public interface TaskReportDao {
 	List<TaskReportFileVo> selectFileForReportNo(SqlSessionTemplate sst, String no);
 		//파일 다운로드
 	List<TaskReportFileVo> selectFileForNo(SqlSessionTemplate sst, String fno);
+
+	//검색 기능
+	int selectKeywordCnt(SqlSessionTemplate sst, Map<String, String> map);
+
+	List<TaskReportVo> selectReportKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
 
 

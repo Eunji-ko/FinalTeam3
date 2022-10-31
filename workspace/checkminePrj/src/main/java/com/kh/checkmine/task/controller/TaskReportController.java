@@ -3,6 +3,7 @@ package com.kh.checkmine.task.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -231,4 +233,28 @@ public class TaskReportController {
 		return "redirect:/task/order/list";
 	}
 
+	//게시물 검색
+	@GetMapping("search")
+	public String search(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(name = "type") String type, @RequestParam(name = "keyword") String keyword, Model model) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("type", type);
+		map.put("keyword", keyword);
+		
+		int totalCount = reportService.selectKeywordCnt(map);
+
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
+		
+		List<TaskReportVo> voList = reportService.selectReportKeyword(pv, map);
+
+		System.out.println("검색 voList ::: " + voList);
+
+		model.addAttribute("voList", voList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		
+		return "task/report-search";
+	}
+	
 }

@@ -210,46 +210,67 @@
 		ORDER BY T.NO DESC
 	</select>
 	
+	<!-- 검색 갯수 -->
 	<select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
 		SELECT COUNT(T.NO)
 		FROM TASK T
 		JOIN EMPLOYEE E
 		ON E.NO = T.ORDERER
-		<choose>
-	  		<when test='option=="title"'>
-	  			WHERE T.TITLE LIKE '%'||#{keyword}||'%'
-	  		</when>
-	  		<when test='option=="content"'>
-	  			AND T.CONTENT LIKE '%'||#{keyword}||'%'
-	  		</when>
-	  		<when test='option=="writer"'>
-	  			AND E.NAME LIKE '%'||#{keyword}||'%'
-	  		</when>
-  		</choose>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="type=='title'">
+					AND T.TITLE LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='content'">
+					AND T.CONTENT LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='orderer'">
+					AND E.NAME LIKE '%'||#{keyword}||'%'
+				</if>
+			</if>
+		</trim>
 	</select>
 	
-	<select id="selectOrderKeyword"  parameterType="HashMap" resultType="TaskOrderVo">
-		SELECT
-			T.NO,
-			E.NAME AS ORDERER,
-			T.TITLE,
-			T.CONTENT,
-			T.ENROLL_DATE,
-			T.START_DATE,
-			T.END_DATE
-		FROME TASK T
+	<!-- 검색 데이터 -->
+	<select id="selectTaskKeyword" parameterType="HashMap"  resultType="TaskOrderVo">
+		SELECT 
+		    T.NO,
+		    E.NAME AS ORDERER,
+		    A.ATT_NAME,
+		    T.DEPT_NO,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE
+		FROM TASK T
 		JOIN EMPLOYEE E
 		ON T.ORDERER = E.NO
-		<choose>
-	  		<when test='option=="title"'>
-	  			WHERE T.TITLE LIKE '%'||#{keyword}||'%'
-	  		</when>
-	  		<when test='option=="content"'>
-	  			AND T.CONTENT LIKE '%'||#{keyword}||'%'
-	  		</when>
-	  		<when test='option=="writer"'>
-	  			AND E.NAME LIKE '%'||#{keyword}||'%'
-	  		</when>
-  		</choose>
+		JOIN (
+	        SELECT
+		        A.TASK_NO,
+		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME
+		    FROM TASK_ATT A
+		    JOIN EMPLOYEE E
+		    ON A.EMP_NO = E.NO
+		    WHERE A.TYPE = 'A'
+		    GROUP BY A.TASK_NO
+		) A
+		ON T.NO = A.TASK_NO
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="type=='title' and keyword != null and keyword != '' ">
+				AND T.TITLE LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="type=='content' and keyword != null and keyword != '' ">
+				AND T.CONTENT LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="type=='orderer' and keyword != null and keyword != '' ">
+				AND E.NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+		ORDER BY T.NO DESC
 	</select>
+	
 </mapper>
+	

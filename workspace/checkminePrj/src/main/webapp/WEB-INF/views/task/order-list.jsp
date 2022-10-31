@@ -190,23 +190,22 @@
 			      </ul>
 
                 <!--검색 기능-->
-
                 <div id="search-write-box">
-                    <form id="search" action="${root}/order/list/search" method="get" >
+                    <form id="search" action="${root}/task/order/search" method="get" >
                         <table class="pull-right">
                             <tr>
                                 <td>
                                     <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px" id="search-img">
                                 </td>
-                                <td><select class="form-control" name="searchField">
+                                <td><select class="form-control" name="type">
                                         <option value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="orderer">작성자</option>
                                 </select></td>
                                 <td>
                                     <input type="text" class="form-control"
-                                    placeholder="지시서 검색" name="searchText" maxlength="100"></td>
-                                <td><button type="submit" class="search-btn">검색</button></td>
+                                    placeholder="지시서 검색" name="keyword" maxlength="100"></td>
+                                <td><button type="submit"class="search-btn">검색</button></td>
                             </tr>
                         </table>
                     </form>
@@ -258,5 +257,6 @@
         
         </main>
     </div>
+
 </body>
 </html>
