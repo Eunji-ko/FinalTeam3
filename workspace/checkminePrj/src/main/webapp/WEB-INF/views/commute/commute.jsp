@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>근태관리</title>
 <style>
     .shadow{
        padding: 20px;
@@ -97,31 +97,31 @@
                       <div></div>
 
                       <div id="search">
-                        <select id="">
+                        <select id="dept-selectbox">
                             <option value="">부서전체</option>
-                            <option value="1">-</option>
-                            <option value="2">인사부</option>
-                            <option value="3">총무부</option>
-                            <option value="4">회계부</option>
-                            <option value="5">영업부</option>
-                            <option value="6">마케팅부</option>
+                            <option value="-">-</option>
+                            <option value="인사부">인사부</option>
+                            <option value="총무부">총무부</option>
+                            <option value="회계부">회계부</option>
+                            <option value="영업부">영업부</option>
+                            <option value="마케팅부">마케팅부</option>
                         </select>
 
-                        <select id="">
+                        <select id="pos-selectbox">
                             <option value="">직급전체</option>
-                            <option value="1">사원</option>
-                            <option value="2">주임</option>
-                            <option value="3">대리</option>
-                            <option value="4">과장</option>
-                            <option value="5">차장</option>
-                            <option value="6">부장</option>
-                            <option value="7">사장</option>
+                            <option value="사원">사원</option>
+                            <option value="주임">주임</option>
+                            <option value="대리">대리</option>
+                            <option value="과장">과장</option>
+                            <option value="차장">차장</option>
+                            <option value="부장">부장</option>
+                            <option value="사장">사장</option>
                         </select>
 
                       </div>
 
                       <div id="search-btn">
-                        <button type="button" class="btn btn-sm">조회하기</button>
+                        <button type="button" class="btn btn-sm" onclick="search();">조회하기</button>
                       </div>
 
                     </div>
@@ -241,12 +241,52 @@
 
     <script>
       //부서별 조회
-      $('')
+      function search(){
+        $('#dept-selectbox').on('change', function(){
+          console.log("부서조회");
+          
+          let deptCode = $('#dept-selectbox option:selected').val();
+          let paramData = JSON.stringify({"deptCode" : $('#dept-selectbox option:selected').val()});
+          console.log(deptCode);
+          console.log(paramData);
+
+          $.ajax({
+            url : "${rootPath}/commute/selectDept",
+            method : "post",
+            data : {deptCode : deptCode},
+            dataType : 'json',
+            success : function(deptEmpList){
+              console.log(deptEmpList);
+            },
+            error : function(){
+              console.log("실패");
+            }
+          })
+        })
+      }
     </script>
 
     <script>
       //직급별 조회
-      $('')
+      function search(){
+        $('#pos-selectbox').on('change', function(){
+          let posCode = $('#pos-selectbox option:selected').val();
+          let paramData = JSON.stringify({"deptCode" : $('#pos-selectbox option:selected').val()});
+
+          $.ajax({
+            url : "${rootPath}/commute/selectPos",
+            method : "post",
+            data : {posCode : posCode},
+            dataType : 'json',
+            success : function(posEmpList){
+              console.log(posEmpList);
+            },
+            error : function(){
+              console.log("실패");
+            }
+          })
+        })
+      }
     </script>
 
 </body>
