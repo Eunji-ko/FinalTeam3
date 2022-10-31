@@ -67,6 +67,29 @@
         border-left: none;
     }
   
+    input[name=attach]{
+        width: 200px;
+        display: none;
+    }
+
+    #showFiles{
+        width: 350px;
+        height: 38px;
+        overflow: auto;
+        font-size: small;
+        margin-left: 10px;
+    }
+
+    #attach label {
+        color: white;
+        height: 38px;
+        width: 100px;
+        line-height: 35px;
+        text-align: center;
+        background-color: #5D736F;
+        cursor: pointer;
+        border-radius: 30px;
+    }
 
     #regist{
         width: 178px;
@@ -91,6 +114,7 @@
     textarea{
         resize: none;
     }
+
 
 </style>
 </head>
@@ -127,7 +151,13 @@
                        
                     </div>
                     <div id="footer">
-                        <div id="attach"><input type="file" name="attach" multiple></div>
+                        <div style="display: flex; align-items: flex-start;">
+                        <div id="attach">
+                            <label for="file">첨부파일</label> 
+                            <input type="file" name="attach" id="file" multiple>
+                        </div>
+                            <div style="display: inline-block;" id="showFiles"></div>
+                        </div>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
                     </div>
 
@@ -144,17 +174,19 @@
     </div>
    
     <script>
-        //커뮤니티, 갤러리 선택 시 사진만 첨부 가능하게 함
-        function attachType(){
-            const select = document.querySelector("select[name=type]").value;
-            const attachArea = document.querySelector("#attach");
-            if(select == 'G' || select == 'C'){
-                attachArea.innerHTML = '<input type="file" accept=".gif, .jpg, .png" name="attach" multiple>';
-            }else{
-                attachArea.innerHTML = '<input type="file" name="attach" multiple>';
-            }
-
-        }
+        //첨부된 파일 목록 보여주기
+            target = document.querySelector('input[name=attach]');
+            console.log(target);
+            target.addEventListener('change', function(){
+                fileList = "";
+                for(i = 0; i < target.files.length; i++){
+                    fileList += target.files[i].name + '<br>';
+                }
+                target2 = document.getElementById('showFiles');
+                target2.innerHTML = fileList;
+            });
+    
+</script>
         
        
     </script>

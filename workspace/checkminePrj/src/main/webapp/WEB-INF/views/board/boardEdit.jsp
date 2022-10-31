@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+     <!-- 서머노트를 위해 추가해야할 부분 -->
+     <script src="${rootPath}/resources/summernote/summernote-lite.js"></script>
+     <script src="${rootPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+     <link rel="stylesheet" href="${rootPath}/resources/summernote/summernote-lite.css">
+  <!--  -->
      
 
 <!DOCTYPE html>
@@ -60,6 +65,34 @@
         border: 1px solid #5D736F;
     }
   
+    select[name="type"]{
+        border-top: none;
+        border-left: none;
+    }
+  
+    input[name=attach]{
+        width: 200px;
+        display: none;
+    }
+
+    #showFiles{
+        width: 350px;
+        height: 38px;
+        overflow: auto;
+        font-size: small;
+        margin-left: 10px;
+    }
+
+    #attach label {
+        color: white;
+        height: 38px;
+        width: 100px;
+        line-height: 35px;
+        text-align: center;
+        background-color: #5D736F;
+        cursor: pointer;
+        border-radius: 30px;
+    }
 
     #regist{
         width: 178px;
@@ -102,34 +135,32 @@
             <div id="infoWrap">
                 <form action="" method="post" enctype="multipart/form-data">
             
-                <div id="title">
-                    <div><select style="width: 200px;" class="form-select" name="type" id="type">
+                    <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <select style="width: 200px;" class="form-select" name="type" id="type" onchange=attachType();>
                         <c:if test="${fn:contains(loginMember.permission, 'N')}">
                             <option value="N">공지사항</option>
                         </c:if>
                         <option value="C">커뮤니티</option>
                         <option value="G">갤러리</option>
-                    </select></div>
-                    <div><input type="text" class="form-control" name="title" value=${board.title} required></div>
+                        </select>
+                    </div>
+                    <div id="title"><input type="text" class="form-control" name="title" value=${board.title} required></div>
                     
                </div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;" name="content" style="width:650px; height:350px;" required>${board.content}</textarea>
+                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;" required>${board.content}</textarea>
                        
                     </div>
                     <div id="footer">
-                        <div id="attach">
-                            <c:choose>
-                                <c:when test="${board.type eq 'N'}">
-                                    <input type="file" name="attach" multiple>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="file" accept=".gif, .jpg, .png" name="attach" multiple>
-                                </c:otherwise>
-                            </c:choose>
-
-                        </div>
+                        <div style="display: flex; align-items: flex-start;">
+                            <div id="attach">
+                                <label for="file">첨부파일</label> 
+                                <input type="file" name="attach" id="file" multiple>
+                            </div>
+                                <div style="display: inline-block;" id="showFiles"></div>
+                            </div>
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">수정하기</button></div>
                     </div>
 
@@ -148,7 +179,56 @@
     <script>
         //카테고리 적용
         $('#type').val('${board.type}').prop("selected",true);
+
+        //첨부된 파일 목록 보여주기
+        target = document.querySelector('input[name=attach]');
+            console.log(target);
+            target.addEventListener('change', function(){
+                fileList = "";
+                for(i = 0; i < target.files.length; i++){
+                    fileList += target.files[i].name + '<br>';
+                }
+                target2 = document.getElementById('showFiles');
+                target2.innerHTML = fileList;
+            });
        
+       
+    </script>
+    <script>
+        //썸머노트 적용
+        $('.summernote').summernote({
+            height: 533,
+            lang: "ko-KR",
+            disableResizeEditor: true,
+           
+            //콜백 함수
+            callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+            // 파일 업로드(다중업로드를 위해 반복문 사용)
+            for (var i = files.length - 1; i >= 0; i--) {
+            uploadSummernoteImageFile(files[i],
+            this);
+            		}
+            	}
+            }
+	});
+           
+    function uploadSummernoteImageFile(file, el) {
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "${rootPath}/board/uploadSummernoteImageFile",
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+					$(el).summernote('editor.insertImage', '${rootPath}'+ "/resources/upload/board/" +data.fileName);
+				}
+			});
+		}
+   
     </script>
     
     
