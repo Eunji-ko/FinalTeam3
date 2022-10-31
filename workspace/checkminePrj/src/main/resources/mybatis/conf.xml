@@ -28,7 +28,7 @@
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportAttVo" alias="TaskReportAttVo"/>
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportFileVo" alias="TaskReportFileVo"/>
 	<typeAlias type="com.kh.checkmine.commute.vo.CommuteVo" alias="CommuteVo"/>
-	<typeAlias type="com.kh.checkmine.schedule.vo.CommuteVo" alias="scheduleVo"/>
+	<typeAlias type="com.kh.checkmine.schedule.vo.scheduleVo" alias="scheduleVo"/>
 </typeAliases>
 
 
