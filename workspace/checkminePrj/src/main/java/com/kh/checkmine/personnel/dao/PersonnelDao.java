@@ -11,9 +11,9 @@ import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface PersonnelDao {
 
-	List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv);
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv, HashMap<String, String> empMap);
 
-	List<AccountVo> selectAccountList(SqlSessionTemplate sst);
+	List<AccountVo> selectAccountList(SqlSessionTemplate sst, PageVo apv, HashMap<String, String> accMap);
 
 	MemberVo selectEmpByNo(SqlSessionTemplate sst, String no);
 

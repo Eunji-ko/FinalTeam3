@@ -25,13 +25,13 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 	
 	@Override
-	public List<MemberVo> selectMemberList(PageVo epv) {
-		return dao.selectMemberList(sst, epv);
+	public List<MemberVo> selectMemberList(PageVo epv, HashMap<String, String> empMap) {
+		return dao.selectMemberList(sst, epv, empMap);
 	}
 
 	@Override
-	public List<AccountVo> selectAccountList() {
-		return dao.selectAccountList(sst);
+	public List<AccountVo> selectAccountList(PageVo apv, HashMap<String, String> accMap) {
+		return dao.selectAccountList(sst, apv, accMap);
 	}
 
 	@Override

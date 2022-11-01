@@ -14,6 +14,12 @@
 		FROM EMPLOYEE E, POSITION P, DEPARTMENT D
 		WHERE E.POS_NO = P.NO
 		AND E.DEPT_NO = D.NO
+		<if test='type neq null and !type.equals("")'>
+			AND ${type} LIKE '%${text}%'
+		</if>
+		<if test='rsn neq null and !rsn.equals("")'>
+			AND E.RESIGN_YN = #{rsn}
+		</if>
 		ORDER BY E.NO DESC
   </select>
   
@@ -28,6 +34,9 @@
   		, DELETE_YN
   	FROM ACCOUNT
   	WHERE DELETE_YN = 'N'
+  	<if test='type neq null and !type.equals("")'>
+  		AND ${type} LIKE '%${text}%'
+  	</if>
   	ORDER BY NO DESC
   </select>
   

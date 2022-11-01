@@ -16,16 +16,19 @@ import com.kh.checkmine.personnel.vo.AccountVo;
 public class PersonnelDaoImpl implements PersonnelDao {
 
 	@Override
-	public List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv) {
+	public List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo epv, HashMap<String, String> empMap) {
 		int offset = (epv.getCurrentPage() -1) * epv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, epv.getBoardLimit());
 		
-		return sst.selectList("personnelMapper.selectMemberList", null, rb);
+		return sst.selectList("personnelMapper.selectMemberList", empMap, rb);
 	}
 
 	@Override
-	public List<AccountVo> selectAccountList(SqlSessionTemplate sst) {
-		return sst.selectList("personnelMapper.selectAccountList");
+	public List<AccountVo> selectAccountList(SqlSessionTemplate sst, PageVo apv, HashMap<String, String> accMap) {
+		int offset = (apv.getCurrentPage() -1) * apv.getBoardLimit();
+		RowBounds rb = new RowBounds(offset, apv.getBoardLimit());
+		
+		return sst.selectList("personnelMapper.selectAccountList", accMap, rb);
 	}
 
 	@Override
