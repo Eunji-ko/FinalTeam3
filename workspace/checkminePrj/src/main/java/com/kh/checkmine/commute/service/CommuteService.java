@@ -1,7 +1,9 @@
 package com.kh.checkmine.commute.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.commute.vo.CommuteVo;
 
@@ -17,7 +19,7 @@ public interface CommuteService {
 	int leave(CommuteVo vo);
 
 	//전체 근태기록
-	List<CommuteVo> selectList(PageVo pv);
+	List<CommuteVo> selectList(CommuteVo vo, PageVo pv);
 
 	//전체 근태 갯수 조회
 	int selectcommuteTotalCount();
@@ -30,5 +32,8 @@ public interface CommuteService {
 
 	//직급별 조회
 	List<CommuteVo> selectPosList(String posName);
+
+	//연차조회
+	List<ApprovalLeaveVo> selectLeaveList(Map<String, String> map);
 
 }

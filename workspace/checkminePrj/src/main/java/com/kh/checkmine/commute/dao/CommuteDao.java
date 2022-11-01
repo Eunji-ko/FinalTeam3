@@ -1,9 +1,11 @@
 package com.kh.checkmine.commute.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.commute.vo.CommuteVo;
 
@@ -19,7 +21,7 @@ public interface CommuteDao {
 	int updateLeave(CommuteVo vo, SqlSessionTemplate sst);
 
 	//전체 근태기록
-	List<CommuteVo> selectList(SqlSessionTemplate sst, PageVo pv);
+	List<CommuteVo> selectList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv);
 
 	//전체 근태 갯수 조회
 	int selectCommuteCountAll(SqlSessionTemplate sst);
@@ -32,5 +34,8 @@ public interface CommuteDao {
 
 	//직급별 조회
 	List<CommuteVo> selectPosList(String posName, SqlSessionTemplate sst);
+
+	//연차조회
+	List<ApprovalLeaveVo> selectLeaveList(Map<String, String> map, SqlSessionTemplate sst);
 
 }

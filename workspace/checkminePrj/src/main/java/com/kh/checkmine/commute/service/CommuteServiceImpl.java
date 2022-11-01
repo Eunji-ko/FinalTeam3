@@ -1,11 +1,13 @@
 package com.kh.checkmine.commute.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.commute.dao.CommuteDao;
 import com.kh.checkmine.commute.vo.CommuteVo;
@@ -42,8 +44,8 @@ public class CommuteServiceImpl implements CommuteService {
 
 	//전체 근태기록
 	@Override
-	public List<CommuteVo> selectList(PageVo pv) {
-		return dao.selectList(sst, pv);
+	public List<CommuteVo> selectList(CommuteVo vo, PageVo pv) {
+		return dao.selectList(sst, vo, pv);
 	}
 
 	//전체 근태 갯수 조회
@@ -68,6 +70,12 @@ public class CommuteServiceImpl implements CommuteService {
 	@Override
 	public List<CommuteVo> selectPosList(String posName) {
 		return dao.selectPosList(posName, sst);
+	}
+
+	//연차조회
+	@Override
+	public List<ApprovalLeaveVo> selectLeaveList(Map<String, String> map) {
+		return dao.selectLeaveList(map, sst);
 	}
 
 }
