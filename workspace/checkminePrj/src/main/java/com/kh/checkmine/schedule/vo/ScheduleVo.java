@@ -3,10 +3,10 @@ package com.kh.checkmine.schedule.vo;
 import lombok.Data;
 
 @Data
-public class scheduleVo {
+public class ScheduleVo {
 	private String no;
 	private String empNo;
-	private String name;
+	private String title;
 	private String content;
 	private String enorllDate;
 	private String startDate;

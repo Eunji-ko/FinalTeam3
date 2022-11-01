@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="scheduleMapper">
+	<select id="selcetOrderList" resultType="TaskOrderVo">
+		SELECT 
+		    E.NAME ORDERER,
+		    D.NAME DEPT_NO,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.START_DATE,
+		    T.END_DATE,
+		    T.IMPORTANCE
+		FROM TASK T
+		JOIN EMPLOYEE E
+		ON T.ORDERER = E.NO
+		JOIN DEPARTMENT D
+		ON T.DEPT_NO = D.NO
+	</select>
 </mapper>
