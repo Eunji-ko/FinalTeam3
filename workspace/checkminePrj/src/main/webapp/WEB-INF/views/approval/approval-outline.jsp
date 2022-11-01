@@ -70,6 +70,9 @@
 		margin-left : 20px;
 		margin-bottom : 20px;
 	}
+	a:hover{
+		color: #5d736f !important;
+	}
 </style>
 </head>
 <body>
@@ -93,7 +96,7 @@
 	        <a class="list-group-item top-radius-btn" id="list-state-list" data-bs-toggle="list" href="#list-state" role="tab" aria-controls="list-state">전표</a>
 	        <a class="list-group-item top-radius-btn" id="list-leave-list" data-bs-toggle="list" href="#list-leave" role="tab" aria-controls="list-leave">휴가</a>
     	</div>
-    	<hr class="hr-border">
+		<hr class="hr-border">
         <div class="tab-content" id="nav-tabContent">
 	        <div class="tab-pane fade show active" id="list-draft" role="tabpanel" aria-labelledby="list-draft-list">
 	            <%@ include file="/WEB-INF/views/approval/draft.jsp" %>

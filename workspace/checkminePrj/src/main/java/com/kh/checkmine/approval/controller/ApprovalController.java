@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -176,6 +175,10 @@ public class ApprovalController {
 				obj.addProperty("num" + i, memberList.get(i).getNo());
 			}
 		}
+		
+//		String list = gson.toJson(memberList);
+//		obj.addProperty("list", list);
+		
 		String allEmpCnt = Integer.toString(service.selectEmpByName("").size());
 		obj.addProperty("allEmpCnt", allEmpCnt);
 	
@@ -264,6 +267,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -308,6 +312,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -383,6 +388,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -428,6 +434,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -473,6 +480,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -517,6 +525,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());
@@ -561,6 +570,7 @@ public class ApprovalController {
 			
 			session.setAttribute("alertMsg", alertUpdateMsg);
 			
+			return "redirect:/approval/list";
 		}else {//문서번호 없음
 			//작성자 번호 세팅
 			docVo.setWriterNo(loginMember.getNo());

@@ -4,18 +4,34 @@
 
 	<select id="selectCountApAll" resultType="int">
 		SELECT COUNT(*)
-		FROM APPROVAL
-		WHERE
-			STATUS = '대기'
-		    AND (
-			    (FINAL_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
-			    OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
-			    OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			)
+		FROM (
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        (FIRST_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
+		        AND FIRST_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        ((FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
+		        OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo}))
+		        AND SECOND_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        ((FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
+		        OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo}))
+		        AND THIRD_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
+		        OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+		) A
+		WHERE A.STATUS = '대기'
 	</select>
 	
 	<select id="selectApListAll" resultType="ApprovalDocVo">
@@ -26,24 +42,41 @@
 		    ,D."DATE"
 		    ,T."NAME" TYPE
 		FROM AP_DOC D
-		JOIN APPROVAL A
+		JOIN
+		(
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        (FIRST_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
+		        AND FIRST_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        ((FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
+		        OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo}))
+		        AND SECOND_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        ((FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
+		        OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo}))
+		        AND THIRD_APPROVER IS NULL
+		    UNION
+		    SELECT *
+		    FROM APPROVAL
+		    WHERE
+		        (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
+		        OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
+		) A
 		ON D.NO = A.DOC_NO
 		JOIN EMPLOYEE E
 		ON D.WRITER_NO = E.NO
 		JOIN AP_TYPE T
 		ON D."TYPE" = T."TYPE"
-		WHERE
-			A.STATUS = '대기'
-		    AND (
-			    (FINAL_DATE IS NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NULL AND FIRST_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (FIRST_DATE IS NOT NULL AND SECOND_APPROVER = #{employeeNo})
-			    OR (SECOND_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			    OR (SECOND_DATE IS NOT NULL AND THIRD_APPROVER = #{employeeNo})
-			    OR (THIRD_DATE IS NOT NULL AND FINAL_APPROVER = #{employeeNo})
-			)
-		ORDER BY D."DATE" ASC
+		WHERE A.STATUS = '대기'
+		ORDER BY D."DATE" DESC
 	</select>
 	
 	<select id="selectDoc" resultType="ApprovalDocVo">

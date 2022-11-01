@@ -155,10 +155,10 @@
 					<input type="number" class="form-control" name="amount" min="0" value="${buyOrderVo.amount}" required>
 					<div class="input-group-text">단가</div>
 					<input type="number" class="form-control" name="price" min="0" value="${buyOrderVo.price}" required>
-					<div class="input-group-text">납품기간</div>
-					<input type="date" class="form-control" name="startDate" value="${buyOrderVo.startDate}">
+					<div class="input-group-text">납품요청기한</div>
+					<input type="date" class="form-control" id="order-start" name="startDate" value="${buyOrderVo.startDate}">
 					<div class="input-group-text">완납일자</div>
-					<input type="date" class="form-control" name="endDate" value="${buyOrderVo.endDate}">
+					<input type="date" class="form-control" id="order-end" name="endDate" value="${buyOrderVo.endDate}">
 					<textarea class="form-control" maxlength="250" name="content">${buyOrderVo.content}</textarea>
 				</div>
 			</div>
@@ -181,6 +181,7 @@
 
 			
 		</div>
+	
 		
 	</form>
 </main>
