@@ -72,6 +72,7 @@ public class MailSendServiceImpl implements MailSendService{
 	 * 메일 임시저장
 	 */
 	@Override
+	@Transactional
 	public int insertMailSave(MailSendFormVo formVo) {
 		int result = 1;
 		result = result * dao.insertMailSave(sst,formVo);

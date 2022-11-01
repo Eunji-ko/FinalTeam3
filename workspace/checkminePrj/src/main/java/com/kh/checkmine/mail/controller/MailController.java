@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -169,7 +170,7 @@ public class MailController {
 		int listCount = service.getSaveListCount(memberNo);
 		PageVo pageVo = Pagination.getPageVo(listCount, Integer.parseInt(page), 1, 15);
 		
-		ArrayList<MailVo> saveMailList = (ArrayList<MailVo>) service.getSaveList(memberNo, pageVo);
+		ArrayList<MailSendFormVo> saveMailList = (ArrayList<MailSendFormVo>) service.getSaveList(memberNo, pageVo);
 		
 		int notReadCountReceive = service.getNotReadCount(memberNo, "A");
         int notReadCountRef = service.getNotReadCount(memberNo, "R");
@@ -225,7 +226,7 @@ public class MailController {
 	@ResponseBody
 	public String moveRecycleBinSend(String[] targetMails) {
 		
-		int result = service.moveRecycleBinSend(targetMails);
+		int result = service.moveRecycleBinSave(targetMails);
 		
 		if(result == 1) {
 			return Integer.toString(targetMails.length);

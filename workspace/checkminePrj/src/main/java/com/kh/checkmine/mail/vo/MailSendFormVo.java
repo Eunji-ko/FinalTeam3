@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class MailSendFormVo {
+	private String no;
 	private String empNo;
 	private String title;
 	private String receiver;

@@ -1,5 +1,8 @@
 package com.kh.checkmine.mail.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -17,4 +20,5 @@ public class ReceiveMailVo {
 	public String sStatus;
 	public String sendDate;
 	public String senderEmail;
+	private List<MailAttVo> mailAttVo;
 }
