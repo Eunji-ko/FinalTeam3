@@ -101,8 +101,10 @@ public class AdminMemberController {
 		}
 		
 		//권한 ',' 제거, 대문자로 변환
-		String permission = vo.getPermission().replace(",", "").toUpperCase();
-		vo.setPermission(permission);
+		if(vo.getPermission() != null) {
+			String permission = vo.getPermission().replace(",", "").toUpperCase();			
+			vo.setPermission(permission);
+		}
 		int result = service.insertMember(vo);
 		
 		if(result == 1) {

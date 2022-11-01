@@ -36,11 +36,24 @@
         line-height: 50px;
     }
     .google-visualization-orgchart-node{
-        width: 100px;
+        width: 120px;
+        background: #C4F2EA;
+        border-radius: 20px;
+        border: none;
+    }
+    .google-visualization-orgchart-node:hover{
+        background-color: rgb(236, 236, 110);
+    }
+    .google-visualization-orgchart-linebottom{
+        border-bottom: 1px solid gray;
+    }
+    .google-visualization-orgchart-lineleft{
+        border-left: 1px solid gray;
     }
     
-
-    
+    .google-visualization-orgchart-lineright{
+        border-right: 1px solid gray;
+    }
 
 </style>
 </head>
@@ -72,21 +85,21 @@
         data.addColumn('string', 'ToolTip');
 
         data.addRows([
-          [{'v':'김사장', 'f':'김사장<div style="color:red; font-style:italic">President</div>'},
-           '', 'The President'],
-          ['인사부', '김사장', ''],
-          ['총무부', '김사장', ''],
-          ['회계부', '김사장', ''],
-          ['영업부', '김사장', ''],
-          ['마케팅부', '김사장', ''],
+          [{'v':'Company', 'f':'<div style="font-style:italic; font-size: 18px">Company</div>'},
+           '', ''],
+          ['<div style="font-size : 18px">인사부</div>', 'Company', ''],
+          ['<div style="font-size : 18px">총무부</div>', 'Company', ''],
+          ['<div style="font-size : 18px">회계부</div>', 'Company', ''],
+          ['<div style="font-size : 18px">영업부</div>', 'Company', ''],
+          ['<div style="font-size : 18px">마케팅부</div>', 'Company', ''],
           
 
-          [{'v':'사원', 'f':'사원<div style="color:blue; font-style:italic">${chart.get(0).get("CNT")}명</div>'}, '', ''],
-          [{'v':'주임', 'f':'주임<div style="color:blue; font-style:italic">${chart.get(1).get("CNT")}명</div>'}, '', ''],
-          [{'v':'대리', 'f':'대리<div style="color:blue; font-style:italic">${chart.get(2).get("CNT")}명</div>'}, '', ''],
-          [{'v':'과장', 'f':'과장<div style="color:blue; font-style:italic">${chart.get(3).get("CNT")}명</div>'}, '', ''],
-          [{'v':'차장', 'f':'차장<div style="color:blue; font-style:italic">${chart.get(4).get("CNT")}명</div>'}, '', ''],
-          [{'v':'부장', 'f':'부장<div style="color:blue; font-style:italic">${chart.get(5).get("CNT")}명</div>'}, '', ''],
+          [{'v':'사원', 'f':'<div style="font-size:15px;">사원</div><div style="font-size:15px; font-style:italic">${chart.get(0).get("CNT")}명</div>'}, '', ''],
+          [{'v':'주임', 'f':'<div style="font-size:15px;">주임</div><div style="font-size:15px; font-style:italic">${chart.get(1).get("CNT")}명</div>'}, '', ''],
+          [{'v':'대리', 'f':'<div style="font-size:15px;">대리</div><div style="font-size:15px; font-style:italic">${chart.get(2).get("CNT")}명</div>'}, '', ''],
+          [{'v':'과장', 'f':'<div style="font-size:15px;">과장</div><div style="font-size:15px; font-style:italic">${chart.get(3).get("CNT")}명</div>'}, '', ''],
+          [{'v':'차장', 'f':'<div style="font-size:15px;">차장</div><div style="font-size:15px; font-style:italic">${chart.get(4).get("CNT")}명</div>'}, '', ''],
+          [{'v':'부장', 'f':'<div style="font-size:15px;">부장</div><div style="font-size:15px; font-style:italic">${chart.get(5).get("CNT")}명</div>'}, '', ''],
         ]);
 
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));

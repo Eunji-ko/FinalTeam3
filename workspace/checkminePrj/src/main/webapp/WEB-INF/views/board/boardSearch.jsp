@@ -154,7 +154,7 @@
                             </thead>
                             <tbody style="border-top: none;">
                                 <c:forEach items="${boardList}" var="b">
-                                <tr onclick="location.href='${rootPath}/admin/board/detail/${n.no}'">
+                                <tr onclick="location.href='${rootPath}/board/detail/${b.no}'">
                                     <td>${b.no}</td>
                                     <td>${b.title}</td>
                                     <td>${b.writer}</td>
@@ -175,7 +175,7 @@
 
                     <div id="pageArea">
                         <c:if test="${pv.startPage ne 1}">
-                            <a href="${rootPath}/board/list/${type}?sort=${sort}&p=${pv.startPage -1}">&lt;</a>            
+                            <a href="${rootPath}/board/search?keyword=${keyword}&p=${pv.startPage -1}">&lt;</a>            
                         </c:if>
                         <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
                             <c:choose>
@@ -183,7 +183,7 @@
                                     <a style="font-weight:900;">${i}</a>  
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="${rootPath}/board/list/${type}?sort=${sort}&p=${i}">${i}</a>            
+                                    <a href="${rootPath}/board/search?keyword=${keyword}&p=${i}">${i}</a>            
                                 
                                 </c:otherwise>
                             
@@ -191,7 +191,7 @@
                             
                         </c:forEach>
                           <c:if test="${pv.endPage ne pv.maxPage}">
-                            <a href="${rootPath}/board/list/${type}?sort=${sort}&p=${pv.endPage + 1}">&gt;</a>
+                            <a href="${rootPath}/board/search?keyword=${keyword}&p=${pv.endPage + 1}">&gt;</a>
                           </c:if>
                         </div>
                 </div>

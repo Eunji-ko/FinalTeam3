@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.kh.checkmine.admin.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.service.ReplyService;
@@ -248,6 +249,22 @@ public class AdminBoardController {
 	
 	}
 	
+	//썸머노트 파일 처리
+	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
+		JsonObject jsonObject = new JsonObject();
+	
+		// 내부경로로 저장
+		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+		String changeName = FileUploader.fileUpload(multipartFile, savePath);
+
+			jsonObject.addProperty("fileName", changeName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("responseCode", "success");
+		
+		String a = jsonObject.toString();
+		return a;
+	}
 	
 
 }

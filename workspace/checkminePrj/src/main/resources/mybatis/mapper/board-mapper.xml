@@ -113,7 +113,11 @@
  </update>
  
  <update id="edit">
- 	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content} WHERE NO = #{no}
+ 	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, 
+ 	<if test="type != null">
+	 	TYPE=#{type}, 
+ 	</if>
+ 	MODIFY_DATE=SYSDATE WHERE NO = #{no}
  </update>
  
    <insert id="updateBoardAtt">
@@ -130,10 +134,10 @@
   <select id="selectBoardListByType" parameterType="HashMap" resultType="BoardVo">
   	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
   	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE,
-  	THUMBNAIL 
+  	CASE WHEN B.CONTENT LIKE '%.jpg%' THEN SUBSTR(B.CONTENT, INSTR(B.CONTENT, '.jpg')-19, 23)
+	WHEN B.CONTENT LIKE '%.png%' THEN SUBSTR(B.CONTENT, INSTR(B.CONTENT, '.png')-19, 23) END AS THUMBNAIL
   	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
   	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
-  	LEFT OUTER JOIN (SELECT B_NO, MIN(NAME) THUMBNAIL FROM BOARD_ATT GROUP BY B_NO) A ON B.NO = A.B_NO 
   	WHERE DELETE_YN = 'N' 
   	<choose>
   		<when test='type == "notice"'>

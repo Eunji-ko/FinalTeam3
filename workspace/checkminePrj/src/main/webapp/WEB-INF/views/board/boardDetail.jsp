@@ -58,12 +58,15 @@
         display: inline-block;
         margin-right: 15px;
         line-height: 40px;
-        font-size: 20px;
+        font-size: 18px;
+    }
+    #dateArea{
+        color: gray;
     }
     #content-box{
         height: 550px;
         overflow: auto;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
     #content{
    		width:98%;
@@ -80,13 +83,15 @@
         border-bottom: 1px solid #5D736F;
     }
     #replyArea{
-        height: 150px;
+        height: 100px;
         margin: 20px;
+        margin-top: 25px;
         
     }
     #reply-bot{
         margin-left: 30px;
         border-bottom: 1px solid lightgrey;
+        font-size: 15px;
 
     }
     #replyTitle, #attachArea > h6{
@@ -166,7 +171,16 @@
                 	<div id="recommendCnt">추천 ${board.recommendCnt}</div>
 	                <div>조회수 ${board.hit}</div>
 	                <div id="writer"><b>${board.department}&nbsp${board.writer}</b></div>
-	                <div>${board.enrollDate}</div>
+	                <div id="dateArea">
+                        <c:choose>
+                            <c:when test="${board.modifyDate ne null}">
+                                ${board.modifyDate}
+                            </c:when>
+                            <c:otherwise>
+                                ${board.enrollDate}
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </div>
                 <div id="content-box">
                     <div id="content">
@@ -273,15 +287,15 @@
                        if("${loginMember.no}" == a){
                            result +=
                            '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
-                                       '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
-                                       '<div>'+ list[i].replyDate +'</div>'+
+                                       '<div style="font-weight:500;">'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div style="color:gray;">'+ list[i].replyDate +'</div>'+
                                        '<button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>'+                              
                                        '</div><div>'+list[i].content+'</div></div>'
                        }else{
                         result +=
                            '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
                                        '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
-                                       '<div>'+ list[i].replyDate +'</div>'+                  
+                                       '<div style="color:gray;>'+ list[i].replyDate +'</div>'+                  
                                        '</div><div>'+list[i].content+'</div></div>'
                        }
                                     

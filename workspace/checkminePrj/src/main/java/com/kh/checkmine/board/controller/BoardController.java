@@ -66,7 +66,7 @@ public class BoardController {
 		
 
 		List<BoardVo> boardList = service.selectBoardList(pv, map);
-		
+		System.out.println(boardList);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("type", type);
 		model.addAttribute("sort", sort);
@@ -283,26 +283,25 @@ public class BoardController {
 				attVoList.add(att);
 			}
 		
-			result = service.edit(vo, attVoList);
 			
+			result = service.edit(vo, attVoList);
 		}else {
 			//제목 또는 내용만 수정 시
 			result = service.edit(vo);
 		}
-
 		if(result == 1) {
-			session.setAttribute("msg", "게시물을 수정하였습니다.");
+			session.setAttribute("alertMsg", "게시물을 수정하였습니다.");
 			return "redirect:/board/detail/" + no;
 			
 		}else {
-			session.setAttribute("msg", "처리 중 문제가 발생하였습니다.");
+			session.setAttribute("alertMsg", "처리 중 문제가 발생하였습니다.");
 			return "redirect:/board/list/notice";
 		}
 	
 	}
 	
 	
-	
+	//썸머노트 파일 처리
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
