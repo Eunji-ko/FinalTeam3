@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
@@ -126,6 +127,14 @@ public interface MailDao {
 	 * @param pageVo
 	 * @return
 	 */
-	List<MailVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
+	List<MailSendFormVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo);
+
+	/**
+	 * 임시보관 메일 삭제
+	 * @param sst
+	 * @param targetMail
+	 * @return
+	 */
+	int deleteMailSend(SqlSessionTemplate sst, String targetMail);
 
 }

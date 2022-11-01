@@ -1,10 +1,10 @@
 package com.kh.checkmine.mail.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
@@ -112,6 +112,13 @@ public interface MailService {
 	 * @param pageVo
 	 * @return
 	 */
-	List<MailVo> getSaveList(String memberNo, PageVo pageVo);
+	List<MailSendFormVo> getSaveList(String memberNo, PageVo pageVo);
+
+	/**
+	 * 임시저장 삭제
+	 * @param targetMails
+	 * @return
+	 */
+	int moveRecycleBinSave(String[] targetMails);
 
 }

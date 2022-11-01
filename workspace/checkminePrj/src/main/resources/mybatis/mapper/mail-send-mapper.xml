@@ -70,12 +70,14 @@
 	<insert id="insertMailSave">
 		INSERT INTO MAIL_SAVE(
 			NO
+			,EMP_NO
 			,TITLE
 			,RECEIVER
 			,REFER
 			,CONTENT
 		)VALUES(
 			SEQ_MAIL_SAVE.NEXTVAL
+			, #{empNo}
 			, #{title}
 			, #{receiver}
 			, #{refer}
@@ -90,7 +92,7 @@
 	<insert id="insertMailSaveAtt">
 		INSERT INTO MAIL_SAVE_ATT(
 			NO
-			,MAIL_NO
+			,MAIL_SAVE_NO
 			,NAME
 			,PATH
 			,REAL_NAME
