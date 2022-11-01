@@ -8,7 +8,6 @@
 <title>CHECKMINE 사원관리</title>
 <style>
 
-
     main > div {
         width: 1389px;
         margin: 10px auto;
@@ -28,12 +27,12 @@
     }
 
     #listArea{
-        height: 622px;
+        height: 616px;
         margin: 20px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -52,7 +51,6 @@
 
     #filter{
         width: 110px;
-        display: inline-block;
     }
     #option{
         width: 183px;
@@ -84,6 +82,9 @@
         color: black;
     }
    
+    tr{
+        height: 40px;
+    }
 
 </style>
 </head>
@@ -97,16 +98,12 @@
                 <button type="button" class="btn" onclick="location.href='${root}/admin/member/add'">사원등록</button>
             </div>
 			<div id="area2">
-				<div>
-	                <select class="form-select" id="filter" onchange="location.href=this.value">
-	                	<option value="${root}/admin/member/list?sort=a&p=1">-----</option>
-	                    <option value="${root}/admin/member/list?sort=a&p=1">모두</option>
-	                    <option value="${root}/admin/member/list?sort=n&p=1">재직</option>
-	                    <option value="${root}/admin/member/list?sort=y&p=1">퇴직</option>
-	                </select>
-	                <div style="display: inline-block; margin:10px">'${keyword}'의 검색결과입니다.</div>
-
-				</div>
+                <select class="form-select" id="filter" onchange="location.href=this.value">
+                	<option value="${root}/admin/member/list?sort=a&p=1">-----</option>
+                    <option value="${root}/admin/member/list?sort=a&p=1">모두</option>
+                    <option value="${root}/admin/member/list?sort=n&p=1">재직</option>
+                    <option value="${root}/admin/member/list?sort=y&p=1">퇴직</option>
+                </select>
                 <form action="${root}/admin/member/search" method="get">
                     <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="name">이름</option>
@@ -126,7 +123,7 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr>
+                        <tr style="height: 40.5px;">
                             <th>사원번호</th>
                             <th>이름</th>
                             <th>부서</th>
@@ -138,7 +135,7 @@
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${memberList}" var="m">
-                        <tr onclick="location.href='${root}/admin/member/detail/${m.no}'">
+                        <tr style="height: 41px;" onclick="location.href='${root}/admin/member/detail/${m.no}'">
                             <td>${m.no}</td>
                             <td>${m.name}</td>
                             <td>${m.deptNo}</td>

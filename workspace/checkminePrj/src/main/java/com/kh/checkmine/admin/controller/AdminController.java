@@ -1,6 +1,5 @@
 package com.kh.checkmine.admin.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class AdminController {
 	//관리자 로그인 화면
 	@GetMapping("login")
 	public String login() {
-		return "admin/adminLogin";
+		return "admin/main/login";
 	}
 	
 	//관리자 로그인 동작
@@ -78,7 +77,7 @@ public class AdminController {
 		  model.addAttribute("boardList", boardList);
 		  model.addAttribute("memberList", memberList);
 		  model.addAttribute("bookList", bookList);
-		  return "admin/adminMain"; 
+		  return "admin/main/main"; 
 	}
 	
 

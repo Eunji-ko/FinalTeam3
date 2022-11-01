@@ -97,12 +97,18 @@
     }
     #checkDupBtn{
         background-color: #C4F2EA;
-        border: 1px solid lightgrey;
+        border: 1px outset #C4F2EA;
         margin-left: 5px;
+        font-size: 17px;
+        width: 50px;
+        height: 40px;
     }
-
-    
-    
+    input[type=text], select, input[type=date], input[type=password]{
+        font-size: 17px;
+        height: 40px;
+        width: 250px;
+    }
+   
    
 
 </style>
@@ -148,21 +154,21 @@
                             </c:forEach>
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 30px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();" required>
+                        <div class="inputField" style="grid-column: 2; margin-right: 10px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();" required>
                             <button id="checkDupBtn" type="button" onclick="checkDup();">확인</button>
                         </div>
                         <input type="hidden" value="X" id="dup">
                         <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 90px;"><label>상세주소</label><input type="text" name="addressDetail" ></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" required></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail" ></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" oninput="autoHyphen(this);" maxlength="13" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
                             <br><input type="checkbox" name="permission" value="n"><label style="font-weight: normal;">공지 등록</label>
                             <br><input type="checkbox" name="permission" value="r"><label style="font-weight: normal;">장비/장소 예약 승인</label>
                             <br><input type="checkbox" name="permission" value="h"><label style="font-weight: normal;">인사 관리</label>
                         </div>
-                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" required></div>
-                        <div class="inputField" style="margin-top:50px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off" required></div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>입사일</label><input type="date" name="enrollDate" required></div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off" required></div>
                     </div>
                     
                 </div>
@@ -185,7 +191,7 @@
                 }
                 fr.readAsDataURL(photo.files[0]); 
             }else{
-                imgTag.src = "";
+                reviewImg.src = "${root}/resources/img/admin/user-icon-thum.png";
             }
        }
 
@@ -210,6 +216,10 @@
             const dup = document.querySelector('#dup');
             const id = document.querySelector('#memberId').value;
 
+            if(id == null || id == ""){
+                alert("아이디를 입력해주세요.");
+                return;
+            }
             $.ajax({
                 url : "${root}/admin/member/dup",
                 type : "POST",
@@ -231,6 +241,12 @@
 
         }
 
+        //전화번호
+    const autoHyphen = (target) => {
+        target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        }
 
 
 

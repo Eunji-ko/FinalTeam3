@@ -51,7 +51,7 @@ public class AdminMemberController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("pv", pv);
 		
-		return "admin/adminMember";
+		return "admin/member/list";
 	}
 	
 	//사원 검색
@@ -70,7 +70,7 @@ public class AdminMemberController {
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
 		
-		return "admin/adminMemberSearch";
+		return "admin/member/search";
 	}
 	
 	
@@ -88,7 +88,7 @@ public class AdminMemberController {
 		model.addAttribute("dept", dept);
 		model.addAttribute("pos", pos);
 		
-		return "admin/adminMemberAdd";
+		return "admin/member/add";
 	}
 	
 	@PostMapping("add")
@@ -101,8 +101,10 @@ public class AdminMemberController {
 		}
 		
 		//권한 ',' 제거, 대문자로 변환
-		String permission = vo.getPermission().replace(",", "").toUpperCase();
-		vo.setPermission(permission);
+		if(vo.getPermission() != null) {
+			String permission = vo.getPermission().replace(",", "").toUpperCase();			
+			vo.setPermission(permission);
+		}
 		int result = service.insertMember(vo);
 		
 		if(result == 1) {
@@ -144,7 +146,7 @@ public class AdminMemberController {
 		model.addAttribute("memberVo", memberVo);
 		model.addAttribute("dept", dept);
 		model.addAttribute("pos", pos);
-		return "admin/adminMemberDetail";
+		return "admin/member/detail";
 	}
 	
 	

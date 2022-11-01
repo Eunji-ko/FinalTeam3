@@ -96,12 +96,11 @@
         width: 219px;
         height: 36px;
     }
-    #checkDup{
-        background-color: #C4F2EA;
-        border: 1px solid lightgrey;
-        margin-left: 5px;
+    input[type=text], select, input[type=date], input[type=password]{
+        font-size: 17px;
+        height: 40px;
+        width: 250px;
     }
-
     
     
    
@@ -175,12 +174,12 @@
                             </c:forEach>
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 85px;"><label>아이디</label><input type="text" name="id" id="memberId" value="${m.id}" readonly></div>
-                        <input type="hidden" value="X" id="dup">
+                        <div class="inputField" style="grid-column: 2; margin-right: 70px;"><label>아이디</label><input type="text" name="id" id="memberId" value="${m.id}" readonly></div>
+                        
                         <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address" value="${m.address}"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 90px;"><label>상세주소</label><input type="text" name="addressDetail" value="${m.addressDetail}"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 90px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" required></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 90px;"><label>이메일</label><input type="text" name="email" id="email" value="${m.email}" readonly></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail" value="${m.addressDetail}"></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" oninput="autoHyphen(this);" maxlength="13" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" value="${m.email}" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
                             <br>
                             <c:choose>
@@ -210,8 +209,8 @@
                             	</c:otherwise>
                             </c:choose>
                         </div>
-                        <div class="inputField" style="margin-top:50px;"><label>입사일</label><input type="date" name="enrollDate" value="${m.enrollDate}" readonly></div>
-                        <div class="inputField" style="margin-top:50px;"><label>퇴사일</label><input type="date" name="resignDate" value="${m.resignDate}"></div>
+                        <div class="inputField" style="margin-top:70px;"><label>입사일</label><input type="date" name="enrollDate" value="${m.enrollDate}" readonly></div>
+                        <div class="inputField" style="margin-top:70px; margin-right: 75px;"><label>퇴사일</label><input type="date" name="resignDate" value="${m.resignDate}"></div>
                     </div>
                     
                 </div>
@@ -233,10 +232,19 @@
                     reviewImg.src = data.target.result;
                 }
                 fr.readAsDataURL(photo.files[0]); 
+            }else if('${m.photoName}' == ""){
+                reviewImg.src = "${root}/resources/img/admin/user-icon-thum.png";
             }else{
-                imgTag.src = "";
+                reviewImg.src = "${root}/resources/upload/profile/${m.photoName}";
             }
        }
+       
+       //전화번호
+       const autoHyphen = (target) => {
+        target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        }
 
 
     </script>
