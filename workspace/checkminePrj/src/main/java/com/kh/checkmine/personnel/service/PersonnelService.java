@@ -9,9 +9,9 @@ import com.kh.checkmine.personnel.vo.AccountVo;
 
 public interface PersonnelService {
 
-	List<MemberVo> selectMemberList(PageVo epv);
+	List<MemberVo> selectMemberList(PageVo epv, HashMap<String, String> empMap);
 
-	List<AccountVo> selectAccountList();
+	List<AccountVo> selectAccountList(PageVo apv, HashMap<String, String> accMap);
 
 	MemberVo selectEmpByNo(String no);
 

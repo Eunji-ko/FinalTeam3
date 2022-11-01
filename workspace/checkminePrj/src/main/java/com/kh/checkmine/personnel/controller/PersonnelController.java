@@ -34,17 +34,34 @@ public class PersonnelController {
 	
 	//인사관리 페이지 조회
 	@GetMapping("main")
-	public String person(Model model) {
+	public String person(@RequestParam(name="ep") int ep,
+						 @RequestParam(name="ap") int ap,
+						 @RequestParam(name="category", required=false) String category,
+						 @RequestParam(name="rsn", required=false) String rsn,
+						 @RequestParam(name="empSearchType", required=false) String empSearchType,
+						 @RequestParam(name="empSearchText",required=false) String empSearchText,
+						 @RequestParam(name="accSearchType", required=false) String accSearchType,
+						 @RequestParam(name="accSearchText", required=false) String accSearchText,
+			Model model) {
 		
 		int totalCount = ps.selectTotalCnt();
 		int totalACount = ps.selectTotalACnt();
 		
-		PageVo epv = Pagination.getPageVo(totalCount, 1, 5, 10);
-		PageVo apv = Pagination.getPageVo(totalACount, 1, 5, 10);
+		PageVo epv = Pagination.getPageVo(totalCount, ep, 5, 10);
+		PageVo apv = Pagination.getPageVo(totalACount, ap, 5, 10);
+		
+		HashMap<String, String> empMap = new HashMap<>();
+		empMap.put("rsn", rsn);
+		empMap.put("type", empSearchType);
+		empMap.put("text", empSearchText);
+		
+		HashMap<String, String> accMap = new HashMap<>();
+		accMap.put("type", accSearchType);
+		accMap.put("text", accSearchText);
 		
 		//디비 다녀오기
-		List<MemberVo> memList = ps.selectMemberList(epv);
-		List<AccountVo> accList = ps.selectAccountList();
+		List<MemberVo> memList = ps.selectMemberList(epv, empMap);
+		List<AccountVo> accList = ps.selectAccountList(apv, accMap);
 		
 		//model에 데이터 담기
 		model.addAttribute("memList", memList);
@@ -81,16 +98,8 @@ public class PersonnelController {
 		if(result == 1) {
 			//정보수정 성공
 			
-			//디비 다녀오기
-			List<MemberVo> memList = ps.selectMemberList();
-			List<AccountVo> accList = ps.selectAccountList();
-
-			//model에 데이터 담기
-			model.addAttribute("memList", memList);
-			model.addAttribute("accList", accList);
-			
 			//화면 선택
-			return "personnel/main";
+			return "redirect:/personnel/main";
 		}else {
 			//정보수정 실패
 			session.setAttribute("alertMsg", "거래처를 추가하는 데 실패하였습니다 !");
@@ -139,16 +148,8 @@ public class PersonnelController {
 		if(result >= 1) {
 			//삭제 성공
 			
-			//디비 다녀오기
-			List<MemberVo> memList = ps.selectMemberList();
-			List<AccountVo> accList = ps.selectAccountList();
-
-			//model에 데이터 담기
-			model.addAttribute("memList", memList);
-			model.addAttribute("accList", accList);
-			
 			session.setAttribute("alertMsg", result + "개의 거래처를 모두 삭제하였습니다 !");
-			return "personnel/main";
+			return "redirect:/personnel/main";
 		}else {
 			//삭제 실패
 			session.setAttribute("alertMsg", "거래처를 삭제하는 데 실패하였습니다 !");
@@ -156,48 +157,5 @@ public class PersonnelController {
 		}
 		
 	}
-	
-	//사원 재직상태에 따른 조회
-	@GetMapping("selectRsn/{rsn}")
-	public String editAcc(Model model, @PathVariable String rsn) {
-		List<MemberVo> memList = ps.selectMemberListByRsn(rsn);
-		List<AccountVo> accList = ps.selectAccountList();
-		
-		model.addAttribute("memList", memList);
-		model.addAttribute("accList", accList);
-		
-		return "personnel/main";
-	}
-	
-	//사원 검색
-	@PostMapping("searchEmp")
-	public String searchEmp(Model model, String searchType, String searchText) {
-		HashMap<String, String> searchMap = new HashMap<>();
-		searchMap.put("type", searchType);
-		searchMap.put("text", searchText);
-		List<MemberVo> memList = ps.selectMemberListBySearch(searchMap);
-		List<AccountVo> accList = ps.selectAccountList();
-		
-		model.addAttribute("memList", memList);
-		model.addAttribute("accList", accList);
-		
-		return "personnel/main";
-	}
-	
-	//거래처 검색
-	@PostMapping("searchAcc")
-	public String searchAcc(Model model, String searchType, String searchText) {
-		HashMap<String, String> searchMap = new HashMap<>();
-		searchMap.put("type", searchType);
-		searchMap.put("text", searchText);
-		List<MemberVo> memList = ps.selectMemberList();
-		List<AccountVo> accList = ps.selectAccountListBySearch(searchMap);
-		
-		model.addAttribute("memList", memList);
-		model.addAttribute("accList", accList);
-		
-		return "personnel/main";
-	}
-	
 	
 }
