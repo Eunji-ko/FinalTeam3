@@ -303,6 +303,11 @@
 				$('#out').prop('checked', true);
 			}
 		</script>
+		<c:forEach items="${stateVo}" var="vo">
+			<script>
+				$('#money-sum').val(Number($('#money-sum').val()) + Number('${vo.money}'));
+			</script>
+		</c:forEach>
 	</c:if>
 
 	</form>
