@@ -1,7 +1,11 @@
 package com.kh.checkmine.commute.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -9,10 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.commute.service.CommuteService;
@@ -53,24 +60,48 @@ public class CommuteController {
 	
 	//전체 근태기록
 	@GetMapping("commute/{pno}")
-	public String commute(Model model, @PathVariable int pno) {
+	public String commute(Model model, HttpServletRequest req, @PathVariable int pno) {
 		
 		int commuteTotalCount = cs.selectcommuteTotalCount();
 		PageVo pv = Pagination.getPageVo(commuteTotalCount, pno, 5, 10);
 		
-		List<CommuteVo> voList = cs.selectList(pv);
+		String deptName = (String) req.getParameter("부서명");
+		String posName = (String) req.getParameter("직급");
+		
+		CommuteVo vo = new CommuteVo();
+		vo.setDeptName(deptName);
+		vo.setPosName(posName);
+		
+		List<CommuteVo> voList = cs.selectList(vo, pv);
 		
 		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
+		model.addAttribute("vo", vo);
 		
 		return "commute/commute";
 		
 	}
 	
-	//연차신청
-	@GetMapping("leave")
-	public String leave() {
-		return "commute/leave";
+	//연차조회
+	@GetMapping("annualleave")
+	public String annualleave(Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember"); 
+		String no = loginMember.getNo();
+		
+		LocalDate now = LocalDate.now();
+		String year = Integer.toString(now.getYear());
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberNo", no);
+		map.put("year", year);
+		
+		List<ApprovalLeaveVo> voList = cs.selectLeaveList(map);
+		
+		model.addAttribute("voList", voList);
+		
+		return "commute/annualleave";
+		
 	}
 	
 	//출근 버튼
@@ -118,31 +149,5 @@ public class CommuteController {
 		}
 		
 	}
-	
-	//부서별 조회
-	@PostMapping(value="selectDept", produces = "application/json; charset=utf-8")
-	@ResponseBody
-	public String selectDept(String deptName, Model model) {
-		
-		List<CommuteVo> result = cs.selectDeptList(deptName);
-		
-		Gson g = new Gson();
-		
-		return g.toJson(result);
-		
-	}
-	
-	//직급별 조회
-	@PostMapping(value = "selectPos", produces = "application/json; charset=utf-8")
-	@ResponseBody
-	public String selectPos(String posName, Model model) {
-		
-		List<CommuteVo> result = cs.selectPosList(posName);
-		
-		Gson g = new Gson();
-		
-		return g.toJson(result);
-		
-	}
-	
+
 }

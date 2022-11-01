@@ -100,7 +100,6 @@
         height: 40px;
     }
     #begin-zone *, #end-zone * {
-        float: left;
         height: 30px;
     }
     #begin-zone * {
@@ -113,6 +112,25 @@
         font-size: 15px;
         padding-right: 15px;
         padding-left: 10px;
+    }
+    /*예원이*/
+    #begin-zone, #end-zone{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    #time-zone{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        width: 170px;
+        height: 30px;
+    }
+    #attend-btn-zone{
+        width: 200px;
+        height: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 0px;
+        margin-top: 30px;
     }
 
     /* 출근 및 퇴근하면 확인하고 버튼 비활성화 시키기 */
@@ -271,7 +289,7 @@
                             출근시간
                         </div>
                         <div id="begin-time">
-                            08:20:05
+                            ${cvo.arrived}
                         </div>
                     </div>
                     <div id="end-zone">
@@ -279,7 +297,7 @@
                             퇴근시간
                         </div>
                         <div id="end-time">
-                            18:07:23
+                            ${cvo.leave}
                         </div>
                     </div>
                 </div>
