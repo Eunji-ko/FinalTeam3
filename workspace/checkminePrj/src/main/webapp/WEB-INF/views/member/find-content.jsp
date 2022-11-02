@@ -46,7 +46,10 @@
     .checkmine-btn {
         background-color: #5D736F;
         color: white;
-        border-radius: 7px;
+        width: 220px;
+        height: 60px;
+        font-size: 25px;
+        border-radius: 12px;
         padding-left: 10px;
         padding-right: 10px;
         padding-top: 3px;
@@ -56,6 +59,7 @@
         background-color: #72918b;
     }
 </style>
+<script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
     <br><br>
