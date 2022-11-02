@@ -99,7 +99,7 @@
 
                     <div>5</div>
 
-                    <div>0</div>
+                    <div>${x}</div>
                     
                     <div>5</div>
 
@@ -107,7 +107,7 @@
 
                 <div id="leave-list">
                     
-                      <div id="name">테스트 사원</div>
+                      <div id="name">${loginMember.name} 님</div>
 
                     <div id="leave-list-bot">
 
