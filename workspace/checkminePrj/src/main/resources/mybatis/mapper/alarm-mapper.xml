@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="alarmMapper">
+
+	<select id="selectAlarmList">
+		SELECT *
+		FROM ALARM
+		WHERE EMP_NO = #{no}
+		AND STATUS = 'N'
+	</select>
+	
+	<insert id="insertApproval">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'결재'
+			,'결재할 문서가 ${appSum}건 있습니다.'
+			,'approval/list'
+		)
+	</insert>
+	
+	<delete id="deleteAlarm">
+		DELETE FROM ALARM WHERE NO = #{no}
+	</delete>
+
+</mapper>

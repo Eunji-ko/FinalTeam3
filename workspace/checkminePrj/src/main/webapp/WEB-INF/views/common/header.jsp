@@ -80,14 +80,17 @@
         <div class="d-flex h-100 align-items-center justify-content-between me-5" style="width:340px">
         
         	<!-- 메일 TODO:메일경로-->
-        	<a href="${rootPath}/mail"><img src="/checkmine/resources/img/header/mail-icon.png"></a>
+        	<a href="${rootPath}/mail/receive"><img src="/checkmine/resources/img/header/mail-icon.png"></a>
         
             <!-- 알림 TODO:경로처리 갯수 처리, 배지 -->
             <div class="dropdown">
-                <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn dropdown-toggle" onclick="loadAlarm();" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/checkmine/resources/img/header/notification-bell.png">
                     <span class="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger">
-					    1
+					    ${alarmSum}
+                        <c:if test="${alarmSum eq null}">
+                            0
+                        </c:if>
 					    <span class="visually-hidden">unread messages</span>
 					</span>
                 </a>
@@ -95,13 +98,24 @@
                     <h5 class="fw-bold" style="margin-bottom: 25px;">알림 목록</h5>
 
                     <!-- TODO: 경로, 정보 -->
-                    <li class="d-flex align-items-center"><a class="dropdown-item" href="목표경로" style="width: 95%;">
-                        <span>[메일]000님이 메일을 보냈습니다.</span>
-                        <span style="font-size: 10px;">2022.02.03 22:10</span>
-                        <span><a href="삭제경로" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
-                        
-                    </a></li>
-                    <hr>
+                    <c:forEach items="${alrmList}" var="list">
+                        <li class="d-flex align-items-center">
+                            <a class="dropdown-item" href="목표경로" style="width: 95%;">
+                                <span>[${list.type}]${list.content}</span>
+                                <span style="font-size: 10px;">${list.time}</span>
+                                <span><a type="button" onclick="deleteAlarm('${list.no}');" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
+                            </a>
+                        </li>
+                        <hr>
+                    </c:forEach>
+                    <c:if test="${alrmList eq null}">
+                        <li class="d-flex align-items-center">
+                            <a class="dropdown-item" href="#" style="width: 95%;">
+                                <span>새로운 알람이 없습니다.</span>
+                            </a>
+                        </li>
+                        <hr>
+                    </c:if>
                 </ul>
             </div>
 
@@ -119,6 +133,39 @@
             </div>
         </div>
     </header>
+
+    <script>
+        function loadAlarm(){
+            $.ajax({
+                url : "${rootPath}/alarm/load",
+  				type : "POST",
+  				//data : {'no' : param},
+  				dataType : 'text',
+  				success : function(data){
+  				},
+  				error : function(){
+  					alert("서버요청실패..");
+  				}
+            });
+        }
+
+        function deleteAlarm(param){
+            $.ajax({
+                url : "${rootPath}/alarm/delete",
+  				type : "POST",
+  				data : {'no' : param},
+  				dataType : 'text',
+  				success : function(data){
+                   if(data == 'fail'){
+                    alert('알람 삭제에 실패하였습니다.');
+                   }
+  				},
+  				error : function(){
+  					alert("서버요청실패..");
+  				}
+            });
+        }
+    </script>
 
 
 </body>

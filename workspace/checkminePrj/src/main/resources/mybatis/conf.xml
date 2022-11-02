@@ -29,6 +29,11 @@
 	<typeAlias type="com.kh.checkmine.task.vo.TaskReportFileVo" alias="TaskReportFileVo"/>
 	<typeAlias type="com.kh.checkmine.commute.vo.CommuteVo" alias="CommuteVo"/>
 	<typeAlias type="com.kh.checkmine.schedule.vo.scheduleVo" alias="scheduleVo"/>
+	<typeAlias type="com.kh.checkmine.alarm.vo.AlarmVo" alias="AlarmVo"/>
+	<typeAlias type="com.kh.checkmine.reservation.vo.GoodsBookVo" alias="GoodsBookVo"/>
+	<typeAlias type="com.kh.checkmine.reservation.vo.GoodsVo" alias="GoodsVo"/>
+	<typeAlias type="com.kh.checkmine.reservation.vo.PlaceBookVo" alias="PlaceBookVo"/>
+	<typeAlias type="com.kh.checkmine.reservation.vo.PlaceVo" alias="PlaceVo"/>
 </typeAliases>
 
 

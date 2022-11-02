@@ -209,7 +209,7 @@
 	<script>
 		//무급휴가 확인 함수
 		function leaveApproval(){
-			if($('#l-day').val() > $('#leave-apply').val()){
+			if(($('#l-day').val() > $('#leave-apply').val()) || ($('#l-day').val()%1 == 0.5 && $('#l-day').val() > 0.5)){
 				if(confirm('무급휴가가 포함되어 있는 것이 맞습니까?')){
 					return approval();
 				}else{
@@ -228,9 +228,15 @@
 		$('#start-date').blur(function(){
 			var today = new Date();
 			var date1 = new Date(document.querySelector('#start-date').value);
-			if(date1 < today){
+			var date2 = new Date(document.querySelector('#end-date').value);
+			if(document.querySelector('#start-date').value < today.toISOString().slice(0, 10)){
 				alert('휴가는 오늘 이후만 가능합니다.');
 				document.querySelector('#start-date').value = today.toISOString().slice(0, 10);
+				return;
+			}
+			if(date2 < date1){
+				alert('종료일은 시작일 이후만 가능합니다.');
+				document.querySelector('#end-date').value = date1.toISOString().slice(0, 10);
 				return;
 			}
 		});
@@ -238,7 +244,7 @@
 			var today = new Date();
 			var date1 = new Date(document.querySelector('#start-date').value);
 			var date2 = new Date(document.querySelector('#end-date').value);
-			if(date2 < today){
+			if(document.querySelector('#end-date').value < today.toISOString().slice(0, 10)){
 				alert('휴가는 오늘 이후만 가능합니다.');
 				document.querySelector('#end-date').value = today.toISOString().slice(0, 10);
 				return;
