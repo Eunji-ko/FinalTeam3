@@ -74,6 +74,16 @@
 		color: #5d736f !important;
 	}
 </style>
+<c:if test="${docVo ne null}">
+	<style>
+		a:hover{
+			color: black !important;
+		}
+		a.active{
+			color: #5D736F !important;
+		}
+	</style>
+</c:if>
 </head>
 <body>
 
