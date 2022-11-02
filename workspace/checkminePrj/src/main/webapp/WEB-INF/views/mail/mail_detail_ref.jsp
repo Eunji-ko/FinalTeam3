@@ -39,8 +39,8 @@
                     </div>
 
                     <ul>
-						<li><div class="container-nav-selected"><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
-                        <li><div><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
+						<li><div><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
+                        <li><div class="container-nav-selected"><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef}</span></div></li>
                         <li><div><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/save?p=1">임시보관함</a></div></li>
@@ -50,7 +50,7 @@
                 </div>
                 <!-- 여기까지 -->
                 <div>
-                    <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
+                    <div style="margin-left: 12px; margin-bottom: 3px;">참조편지함</div>
                     <div id="detail-container">
                         <div class="d-flex">
                             <a href="javascript:window.history.back();"><img src="${imgPath}/mail_d_arrow_pre.png"></a>
@@ -64,7 +64,7 @@
                             <a href="/checkmine/mail/reply?t=${mailVo.senderEmail}"><img src="${imgPath}/mail_d_reply.png"></a>
                         </div>
 
-                        <div id="title">${mailVo.title}</div>
+                        <div id="title">[참조]${mailVo.title}</div>
 
                         <div class="d-flax">
                             <span>보낸이 : ${mailVo.senderEmail}</span> 
@@ -76,6 +76,7 @@
 
                         <!-- 다운로드 처리 -->
                         <div>
+                            <button id="down">전부 다운로드</button> :
                             <div id="downloadList">
 	                            <c:forEach items="${mailVo.mailAttVo}" var="fileName">
 		                            <a href="/checkmine/download/${fileName.name}/${fileName.realName}">${fileName.realName}</a>&nbsp;&nbsp;
@@ -109,7 +110,7 @@
                     , success : function(result){
                         if(result == '1'){
                             alert('메일이 휴지통으로 이동되었습니다!');
-                            location.href = '/checkmine/mail/receive';
+                            location.href = '/checkmine/mail/ref';
                         }else{
                             alert('삭제 실패');
                         }

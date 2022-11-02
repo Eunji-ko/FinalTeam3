@@ -155,7 +155,7 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int moveRecycleBinSave(String[] targetMails) {
 		int result = 1;
-		for(String targetMail:targetMails) {			
+		for(String targetMail:targetMails) {
 			result = result*dao.deleteMailSend(sst, targetMail);
 		}
 		return result;

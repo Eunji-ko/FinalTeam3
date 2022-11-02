@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.mail.vo.MailAttVo;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 public interface MailDetailDao {
@@ -25,5 +26,29 @@ public interface MailDetailDao {
 	 * @return
 	 */
 	List<MailAttVo> selectFileNameList(SqlSessionTemplate sst, String mailNo);
+
+	/**
+	 * 보낸 메일 객체 가져오기
+	 * @param sst
+	 * @param mailNo
+	 * @return
+	 */
+	MailVo selectSendMailVo(SqlSessionTemplate sst, String mailNo);
+
+	/**
+	 * 메일 번호로 받는사람 리스트 가져오기
+	 * @param sst
+	 * @param mailNo
+	 * @return
+	 */
+	List<String> selectReceiverList(SqlSessionTemplate sst, String mailNo);
+
+	/**
+	 * 메일 번호로 참조인 리스트 가져오기
+	 * @param sst
+	 * @param mailNo
+	 * @return
+	 */
+	List<String> selectReferList(SqlSessionTemplate sst, String mailNo);
 
 }

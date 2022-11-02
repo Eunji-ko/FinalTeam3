@@ -39,9 +39,9 @@
                     </div>
 
                     <ul>
-						<li><div class="container-nav-selected"><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
+						<li><div><a href="/checkmine/mail/receive?p=1">받은편지함</a><span>${notReadCountReceive}</span></div></li>
                         <li><div><a href="/checkmine/mail/ref?p=1">참조편지함</a><span>${notReadCountRef }</span></div></li>
-                        <li><div><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
+                        <li><div class="container-nav-selected"><a href="/checkmine/mail/send?p=1">보낸편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/imp?p=1">중요편지함</a></div></li>
                         <li><div><a href="/checkmine/mail/save?p=1">임시보관함</a></div></li>
                         <li><div><a href="/checkmine/mail/bin?p=1">휴지통</a></div></li>
@@ -50,26 +50,24 @@
                 </div>
                 <!-- 여기까지 -->
                 <div>
-                    <div style="margin-left: 12px; margin-bottom: 3px;">받은편지함</div>
+                    <div style="margin-left: 12px; margin-bottom: 3px;">보낸편지함</div>
                     <div id="detail-container">
                         <div class="d-flex">
                             <a href="javascript:window.history.back();"><img src="${imgPath}/mail_d_arrow_pre.png"></a>
-                            <a href="javascript:return false;" onclick="deleteMail('${mailVo.no}');"><img src="${imgPath}/trash_icon.png"></a>
-                            <c:if test="${mailVo.importance eq 'N'}">
-	                            <a id="star" href="javascript:return false;" onclick="setImp('Y', '${mailVo.no}')"><img src="${imgPath}/mail_star_blank.png"></a>
-                            </c:if>
-                            <c:if test="${mailVo.importance ne 'N'}">
-	                            <a id="star" href="javascript:return false;" onclick="setImp('N', '${mailVo.no}')"><img src="${imgPath}/mail_star_sel.png"></a>
-                            </c:if>
-                            <a href="/checkmine/mail/reply?t=${mailVo.senderEmail}"><img src="${imgPath}/mail_d_reply.png"></a>
+                            <a href="javascript:return false;" onclick="deleteMail('${mailVo.no}');"><img src="${imgPath}/trash_icon.png"></a>                            
                         </div>
 
                         <div id="title">${mailVo.title}</div>
 
-                        <div class="d-flax">
-                            <span>보낸이 : ${mailVo.senderEmail}</span> 
-                            <button  id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
+						<div class="d-flax">
+                            <span>수신인 : ${mailVo.receiverListString}</span>
+                             <button  id="addr-add" data-bs-toggle="modal" data-bs-target="#add-addr-modal">주소록에 추가</button>
                             <span id="time">${mailVo.sendDate}</span>
+                        </div>
+
+                        <div class="d-flax">
+                            <span>참조인 : ${mailVo.refersListString}</span> 
+                           
                         </div>
 
                         <div id="content">${mailVo.content}</div>
@@ -83,12 +81,6 @@
                             </div>
                         </div>
 						
-                        <div class="d-flex justify-content-end">
-                            <button id="reply-btn" onclick="location.href = '/checkmine/mail/reply?t=${mailVo.senderEmail}'">
-                                <img src="${imgPath}/mail_d_reply.png">
-                                답장
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -100,16 +92,16 @@
 
     <script>
     	//메일 삭제
-        function deleteMail(receiveMailNo){
+        function deleteMail(sandMailNo){
             if(confirm('메일을 삭제하시겠습니까?')){
                 $.ajax({
-                    url : '/checkmine/mail/receive/detail/delete'
+                    url : '/checkmine/mail/send/detail/delete'
                     , type : 'post'
-                    , data : {'receiveMailNo' : receiveMailNo}
+                    , data : {'sandMailNo' : sandMailNo}
                     , success : function(result){
                         if(result == '1'){
                             alert('메일이 휴지통으로 이동되었습니다!');
-                            location.href = '/checkmine/mail/receive';
+                            location.href = '/checkmine/mail/send';
                         }else{
                             alert('삭제 실패');
                         }
@@ -118,32 +110,6 @@
             }
         }
     	
-    	//중요도 표시
-    	function setImp(impVal,receiveMailNo) {
-    		const star = document.querySelector("#star");
-    		
-    		$.ajax({
-                url : '/checkmine/mail/receive/detail/setImp'
-                , type : 'post'
-                , data : {
-                        'impVal' : impVal,
-                        'receiveMailNo' : receiveMailNo
-                    }
-                , success : function(result){
-                    if(result == '1'){
-                    	if(impVal == 'N'){
-                    		star.onclick = function(){setImp('Y', receiveMailNo);}
-                    		star.innerHTML = '<img src="${imgPath}/mail_star_blank.png">';
-                    	}else if(impVal == 'Y'){
-                    		star.onclick = function(){setImp('N', receiveMailNo);}
-                    		star.innerHTML = '<img src="${imgPath}/mail_star_sel.png">';
-                    	}
-                    }else{
-                        alert('error');
-                    }
-                }
-            });
-		}
     </script>
 </body>
 </html>
