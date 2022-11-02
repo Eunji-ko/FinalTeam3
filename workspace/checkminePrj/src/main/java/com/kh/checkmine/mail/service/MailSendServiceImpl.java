@@ -36,9 +36,11 @@ public class MailSendServiceImpl implements MailSendService{
 		formVo.setCurrentMailNum(currentMailNum);
 		
 		//파일 이름 디비에 저장
-		for(MailAttVo vo : formVo.getMailAttVoList()) {
-			vo.setMailNo(currentMailNum);
-			result = result * dao.insertMailAtt(sst, vo);
+		if(formVo.getMailAttVoList() !=null) {			
+			for(MailAttVo vo : formVo.getMailAttVoList()) {
+				vo.setMailNo(currentMailNum);
+				result = result * dao.insertMailAtt(sst, vo);
+			}
 		}
 		
 		

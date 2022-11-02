@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.mail.vo.MailAttVo;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
 @Repository
@@ -26,6 +27,32 @@ public class MailDetailDaoImpl implements MailDetailDao{
 	@Override
 	public List<MailAttVo> selectFileNameList(SqlSessionTemplate sst, String mailNo) {
 		return sst.selectList("mailDetailMapper.selectFileNameList", mailNo);
+	}
+
+	/**
+	 * 보낸 메일 상세조회 객체 가져오기
+	 */
+	@Override
+	public MailVo selectSendMailVo(SqlSessionTemplate sst, String mailNo) {
+		return sst.selectOne("mailDetailMapper.selectSendMailVo",mailNo);
+	}
+
+	/**
+	 * 메일번호로 받는사람 리스트 가져오기
+	 */
+	@Override
+	public List<String> selectReceiverList(SqlSessionTemplate sst, String mailNo) {
+		return sst.selectList("mailDetailMapper.selectReceiverList" ,mailNo);
+		//TODO
+	}
+
+	/**
+	 * 메일번호로 참조인 리승트 가져오기
+	 */
+	@Override
+	public List<String> selectReferList(SqlSessionTemplate sst, String mailNo) {
+		return sst.selectList("mailDetailMapper.selectReferList" ,mailNo);
+		//TODO
 	}
 	
 }

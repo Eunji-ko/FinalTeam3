@@ -28,4 +28,24 @@
 	<select id="selectFileNameList" resultType="com.kh.checkmine.mail.vo.MailAttVo">
 		SELECT * FROM MAIL_ATT WHERE MAIL_NO = #{mailNo}
 	</select>
+	
+	<select id="selectSendMailVo" resultType="com.kh.checkmine.mail.vo.MailVo">
+		SELECT * FROM MAIL WHERE NO = #{mailNo}
+	</select>
+	
+	<select id="selectReceiverList" resultType="string">
+		SELECT E.EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN EMPLOYEE E ON MR.RECEIVER = E.NO
+		WHERE MR.MAIL_NO = #{mailNo}
+		AND MR.TYPE = 'A'
+	</select>
+	
+	<select id="selectReferList" resultType="string">
+		SELECT E.EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN EMPLOYEE E ON MR.RECEIVER = E.NO
+		WHERE MR.MAIL_NO = #{mailNo}
+		AND MR.TYPE = 'R'
+	</select>
 </mapper>

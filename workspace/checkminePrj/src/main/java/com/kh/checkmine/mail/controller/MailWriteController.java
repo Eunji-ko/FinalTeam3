@@ -70,20 +70,22 @@ public class MailWriteController {
 		System.out.println(Arrays.toString(fileNames));
 
 		//파일이름 데이터 뭉치기
-		String savePath = "/checkmine/resources/upload/mail";
-		List<MailAttVo> mailAttVoList = new ArrayList<MailAttVo>();
-		
-		for(int i = 0;i<fileNames.length;i++) {
-			String[] arr = fileNames[i].split("!!");
+		if(fileNames != null) {			
+			String savePath = "/checkmine/resources/upload/mail";
+			List<MailAttVo> mailAttVoList = new ArrayList<MailAttVo>();
 			
-			MailAttVo mailAttVo = new MailAttVo();
-			mailAttVo.setRealName(arr[0]);
-			mailAttVo.setName(arr[1]);
-			mailAttVo.setPath(savePath);
-			
-			mailAttVoList.add(mailAttVo);
+			for(int i = 0;i<fileNames.length;i++) {
+				String[] arr = fileNames[i].split("!!");
+				
+				MailAttVo mailAttVo = new MailAttVo();
+				mailAttVo.setRealName(arr[0]);
+				mailAttVo.setName(arr[1]);
+				mailAttVo.setPath(savePath);
+				
+				mailAttVoList.add(mailAttVo);
+			}
+			formVo.setMailAttVoList(mailAttVoList);
 		}
-		formVo.setMailAttVoList(mailAttVoList);
 
 		// 데이터 뭉치기
 		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
