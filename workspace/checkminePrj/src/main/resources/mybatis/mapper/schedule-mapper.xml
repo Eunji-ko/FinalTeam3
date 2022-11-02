@@ -3,6 +3,7 @@
 <mapper namespace="scheduleMapper">
 	<select id="selcetOrderList" resultType="TaskOrderVo">
 		SELECT 
+			T.NO,
 		    E.NAME ORDERER,
 		    D.NAME DEPT_NO,
 		    T.TITLE,
@@ -16,4 +17,41 @@
 		JOIN DEPARTMENT D
 		ON T.DEPT_NO = D.NO
 	</select>
+	
+	<select id="selectScheduleList" resultType="ScheduleVo">
+		SELECT 
+		    S.NO,
+		    E.NAME EMP_NO,
+		    S.TITLE,
+		    S.CONTENT,
+		    S.ENORLL_DATE,
+		    S.START_DATE,
+		    S.END_DATE,
+		    S.DEL
+		FROM SCHEDULE S
+		JOIN EMPLOYEE E
+		ON S.EMP_NO = E.NO
+		WHERE DEL = 'N'
+	</select>
+	
+	<insert id="insertSchedule">
+		INSERT INTO SCHEDULE
+		(
+		    NO,
+		    EMP_NO,
+		    TITLE,
+		    CONTENT,
+		    START_DATE,
+		    END_DATE
+		)
+		VALUES
+		(
+		    SEQ_SCHEDULE_NO.NEXTVAL,
+		    #{empNo},
+		    #{title},
+		    #{content},
+		    #{startDate},
+		    #{endDate}
+		)
+	</insert>
 </mapper>

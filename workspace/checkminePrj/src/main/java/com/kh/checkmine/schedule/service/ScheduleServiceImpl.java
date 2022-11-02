@@ -20,14 +20,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 		this.sst = sst;
 	}
 
+	//지시서 가져오기
 	@Override
 	public List<TaskOrderVo> selcetOrderList() {
 		return dao.selcetOrderList(sst);
 	}
 
+	//일정 가져오기
 	@Override
 	public List<ScheduleVo> selectScheduleList() {
 		return dao.selectScheduleList(sst);
+	}
+
+	//일정 등록
+	@Override
+	public int insertSchedule(ScheduleVo vo) {
+		return dao.insertSchedule(sst, vo);
 	}
 
 }

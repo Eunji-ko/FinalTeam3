@@ -15,4 +15,7 @@ public interface ScheduleDao {
 	//일정 가져오기
 	List<ScheduleVo> selectScheduleList(SqlSessionTemplate sst);
 
+	//일정 등록
+	int insertSchedule(SqlSessionTemplate sst, ScheduleVo vo);
+
 }

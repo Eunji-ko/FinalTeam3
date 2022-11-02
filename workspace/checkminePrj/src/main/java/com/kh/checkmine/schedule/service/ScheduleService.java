@@ -14,4 +14,7 @@ public interface ScheduleService {
 	//일정 가져오기
 	List<ScheduleVo> selectScheduleList();
 
+	//일정 등록
+	int insertSchedule(ScheduleVo vo);
+
 }

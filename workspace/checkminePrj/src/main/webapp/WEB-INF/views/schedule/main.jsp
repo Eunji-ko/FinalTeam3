@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+
+<% //테스트용 멤버
+	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
+	vo.setNo("10");
+	vo.setName("박정규");
+	vo.setPosNo("6");
+	vo.setDeptNo("5");
+	session.setAttribute("loginMember", vo);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,16 +56,26 @@
         color: dodgerblue !important;
     }
 
-    a.fc-event:hover{ /*이벤트 호버시 색 변경*/
-        background-color:#5D736F;
+    .fc-event:hover{ /*이벤트 호버시 색 변경*/
+        background-color:#b0d9d1;
     }
 
-    a.fc-event{ /*이벤트 설정*/
-        background-color: #91b3ac;
+    .fc-event{ /*이벤트 설정*/
+        background-color: #5D736F;
         border: 1px solid white;
         border-radius: 20px;
         text-align: center;
+    }
+    
+    /*하루짜리 이벤트만 다르게 나와서...*/
+    .fc-daygrid-event-dot + .fc-event-title{
+        font-weight: normal !important;
         color: white;
+    }
+
+    .fc-daygrid-event-dot{
+        border: 4px solid #b0d9d14d !important;
+        border-radius: 4px !important;
     }
 
     .fc-day-today{ /*오늘 날짜 백그라운드*/
@@ -106,56 +126,53 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-                    <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="taskId" class="col-form-label">일정명</label>
-                        <input type="text" class="form-control" id="title" name="title">
-                        <label for="taskId" class="col-form-label">일정 내용</label>
-                        <input type="text" class="form-control" id="content" name="content">
-                        <label for="taskId" class="col-form-label">시작 날짜</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate">
-                        <label for="taskId" class="col-form-label">종료 날짜</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate">
+                <form action="${root}/schedule/add" method="post" id="modal-data" onsubmit="return check();">
+                    
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn fc-button fc-button-primary" id="addSchedule" onclick="click();">추가</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="sprintSettingModalClose">취소</button>
-                </div>
-    
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="taskId" class="col-form-label">일정명</label>
+                            <input type="text" class="form-control" id="title" name="title">
+                            <label for="taskId" class="col-form-label">일정 내용</label>
+                            <input type="text" class="form-control" id="content" name="content">
+                            <label for="taskId" class="col-form-label">시작 날짜</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate">
+                            <label for="taskId" class="col-form-label">종료 날짜</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn fc-button fc-button-primary" id="addSchedule">추가</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
 
     <script>
 
-
-
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+        })
         
+        //일정 시간 나오게 해야함!!
         //풀캘린더 라이브러리 적용
         document.addEventListener('DOMContentLoaded', function() {
-            
+            //data 받아오는 ajax
             $(function(){
                  request = $.ajax({
-                    url:"${root}/schedule/order",
+                    url:"${root}/schedule/list",
                     method:"GET",
                     //dataType:"JSON",
                     success:function(data){
                         console.log(data);
-                    },
-                    error : function(e){
-                        alert("실패");
-                        console.log(e);
-                    }
-                });
-            });
-            //이부분부터 DB 연결 이전 기존에 있던 내용
+
+                        //이부분부터 DB 연결 이전 기존에 있던 내용
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
@@ -201,11 +218,14 @@
                         }
                     },
                     navLinks: true, //날짜 선택시 day 캘린더로 링크
-                    selectable: true, //달력 일자 드래그 설정
+                    selectable: false, //달력 일자 드래그 설정
                     dayMaxEvents: true, //이벤트 오버되면 높이 제한
                     eventLimit:true,
                     editable:true,//draggable 작동
-    
+                    displayEventEnd:{
+                        month:false,
+                        basickWeek: true
+                    },
                     //구글 캘린더 - 공휴일 연동
                     googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY", //api id
                     eventSources :[
@@ -215,72 +235,66 @@
                             textColor: 'white',
                         }
                     ],
-    
-                    events: [{
-                        title: 'test01',
-                        content: '보이나용?',
-                        start: '2022-10-17 12:00:00',
-                        end: '2022-10-17 18:00:00'
-                    }],
-    
-    
-                    //일정에 hover시 요약-----------------------------
-                    eventRender: function (event, element, view) {
-                    element.popover({
-                    title: $('<div />', {
-                        class: 'popoverTitleCalendar',
-                        text: event.title
-                    }).css({
-                        'background': event.backgroundColor,
-                        'color': event.textColor
-                    }),
-                    content: $('<div />', {
-                        class: 'popoverInfoCalendar'
-                        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
-                        .append('<p><strong>제목:</strong> ' + event.title + '</p>')
-                        .append('<p><strong>기간:</strong> ' + event.start + '~' + event.end + '</p>')
-                        .append('<div class="popoverDescCalendar"><strong>내용:</strong> ' + event.content + '</div>'),
-                    delay: {
-                        show: "800",
-                        hide: "50"
-                    },
-                    trigger: 'hover',
-                    placement: 'top',
-                    html: true,
-                    container: 'body'
-                    });
-    
-                    return filtering(event);
-    
+                    allDaySlot: false,
+                    events: data,
+                    eventClick : function(data, element){
+
+                        var eventObj = data.event;
+                        
+                        if(confirm(eventObj.title + '\n' + "해당 지시서로 이동하겠습니까?") == true){
+                            window.open('${root}/task/order/detail/' + data.event.id);
+                        }else{
+                            alert("취소되었습니다.");
+                        }
+
                     }
                 });
                 calendar.render();
 
+                    },
+                    error : function(e){
+                        alert("실패");
+                        console.log(e);
+                    }
+                });
+            });
+            
+
         });
     </script>
 
-	<!-- 일정 추가 스크립트 -->
-	<script>
-        var name = $('#title').val();
-        var content = $('#content').val();
-        var startDate = $('#startDate').val();
-        var endDate = $('#endDate').val();
+    <!--빈칸 방지-->
+    <script>
+        const title = document.querySelector('#title');
+        const content = document.querySelector('#content');
+        const startDate = document.querySelector('#startDate');
+        const endDate = document.querySelector('#endDate');
 
-		function click(){
-			$.ajax({
-                    url:"/schedule/add",
-                    method:"POST",
-                    data:{title:title, content:content, startDate:startDate, endDate:endDate},
-                    dataType:"json",
-                    success:function(data){
-                        alert("일정이 등록되었습니다.");
-                    },
-                    error:function(data){
-                        alert("일정을 등록하지 못했습니다.");
-                        return false;
-                    }
-                });
+        function check(){
+            //제목
+            if(title.value.length == 0){
+                alert("제목을 작성해주세요.");
+                return false;
             }
-	</script>
+
+            //본문
+            if(content.value.length == 0){
+                alert("내용을 작성해주세요.");
+                return false;
+            }
+            
+            //시작일
+            if(startDate.value.length == 0){
+                alert("시작일을 지정해주세요.");
+                return false;
+            }
+            
+            //마감일
+            if(endDate.value.length == 0){
+                alert("종료일을 지정해주세요.");
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
