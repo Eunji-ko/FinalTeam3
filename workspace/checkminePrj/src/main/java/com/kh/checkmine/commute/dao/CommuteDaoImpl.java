@@ -1,11 +1,13 @@
 package com.kh.checkmine.commute.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.checkmine.approval.vo.ApprovalLeaveVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.commute.vo.CommuteVo;
 
@@ -37,11 +39,11 @@ public class CommuteDaoImpl implements CommuteDao {
 
 	//전체 근태기록
 	@Override
-	public List<CommuteVo> selectList(SqlSessionTemplate sst, PageVo pv) {
+	public List<CommuteVo> selectList(SqlSessionTemplate sst, CommuteVo vo, PageVo pv) {
 		int offset = (pv.getCurrentPage() - 1) * pv.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		
-		return sst.selectList("commuteMapper.selectList", null, rb);
+		return sst.selectList("commuteMapper.selectList", vo, rb);
 	}
 
 	//전체 근태 갯수 조회
@@ -66,6 +68,12 @@ public class CommuteDaoImpl implements CommuteDao {
 	@Override
 	public List<CommuteVo> selectPosList(String posName, SqlSessionTemplate sst) {
 		return sst.selectList("commuteMapper.selectPosList",posName);
+	}
+
+	//연차조회
+	@Override
+	public List<ApprovalLeaveVo> selectLeaveList(Map<String, String> map, SqlSessionTemplate sst) {
+		return sst.selectList("commuteMapper.selectLeaveList",map);
 	}
 
 }

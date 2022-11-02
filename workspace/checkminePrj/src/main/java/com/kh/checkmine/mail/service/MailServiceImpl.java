@@ -1,6 +1,5 @@
 package com.kh.checkmine.mail.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.mail.dao.MailDao;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
@@ -145,8 +145,20 @@ public class MailServiceImpl implements MailService{
 	 * 임시저장 리스트 가져오기
 	 */
 	@Override
-	public List<MailVo> getSaveList(String memberNo, PageVo pageVo) {
+	public List<MailSendFormVo> getSaveList(String memberNo, PageVo pageVo) {
 		return dao.getSaveList(sst, memberNo, pageVo);
+	}
+
+	/**
+	 * 임시저장 메일 삭제
+	 */
+	@Override
+	public int moveRecycleBinSave(String[] targetMails) {
+		int result = 1;
+		for(String targetMail:targetMails) {			
+			result = result*dao.deleteMailSend(sst, targetMail);
+		}
+		return result;
 	}
 
 	

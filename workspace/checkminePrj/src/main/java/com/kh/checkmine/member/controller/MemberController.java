@@ -18,6 +18,8 @@ import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
+import com.kh.checkmine.commute.service.CommuteService;
+import com.kh.checkmine.commute.vo.CommuteVo;
 import com.kh.checkmine.member.service.MemberService;
 import com.kh.checkmine.member.vo.MemberVo;
 
@@ -27,11 +29,13 @@ public class MemberController {
 	
 	private final MemberService ms;
 	private final ApprovalService as;
+	private final CommuteService cs;
 	
 	@Autowired
-	public MemberController(MemberService ms, ApprovalService as) {
+	public MemberController(MemberService ms, ApprovalService as, CommuteService cs) {
 		this.ms = ms;
 		this.as = as;
+		this.cs = cs;
 	}
 	
 	@GetMapping("main")
@@ -47,6 +51,12 @@ public class MemberController {
 			List<ApprovalDocVo> approvalList = as.selectList(loginMember.getNo(), pv);
 			model.addAttribute("approvalList", approvalList);
 			model.addAttribute("approvalCnt", approvalCnt);
+			
+			//출퇴근 시간 메인 화면에 보여주기
+			int mycommuteTotalCount = cs.selectMycommuteTotalCnt(loginMember.getNo());
+			List<CommuteVo> list = cs.selectListOne(loginMember.getNo(), Pagination.getPageVo(mycommuteTotalCount, 1, 1, mycommuteTotalCount));
+			CommuteVo cvo = list.get(0);
+			model.addAttribute("cvo", cvo);
 		}
 		
 		return "member/main";

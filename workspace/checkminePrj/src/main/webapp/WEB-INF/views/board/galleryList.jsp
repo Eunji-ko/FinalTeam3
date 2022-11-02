@@ -75,11 +75,11 @@
     }
 
     .nav-tabs .nav-link.active {
-        color: #B0D9D1;
+        color: black;
     }
 
     .nav-tabs .nav-link {
-        color: black;
+        color: #B0D9D1;
     }
 
     table{
@@ -115,10 +115,11 @@
         display: flex;
         justify-content: space-around;
     }
-    .info2{
+    .dateInfo{
         display: flex;
         justify-content: right;
         margin-right: 13px;
+        color: gray;
     }
     .title, .writer{
         display: inline-block;
@@ -128,6 +129,16 @@
         margin-right: 10px;
     }
    
+    .nav-tabs{
+        border-bottom: 1px solid #B0D9D1;
+        padding-left: 20px;
+    }
+    .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover{
+        border-color: #e9ecef #e9ecef #B0D9D1;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+        border-color: #B0D9D1 #B0D9D1 #fff;
+    }
 
 </style>
 </head>
@@ -173,9 +184,20 @@
                     <div id="listArea">
                         <c:forEach items="${boardList}" var="b">
                         <div class="board-item" style="cursor: pointer;" onclick="location.href='${rootPath}/board/detail/${b.no}';">
-                            <div class="thumbnail"><img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}"></div>
+                            <div class="thumbnail">
+                                <c:choose>
+                                    <c:when test="${b.thumbnail ne null}">
+                                        <img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${rootPath}/resources/img/board/no_image.png" alt="no_image.png">
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                             <div class="info"><div class="title">${b.title}</div><div class="writer">${b.writer}</div></div>
-                            <div class="info2">${b.enrollDate}</div>
+                            <div class="dateInfo">
+                                    ${b.enrollDate}
+                            </div>
                         </div>
                         </c:forEach>
                     </div>

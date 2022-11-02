@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
@@ -134,11 +135,19 @@ public class MailDaoImpl implements MailDao{
 	 * 임시보관 리스트 가져오기
 	 */
 	@Override
-	public List<MailVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
+	public List<MailSendFormVo> getSaveList(SqlSessionTemplate sst, String memberNo, PageVo pageVo) {
 		int offset = (pageVo.getCurrentPage()-1) * pageVo.getBoardLimit();
 		RowBounds rb = new RowBounds(offset, pageVo.getBoardLimit());
 		
 		return sst.selectList("mailMapper.selectSaveList", memberNo, rb);
+	}
+
+	/**
+	 * 임시보관 메일 삭제
+	 */
+	@Override
+	public int deleteMailSend(SqlSessionTemplate sst, String targetMail) {
+		return sst.delete("mailMapper.deleteMailSend", targetMail);
 	}
 
 	

@@ -24,6 +24,25 @@
 		UPDATE COMMUTE SET LEAVE = SYSDATE WHERE EMP_NO = #{empNo} AND NO = (SELECT MAX(NO) FROM COMMUTE)
 	</update>
 	
+	<!-- <select id="selectList" resultType="CommuteVo">
+		SELECT
+		    C.NO
+		    , TO_CHAR(C.ARRIVED, 'HH:MI AM') AS ARRIVED
+		    , TO_CHAR(C.LEAVE, 'HH:MI PM') AS LEAVE
+		    , TO_CHAR(C.WORK_DATE, 'YYYY-MM-DD') AS WORK_DATE
+		    , E.NAME AS EMP_NO
+		    , P.NAME POS_NAME
+		    , D.NAME DEPT_NAME
+		FROM COMMUTE C
+		JOIN EMPLOYEE E
+		    ON C.EMP_NO = E.NO
+		JOIN POSITION P
+		    ON P.NO = E.POS_NO
+		JOIN DEPARTMENT D 
+		    ON D.NO = E.DEPT_NO
+		ORDER BY C.WORK_DATE DESC
+	</select> -->
+	
 	<select id="selectList" resultType="CommuteVo">
 		SELECT
 		    C.NO
@@ -40,6 +59,13 @@
 		    ON P.NO = E.POS_NO
 		JOIN DEPARTMENT D 
 		    ON D.NO = E.DEPT_NO
+		WHERE 1 = 1    
+		<if test="deptName != null">
+			AND D.NAME LIKE '%${deptName}%'
+		</if>    
+		<if test="posName != null">
+			AND P.NAME LIKE '%${posName}%'
+		</if>
 		ORDER BY C.WORK_DATE DESC
 	</select>
 	
@@ -72,6 +98,28 @@
 		    ON D.NO = E.DEPT_NO
 		WHERE D.NAME = #{deptName}
 		ORDER BY C.WORK_DATE DESC
+	</select>
+	
+	<select id="selectLeaveList" resultType="ApprovalLeaveVo">
+		SELECT
+		    L."BEGIN"
+		    ,L."END"
+		    ,L."APPLY"
+		FROM LEAVE L
+		JOIN AP_DOC D
+		ON L.NO = D.NO
+		JOIN APPROVAL A
+		ON A.DOC_NO = D.NO
+		WHERE
+		    D.WRITER_NO = #{memberNo}
+		    AND A.STATUS = '승인'
+		    AND
+		    (
+		    <![CDATA[
+		    	TO_DATE(L."BEGIN") >= TO_DATE('${year}-01-01')
+		        OR TO_DATE(L."END") <= TO_DATE('${year}-12-31')
+		    ]]>
+		    )
 	</select>
 	
 </mapper>

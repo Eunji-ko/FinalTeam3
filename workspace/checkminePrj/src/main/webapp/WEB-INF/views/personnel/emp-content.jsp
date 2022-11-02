@@ -96,12 +96,12 @@
 <body onload="checkRsn()">
     <br>
     <div id="emp-area">
-        <select name="resignYn" class="resign-select" onchange="selectResign()" id="selectResign">
+        <select name="resignYn" class="resign-select" onchange="changeRsn(this.value)" id="selectResign">
             <option value="">모두</option>
             <option value="N">재직</option>
             <option value="Y">퇴직</option>
         </select>
-        <form class="align-right search-form" action="${rootPath}/personnel/searchEmp" method="post">
+        <form class="align-right search-form" onsubmit="changeEmpSearch(this.children(0).value, this.children(1).children(0).value)">
             <select name="searchType" class="search-type-select align-right">
                 <option value="E.NAME">이름</option>
                 <option value="D.NAME">부서</option>
@@ -150,18 +150,31 @@
         </div>
         <br><br>
         <div id="psn-page-zone">
-            <!-- <a href="">&lt;</a> -->
+            <c:if test="${epv.startPage ne 1}">
+                <a href="/checkmine/personnel/main/${epv.startPage -1}">&lt;</a>
+            </c:if>
+            <c:forEach begin="${epv.startPage}" end="${epv.endPage}" var="i">
+                <c:if test="i eq epv.currentPage">
+                    <a class="page-selected">${i}</a>
+                </c:if>
+                <c:if test="i ne epv.currentPage">
+                    <a href="/checkmine/personnel/main/${i}">${i}</a>
+                </c:if>             
+            </c:forEach>
+            <c:if test="${epv.endPage ne pv.maxPage}">
+                <a href="/app99/personnel/main/${epv.endPage + 1}">&gt;</a>
+            </c:if>
+        </div>
+        <div id="psn-page-zone">
+            <c:if test="${epv.startPage ne 1}">
+                <a href="">&lt;</a>
+            </c:if>
             <a href="" class="page-selected">1</a>
             <a href="">2</a>
             <a href="">3</a>
             <a href="">4</a>
             <a href="">5</a>
             <a href="">&gt;</a>
-        </div>
-        <div id="createZone">
-            <div class="page-area" id="pageArea">
-
-            </div>
         </div>
     </div>
 
@@ -193,123 +206,50 @@
         }
     </script>
 
-<script>
-	
-    $(document).on("click", ".click-event", function(){
-            
-        $('#pageArea').remove();
-        let createArea = document.getElementById('createZone');
-        let newPage = document.createElement('div');
-        newPage.setAttribute("class", "page-area");
-        newPage.setAttribute("id", "pageArea");
-        createArea.appendChild(newPage);
-        
-        $('#empList').remove();
-        let createArea2 = document.getElementById('createTable');
-        let newTBody = document.createElement('tbody');
-        newTBody.setAttribute("id", "empList");
-        createArea2.appendChild(newTBody);
-                
-                
-        let numPage = $(this).val();
-        $.ajax({
-            url : "/checkmine/personnel/empList/" + numPage,
-            method : "GET",
-            success : function(x){
-                console.log("페이지 "+ numPage +"의 이벤트 출력 성공 !");
-                
-                let map = JSON.parse(x);
-                let pv = JSON.parse(map.pv);
-                let list = JSON.parse(map.list);
-                
-                let listArea = document.getElementById('empList');
-                
-                for(let i in list){
-                           let newTr = document.createElement('tr');
-                           newTr.setAttribute("data-bs-toggle", "modal");
-                           newTr.setAttribute("data-bs-target", "#changeEmp");
-                           newTr.setAttribute("class", "empModal");
-                           listArea.appendChild(newTr);
-                           
-                           let newNo = document.createElement('th');
-                           newNo.setAttribute("class", "empNo");
-                           let newName = document.createElement('td');
-                           let newDept = document.createElement('td');
-                           let newPos = document.createElement('td');
-                           let newId = document.createElement('td');
-                           let newEnroll = document.createElement('td');
-                           let newResign = document.createElement('td');
-                           newNo.innerHTML = list[i].no;
-                           newName.innerHTML = list[i].name;
-                           newDept.innerHTML = list[i].deptNo;
-                           newPos.innerHTML = list[i].posNo;
-                           newId.innerHTML = list[i].id;
-                           newEnroll = list[i].enrollDate.substring(0, 10);
-                           if(list[i].resignYn = 'N'){
-                            newResign = '재직';
-                           }else if(list[i].resignYn = 'Y'){
-                            newResign = '퇴직';
-                           }else{
-                            newResign = '?';
-                           }
-                           
-                        newTr.appendChild(newNo);
-                        newTr.appendChild(newName); 
-                        newTr.appendChild(newDept);
-                        newTr.appendChild(newPos);
-                        newTr.appendChild(newId);
-                        newTr.appendChild(newEnroll);
-                        newTr.appendChild(newResign);
-                     }
+    <script>
+        let sch = location.search;
+        let params = new URLSearchParams(sch);
 
-                       let pageArea = document.getElementById('pageArea');
-                       
-                       console.log(epv.currentPage);
-                       
-                       if(epv.currentPage != 1) {
-                        let newA = document.createElement('a');
-                        newA.setAttribute("class", "click-event");
-                        newA.setAttribute("href", "javascript:;");
-                        newA.value = epv.startPage-1;
-                        newA.innerHTML = "&lt;";
-                        pageArea.appendChild(newA);
-                       }
-                       
-                       for(let i = epv.startPage; i <= epv.endPage; ++i){
-                           if(i == epv.currentPage){
-                                    let newA2 = document.createElement('a');
-                                    newA2.setAttribute("class", "page-selected");
-                                    newA2.setAttribute("href", "javascript:;");
-                                    newA2.value = i;
-                                    newA2.innerHTML = i;
-                                    pageArea.appendChild(newA2);
-                           }else{
-                                    let newA3 = document.createElement('a');
-                                    newA3.setAttribute("class", "click-event");
-                                    newA3.setAttribute("href", "javascript:;");
-                                    newA3.value = i;
-                                    newA3.innerHTML = i;
-                                    pageArea.appendChild(newA3);
-                           }
-                       }
-                       
-                       if(epv.currentPage != epv.maxPage) {
-                           let currentPlus = epv.endPage + 1;
-                                let newA4 = document.createElement('a');
-                                newA4.setAttribute("class", "click-event");
-                                newA4.value = currentPlus;
-                                newA4.innerHTML = "&gt;";
-                                pageArea.appendChild(newA4);
-                       }
-                
-            },
-            error : function(request, status, error){
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        function changeEPage(ePage){
+            params.set('ep', ePage);
+            url = params.toString();
+            location.href="${rootPath}/personnel/main"+ url;
+        }
+
+        function changeAPage(aPage){
+            params.set('ap', aPage);
+            url = params.toString();
+            location.href="${rootPath}/personnel/main"+ url;
+        }
+
+        function changeRsn(resign){
+            params.set('ep', 1);
+            params.set('ap', 1);
+            if(resign == ""){
+                if(params.has("rsn")){
+                    params.delete("rsn");
+                    url = params.toString();
+                    location.href="${rootPath}/personnel/main?"+ url;
+                }
+            } else if(!params.has("rsn")){
+                url = params.toString();
+                location.href="${rootPath}/personnel/main?"+ url +"&rsn=" + resign;
+            } else{
+                params.set('rsn', resign);
+                url = params.toString();
+                location.href="${rootPath}/personnel/main?"+ url;
             }
-        });
-    });
-    
-</script>
+        }
+
+        function changeEmpSearch(empSearchType, empSearchText){
+            params.set('ep', 1);
+            console.log(empSearchType ,empSearchText)
+            if(!params.has("empSearchText")){
+                url = params.toString();
+            }
+            return false;
+        }
+    </script>
 
     <%@ include file="/WEB-INF/views/personnel/emp-modal.jsp" %>
 </body>

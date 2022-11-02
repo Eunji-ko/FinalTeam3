@@ -44,12 +44,6 @@
     #page-btn{
       text-align: center;
     }
-
-    #search-btn>button{
-        background: #5D736F;
-        border-radius: 10px;
-        color: white;
-    }
 </style>
 </head>
 <body>
@@ -68,7 +62,7 @@
                       <a class="nav-link active" aria-current="page" href="/checkmine/commute/commute/1">전체 근태기록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/checkmine/commute/leave">연차내역</a>
+                      <a class="nav-link" href="/checkmine/commute/annualleave">연차내역</a>
                     </li>
                 </ul>
 
@@ -99,29 +93,25 @@
                       <div id="search">
                         <select id="dept-selectbox">
                             <option value="">부서전체</option>
-                            <option value="-">-</option>
-                            <option value="인사부">인사부</option>
-                            <option value="총무부">총무부</option>
-                            <option value="회계부">회계부</option>
-                            <option value="영업부">영업부</option>
-                            <option value="마케팅부">마케팅부</option>
+                            <option value="-" <c:if test="${'-' eq vo.deptName}">selected="selected"</c:if>>-</option>
+                            <option value="인사부" <c:if test="${'인사부' eq vo.deptName}">selected="selected"</c:if> >인사부</option>
+                            <option value="총무부" <c:if test="${'총무부' eq vo.deptName}">selected="selected"</c:if>>총무부</option>
+                            <option value="회계부" <c:if test="${'회계부' eq vo.deptName}">selected="selected"</c:if>>회계부</option>
+                            <option value="영업부" <c:if test="${'영업부' eq vo.deptName}">selected="selected"</c:if>>영업부</option>
+                            <option value="마케팅부" <c:if test="${'마케팅부' eq vo.deptName}">selected="selected"</c:if>>마케팅부</option>
                         </select>
 
                         <select id="pos-selectbox">
                             <option value="">직급전체</option>
-                            <option value="사원">사원</option>
-                            <option value="주임">주임</option>
-                            <option value="대리">대리</option>
-                            <option value="과장">과장</option>
-                            <option value="차장">차장</option>
-                            <option value="부장">부장</option>
-                            <option value="사장">사장</option>
+                            <option value="사원" <c:if test="${'사원' eq vo.posName}">selected="selected"</c:if>>사원</option>
+                            <option value="주임" <c:if test="${'주임' eq vo.posName}">selected="selected"</c:if>>주임</option>
+                            <option value="대리" <c:if test="${'대리' eq vo.posName}">selected="selected"</c:if>>대리</option>
+                            <option value="과장" <c:if test="${'과장' eq vo.posName}">selected="selected"</c:if>>과장</option>
+                            <option value="차장" <c:if test="${'차장' eq vo.posName}">selected="selected"</c:if>>차장</option>
+                            <option value="부장" <c:if test="${'부장' eq vo.posName}">selected="selected"</c:if>>부장</option>
+                            <option value="사장" <c:if test="${'사장' eq vo.posName}">selected="selected"</c:if>>사장</option>
                         </select>
 
-                      </div>
-
-                      <div id="search-btn">
-                        <button type="button" class="btn btn-sm" onclick="search();">조회하기</button>
                       </div>
 
                     </div>
@@ -240,53 +230,26 @@
     </script>
 
     <script>
-      //부서별 조회
-      function search(){
-        $('#dept-selectbox').on('change', function(){
-          console.log("부서조회");
-          
-          let deptCode = $('#dept-selectbox option:selected').val();
-          let paramData = JSON.stringify({"deptCode" : $('#dept-selectbox option:selected').val()});
-          console.log(deptCode);
-          console.log(paramData);
 
-          $.ajax({
-            url : "${rootPath}/commute/selectDept",
-            method : "post",
-            data : {deptCode : deptCode},
-            dataType : 'json',
-            success : function(deptEmpList){
-              console.log(deptEmpList);
-            },
-            error : function(){
-              console.log("실패");
-            }
-          })
-        })
-      }
-    </script>
+      //부서별
+      $('#dept-selectbox').on('change', function(){
+        let deptName = $('#dept-selectbox option:selected').val();
+        let posName = $('#pos-selectbox option:selected').val();
+        console.log(deptName);
+        console.log(posName);
 
-    <script>
-      //직급별 조회
-      function search(){
-        $('#pos-selectbox').on('change', function(){
-          let posCode = $('#pos-selectbox option:selected').val();
-          let paramData = JSON.stringify({"deptCode" : $('#pos-selectbox option:selected').val()});
+        location.href="${rootPath}/commute/commute/1?부서명=" + deptName + "&직급=" + posName;
 
-          $.ajax({
-            url : "${rootPath}/commute/selectPos",
-            method : "post",
-            data : {posCode : posCode},
-            dataType : 'json',
-            success : function(posEmpList){
-              console.log(posEmpList);
-            },
-            error : function(){
-              console.log("실패");
-            }
-          })
-        })
-      }
+      })
+      //직급별
+      $('#pos-selectbox').on('change', function(){
+        let posName = $('#pos-selectbox option:selected').val();
+        let deptName = $('#dept-selectbox option:selected').val();
+
+        location.href="${rootPath}/commute/commute/1?부서명=" + deptName + "&직급=" + posName;
+
+      })
+
     </script>
 
 </body>

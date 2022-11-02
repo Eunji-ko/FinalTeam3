@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.kh.checkmine.admin.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.service.ReplyService;
@@ -55,7 +56,7 @@ public class AdminBoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("sort", sort);
 		model.addAttribute("pv", pv);
-		return "admin/adminBoard";
+		return "admin/board/list";
 		
 	}
 	
@@ -93,13 +94,13 @@ public class AdminBoardController {
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
 		
-		return "admin/adminBoardSearch";
+		return "admin/board/search";
 	}
 	
 	//공지사항 작성 페이지
 	@GetMapping("write")
 	public String write() {
-		return "admin/adminNoticeWrite";
+		return "admin/board/noticeWrite";
 	}
 	
 	//공지사항 작성
@@ -164,7 +165,7 @@ public class AdminBoardController {
 		model.addAttribute("board", vo);
 		model.addAttribute("attList", attList);
 			
-		return "admin/adminBoardDetail";
+		return "admin/board/detail";
 	}
 	
 	
@@ -189,7 +190,7 @@ public class AdminBoardController {
 		BoardVo vo = service.selectOne(no);
 		model.addAttribute("board", vo);
 		
-		return "admin/adminBoardEdit";
+		return "admin/board/edit";
 		
 	}
 	
@@ -248,6 +249,22 @@ public class AdminBoardController {
 	
 	}
 	
+	//썸머노트 파일 처리
+	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
+		JsonObject jsonObject = new JsonObject();
+	
+		// 내부경로로 저장
+		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+		String changeName = FileUploader.fileUpload(multipartFile, savePath);
+
+			jsonObject.addProperty("fileName", changeName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("responseCode", "success");
+		
+		String a = jsonObject.toString();
+		return a;
+	}
 	
 
 }

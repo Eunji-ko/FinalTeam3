@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mailDetailMapper">
+	<select id="selectReceiveMailVo" resultType="com.kh.checkmine.mail.vo.ReceiveMailVo">
+		SELECT 
+		    MR.NO,
+		    MR.MAIL_NO,
+		    MR.RECEIVER,
+		    MR.TYPE,
+		    MR.READ,
+		    MR.STATUS,
+		    MR.IMPORTANCE,
+		    M.SENDER,
+		    M.TITLE,
+		    M.CONTENT,
+		    M.S_STATUS,
+		    M.SEND_DATE,
+		    E.EMAIL AS SENDER_EMAIL
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M
+		ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E
+		ON M.SENDER = E.NO
+		WHERE MR.NO = #{mailNo}
+	</select>
+	
+	<select id="selectFileNameList" resultType="com.kh.checkmine.mail.vo.MailAttVo">
+		SELECT * FROM MAIL_ATT WHERE MAIL_NO = #{mailNo}
+	</select>
+</mapper>

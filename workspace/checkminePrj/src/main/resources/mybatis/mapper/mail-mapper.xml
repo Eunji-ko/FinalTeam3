@@ -105,9 +105,8 @@
 		ORDER BY SEND_DATE DESC
 	</select>
 	
-	<select id="selectSaveList" resultType="com.kh.checkmine.mail.vo.MailVo">
-		SELECT * FROM MAIL WHERE S_STATUS = 'N' AND SEND_DATE IS NULL AND SENDER=#{memberNo}
-		ORDER BY SEND_DATE DESC
+	<select id="selectSaveList" resultType="com.kh.checkmine.mail.vo.MailSendFormVo">
+		SELECT * FROM MAIL_SAVE WHERE EMP_NO = ${memberNo}
 	</select>
 	
 	<update id="upadteImportance">
@@ -129,6 +128,10 @@
 	<select id="selectNotReadCount" resultType="int">
 		SELECT COUNT(*) FROM MAIL_REF WHERE STATUS='N' AND READ = 'N' AND RECEIVER=#{memberNo} AND TYPE=#{type}
 	</select>
+	
+	<delete id="deleteMailSend">
+		DELETE FROM MAIL_SAVE WHERE NO = #{targetMail}
+	</delete>
 	
 	
 </mapper>

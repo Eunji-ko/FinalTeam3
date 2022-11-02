@@ -75,11 +75,11 @@
     }
 
     .nav-tabs .nav-link.active {
-        color: #B0D9D1;
+        color: black;
     }
 
     .nav-tabs .nav-link {
-        color: black;
+        color: #B0D9D1;
     }
 
     table{
@@ -102,8 +102,18 @@
         width: 150px;
         margin-right: 10px;
     }
+    
+    .nav-tabs{
+        border-bottom: 1px solid #B0D9D1;
+        padding-left: 20px;
+    }
+    .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover{
+        border-color: #e9ecef #e9ecef #B0D9D1;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+        border-color: #B0D9D1 #B0D9D1 #fff;
+    }
    
-
 </style>
 </head>
 <body>
