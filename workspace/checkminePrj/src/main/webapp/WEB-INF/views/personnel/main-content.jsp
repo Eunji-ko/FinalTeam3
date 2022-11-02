@@ -71,33 +71,5 @@
             <%@ include file="/WEB-INF/views/personnel/account-content.jsp" %>
         </div>
     </div>
-
-    <script>
-        function checkPsn(){
-            let psnLink = location.href;
-            let accCheck = psnLink.slice(-3);
-
-            if(accCheck == 'Acc'){
-                $("#list-emp-list").removeClass("active");
-                $("#list-emp-list").attr("aria-selected", "false");
-                $("#list-emp").removeClass("active");
-                $("#list-emp").removeClass("show");
-                $("#list-account-list").addClass("active");
-                $("#list-account-list").attr("aria-selected", "true");
-                $("#list-account").addClass("active");
-                $("#list-account").addClass("show");
-            }
-
-            let rsnCheck = psnLink.slice(-1);
-
-            if(rsnCheck == 'N') {
-                $("#selectResign").val("N").prop("selected", true);
-            }else if(rsnCheck == 'Y'){
-                $("#selectResign").val("Y").prop("selected", true);
-            }else{
-                $("#selectResign").val("").prop("selected", true);
-            }
-        }
-    </script>
 </body>
 </html>

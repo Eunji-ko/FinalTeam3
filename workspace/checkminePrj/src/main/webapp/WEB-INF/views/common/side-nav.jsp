@@ -13,7 +13,7 @@
             <a href="${rootPath}/commute/mycommute/1">근태관리</a>
             <a href="${rootPath}/approval">전자결재</a>
             <a href="${rootPath}/task/report/list/1">업무</a>
-            <a href="${rootPath}/personnel/main">인사관리</a>
+            <a href="${rootPath}/personnel/main?ep=1&ap=1">인사관리</a>
             <a href="${rootPath}/reservation/myreservation">예약</a>
             <a href="${rootPath}/board/list/notice">게시판</a>
             <a href="${rootPath}/schedule">일정</a>

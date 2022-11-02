@@ -101,15 +101,17 @@
             <option value="N">재직</option>
             <option value="Y">퇴직</option>
         </select>
-        <form class="align-right search-form" onsubmit="changeEmpSearch(this.children(0).value, this.children(1).children(0).value)">
-            <select name="searchType" class="search-type-select align-right">
+        <form class="align-right search-form" onsubmit="changeEmpSearch()" id="empForm">
+            <input type="hidden" name="ep" value="1">
+            <input type="hidden" name="ap" id="empSearchAp" value="">
+            <select name="empSearchType" class="search-type-select align-right">
                 <option value="E.NAME">이름</option>
                 <option value="D.NAME">부서</option>
                 <option value="E.ID">아이디</option>
             </select>
             <div class="emp-search">
-                <input id="emp-search-text" type="text" name="searchText" placeholder="검색">
-                <input id="emp-search-submit" type="submit" value=""></input>
+                <input id="emp-search-text" type="text" name="empSearchText" placeholder="검색">
+                <input id="emp-search-submit" type="submit" value="">
             </div>
         </form>
         <br><br>
@@ -151,60 +153,21 @@
         <br><br>
         <div id="psn-page-zone">
             <c:if test="${epv.startPage ne 1}">
-                <a href="/checkmine/personnel/main/${epv.startPage -1}">&lt;</a>
+                <a href="javascript:void(0);" onclick="changeEPage(${epv.startPage -1})">&lt;</a>
             </c:if>
             <c:forEach begin="${epv.startPage}" end="${epv.endPage}" var="i">
-                <c:if test="i eq epv.currentPage">
+                <c:if test="${i ne epv.currentPage}">
+                    <a href="javascript:void(0);" onclick="changeEPage(${i})">${i}</a>           
+                </c:if>
+                <c:if test="${i eq epv.currentPage}">
                     <a class="page-selected">${i}</a>
                 </c:if>
-                <c:if test="i ne epv.currentPage">
-                    <a href="/checkmine/personnel/main/${i}">${i}</a>
-                </c:if>             
             </c:forEach>
-            <c:if test="${epv.endPage ne pv.maxPage}">
-                <a href="/app99/personnel/main/${epv.endPage + 1}">&gt;</a>
+            <c:if test="${epv.endPage ne epv.maxPage}">
+                <a href="javascript:void(0);" onclick="changeEPage(${epv.endPage + 1})">&gt;</a>
             </c:if>
-        </div>
-        <div id="psn-page-zone">
-            <c:if test="${epv.startPage ne 1}">
-                <a href="">&lt;</a>
-            </c:if>
-            <a href="" class="page-selected">1</a>
-            <a href="">2</a>
-            <a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
-            <a href="">&gt;</a>
         </div>
     </div>
-
-    <script>
-        function selectResign(){
-            let selectRsn = document.getElementById("selectResign");
-            let rsn = selectRsn.options[selectRsn.selectedIndex].value;
-            if(rsn == ""){
-                location.href="${rootPath}/personnel/main";
-            }else{
-                location.href="${rootPath}/personnel/selectRsn/"+rsn;
-            }
-        }
-    </script>
-
-    <script>
-        function checkRsn(){
-            let psnLink = location.href;
-            let rsnCheck = psnLink.slice(-1);
-            console.log(rsnCheck);
-
-            if(rsnCheck == 'N') {
-                $("#selectResign").val("N").prop("selected", true);
-            }else if(rsnCheck == 'Y'){
-                $("#selectResign").val("Y").prop("selected", true);
-            }else{
-                $("#selectResign").val("").prop("selected", true);
-            }
-        }
-    </script>
 
     <script>
         let sch = location.search;
@@ -213,18 +176,26 @@
         function changeEPage(ePage){
             params.set('ep', ePage);
             url = params.toString();
-            location.href="${rootPath}/personnel/main"+ url;
+            params.set("category", "emp");
+            location.href="${rootPath}/personnel/main?"+ url;
         }
 
         function changeAPage(aPage){
             params.set('ap', aPage);
             url = params.toString();
-            location.href="${rootPath}/personnel/main"+ url;
+            params.set("category", "acc");
+            location.href="${rootPath}/personnel/main?"+ url;
         }
 
         function changeRsn(resign){
+            let ap = params.get("ap");
             params.set('ep', 1);
-            params.set('ap', 1);
+            params.set('ap', ap);
+            params.set("category", "emp");
+            if(params.has("empSearchType")){
+                params.delete("empSearchType");
+                params.delete("empSearchText");
+            }
             if(resign == ""){
                 if(params.has("rsn")){
                     params.delete("rsn");
@@ -241,13 +212,26 @@
             }
         }
 
-        function changeEmpSearch(empSearchType, empSearchText){
-            params.set('ep', 1);
-            console.log(empSearchType ,empSearchText)
-            if(!params.has("empSearchText")){
-                url = params.toString();
+        function changeEmpSearch(){
+            let ap = params.get("ap");
+            params.set("category", "emp");
+            $('#empSearchAp').val(ap);
+            if(params.has("accSearchText")){
+                let accSearchType = params.get("accSearchType");
+                let accSearchText = params.get("accSearchText");
+                let empFormArea = document.getElementById('empForm');
+
+                let newHd = document.createElement('input');
+                newHd.setAttribute("type", "hidden");
+                newHd.setAttribute("name", "accSearchType");
+                newHd.setAttribute("value", accSearchType);
+                let newHd2 = document.createElement('input');
+                newHd2.setAttribute("type", "hidden");
+                newHd2.setAttribute("name", "accSearchText");
+                newHd2.setAttribute("value", accSearchText);
+                empFormArea.appendChild(newHd);
+                empFormArea.appendChild(newHd2);
             }
-            return false;
         }
     </script>
 

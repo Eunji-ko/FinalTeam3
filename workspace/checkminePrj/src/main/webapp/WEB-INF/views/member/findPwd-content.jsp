@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <h3>본인인증 기능 어찌 할지 좀더 고민해보기 ㅠㅠㅠ</h3>
+    <div class="id-pwd-page">
+        <h3>본인인증 어찌?ㅠㅠ</h3>
+    </div>
 </body>
 </html>

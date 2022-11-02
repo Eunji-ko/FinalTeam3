@@ -99,11 +99,11 @@ public class PersonnelController {
 			//정보수정 성공
 			
 			//화면 선택
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}else {
 			//정보수정 실패
 			session.setAttribute("alertMsg", "거래처를 추가하는 데 실패하였습니다 !");
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}
 	}
 	
@@ -115,11 +115,11 @@ public class PersonnelController {
 		
 		if(result == 1) {
 			//정보수정 성공
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=emp";
 		}else {
 			//정보수정 실패
 			session.setAttribute("alertMsg", "사원 정보를 수정하는 데 실패하였습니다 !");
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=emp";
 		}
 		
 	}
@@ -132,11 +132,11 @@ public class PersonnelController {
 		
 		if(result == 1) {
 			//정보수정 성공
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}else {
 			//정보수정 실패
 			session.setAttribute("alertMsg", "거래처 정보를 수정하는 데 실패하였습니다 !");
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}
 	}
 	
@@ -149,11 +149,11 @@ public class PersonnelController {
 			//삭제 성공
 			
 			session.setAttribute("alertMsg", result + "개의 거래처를 모두 삭제하였습니다 !");
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}else {
 			//삭제 실패
 			session.setAttribute("alertMsg", "거래처를 삭제하는 데 실패하였습니다 !");
-			return "redirect:/personnel/main";
+			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}
 		
 	}

@@ -33,13 +33,15 @@
         <br>
         <button type="button" class="btn checkmine-btn acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
         <button type="button" class="btn checkmine-btn acc-btn" id="acc-del-btn" disabled="disabled" onclick="delAcc();">삭제하기</button>
-        <form class="align-right search-form" action="${rootPath}/personnel/searchAcc" method="post">
-            <select name="searchType" class="search-type-select align-right">
+        <form class="align-right search-form" onsubmit="changeAccSearch()" id="accForm">
+            <input type="hidden" name="ep" id="accSearchEp" value="">
+            <input type="hidden" name="ap" value="1">
+            <select name="accSearchType" class="search-type-select align-right">
                 <option value="CORPORATE">거래처명</option>
                 <option value="PNAME">담당자명</option>
             </select>
             <div class="emp-search">
-                <input id="emp-search-text" name="searchText" type="text" placeholder="검색">
+                <input id="emp-search-text" name="accSearchText" type="text" placeholder="검색">
                 <input id="emp-search-submit" type="submit" value=""></input>
             </div>
         </form>
@@ -90,6 +92,22 @@
         </div>
         <br><br>
         <div id="psn-page-zone">
+            <c:if test="${apv.startPage ne 1}">
+                <a href="javascript:void(0);" onclick="changeAPage(${apv.startPage -1})">&lt;</a>
+            </c:if>
+            <c:forEach begin="${apv.startPage}" end="${apv.endPage}" var="i">
+                <c:if test="${i ne apv.currentPage}">
+                    <a href="javascript:void(0);" onclick="changeAPage(${i})">${i}</a>           
+                </c:if>
+                <c:if test="${i eq apv.currentPage}">
+                    <a class="page-selected">${i}</a>
+                </c:if>
+            </c:forEach>
+            <c:if test="${apv.endPage ne apv.maxPage}">
+                <a href="javascript:void(0);" onclick="changeAPage(${apv.endPage + 1})">&gt;</a>
+            </c:if>
+        </div>
+        <div id="psn-page-zone">
             <!-- <a href="">&lt;</a> -->
             <a href="" class="page-selected">1</a>
             <a href="">2</a>
@@ -123,6 +141,81 @@
                 });
                 checkNo = checkNo.slice(0, -1);
                 location.href="/checkmine/personnel/delAcc?no=" + checkNo;
+            }
+        }
+    </script>
+
+    <script>
+        let sch2 = location.search;
+        let params2 = new URLSearchParams(sch2);
+
+        function changeAccSearch(){
+            let ep2 = params2.get("ep");
+            $('#accSearchEp').val(ep2);
+            let accFormArea = document.getElementById('accForm');
+            if(params2.has("empSearchText")){
+                let empSearchType = params2.get("empSearchType");
+                let empSearchText = params2.get("empSearchText");
+
+                let newHd3 = document.createElement('input');
+                newHd3.setAttribute("type", "hidden");
+                newHd3.setAttribute("name", "empSearchType");
+                newHd3.setAttribute("value", empSearchType);
+                let newHd4 = document.createElement('input');
+                newHd4.setAttribute("type", "hidden");
+                newHd4.setAttribute("name", "empSearchText");
+                newHd4.setAttribute("value", empSearchText);
+                accFormArea.appendChild(newHd3);
+                accFormArea.appendChild(newHd4);
+            } else if(params2.has("rsn")){
+                let rsn2 = params2.get("rsn");
+                let newHd5 = document.createElement('input');
+                newHd5.setAttribute("type", "hidden");
+                newHd5.setAttribute("name", "rsn");
+                newHd5.setAttribute("value", rsn);
+                accFormArea.appendChild(newHd5);
+            }
+            let newHd6 = document.createElement('input');
+            newHd6.setAttribute("type", "hidden");
+            newHd6.setAttribute("name", "category");
+            newHd6.setAttribute("value", "acc");
+            accFormArea.appendChild(newHd6);
+        }
+
+        function checkPsn(){
+            if(params2.has("category")){
+                let category = params2.get("category");
+                if(category == 'acc'){
+                    $("#list-emp-list").removeClass("active");
+                    $("#list-emp-list").attr("aria-selected", "false");
+                    $("#list-emp").removeClass("active");
+                    $("#list-emp").removeClass("show");
+                    $("#list-account-list").addClass("active");
+                    $("#list-account-list").attr("aria-selected", "true");
+                    $("#list-account").addClass("active");
+                    $("#list-account").addClass("show");
+                }else if(category == 'emp'){
+                    $("#list-account-list").removeClass("active");
+                    $("#list-account-list").attr("aria-selected", "false");
+                    $("#list-account").removeClass("active");
+                    $("#list-account").removeClass("show");
+                    $("#list-emp-list").addClass("active");
+                    $("#list-emp-list").attr("aria-selected", "true");
+                    $("#list-emp").addClass("active");
+                    $("#list-emp").addClass("show");
+                }
+            }
+
+            if(params2.has("rsn")){
+                let rsnCheck = params2.get("rsn");
+
+                if(rsnCheck == 'N') {
+                    $("#selectResign").val("N").prop("selected", true);
+                }else if(rsnCheck == 'Y'){
+                    $("#selectResign").val("Y").prop("selected", true);
+                }else{
+                    $("#selectResign").val("").prop("selected", true);
+                }
             }
         }
     </script>
