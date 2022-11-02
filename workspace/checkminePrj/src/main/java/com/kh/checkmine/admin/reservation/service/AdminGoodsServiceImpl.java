@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.service;
+package com.kh.checkmine.admin.reservation.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
-import com.kh.checkmine.admin.dao.AdminGoodsDao;
+import com.kh.checkmine.admin.reservation.dao.AdminGoodsDao;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;

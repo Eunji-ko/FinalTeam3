@@ -75,11 +75,13 @@
     }
 
     .nav-tabs .nav-link.active {
-        color: black;
+        color: #728D89;
+        font-weight : bold;
     }
 
     .nav-tabs .nav-link {
-        color: #B0D9D1;
+        color: black;
+        font-weight : bold;
     }
 
     table{
@@ -185,14 +187,7 @@
                         <c:forEach items="${boardList}" var="b">
                         <div class="board-item" style="cursor: pointer;" onclick="location.href='${rootPath}/board/detail/${b.no}';">
                             <div class="thumbnail">
-                                <c:choose>
-                                    <c:when test="${b.thumbnail ne null}">
-                                        <img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="${rootPath}/resources/img/board/no_image.png" alt="no_image.png">
-                                    </c:otherwise>
-                                </c:choose>
+                                <img src="${rootPath}/resources/upload/board/${b.thumbnail}" alt="${b.thumbnail}" onError="this.src='${rootPath}/resources/img/board/no_image.png';">
                             </div>
                             <div class="info"><div class="title">${b.title}</div><div class="writer">${b.writer}</div></div>
                             <div class="dateInfo">

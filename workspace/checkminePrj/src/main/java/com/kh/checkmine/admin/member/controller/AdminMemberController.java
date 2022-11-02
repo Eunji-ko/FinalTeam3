@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.controller;
+package com.kh.checkmine.admin.member.controller;
 
 import java.io.File;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.checkmine.admin.service.AdminMemberService;
+import com.kh.checkmine.admin.member.service.AdminMemberService;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;

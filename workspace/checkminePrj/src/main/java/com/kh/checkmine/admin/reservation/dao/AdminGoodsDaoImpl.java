@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.dao;
+package com.kh.checkmine.admin.reservation.dao;
 
 import java.util.HashMap;
 import java.util.List;

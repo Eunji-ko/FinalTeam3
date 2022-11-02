@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.service;
+package com.kh.checkmine.admin.reservation.service;
 
 import java.util.HashMap;
 import java.util.List;

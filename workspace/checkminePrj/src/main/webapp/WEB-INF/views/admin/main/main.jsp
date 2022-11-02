@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>CHECKMINE 관리자 페이지</title>
 <link href='${root}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 	<script src='${root}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 </head>
@@ -183,13 +183,13 @@
                         <span>${m.name}님이 
                         <c:choose>
                             <c:when test="${m.modifyDate ne null}">
-                                수정
+                                수정되었습니다.
                             </c:when>
                             <c:otherwise>
-                                등록
+                                등록되었습니다.
                             </c:otherwise>
                         </c:choose>
-                        되었습니다.</span>  
+                        </span>  
                         <span id="date">
                             <c:choose>
                             <c:when test="${m.modifyDate ne null}">
@@ -211,6 +211,11 @@
                         <span>[${r.plNo}] ${r.empNo}님이 예약하였습니다.</span>  
                         <span id="date">${r.rsvDate}</span></div>
                     </c:forEach>
+
+                    <c:if test="${fn:length(bookList) == 0}">
+                        <div class="list">
+                            금일 예약된 장소가 없습니다.</div>
+                    </c:if>
                 </div>
 
 
@@ -276,6 +281,10 @@
                     </table>
                     <br><br>
                     </c:forEach>
+                    <c:if test="${fn:length(bookList) == 0}">
+                        <div style="margin-top: 100px;">
+                            금일 예약된 장소가 없습니다.</div>
+                    </c:if>
                     </div>
             
                     <!-- Modal footer -->
@@ -313,7 +322,6 @@
         });
         calendar.render();
         });
-
 
     </script>
 </body>

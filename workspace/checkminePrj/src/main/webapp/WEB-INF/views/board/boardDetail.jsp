@@ -155,7 +155,6 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;상세보기</span>
                 </div>
             </div>

@@ -44,7 +44,6 @@ public class AdminController {
 		//세션 저장
 		if(loginAdmin != null) {
 			session.setAttribute("loginAdmin", loginAdmin);
-			session.setAttribute("msg", "관리자로 로그인하였습니다.");
 			return "redirect:/admin/main";
 		}else {
 			session.setAttribute("msg", "로그인에 실패하였습니다.");

@@ -108,6 +108,20 @@
         resize: none;
     }
 
+    .dropdown-toggle::after {
+    display:none;
+}
+
+    .note-modal-footer{
+        height: 50px;
+    }
+
+    .note-modal-footer .note-btn{
+        background-color: #5D736F; 
+        color: white;
+        opacity: 100%;
+        border: none;
+    }
 </style>
 </head>
 <body>
@@ -117,17 +131,17 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button type="button" onclick="location.href='${root}/admin/board/detail/${board.no}'">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;글 수정하기</span>
                 </div>
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post" enctype="multipart/form-data">
-                <div id="title"><div><input type="text" class="form-control" value=${board.title} name="title" required></div></div>
+                <form action="" name="form" method="post" enctype="multipart/form-data" onSubmit="return Checkform();">
+                <div id="title"><div><input type="text" class="form-control" value=${board.title} name="title"></div></div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;" required>${board.content}</textarea>
+                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;">${board.content}</textarea>
                        
                     </div>
                     <div id="footer">
@@ -201,6 +215,18 @@
 				}
 			});
 		}
+
+        //필수 입력값 확인
+        function Checkform(){
+            if(form.title.value == "") {
+                form.title.focus();
+                alert("제목을 입력해 주십시오.");
+            return false;
+                }else if(form.content.value == ""){
+                    alert("내용을 입력해 주십시오.");
+            return false;
+                }
+            }
    
     </script>
 

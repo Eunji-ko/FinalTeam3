@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.controller;
+package com.kh.checkmine.admin.board.controller;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
-import com.kh.checkmine.admin.service.AdminBoardService;
+import com.kh.checkmine.admin.board.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;

@@ -75,11 +75,13 @@
     }
 
     .nav-tabs .nav-link.active {
-        color: black;
+        color: #728D89;
+        font-weight : bold;
     }
 
     .nav-tabs .nav-link {
-        color: #B0D9D1;
+        color: black;
+        font-weight : bold;
     }
 
     table{

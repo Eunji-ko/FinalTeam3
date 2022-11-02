@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.service;
+package com.kh.checkmine.admin.board.service;
 
 import java.util.List;
 import java.util.Map;

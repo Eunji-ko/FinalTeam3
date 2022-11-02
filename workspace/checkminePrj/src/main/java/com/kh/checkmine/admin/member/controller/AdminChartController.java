@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.controller;
+package com.kh.checkmine.admin.member.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kh.checkmine.admin.service.AdminMemberService;
+import com.kh.checkmine.admin.member.service.AdminMemberService;
 
 @Controller
 public class AdminChartController {
@@ -24,7 +24,7 @@ public class AdminChartController {
 		List<Map<String, String>> chart = service.memberChart();
 		
 		model.addAttribute("chart", chart);
-		return "admin/adminChart";
+		return "admin/chart/chart";
 	}
 	
 	

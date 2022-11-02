@@ -66,7 +66,6 @@ public class BoardController {
 		
 
 		List<BoardVo> boardList = service.selectBoardList(pv, map);
-		System.out.println(boardList);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("type", type);
 		model.addAttribute("sort", sort);
