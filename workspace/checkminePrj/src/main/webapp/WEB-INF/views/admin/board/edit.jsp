@@ -131,7 +131,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button type="button" onclick="location.href='${root}/admin/board/detail/${board.no}'">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;글 수정하기</span>
                 </div>
             </div>

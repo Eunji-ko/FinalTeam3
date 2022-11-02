@@ -37,14 +37,13 @@ public class AdminController {
 	
 	//관리자 로그인 동작
 	@PostMapping("login")
-	public String login(AdminVo vo, HttpSession session, HttpServletRequest req) {
+	public String login(AdminVo vo, HttpSession session) {
 		
 		AdminVo loginAdmin = service.login(vo);
 		
 		//세션 저장
 		if(loginAdmin != null) {
 			session.setAttribute("loginAdmin", loginAdmin);
-			session.setAttribute("msg", "관리자로 로그인하였습니다.");
 			return "redirect:/admin/main";
 		}else {
 			session.setAttribute("msg", "로그인에 실패하였습니다.");
