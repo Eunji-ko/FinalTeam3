@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.controller;
+package com.kh.checkmine.admin.reservation.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.kh.checkmine.admin.service.AdminGoodsService;
+import com.kh.checkmine.admin.reservation.service.AdminGoodsService;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
@@ -50,11 +50,11 @@ public class AdminGoodsController {
 		if("p".equals(sort)) {
 			List<PlaceVo> goodsList = service.selectPlaceList(pv, sort);	
 			model.addAttribute("goodsList", goodsList);	
-			return "admin/adminPlace";
+			return "admin/reservation/placeList";
 		}else {
 			List<GoodsVo> goodsList = service.selectGoodsList(pv, sort);
 			model.addAttribute("goodsList", goodsList);
-			return "admin/adminGoods";
+			return "admin/reservation/goodsList";
 		}
 	
 	}
@@ -106,7 +106,7 @@ public class AdminGoodsController {
 	//공유물 등록
 	@GetMapping("add")
 	public String add() {
-		return "admin/adminGoodsAdd";
+		return "admin/reservation/add";
 	}
 	
 	@PostMapping("add")
@@ -135,7 +135,7 @@ public class AdminGoodsController {
 		model.addAttribute("pv", pv);
 		model.addAttribute("map", map);
 		
-		return "admin/adminGoodsSearch";
+		return "admin/reservation/goodsSearch";
 	}
 	
 	//공유물 검색 - 장소
@@ -150,7 +150,7 @@ public class AdminGoodsController {
 			model.addAttribute("pv", pv);
 			model.addAttribute("map", map);
 			
-			return "admin/adminPlaceSearch";
+			return "admin/reservation/placeSearch";
 		}
 	
 	

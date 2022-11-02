@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.service;
+package com.kh.checkmine.admin.member.service;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kh.checkmine.admin.dao.AdminMemberDao;
+import com.kh.checkmine.admin.member.dao.AdminMemberDao;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.DeptVo;
 import com.kh.checkmine.member.vo.MemberVo;

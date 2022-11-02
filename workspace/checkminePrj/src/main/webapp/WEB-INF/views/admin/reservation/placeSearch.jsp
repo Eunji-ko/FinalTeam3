@@ -52,6 +52,7 @@
 
     #filter{
         width: 110px;
+        display: inline-block;
     }
     #option{
         width: 183px;
@@ -129,11 +130,14 @@
                 
             </div>
 			<div id="area2">
-                <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
-                    <option value="">-----</option>
-                    <option value="${root}/admin/goods/list?sort=p&p=1">장소</option>
-                    <option value="${root}/admin/goods/list?sort=g&p=1">장비</option>
-                </select>
+                <div>
+                    <select class="form-select" id="filter" name="select" onchange="location.href=this.value">
+                        <option value="">-----</option>
+                        <option value="${root}/admin/goods/list?sort=p&p=1">장소</option>
+                        <option value="${root}/admin/goods/list?sort=g&p=1">장비</option>
+                    </select>
+                    <div style="display: inline-block; margin:10px">'${map.keyword}'의 검색결과입니다.</div>
+                </div>
                 <form action="${root}/admin/goods/searchPlace" method="get">
                     <select class="form-select" id="option" required style="display: inline-block;">
                         <option value="name">이름</option>
@@ -152,7 +156,7 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr>
+                        <tr style="height: 40.5px;">
                             <th width="10%">번호</th>
                             <th width="10%">카테고리</th>
                             <th width="20%">이름</th>
@@ -164,7 +168,7 @@
                     <tbody style="border-top: none;">
                     <c:forEach items="${goodsList}" var="g">
          
-                    		<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.content}');">
+                    		<tr style="height: 41px;" data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.content}');">
                             <td>${g.no}</td>
                             <td>장소</td>
                             <td>${g.name}</td>

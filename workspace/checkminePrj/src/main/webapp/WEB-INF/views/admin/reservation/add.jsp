@@ -68,7 +68,7 @@
     }
     textarea{
         resize: none;
-        height: 300px;
+        height: 450px;
     }
     label{
         padding-left: 10px;

@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.dao;
+package com.kh.checkmine.admin.member.dao;
 
 import java.util.List;
 import java.util.Map;

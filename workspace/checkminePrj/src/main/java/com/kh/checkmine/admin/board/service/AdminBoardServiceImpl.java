@@ -1,4 +1,4 @@
-package com.kh.checkmine.admin.service;
+package com.kh.checkmine.admin.board.service;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kh.checkmine.admin.dao.AdminBoardDao;
+import com.kh.checkmine.admin.board.dao.AdminBoardDao;
 import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;

@@ -115,6 +115,22 @@
         resize: none;
     }
 
+    .dropdown-toggle::after {
+    display:none;
+}
+
+    .note-modal-footer{
+        height: 50px;
+    }
+
+    .note-modal-footer .note-btn{
+        background-color: #5D736F; 
+        color: white;
+        opacity: 100%;
+        border: none;
+    }
+
+
 
 </style>
 </head>
@@ -131,11 +147,11 @@
             </div>
             
             <div id="infoWrap">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" name="form" method="post" enctype="multipart/form-data" onSubmit="return Checkform();">
             
                 <div style="display: flex; justify-content: space-between;">
                     <div>
-                        <select style="width: 200px;" class="form-select" name="type" onchange=attachType(); required>
+                        <select style="width: 200px;" class="form-select" name="type" required>
                         <c:if test="${fn:contains(loginMember.permission, 'N')}">
                             <option value="N">공지사항</option>
                         </c:if>
@@ -143,11 +159,11 @@
                         <option value="G">갤러리</option>
                         </select>
                     </div>
-                    <div id="title"><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title" required></div>
+                    <div id="title"><input type="text" class="form-control" placeholder="제목을 입력해주세요." name="title"></div>
                </div>
                 <div id="content-box">
                     <div id="content">
-                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;" required></textarea>
+                        <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;"></textarea>
                        
                     </div>
                     <div id="footer">
@@ -183,10 +199,10 @@
                     fileList += target.files[i].name + '<br>';
                 }
                 target2 = document.getElementById('showFiles');
-                target2.innerHTML = fileList;
+                target2.innerHTML = fileList + '----- 총 ' + target.files.length +'개 -----';
             });
     
-</script>
+
         
        
     </script>
@@ -225,6 +241,18 @@
 				}
 			});
 		}
+
+        //필수 입력값 확인
+        function Checkform(){
+            if(form.title.value == "") {
+                form.title.focus();
+                alert("제목을 입력해 주십시오.");
+            return false;
+                }else if(form.content.value == ""){
+                    alert("내용을 입력해 주십시오.");
+            return false;
+                }
+            }
    
     </script>
     

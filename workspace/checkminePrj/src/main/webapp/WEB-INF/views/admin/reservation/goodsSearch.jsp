@@ -122,7 +122,7 @@
         
         <main class="shadow">
             <div id="area1">
-                <span id="header">공유물 관리 - 장소</span>
+                <span id="header">공유물 관리 - 장비</span>
                 <div>
                     <button type="button" class="btn" onclick="location.href='${root}/admin/goods/add'">공유물 등록</button>
                     <button type="button" class="btn" style="width: 110px;" onclick="deleteList()">선택 삭제</button>
@@ -138,8 +138,8 @@
                     </select>
                     <div style="display: inline-block; margin:10px">'${map.keyword}'의 검색결과입니다.</div>
                 </div>
-                <form action="${root}/admin/goods/searchPlace" method="get">
-                    <select class="form-select" id="option" required style="display: inline-block;">
+                <form action="${root}/admin/goods/searchGoods" method="get">
+                    <select class="form-select" id="option" name="option" required style="display: inline-block;">
                         <option value="name">이름</option>
                         <option value="info">설명</option>
                     </select>
@@ -156,7 +156,7 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr>
+                        <tr style="height: 40.5px;">
                             <th width="10%">번호</th>
                             <th width="10%">카테고리</th>
                             <th width="20%">이름</th>
@@ -167,16 +167,14 @@
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${goodsList}" var="g">
-         
-                    		<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.content}');">
+                    	<tr style="height: 41px;" data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
                             <td>${g.no}</td>
-                            <td>장소</td>
+                            <td>장비</td>
                             <td>${g.name}</td>
-                            <td>${g.content}</td>
+                            <td>${g.note}</td>
                             <td>${g.cnt}</td>
                             <td data-bs-dismiss="modal" data-bs-target="#myModal2"><input type="checkbox" name="check" value="${g.no}"></td>
                         </tr>
-                     
 					</c:forEach>
                     </tbody>
                     
@@ -193,7 +191,9 @@
             		</c:when>
             		<c:otherwise>
 		                <a href="${root}/admin/goods/list?sort=${sort}&p=${i}">${i}</a>            
+            		
             		</c:otherwise>
+            	
             	</c:choose>
                 
             </c:forEach>
@@ -204,6 +204,7 @@
         </main>
     </div>
      <!-- The Modal -->
+
      <div class="modal" id="myModal2">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -222,7 +223,11 @@
             <!-- Modal footer -->
             <div class="modal-footer">
             <button type="button" class="btn" style="background-color: #5D736F; color: white;" data-bs-dismiss="modal">닫기</button>
-    </div>
+   			 </div>
+   			 </div>
+		  </div>
+		</div>
+    
 </body>
 <script>
     //예약 리스트 모달 ajax
@@ -235,7 +240,7 @@
                 "sort" : '${sort}'
             },
             success: function(list){
-                var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>타입</th><td>장소</td></tr><tr><th>설명</th><td>'
+                var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>타입</th><td>장비</td></tr><tr><th>설명</th><td>'
                     +note+'</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>';
 
                 if(list.length == 0){
@@ -243,7 +248,7 @@
                 }else{
                     for(var i in list){
                         result += 
-                         '<table class="goods-list"><tr><th>예약자</th><td>'+list[i].empNo+'</td></tr><tr><th>예약일자</th><td>'+list[i].rsvBegin+'</td></tr><tr>'
+                         '<table class="goods-list"><tr><th>예약자</th><td>'+list[i].eNo+'</td></tr><tr><th>예약일자</th><td>'+list[i].borrow+'</td></tr><tr>'
                         +'<th>종료일자</th><td>'+list[i].rsvEnd+'</td></tr></table><hr>'
                     }
 
@@ -260,8 +265,8 @@
 
 </script>
 <script>
-   //선택 항목 삭제하는 AJAX
-   function deleteList(){
+    //선택 항목 삭제하는 AJAX
+    function deleteList(){
         const checkArr = [];
         var answer = confirm("해당 항목을 삭제하시겠습니까?");
         
@@ -300,6 +305,7 @@
             }
         
     }
+
 
 </script>
 </html>

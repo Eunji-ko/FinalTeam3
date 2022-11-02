@@ -37,7 +37,7 @@ public class AdminController {
 	
 	//관리자 로그인 동작
 	@PostMapping("login")
-	public String login(AdminVo vo, HttpSession session) {
+	public String login(AdminVo vo, HttpSession session, HttpServletRequest req) {
 		
 		AdminVo loginAdmin = service.login(vo);
 		

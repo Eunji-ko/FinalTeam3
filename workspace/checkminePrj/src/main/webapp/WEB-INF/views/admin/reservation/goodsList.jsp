@@ -152,7 +152,7 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr>
+                        <tr style="height: 40.5px;">
                             <th width="10%">번호</th>
                             <th width="10%">카테고리</th>
                             <th width="20%">이름</th>
@@ -163,7 +163,7 @@
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${goodsList}" var="g">
-                    	<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
+                    	<tr style="height: 41px;" data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
                             <td>${g.no}</td>
                             <td>장비</td>
                             <td>${g.name}</td>
@@ -240,7 +240,7 @@
                     +note+'</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>';
 
                 if(list.length == 0){
-                    result += '<table class="goods-list">예약 내역이 없습니다.</table><hr>'
+                    result += '<table class="goods-list">예약 내역이 없습니다.</table>'
                 }else{
                     for(var i in list){
                         result += 
