@@ -1,5 +1,6 @@
 package com.kh.checkmine.schedule.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.schedule.service.ScheduleService;
+import com.kh.checkmine.schedule.vo.FullcalendarVo;
 import com.kh.checkmine.schedule.vo.ScheduleVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
 
@@ -31,67 +33,70 @@ public class ScheduleController {
 		this.service = service;
 	}
 	
-//	@GetMapping("")
-//	public String main() {
-//		return "schedule/main";
-//	}
-	
 	//화면
 	@GetMapping("")
 	public String calendar(Model model) {
-		
-		List<TaskOrderVo> orderList = service.selcetOrderList();
-		//List<ScheduleVo> scheduleList = service.selectScheduleList();
-		
-		//json 형식으로 변환?
-		Gson gson = new Gson();
-
-		JsonArray orderArr= new JsonArray();
-		
-		Map<String, Object> map = new HashMap<>(); 
-		
-		for(int i = 0; i < orderList.size(); ++i) {
-			map.put("orderer", orderList.get(i).getOrderer());
-			map.put("title", orderList.get(i).getTitle());
-			map.put("content", orderList.get(i).getContent());
-			map.put("start", orderList.get(i).getStartDate());
-			map.put("end", orderList.get(i).getEndDate());
-			
-			orderArr.add(gson.toJson(map));
-		}
-		System.out.println(orderArr); //백슬래시가 들어감.
-		
-		model.addAttribute("data", orderArr);
 		return "schedule/main";
 	}
 	
 	//ajax 요청 핸들러
-	@GetMapping( value = "order" , produces = "application/json; charset=UTF-8")
+	@GetMapping( value = "list" , produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String order() {
+	public String list() {
 		
 		List<TaskOrderVo> orderList = service.selcetOrderList();
+		List<FullcalendarVo> calendarList = new ArrayList(); // 지시서 
+		List<ScheduleVo> scheduleList = service.selectScheduleList(); // 일정
 		
-		Gson gons = new Gson();
+		for(int i = 0; i < orderList.size(); i++) {
+			
+			FullcalendarVo calendarVo = new FullcalendarVo();
+			
+			calendarVo.setId(orderList.get(i).getNo());
+			calendarVo.setWriter(orderList.get(i).getOrderer());
+			calendarVo.setTitle("[" + orderList.get(i).getDeptNo() + "]" + orderList.get(i).getTitle());
+			calendarVo.setContent(orderList.get(i).getContent());
+			calendarVo.setStart(orderList.get(i).getStartDate());
+			calendarVo.setEnd(orderList.get(i).getEndDate());
+
+			calendarList.add(calendarVo);
+		}
 		
-		String jsonStr = gons.toJson(orderList);
+		for(int j = 0; j < scheduleList.size(); j++) {
+			
+			FullcalendarVo calendarVo = new FullcalendarVo();
+			
+			calendarVo.setWriter(scheduleList.get(j).getEmpNo());
+			calendarVo.setContent(scheduleList.get(j).getContent());
+			calendarVo.setStart(scheduleList.get(j).getStartDate());
+			calendarVo.setEnd(scheduleList.get(j).getEndDate());
+		}
+		
+		
+		Gson gson = new Gson();
+
+		String jsonStr = gson.toJson(calendarList);
 		
 		return jsonStr;
 		
 	}
 	
 	@PostMapping("add")
-	public String addSchedule(ScheduleVo vo, HttpSession session) {
-		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+	public String addSchedule(ScheduleVo vo, HttpSession session, Model model) {
+//		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+//		
+//		String empNo = loginMember.getNo();
+		vo.setEmpNo("7");
 		
-		String empNo = loginMember.getNo();
-		vo.setNo(empNo);
+		int addSchedule = service.insertSchedule(vo);
 		
-		//int addSchedule = service.insertSchedule(vo);
-		
-		
-		
-		return "schedule/main";
+		if(addSchedule == 1) {
+			session.setAttribute("alertMsg", "일정이 등록되었습니다.");
+			return "schedule/main";
+		}else {
+			session.setAttribute("alertMsg", "일정 ");
+			return "schedule/main";
+		}
 	}
 	
 	
