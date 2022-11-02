@@ -65,7 +65,7 @@
         padding-left: 2%;
     }
 
-    #content-main{
+    #content-goods{
         width: 100%;
         height: 10%;
         display: grid;
@@ -73,7 +73,21 @@
         text-align: center;
     }
 
-    #content-main button{
+    #content-goods button{
+        background: #5D736F;
+        border-radius: 10px;
+        color: white;
+    }
+
+    #content-place{
+        width: 100%;
+        height: 10%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+    }
+
+    #content-place button{
         background: #5D736F;
         border-radius: 10px;
         color: white;
@@ -124,7 +138,7 @@
                     <h1>나의 예약</h1>
                 </div>
     
-                <div id="content-main">
+                <div id="content-goods">
 
                     <div id="name">124호 0407</div>
 
@@ -135,6 +149,26 @@
                     </div>
                 
                     <div id="name">빔1</div>
+
+                    <div id="time">09:00 ~ 10:00</div>
+
+                    <div id="rd-btn">
+                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
+                    </div>
+                    
+                </div>
+
+                <div id="content-place">
+
+                    <div id="name">회의실1</div>
+
+                    <div id="time">09:00 ~ 10:00</div>
+
+                    <div id="rd-btn">
+                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
+                    </div>
+                
+                    <div id="name">응접실1</div>
 
                     <div id="time">09:00 ~ 10:00</div>
 

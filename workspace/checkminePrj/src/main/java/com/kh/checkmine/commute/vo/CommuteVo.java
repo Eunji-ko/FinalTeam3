@@ -13,5 +13,6 @@ public class CommuteVo {
 	
 	private String posName;
 	private String deptName;
+	private String total;
 	
 }

@@ -1,12 +1,22 @@
 package com.kh.checkmine.reservation.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.checkmine.reservation.service.ReservationService;
+
 @Controller
 @RequestMapping("reservation")
 public class ReservationController {
+
+	private final ReservationService rs;
+	
+	@Autowired
+	public ReservationController(ReservationService rs) {
+		this.rs = rs;
+	}
 
 	//나의 예약
 	@GetMapping("myreservation")

@@ -98,7 +98,17 @@ public class CommuteController {
 		
 		List<ApprovalLeaveVo> voList = cs.selectLeaveList(map);
 		
+		double x = 0;
+		
+		if(voList != null) {
+			for(int i = 0; i < voList.size(); i++) {
+				String apply = voList.get(i).getApply();
+				x = x + Double.parseDouble(apply);
+			}
+		}
+		
 		model.addAttribute("voList", voList);
+		model.addAttribute("x", x);
 		
 		return "commute/annualleave";
 		

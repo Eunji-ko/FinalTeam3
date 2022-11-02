@@ -128,7 +128,6 @@
                                 <th scope="col">출근시각</th>
                                 <th scope="col">퇴근시각</th>
                                 <th scope="col">총 근무시간</th>
-                                <th scope="col">상태</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -140,8 +139,7 @@
                                 <td>${vo.workDate}</td>
                                 <td>${vo.arrived}</td>
                                 <td>${vo.leave}</td>
-                                <td>08:00</td>
-                                <td>정상출근</td>
+                                <td>${vo.total}</td>
                               </tr>
                             </c:forEach>
                             </tbody>
