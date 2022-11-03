@@ -187,7 +187,7 @@
                         <c:forEach items="${saveMailList}" var="item">
                         	<!-- 여기가 리스트 아이템 -->
 							<div id="${item.no}" class="mail-item d-flex align-items-center">
-	                            <a href="메일_상세보기" class="mail-list-item">
+	                            <a href="/checkmine/mail/save/detail?n=${item.no}" class="mail-list-item">
 	                                <input type="checkbox" value="${item.no}">
 	                                <span style="width: 257px;">나</span>
 	                                <span style="width: 650px;">${item.title}</span>

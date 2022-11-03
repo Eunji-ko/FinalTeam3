@@ -48,4 +48,15 @@
 		WHERE MR.MAIL_NO = #{mailNo}
 		AND MR.TYPE = 'R'
 	</select>
+	
+	<!-- 임시저장 메일 객체 가져오기 -->
+	<select id="selectSaveMailVo" resultType="com.kh.checkmine.mail.vo.MailSendFormVo">
+		SELECT * FROM MAIL_SAVE
+		WHERE NO = #{mailNo}
+	</select>
+	
+	<!-- 임시저장 메일 첨부파일 객체 가져오기 -->
+	<select id="selectSaveMailFileList" resultType="com.kh.checkmine.mail.vo.MailAttVo">
+		SELECT * FROM MAIL_SAVE_ATT WHERE MAIL_SAVE_NO = #{mailNo}
+	</select>
 </mapper>
