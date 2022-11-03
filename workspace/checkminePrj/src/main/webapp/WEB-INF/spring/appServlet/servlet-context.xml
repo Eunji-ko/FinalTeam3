@@ -33,6 +33,12 @@
 		<beans:property name="defaultEncoding" value="UTF-8"/>
 	</beans:bean>
 	
-	
+	<!-- 알람 띄우는 인터셉터 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean class="com.kh.checkmine.alarm.controller.AlarmAdviser"></beans:bean>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

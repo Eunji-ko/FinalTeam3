@@ -17,9 +17,9 @@ public class AlarmDaoImpl implements AlarmDao{
 		return sst.selectList("alarmMapper.selectAlarmList", no);
 	}
 
-	//결재 리스트 알람 테이블에 집어넣기
+	//결재 건수 알림 테이블에 집어넣기
 	@Override
-	public int insertApprovalAlarm(SqlSessionTemplate sst, Map appMap) {
+	public int insertApprovalAlarm(SqlSessionTemplate sst, Map<String, Object> appMap) {
 		return sst.insert("alarmMapper.insertApproval", appMap);
 	}
 
@@ -27,6 +27,18 @@ public class AlarmDaoImpl implements AlarmDao{
 	@Override
 	public int deleteAlarm(SqlSessionTemplate sst, String no) {
 		return sst.delete("alarmMapper.deleteAlarm", no);
+	}
+
+	//메일 건수 알림 테이블에 집어넣기
+	@Override
+	public int insertMailAlarm(SqlSessionTemplate sst, Map<String, Object> mailMap) {
+		return sst.insert("alarmMapper.insertMail", mailMap);
+	}
+
+	//알림 읽음처리
+	@Override
+	public int updateAlarm(SqlSessionTemplate sst, String no) {
+		return sst.update("alarmMapper.updateAlarm", no);
 	}
 
 }

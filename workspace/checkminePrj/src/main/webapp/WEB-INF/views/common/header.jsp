@@ -71,7 +71,6 @@
     <header class="d-flex " style="width: 100%; height: 140px;">
         <div style="width: 270px;" class="ms-5"></div>
 
-        <!-- 체크마인 로고 TODO: 홈경로 설정-->
         <div id="logo" class="m-auto">
             <a href="${rootPath}/member/main"><img src="/checkmine/resources/img/header/logo.png"></a>
         </div>
@@ -79,36 +78,43 @@
         <!-- 알림, 설정메뉴 TODO: 설정메뉴 경로 설정-->
         <div class="d-flex h-100 align-items-center justify-content-between me-5" style="width:340px">
         
-        	<!-- 메일 TODO:메일경로-->
         	<a href="${rootPath}/mail/receive"><img src="/checkmine/resources/img/header/mail-icon.png"></a>
         
-            <!-- 알림 TODO:경로처리 갯수 처리, 배지 -->
             <div class="dropdown">
-                <a class="btn dropdown-toggle" onclick="loadAlarm();" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/checkmine/resources/img/header/notification-bell.png">
-                    <span class="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger">
+                    <span class="position-absolute top-0 start-70 translate-middle badge rounded-pill bg-danger" id="badge">
 					    ${alarmSum}
                         <c:if test="${alarmSum eq null}">
                             0
                         </c:if>
-					    <span class="visually-hidden">unread messages</span>
 					</span>
                 </a>
                 <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton1" style="width: 560px;">
                     <h5 class="fw-bold" style="margin-bottom: 25px;">알림 목록</h5>
 
                     <!-- TODO: 경로, 정보 -->
-                    <c:forEach items="${alrmList}" var="list">
+                    <c:forEach items="${alarmList}" var="list">
+                        <div id="list-div${list.no}">
+                            <li class="d-flex align-items-center">
+                                <a class="dropdown-item" href="${rootPath}/${list.url}" onclick="readAlarm('${list.no}');" style="width: 95%;">
+                                    <span>[${list.type}]${list.content}</span>
+                                    <span style="font-size: 10px;">${list.time}</span>
+                                    <span><a type="button" onclick="deleteAlarm('${list.no}');" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
+                                </a>
+                            </li>
+                            <hr>
+                        </div>
+                    </c:forEach>
+                    <div id="no-alarm" hidden>
                         <li class="d-flex align-items-center">
-                            <a class="dropdown-item" href="목표경로" style="width: 95%;">
-                                <span>[${list.type}]${list.content}</span>
-                                <span style="font-size: 10px;">${list.time}</span>
-                                <span><a type="button" onclick="deleteAlarm('${list.no}');" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
+                            <a class="dropdown-item" href="#" style="width: 95%;">
+                                <span>새로운 알람이 없습니다.</span>
                             </a>
                         </li>
                         <hr>
-                    </c:forEach>
-                    <c:if test="${alrmList eq null}">
+                    </div>
+                    <c:if test="${alarmSum eq 0}">
                         <li class="d-flex align-items-center">
                             <a class="dropdown-item" href="#" style="width: 95%;">
                                 <span>새로운 알람이 없습니다.</span>
@@ -135,29 +141,23 @@
     </header>
 
     <script>
-        function loadAlarm(){
-            $.ajax({
-                url : "${rootPath}/alarm/load",
-  				type : "POST",
-  				//data : {'no' : param},
-  				dataType : 'text',
-  				success : function(data){
-  				},
-  				error : function(){
-  					alert("서버요청실패..");
-  				}
-            });
-        }
 
         function deleteAlarm(param){
             $.ajax({
                 url : "${rootPath}/alarm/delete",
-  				type : "POST",
+  				type : "GET",
   				data : {'no' : param},
   				dataType : 'text',
   				success : function(data){
                    if(data == 'fail'){
-                    alert('알람 삭제에 실패하였습니다.');
+                    alert('알림 삭제에 실패하였습니다.');
+                   }else{
+                    $('#list-div' + param).hide();
+                    var preSum = Number(document.querySelector('#badge').innerHTML);
+                    document.querySelector('#badge').innerHTML = preSum - 1;
+                    if(Number(document.querySelector('#badge').innerHTML) == 0){
+                        $('#no-alarm').prop('hidden', false);
+                    }
                    }
   				},
   				error : function(){
@@ -165,6 +165,24 @@
   				}
             });
         }
+
+        function readAlarm(param){
+            $.ajax({
+                url : "${rootPath}/alarm/read",
+  				type : "GET",
+  				data : {'no' : param},
+  				dataType : 'text',
+  				success : function(data){
+                   if(data == 'fail'){
+                    alert('알림 처리에 실패하였습니다.');
+                   }
+  				},
+  				error : function(){
+  					alert("서버요청실패..");
+  				}
+            });
+        }
+
     </script>
 
 

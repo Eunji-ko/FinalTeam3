@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.checkmine.alarm.service.AlarmService;
 import com.kh.checkmine.approval.service.ApprovalService;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
 import com.kh.checkmine.common.FileUploader;
@@ -30,12 +31,14 @@ public class MemberController {
 	private final MemberService ms;
 	private final ApprovalService as;
 	private final CommuteService cs;
+	private final AlarmService alarmService;
 	
 	@Autowired
-	public MemberController(MemberService ms, ApprovalService as, CommuteService cs) {
+	public MemberController(MemberService ms, ApprovalService as, CommuteService cs, AlarmService alarmService) {
 		this.ms = ms;
 		this.as = as;
 		this.cs = cs;
+		this.alarmService = alarmService;
 	}
 	
 	@GetMapping("main")
@@ -55,8 +58,13 @@ public class MemberController {
 			//출퇴근 시간 메인 화면에 보여주기
 			int mycommuteTotalCount = cs.selectMycommuteTotalCnt(loginMember.getNo());
 			List<CommuteVo> list = cs.selectListOne(loginMember.getNo(), Pagination.getPageVo(mycommuteTotalCount, 1, 1, mycommuteTotalCount));
-			CommuteVo cvo = list.get(0);
-			model.addAttribute("cvo", cvo);
+			if(list != null) {
+				if(list.size() != 0) {
+					CommuteVo cvo = list.get(0);
+					model.addAttribute("cvo", cvo);
+				}
+			}
+			
 		}
 		
 		return "member/main";
@@ -83,6 +91,9 @@ public class MemberController {
 			List<ApprovalDocVo> approvalList = as.selectList(loginMember.getNo(), pv);
 			model.addAttribute("approvalList", approvalList);
 			model.addAttribute("approvalCnt", approvalCnt);
+			
+			//알람 넣기
+			alarmService.insertTotalAlarm(loginMember.getNo());
 			
 			return "member/main";
 		}else {

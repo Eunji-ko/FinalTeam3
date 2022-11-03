@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="alarmMapper">
 
-	<select id="selectAlarmList">
+	<select id="selectAlarmList" resultType="AlarmVo">
 		SELECT *
 		FROM ALARM
 		WHERE EMP_NO = #{no}
 		AND STATUS = 'N'
+		ORDER BY "TIME" DESC
 	</select>
 	
 	<insert id="insertApproval">
@@ -29,7 +30,33 @@
 	</insert>
 	
 	<delete id="deleteAlarm">
-		DELETE FROM ALARM WHERE NO = #{no}
+		DELETE FROM ALARM WHERE NO = #{no} AND STATUS = 'N'
 	</delete>
+	
+	<insert id="insertMail">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'메일'
+			,'읽지 않은 메일이 ${mailSum}개 있습니다.'
+			,'mail/receive'
+		)
+	</insert>
+	
+	<update id="updateAlarm">
+		UPDATE ALARM
+		SET
+			STATUS = 'Y'
+		WHERE NO = #{no}
+	</update>
 
 </mapper>
