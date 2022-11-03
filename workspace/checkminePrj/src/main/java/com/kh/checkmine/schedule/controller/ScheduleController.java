@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,8 @@ import com.kh.checkmine.schedule.service.ScheduleService;
 import com.kh.checkmine.schedule.vo.FullcalendarVo;
 import com.kh.checkmine.schedule.vo.ScheduleVo;
 import com.kh.checkmine.task.vo.TaskOrderVo;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("schedule")
@@ -58,6 +61,10 @@ public class ScheduleController {
 			calendarVo.setContent(orderList.get(i).getContent());
 			calendarVo.setStart(orderList.get(i).getStartDate());
 			calendarVo.setEnd(orderList.get(i).getEndDate());
+			calendarVo.setBackgroundColor("#5D736F");
+			calendarVo.setBorderColor("#5D736F");
+			calendarVo.setColor("#5D736F");
+			calendarVo.setTextColor("white");
 
 			calendarList.add(calendarVo);
 		}
@@ -65,11 +72,19 @@ public class ScheduleController {
 		for(int j = 0; j < scheduleList.size(); j++) {
 			
 			FullcalendarVo calendarVo = new FullcalendarVo();
-			
+
+			calendarVo.setId('S' + scheduleList.get(j).getNo());
+			calendarVo.setTitle(scheduleList.get(j).getTitle());
 			calendarVo.setWriter(scheduleList.get(j).getEmpNo());
 			calendarVo.setContent(scheduleList.get(j).getContent());
 			calendarVo.setStart(scheduleList.get(j).getStartDate());
 			calendarVo.setEnd(scheduleList.get(j).getEndDate());
+			calendarVo.setBackgroundColor("#b0d9d1");
+			calendarVo.setBorderColor("#b0d9d1");
+			calendarVo.setColor("#b0d9d1");
+			calendarVo.setTextColor("#5D736F");
+
+			calendarList.add(calendarVo);
 		}
 		
 		
@@ -87,17 +102,34 @@ public class ScheduleController {
 //		
 //		String empNo = loginMember.getNo();
 		vo.setEmpNo("7");
+		vo.setStartDate(vo.getStartDate()+vo.getStartTime());
+		vo.setEndDate(vo.getEndDate()+vo.getEndTime());
 		
-		int addSchedule = service.insertSchedule(vo);
+		int result = service.insertSchedule(vo);
 		
-		if(addSchedule == 1) {
+		if(result == 1) {
 			session.setAttribute("alertMsg", "일정이 등록되었습니다.");
 			return "schedule/main";
 		}else {
-			session.setAttribute("alertMsg", "일정 ");
+			session.setAttribute("alertMsg", "일정을 등록하지 못했습니다. ");
 			return "schedule/main";
 		}
 	}
 	
+	@GetMapping("del/{no}")
+	public String delSchedule(@PathVariable String no, FullcalendarVo vo, HttpSession session, Model model) {
+		
+		//String no = vo.getId().replace("S", "");
+		
+		int result = service.updateSchedule(no);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "일정이 삭제되었습니다.");
+			return "schedule/main";
+		}else {
+			session.setAttribute("alertMsg", "일정을 삭제하지 못했습니다. ");
+			return "schedule/main";
+		}
+	}
 	
 }

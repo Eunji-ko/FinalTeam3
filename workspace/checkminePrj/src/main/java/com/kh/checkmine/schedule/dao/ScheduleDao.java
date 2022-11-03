@@ -18,4 +18,7 @@ public interface ScheduleDao {
 	//일정 등록
 	int insertSchedule(SqlSessionTemplate sst, ScheduleVo vo);
 
+	//일정 삭제
+	int updateSchedule(SqlSessionTemplate sst, String no);
+
 }

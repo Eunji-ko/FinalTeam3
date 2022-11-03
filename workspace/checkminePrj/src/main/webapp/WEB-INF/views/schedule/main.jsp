@@ -43,9 +43,10 @@
         text-decoration: none;
     }
 
-    a:hover{
+    .fc-daygrid-day-frame a:hover{
         color: #b0d9d1;
         text-decoration: none !important;
+        background-color:#5d736f86;
     }
 
     [aria-label="일요일"], .fc-day-sun>div>a{
@@ -56,13 +57,10 @@
         color: dodgerblue !important;
     }
 
-    .fc-event:hover{ /*이벤트 호버시 색 변경*/
-        background-color:#b0d9d1;
-    }
 
-    .fc-event{ /*이벤트 설정*/
-        background-color: #5D736F;
-        border: 1px solid white;
+    .fc-daygrid-event { /*이벤트 설정*/
+        /* background-color: #5D736F;
+        border: 1px solid white; */
         border-radius: 20px;
         text-align: center;
     }
@@ -70,11 +68,10 @@
     /*하루짜리 이벤트만 다르게 나와서...*/
     .fc-daygrid-event-dot + .fc-event-title{
         font-weight: normal !important;
-        color: white;
     }
 
     .fc-daygrid-event-dot{
-        border: 4px solid #b0d9d14d !important;
+        border: 4px solid #b0d9d1 !important;
         border-radius: 4px !important;
     }
 
@@ -137,10 +134,10 @@
                             <input type="text" class="form-control" id="title" name="title">
                             <label for="taskId" class="col-form-label">일정 내용</label>
                             <input type="text" class="form-control" id="content" name="content">
-                            <label for="taskId" class="col-form-label">시작 날짜</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate">
-                            <label for="taskId" class="col-form-label">종료 날짜</label>
-                            <input type="date" class="form-control" id="endDate" name="endDate">
+                            <label for="taskId" class="col-form-label">시작 날짜 / 시간</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate" > <input class="form-control" type="time" name="startTime">
+                            <label for="taskId" class="col-form-label">종료 날짜 / 시간</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate"> <input class="form-control" type="time" name="endTime">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -153,14 +150,31 @@
         </div>
     </div>
 
-    <script>
+    <!-- confirm 모달을 쓸 페이지에 추가 start-->
+    <section class="modal modal-section type-confirm">
+        <div class="enroll_box">
+            <p class="menu_msg"></p>
+        </div>
+        <div class="enroll_btn">
+            <button class="btn pink_btn btn_ok">확인</button>
+            <button class="btn gray_btn modal_close">취소</button>
+        </div>
+    </section>
+    <!-- confirm 모달을 쓸 페이지에 추가 end-->
+    
+        <!-- alert 모달을 쓸 페이지에 추가 start-->
+        <section class="modal modal-section type-alert">
+            <div class="enroll_box">
+                <p class="menu_msg"></p>
+            </div>
+            <div class="enroll_btn">
+                <button class="btn pink_btn modal_close">확인</button>
+            </div>
+        </section>
+        <!-- alert 모달을 쓸 페이지에 추가 end-->
 
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-        })
+    <script>
         
-        //일정 시간 나오게 해야함!!
         //풀캘린더 라이브러리 적용
         document.addEventListener('DOMContentLoaded', function() {
             //data 받아오는 ajax
@@ -185,9 +199,15 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
                     footerToolbar:{
                         right: 'addEventButton'
                     }, 
-                    displayEventTime: false, //시간 표시x
-    
-                    customButtons: {
+                    displayEventTime: function(data){
+                        if(data.event.start != data.event.end){
+                            true;
+                        }else{
+                            false;
+                        };
+                    }, //시간 표시
+
+                    customButtons: { //일정 추가 커스텀
                         addEventButton: { // 추가한 버튼 설정
                             text : "일정 추가",  // 버튼 내용
                             click : function(){ // 버튼 클릭 시 이벤트 추가
@@ -217,13 +237,14 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
                             }
                         }
                     },
+    
                     navLinks: true, //날짜 선택시 day 캘린더로 링크
                     selectable: false, //달력 일자 드래그 설정
                     dayMaxEvents: true, //이벤트 오버되면 높이 제한
                     eventLimit:true,
                     editable:true,//draggable 작동
                     displayEventEnd:{
-                        month:false,
+                        month: false,
                         basickWeek: true
                     },
                     //구글 캘린더 - 공휴일 연동
@@ -240,14 +261,28 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
                     eventClick : function(data, element){
 
                         var eventObj = data.event;
-                        
-                        if(confirm(eventObj.title + '\n' + "해당 지시서로 이동하겠습니까?") == true){
-                            window.open('${root}/task/order/detail/' + data.event.id);
+                        if(eventObj.id > 0){
+                            if(confirm("<" + eventObj.title + ">" + '\n' + "해당 지시서로 이동하겠습니까?") == true){
+                                location.href = '${root}/task/order/detail/' + data.event.id;
+                            }else{
+                                alert("취소되었습니다.");
+                            }
                         }else{
-                            alert("취소되었습니다.");
+                            alert("[일정명]" + '\n'  + eventObj.title + '\n' + "[일정 내용]" + '\n' + eventObj.extendedProps.content);
                         }
 
+                    },
+                    eventDragStop:function(data, jsEvent, ui, view){
+                        var eventObj = data.event;
+                        if(eventObj.id.charAt(0) == 'S'){
+                            if(confirm("<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?") == true){
+                                location.href = '${root}/schedule/del/' + eventObj.id.replace('S', '');
+                            }else{
+                                alert("취소되었습니다.");
+                            }
+                        }
                     }
+                    
                 });
                 calendar.render();
 
@@ -256,15 +291,21 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
                         alert("실패");
                         console.log(e);
                     }
-                });
+                });1
             });
+            
             
 
         });
     </script>
 
-    <!--빈칸 방지-->
-    <script>
+<script>
+    
+    //일정 입력시 날짜 표시 : 현재로
+    document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
+    
+    //일정 입력 빈칸 방지
         const title = document.querySelector('#title');
         const content = document.querySelector('#content');
         const startDate = document.querySelector('#startDate');
