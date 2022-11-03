@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationGoodsMapper">
+	
+	<select id="selectListGoods" resultType="GoodsBookVo">
+		SELECT
+		    GR.NO
+		    , TO_CHAR(GR.BORROW, 'HH24:MI') BORROW
+		    , TO_CHAR(GR.RSV_END, 'HH24:MI') RSV_END
+		    , PG.NAME NAME
+		FROM GOODS_RESERVATION GR
+		JOIN EMPLOYEE E
+		    ON GR.E_NO = E.NO
+		JOIN PUBLIC_GOODS PG
+		    ON GR.GOODS_NO = PG.NO
+		WHERE GR.E_NO = #{eNo}
+	</select>
+	
+</mapper>
