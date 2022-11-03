@@ -84,6 +84,7 @@
         height: 10%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        margin-top: 20%;
         text-align: center;
     }
 
@@ -139,43 +140,27 @@
                 </div>
     
                 <div id="content-goods">
+					<c:forEach items="${voListGoods}" var="vo">
+                    <div id="name">${vo.name}</div>
 
-                    <div id="name">124호 0407</div>
-
-                    <div id="time">09:00 ~ 10:00</div>
-
-                    <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
-                    </div>
-                
-                    <div id="name">빔1</div>
-
-                    <div id="time">09:00 ~ 10:00</div>
+                    <div id="time">${vo.borrow} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
                         <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
                     </div>
-                    
+                    </c:forEach>
                 </div>
 
                 <div id="content-place">
+					<c:forEach items="${voListPlace}" var="vo">
+                    <div id="name">${vo.name}</div>
 
-                    <div id="name">회의실1</div>
-
-                    <div id="time">09:00 ~ 10:00</div>
-
-                    <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
-                    </div>
-                
-                    <div id="name">응접실1</div>
-
-                    <div id="time">09:00 ~ 10:00</div>
+                    <div id="time">${vo.rsvBegin} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
                         <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
                     </div>
-                    
+					</c:forEach>                    
                 </div>
 
             </div>

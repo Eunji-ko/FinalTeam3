@@ -11,4 +11,7 @@ public class GoodsBookVo {
 	private String borrow;
 	private String rsvEnd;
 	private String rsvDate;
+	
+	private String name;
+	
 }

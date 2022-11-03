@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationPlaceMapper">
+	
+	<select id="selectListPlace" resultType="PlaceBookVo">
+		SELECT
+		    PR.NO
+		    , TO_CHAR(PR.RSV_BEGIN, 'HH24:MI') RSV_BEGIN
+		    , TO_CHAR(PR.RSV_END, 'HH24:MI') RSV_END
+		    , PP.NAME NAME
+		FROM PLACE_RESERVATION PR
+		JOIN EMPLOYEE E
+		    ON PR.EMP_NO = E.NO
+		JOIN PUBLIC_PLACE PP
+		    ON PR.PL_NO = PP.NO
+		WHERE PR.EMP_NO = #{empNo}
+	</select>
+	
+</mapper>
