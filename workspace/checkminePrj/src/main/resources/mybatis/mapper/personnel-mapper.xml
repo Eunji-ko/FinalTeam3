@@ -137,53 +137,6 @@
   		</foreach>
   </update>
   
-  <select id="selectMemberListByRsn" resultType="MemberVo">
-  	SELECT
-          E.NO
-        , P.NAME POS_NO
-        , D.NAME DEPT_NO
-        , E.ID
-        , E.NAME
-        , E.ENROLL_DATE
-        , E.RESIGN_YN
-	FROM EMPLOYEE E, POSITION P, DEPARTMENT D
-	WHERE E.POS_NO = P.NO
-	AND E.DEPT_NO = D.NO
-	AND E.RESIGN_YN = #{rsn}
-	ORDER BY E.NO DESC
-  </select>
-  
-  <select id="selectMemberListBySearch" resultType="MemberVo">
-  	SELECT
-          E.NO
-        , P.NAME POS_NO
-        , D.NAME DEPT_NO
-        , E.ID
-        , E.NAME
-        , E.ENROLL_DATE
-        , E.RESIGN_YN
-	FROM EMPLOYEE E, POSITION P, DEPARTMENT D
-	WHERE E.POS_NO = P.NO
-	AND E.DEPT_NO = D.NO
-	AND ${type} LIKE '%${text}%'
-	ORDER BY E.NO DESC
-  </select>
-  
-  <select id="selectAccountListBySearch" resultType="AccountVo">
-  	SELECT
-  		  NO
-  		, CORPORATE
-  		, TEL
-  		, FAX
-  		, PNAME
-  		, EMAIL
-  		, DELETE_YN
-  	FROM ACCOUNT
-  	WHERE DELETE_YN = 'N'
-  	AND ${type} LIKE '%${text}%'
-  	ORDER BY NO DESC
-  </select>
-  
   <select id="selectCountAll" resultType="int">
   	SELECT COUNT(NO)
   	FROM EMPLOYEE

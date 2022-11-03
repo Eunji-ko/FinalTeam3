@@ -21,12 +21,6 @@ public interface PersonnelService {
 
 	int editAcc(AccountVo vo);
 
-	List<MemberVo> selectMemberListByRsn(String rsn);
-
-	List<MemberVo> selectMemberListBySearch(HashMap<String, String> searchMap);
-
-	List<AccountVo> selectAccountListBySearch(HashMap<String, String> searchMap);
-
 	int insertAcc(AccountVo vo);
 
 	int delAcc(List<String> no);

@@ -107,15 +107,6 @@
                 <a href="javascript:void(0);" onclick="changeAPage(${apv.endPage + 1})">&gt;</a>
             </c:if>
         </div>
-        <div id="psn-page-zone">
-            <!-- <a href="">&lt;</a> -->
-            <a href="" class="page-selected">1</a>
-            <a href="">2</a>
-            <a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
-            <a href="">&gt;</a>
-        </div>
     </div>
 
     <script>

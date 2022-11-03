@@ -55,21 +55,6 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 
 	@Override
-	public List<MemberVo> selectMemberListByRsn(String rsn) {
-		return dao.selectMemberListByRsn(sst, rsn);
-	}
-
-	@Override
-	public List<MemberVo> selectMemberListBySearch(HashMap<String, String> searchMap) {
-		return dao.selectMemberListBySearch(sst, searchMap);
-	}
-
-	@Override
-	public List<AccountVo> selectAccountListBySearch(HashMap<String, String> searchMap) {
-		return dao.selectAccountListBySearch(sst, searchMap);
-	}
-
-	@Override
 	public int insertAcc(AccountVo vo) {
 		return dao.insertAcc(sst, vo);
 	}
