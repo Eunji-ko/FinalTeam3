@@ -50,22 +50,7 @@ public class PersonnelDaoImpl implements PersonnelDao {
 	public int editAcc(SqlSessionTemplate sst, AccountVo vo) {
 		return sst.update("personnelMapper.editAcc", vo);
 	}
-
-	@Override
-	public List<MemberVo> selectMemberListByRsn(SqlSessionTemplate sst, String rsn) {
-		return sst.selectList("personnelMapper.selectMemberListByRsn", rsn);
-	}
-
-	@Override
-	public List<MemberVo> selectMemberListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap) {
-		return sst.selectList("personnelMapper.selectMemberListBySearch", searchMap);
-	}
-
-	@Override
-	public List<AccountVo> selectAccountListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap) {
-		return sst.selectList("personnelMapper.selectAccountListBySearch", searchMap);
-	}
-
+	
 	@Override
 	public int insertAcc(SqlSessionTemplate sst, AccountVo vo) {
 		return sst.insert("personnelMapper.insertAcc", vo);

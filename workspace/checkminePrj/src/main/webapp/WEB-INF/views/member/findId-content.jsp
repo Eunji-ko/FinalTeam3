@@ -22,9 +22,12 @@
 </head>
 <body>
 	<div class="id-pwd-page">
-        <button type="button" class="checkmine-btn">사원정보 인증</button>
+        <button type="button" class="checkmine-btn" data-bs-toggle="modal" data-bs-target="#checkEmpModal">사원정보 인증</button>
         <br>
-        <button id="kakao-login-btn" onclick="loginWithKakao()" class="checkmine-btn">카카오 인증</button>
+        <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+            <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="240"
+                alt="카카오 로그인 버튼" />
+        </a>
         <p id="token-result"></p>
         <button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
     </div>
@@ -45,15 +48,16 @@
   function loginWithKakao() {
     Kakao.Auth.authorize({
       redirectUri: 'https://localhost:8888/checkmine/member/kakaoLogin',
-      state: 'userme',
-      scope: 'phone_number',
-      prompts: 'none'
+      state: 'userme'
     });
   }
 
   function requestUserInfo() {
     Kakao.API.request({
       url: '/v2/user/me',
+      data: {
+        scopes: ['phone_number']
+      }
     })
       .then(function(res) {
         alert(JSON.stringify(res));
@@ -68,7 +72,7 @@
   // 아래는 데모를 위한 UI 코드입니다.
   displayToken()
   function displayToken() {
-    var token = getCookie('authorize-access-token');
+    var token = getCookie('79bcbc07b59703b3bb44d05e91ab8b4d');
 
     if(token) {
       Kakao.Auth.setAccessToken(token);
@@ -82,5 +86,8 @@
     if (parts.length === 2) { return parts[1].split(';')[0]; }
   }
 </script>
+
+<%@ include file="/WEB-INF/views/member/checkEmp-modal.jsp" %>
+
 </body>
 </html>

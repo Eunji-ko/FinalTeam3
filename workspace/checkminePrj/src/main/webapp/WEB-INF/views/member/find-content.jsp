@@ -46,10 +46,10 @@
     .checkmine-btn {
         background-color: #5D736F;
         color: white;
-        width: 220px;
+        width: 240px;
         height: 60px;
         font-size: 25px;
-        border-radius: 12px;
+        border-radius: 7px;
         padding-left: 10px;
         padding-right: 10px;
         padding-top: 3px;

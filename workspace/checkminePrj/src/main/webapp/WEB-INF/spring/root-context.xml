@@ -8,8 +8,16 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 
-<!-- DB properties -->		
-<context:property-placeholder location="classpath:config/database.properties" />
+<!-- DB properties -->
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations" >
+    <list>
+    <value>classpath:config/database.properties</value>
+    <value>classpath:config/email.properties</value>
+    </list>
+    </property>
+    <property name="fileEncoding" value="UTF-8" />
+</bean>
 
 <!-- Root Context: defines shared resources visible to all other web components -->
 	

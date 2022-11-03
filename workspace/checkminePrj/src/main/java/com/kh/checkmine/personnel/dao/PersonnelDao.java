@@ -23,12 +23,6 @@ public interface PersonnelDao {
 
 	int editAcc(SqlSessionTemplate sst, AccountVo vo);
 
-	List<MemberVo> selectMemberListByRsn(SqlSessionTemplate sst, String rsn);
-
-	List<MemberVo> selectMemberListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap);
-
-	List<AccountVo> selectAccountListBySearch(SqlSessionTemplate sst, HashMap<String, String> searchMap);
-
 	int insertAcc(SqlSessionTemplate sst, AccountVo vo);
 
 	int delAcc(SqlSessionTemplate sst, List<String> no);
