@@ -9,7 +9,7 @@ import com.kh.checkmine.common.PageVo;
 
 public interface BoardService {
 
-	//게시물 조회 - 공지사항
+	//게시물 조회
 	int selectTotalCnt(String type);
 
 	List<BoardVo> selectBoardList(PageVo pv, Map<String, String> map);

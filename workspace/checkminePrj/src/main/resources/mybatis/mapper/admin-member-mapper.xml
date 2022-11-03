@@ -80,9 +80,9 @@
   
   <insert id="insertMember" parameterType="MemberVo">
   	INSERT INTO EMPLOYEE(NO, POS_NO, DEPT_NO, ID, PWD, NAME, EMAIL, PHONE, ADDRESS,
-         ADDRESS_DETAIL, ENROLL_DATE, PHOTO_NAME, PHOTO_PATH, PERMISSION)
+         ADDRESS_DETAIL, PHOTO_NAME, PHOTO_PATH, PERMISSION)
         VALUES(SEQ_EMP_NO.nextval, #{posNo}, #{deptNo}, #{id}, #{pwd}, #{name}, #{email},
-        #{phone}, #{address}, #{addressDetail}, #{enrollDate}, #{photoName}, #{photoPath},
+        #{phone}, #{address}, #{addressDetail}, #{photoName}, #{photoPath},
         #{permission})
   </insert>
   

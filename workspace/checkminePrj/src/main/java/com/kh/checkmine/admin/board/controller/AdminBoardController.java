@@ -50,7 +50,7 @@ public class AdminBoardController {
 		
 		int totalCount = service.selectTotalCnt(sort);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<BoardVo> boardList = service.selectBoardList(pv, sort);
 		model.addAttribute("boardList", boardList);
@@ -86,7 +86,7 @@ public class AdminBoardController {
 		map.put("keyword", keyword);
 		int totalCount = service.selectKeywordCnt(map);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<BoardVo> boardList = service.selectBoardKeyword(pv, map);
 		model.addAttribute("boardList", boardList);

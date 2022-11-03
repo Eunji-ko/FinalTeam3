@@ -27,8 +27,8 @@
     }
 
     #listArea{
-        height: 616px;
-        margin: 20px auto;
+        height: 633px;
+        margin: 0px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
@@ -73,6 +73,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
+        font-size: 15px;
         
     }
 
@@ -82,8 +83,12 @@
         color: black;
     }
    
-    tr{
-        height: 40px;
+    thead > tr{
+        height: 39px;
+    }
+
+    tbody > tr{
+        height: 39.5px;
     }
 
 </style>
@@ -123,19 +128,19 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr style="height: 40.5px;">
-                            <th>사원번호</th>
-                            <th>이름</th>
-                            <th>부서</th>
-                            <th>직위</th>
-                            <th>아이디</th>
-                            <th>입사일자</th>
-                            <th>상태</th>
+                        <tr>
+                            <th width="10%">사원번호</th>
+                            <th width="20%">이름</th>
+                            <th width="15%">부서</th>
+                            <th width="15%">직위</th>
+                            <th width="10%">아이디</th>
+                            <th width="20%">입사일자</th>
+                            <th width="10%">상태</th>
                         </tr>
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${memberList}" var="m">
-                        <tr style="height: 41px;" onclick="location.href='${root}/admin/member/detail/${m.no}'">
+                        <tr onclick="location.href='${root}/admin/member/detail/${m.no}'">
                             <td>${m.no}</td>
                             <td>${m.name}</td>
                             <td>${m.deptNo}</td>

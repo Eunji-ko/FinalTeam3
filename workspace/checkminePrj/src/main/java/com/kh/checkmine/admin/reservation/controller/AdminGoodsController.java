@@ -42,7 +42,7 @@ public class AdminGoodsController {
 		//페이지 처리를 위한 토탈
 		int totalCount = service.selectTotalCnt(sort);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		model.addAttribute("sort", sort);
 		model.addAttribute("pv", pv);
@@ -113,7 +113,7 @@ public class AdminGoodsController {
 	public String add(@RequestParam String type, @RequestParam HashMap<String, String> map, HttpSession session) {
 		
 		int result = service.addList(map);
-		
+
 		if(result == 1) {
 			session.setAttribute("msg", "등록되었습니다.");
 		}else {
@@ -125,10 +125,14 @@ public class AdminGoodsController {
 
 	//공유물 검색 - 장비
 	@GetMapping("searchGoods")
-	public String searchGoods(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam HashMap<String, String> map, Model model) {
+	public String searchGoods(@RequestParam(value = "p", defaultValue = "1") int pno,  @RequestParam String option, @RequestParam String keyword, Model model) {
+		HashMap<String, String> map = new HashMap<>(2);
+		map.put("option", option);
+		map.put("keyword", keyword);
+		
 		int totalCount = service.selectKeywordGoodsCnt(map);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<GoodsVo> goodsList = service.selectGoodsKeyword(pv, map);
 		model.addAttribute("goodsList", goodsList);
@@ -140,16 +144,18 @@ public class AdminGoodsController {
 	
 	//공유물 검색 - 장소
 		@GetMapping("searchPlace")
-		public String searchPlace(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam HashMap<String, String> map, Model model) {
-			int totalCount = service.selectKeywordPlaceCnt(map);
+		public String searchPlace(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
+			HashMap<String, String> map = new HashMap<>(2);
+			map.put("option", option);
+			map.put("keyword", keyword);
 			
-			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+			int totalCount = service.selectKeywordPlaceCnt(map);
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 			
 			List<PlaceVo> goodsList = service.selectPlaceKeyword(pv, map);
 			model.addAttribute("goodsList", goodsList);
 			model.addAttribute("pv", pv);
 			model.addAttribute("map", map);
-			
 			return "admin/reservation/placeSearch";
 		}
 	

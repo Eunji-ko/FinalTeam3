@@ -28,12 +28,12 @@
     }
 
     #listArea{
-        height: 617px;
-        margin: 20px auto;
+        height: 633px;
+        margin: 0px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -74,6 +74,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
+        font-size: 15px;
     }
 
     #pageArea > a{
@@ -84,13 +85,18 @@
     table{
         table-layout: fixed;
     }
-    tr{
-        height: 41px;
-    }
     td{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    thead > tr{
+        height: 39px;
+    }
+
+    tbody > tr{
+        height: 39.5px;
     }
    
 
@@ -164,7 +170,7 @@
                             <td>${b.writer}</td>
                             <td>${b.enrollDate}</td>
                             <td>${b.hit}</td>
-                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="check" value="${b.no}" style="margin: 5px;"></td>
+                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="check" value="${b.no}"></td>
                         
                         </tr>
                     

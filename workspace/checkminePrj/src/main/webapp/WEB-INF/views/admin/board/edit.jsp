@@ -220,10 +220,10 @@
         function Checkform(){
             if(form.title.value == "") {
                 form.title.focus();
-                alert("제목을 입력해 주십시오.");
+                alert("제목을 입력해주세요.");
             return false;
                 }else if(form.content.value == ""){
-                    alert("내용을 입력해 주십시오.");
+                    alert("내용을 입력해주세요.");
             return false;
                 }
             }

@@ -28,12 +28,12 @@
     }
 
     #listArea{
-        height: 622px;
-        margin: 20px auto;
+        height: 633px;
+        margin: 0px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -75,7 +75,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
-        
+        font-size: 15px;
     }
 
     #pageArea > a{

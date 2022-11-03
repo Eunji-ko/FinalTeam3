@@ -78,6 +78,8 @@ public class AdminController {
 		  model.addAttribute("bookList", bookList);
 		  return "admin/main/main"; 
 	}
+	  
+	 //설정
 	
 
 }
