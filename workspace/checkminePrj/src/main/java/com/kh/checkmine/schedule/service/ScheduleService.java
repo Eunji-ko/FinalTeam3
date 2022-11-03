@@ -17,4 +17,7 @@ public interface ScheduleService {
 	//일정 등록
 	int insertSchedule(ScheduleVo vo);
 
+	//일정 삭제
+	int updateSchedule(String no);
+
 }

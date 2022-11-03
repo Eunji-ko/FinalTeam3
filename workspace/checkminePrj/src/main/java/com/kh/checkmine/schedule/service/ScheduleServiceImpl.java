@@ -38,4 +38,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return dao.insertSchedule(sst, vo);
 	}
 
+	//일정 삭제
+	@Override
+	public int updateSchedule(String no) {
+		return dao.updateSchedule(sst, no);
+	}
+
 }

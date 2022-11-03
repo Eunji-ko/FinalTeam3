@@ -12,4 +12,7 @@ public class ScheduleVo {
 	private String startDate;
 	private String endDate;
 	private String del;
+	
+	private String startTime;
+	private String endTime;
 }

@@ -30,4 +30,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		return sst.insert("scheduleMapper.insertSchedule", vo);
 	}
 
+	//일정 삭제
+	@Override
+	public int updateSchedule(SqlSessionTemplate sst, String no) {
+		return sst.update("scheduleMapper.updateSchedule", no);
+	}
+
 }

@@ -15,4 +15,5 @@ public class FullcalendarVo {
 	private String textColor;
 	private String color;
 	private String borderColor;
+	private String backgroundColor;
 }

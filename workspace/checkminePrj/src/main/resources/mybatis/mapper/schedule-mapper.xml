@@ -54,4 +54,10 @@
 		    #{endDate}
 		)
 	</insert>
+	
+	<update id="updateSchedule">
+		UPDATE SCHEDULE
+		SET DEL = 'Y'
+		WHERE NO = #{no}
+	</update>
 </mapper>

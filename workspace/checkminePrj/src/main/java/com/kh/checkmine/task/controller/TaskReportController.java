@@ -221,8 +221,8 @@ public class TaskReportController {
 				.body(res);
 	}
 	
-	//보고서 수정
-	@GetMapping("edit")
+	//보고서 수정 (화면)
+	@GetMapping("edit/{no}")
 	public String reportEdit() {
 		return "task/report-edit";
 	}
