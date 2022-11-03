@@ -13,7 +13,7 @@ import com.kh.checkmine.mail.vo.ReceiveMailVo;
 public interface MailDao {
 
 	/**
-	 * 보낸 메일 리스트 갯수 가져오기
+	 * 받은 메일 리스트 갯수 가져오기
 	 * @param sst
 	 * @param no
 	 * @return
@@ -21,7 +21,7 @@ public interface MailDao {
 	int getReceiveListCount(SqlSessionTemplate sst, String no);
 
 	/**
-	 * 보낸 메일 리스트 가져오기
+	 * 받은 메일 리스트 가져오기
 	 * @param sst
 	 * @param memberNo
 	 * @param pageVo

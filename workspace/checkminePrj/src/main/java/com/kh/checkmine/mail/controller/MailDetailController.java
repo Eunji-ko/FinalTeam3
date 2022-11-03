@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.mail.service.MailDetailService;
 import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -180,6 +181,55 @@ public class MailDetailController {
 	}
 	
 	/**
+	 * 중요메일 상세조회 화면
+	 * @param mailNo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("mail/imp/detail")
+	public String mailImpDetail(@RequestParam(value = "n") String mailNo, Model model, HttpSession session) {	
+		//안읽은 메일 갯수 가져오기
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
+        int notReadCountReceive = mailService.getNotReadCount(memberNo, "A");
+        int notReadCountRef = mailService.getNotReadCount(memberNo, "R");
+        
+        model.addAttribute("notReadCountReceive", notReadCountReceive);
+        model.addAttribute("notReadCountRef", notReadCountRef);
+		
+		//리스트 객체 가져오기
+		ReceiveMailVo mailVo = service.getReceiveMailVo(mailNo);
+		
+		System.out.println(mailVo);
+		model.addAttribute("mailVo", mailVo);
+		return "mail/mail_detail_imp";
+	}
+	
+	/**
+	 * 임시저장 상세조회
+	 * @param mailNo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("mail/save/detail")
+	public String mailSaveDetail(@RequestParam(value = "n") String mailNo, Model model, HttpSession session) {
+		//안읽은 메일 갯수 가져오기
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
+        int notReadCountReceive = mailService.getNotReadCount(memberNo, "A");
+        int notReadCountRef = mailService.getNotReadCount(memberNo, "R");
+        
+        model.addAttribute("notReadCountReceive", notReadCountReceive);
+        model.addAttribute("notReadCountRef", notReadCountRef);
+		
+        MailSendFormVo mailSendFormVo = service.getSaveMailVo(mailNo);
+        
+        System.out.println(mailSendFormVo);
+        model.addAttribute("mailVo", mailSendFormVo);
+		return "mail/mail_write_save";
+	}
+	
+	/**
 	 * 파일 다운로드
 	 * @param name
 	 * @param origin
@@ -205,9 +255,11 @@ public class MailDetailController {
                 .ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .contentLength(Files.size(filePath))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + origin)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + URLEncoder.encode(origin, "UTF-8"))
                 .header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
                 .body(res);
     }
+	
+	
 	
 }

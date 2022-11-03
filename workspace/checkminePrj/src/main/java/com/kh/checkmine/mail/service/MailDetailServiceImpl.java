@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.mail.dao.MailDetailDao;
 import com.kh.checkmine.mail.vo.MailAttVo;
+import com.kh.checkmine.mail.vo.MailSendFormVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.mail.vo.ReceiveMailVo;
 
@@ -58,6 +59,18 @@ public class MailDetailServiceImpl implements MailDetailService{
 		vo.setReceiverListString(receiverListString);
 		vo.setRefersListString(referListString);
 		vo.setMailAttVo(mailAttVo);
+		
+		return vo;
+	}
+
+	/**
+	 * 임시저장 메일 객체 가져오기
+	 */
+	@Override
+	public MailSendFormVo getSaveMailVo(String mailNo) {
+		MailSendFormVo vo = dao.selectSaveMailVo(sst, mailNo);
+		
+		vo.setMailAttVoList(dao.selectSaveMailFileList(sst,mailNo));
 		
 		return vo;
 	}
