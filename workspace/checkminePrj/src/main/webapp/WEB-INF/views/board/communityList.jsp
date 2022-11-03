@@ -17,12 +17,12 @@
   
    
     #listArea{
-        height: 616px;
-        margin: 20px auto;
+        height: 633px;
+        margin: 15px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -62,7 +62,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
-        
+        font-size: 15px;
     }
     #filter{
         width: 110px;
@@ -114,6 +114,14 @@
     }
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
         border-color: #B0D9D1 #B0D9D1 #fff;
+    }
+
+    thead > tr{
+        height: 39px;
+    }
+
+    tbody > tr{
+        height: 39.5px;
     }
 
 </style>

@@ -75,7 +75,7 @@
 	<select id="selectGoodsTotalKeyword" parameterType="HashMap" resultType="int">
 		SELECT COUNT(NO) FROM PUBLIC_GOODS WHERE DELETE_YN = 'N'
 		<choose>
-			<when test="option == 'name'">
+			<when test='option == "name"'>
 				AND NAME LIKE '%'||#{keyword}||'%'
 			</when>
 			<otherwise>
@@ -92,7 +92,7 @@
              GROUP BY GOODS_NO
          ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
          <choose>
-			<when test="option == 'name'">
+			<when test='option == "name"'>
 				AND NAME LIKE '%'||#{keyword}||'%'
 			</when>
 			<otherwise>
@@ -105,7 +105,7 @@
 	<select id="selectPlaceTotalKeyword" parameterType="HashMap" resultType="int">
 		SELECT COUNT(NO) FROM PUBLIC_PLACE WHERE DELETE_YN = 'N'
 		<choose>
-			<when test="option == 'name'">
+			<when test='option == "name"'>
 				AND NAME LIKE '%'||#{keyword}||'%'
 			</when>
 			<otherwise>
@@ -122,7 +122,7 @@
              GROUP BY pl_no
          ) PR ON PP.NO = PR.PL_NO WHERE PP.DELETE_YN = 'N'
          <choose>
-			<when test="option == 'name'">
+			<when test='option == "name"'>
 				AND NAME LIKE '%'||#{keyword}||'%'
 			</when>
 			<otherwise>

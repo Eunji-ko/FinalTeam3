@@ -28,12 +28,12 @@
     }
 
     #listArea{
-        height: 622px;
-        margin: 20px auto;
+        height: 633px;
+        margin: 0px auto;
         border: 1px solid lightgray;
     }
     #pageArea {
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
     }
@@ -75,7 +75,7 @@
         width: 100%;
         border-collapse: collapse;
         text-align: center;
-        
+        font-size: 15px;
     }
 
     #pageArea > a{
@@ -107,10 +107,19 @@
     table {
         border-collapse: separate;
         border-spacing: 0 15px;
-        
+        table-layout: fixed;
     }
     .modal-body{
         overflow: auto;
+    }
+
+    #listArea > table td{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .modal-body > table td{
+        word-break :break-word;
     }
    
 
@@ -156,7 +165,7 @@
             <div id="listArea">
                 <table class="table table-hover">
                     <thead style="background-color: #C4F2EA;">
-                        <tr style="height: 40.5px;">
+                        <tr>
                             <th width="10%">번호</th>
                             <th width="10%">카테고리</th>
                             <th width="20%">이름</th>
@@ -167,7 +176,7 @@
                     </thead>
                     <tbody style="border-top: none;">
                     <c:forEach items="${goodsList}" var="g">
-                    	<tr style="height: 41px;" data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
+                    	<tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
                             <td>${g.no}</td>
                             <td>장비</td>
                             <td>${g.name}</td>

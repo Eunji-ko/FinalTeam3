@@ -101,12 +101,12 @@
             </div>
             
             <div id="infoWrap">
-                <form action="${root}/admin/goods/add" method="post">
+                <form action="${root}/admin/goods/add" name="form" method="post" onSubmit="return Checkform();">
                     <div id="content-box">
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td><input type="text" class="form-control" name="name" id="" required></td>
+                            <td><input type="text" class="form-control" name="name" id=""></td>
                         </tr>
                         <tr>
                             <th>타입</th>
@@ -116,7 +116,7 @@
                         </tr>
                         <tr>
                             <th>설명</th>
-                            <td><textarea class="form-control" name="content" id="" required></textarea></td>
+                            <td><textarea class="form-control" name="content" id=""></textarea></td>
                         </tr>
                     </table>
                 </div>
@@ -138,6 +138,18 @@
    
     <script>
 
+         //필수 입력값 확인
+         function Checkform(){
+            if(form.name.value == "") {
+                form.name.focus();
+                alert("이름을 입력해 주십시오.");
+            return false;
+                }else if(form.content.value == ""){
+                    form.content.focus();
+                    alert("설명을 입력해 주십시오.");
+            return false;
+                }
+            }
        
     </script>
     

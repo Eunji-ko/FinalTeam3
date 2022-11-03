@@ -109,6 +109,11 @@
         width: 250px;
     }
    
+    p{
+        text-align: right;
+        font-size: 13px;
+        color: red;
+    }
    
 
 </style>
@@ -118,7 +123,7 @@
         <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
         
         <main class="shadow">
-            <form action="${root}/admin/member/add" method="post" enctype="multipart/form-data" onsubmit="return check();">
+            <form action="${root}/admin/member/add" method="post" name="form" enctype="multipart/form-data" onsubmit="return check();">
             <div id="area">
                 <div>
                     <button onclick="history.back()">←</button>
@@ -139,36 +144,38 @@
                             <input type="file" name="profile" id="photo" onchange="review()">
                         </div>
                         
-                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name" required></div>
+                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"><p id="nameCheck"></p></div>
                         <div class="inputField" style="grid-column: 2;"><label>부서</label>
-                          <select name="posNo">
-                          <c:forEach items="${pos}" var="p">
-                            <option value="${p.no}">${p.name}</option>
+                          
+                            <select name="deptNo">
+                                <c:forEach items="${dept}" var="d">
+                            <option value="${d.no}">${d.name}</option>
                           </c:forEach>
                           </select>
                         </div>
                         <div class="inputField" style="grid-column: 2;"><label>직위</label>
-                            <select name="deptNo">
-                            <c:forEach items="${dept}" var="d">
-                            	<option value="${d.no}">${d.name}</option>
+                            <select name="posNo">
+                            
+                            <c:forEach items="${pos}" var="p">
+                            	<option value="${p.no}">${p.name}</option>
                             </c:forEach>
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 10px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();" required>
+                        <div class="inputField" style="grid-column: 2; margin-right: 10px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();">
                             <button id="checkDupBtn" type="button" onclick="checkDup();">확인</button>
                         </div>
                         <input type="hidden" value="X" id="dup">
                         <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail" ></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" oninput="autoHyphen(this);" maxlength="13" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail"></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" oninput="autoHyphen(this);" maxlength="13"><p id="phoneCheck"></p></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
                             <br><input type="checkbox" name="permission" value="n"><label style="font-weight: normal;">공지 등록</label>
                             <br><input type="checkbox" name="permission" value="r"><label style="font-weight: normal;">장비/장소 예약 승인</label>
                             <br><input type="checkbox" name="permission" value="h"><label style="font-weight: normal;">인사 관리</label>
                         </div>
-                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>입사일</label><input type="date" name="enrollDate" required></div>
-                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off" required></div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>입사일</label><input type="date" name="enrollDate"><p id="enrollCheck"></p></div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off"><p id="pwdCheck"></p></div>
                     </div>
                     
                 </div>
@@ -203,11 +210,31 @@
         }
 
         function check(){
+            document.querySelectorAll("p").forEach(node => node.innerHTML = "");
+
             //중복확인 체크
-            if(document.querySelector('#dup').value == 'X'){
-                alert("중복확인을 먼저해주세요.");
+            if(document.querySelector('#dup').value == 'X' || form.id.value == ''){
+                form.id.focus();
+                alert("아이디 중복확인을 먼저해주세요.");
+                return false;
+            //필수 입력값 체크
+            }else if(form.name.value == "" || form.phone.value == "" || form.enrollDate.value == "" || form.pwd.value == ""){
+                if(form.name.value == ""){
+                    document.getElementById('nameCheck').innerHTML = "이름을 입력해주세요."
+                }
+                if(form.phone.value == ""){
+                    document.getElementById('phoneCheck').innerHTML = "전화번호를 입력해주세요."
+                }
+                if(form.enrollDate.value == ""){
+                    document.getElementById('enrollCheck').innerHTML = "입사일을 입력해주세요."
+                }
+                if(form.pwd.value == ""){
+                    document.getElementById('pwdCheck').innerHTML = "비밀번호를 입력해주세요."
+                }
                 return false;
             }
+            
+
         }
     </script>
     <script>
@@ -215,9 +242,13 @@
         function checkDup(){
             const dup = document.querySelector('#dup');
             const id = document.querySelector('#memberId').value;
+            var idReg = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{4,14}$/g;
 
             if(id == null || id == ""){
                 alert("아이디를 입력해주세요.");
+                return;
+            }else if( !idReg.test(id)) {
+            alert("아이디는 영문자로 시작하는 5~15자 영문자+숫자 조합이어야 합니다.");
                 return;
             }
             $.ajax({

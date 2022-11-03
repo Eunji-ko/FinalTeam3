@@ -42,7 +42,7 @@ public class AdminMemberController {
 	public String member(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(value = "sort", defaultValue = "a") String sort, Model model) {
 		
 		int totalCount = service.selectTotalCnt(sort);
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		//사원 목록 불러오기
 		List<MemberVo> memberList = service.selectMemberList(pv, sort);
@@ -62,7 +62,7 @@ public class AdminMemberController {
 		map.put("keyword", keyword);
 		int totalCount = service.selectKeywordCnt(map);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<MemberVo> memberList = service.selectMemberKeyword(pv, map);
 		model.addAttribute("memberList", memberList);

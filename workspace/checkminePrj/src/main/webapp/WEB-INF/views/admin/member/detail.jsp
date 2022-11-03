@@ -101,7 +101,11 @@
         height: 40px;
         width: 250px;
     }
-    
+    p{
+        text-align: right;
+        font-size: 13px;
+        color: red;
+    }
     
    
 
@@ -112,7 +116,7 @@
         <%@ include file="/WEB-INF/views/adminCommon/adminSide-nav.jsp" %>
         
         <main class="shadow">
-            <form action="${root}/admin/member/edit/${m.no}" method="post" enctype="multipart/form-data">
+            <form action="${root}/admin/member/edit/${m.no}" method="post" name="form" enctype="multipart/form-data" onsubmit="return check();">
             <div id="area">
                 <div>
                     <button type="button" onclick="history.back()">←</button>
@@ -145,7 +149,7 @@
                             <input type="file" name="profile" id="photo" onchange="review()">
                         </div>
                         
-                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"  value="${m.name}" required></div>
+                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"  value="${m.name}"><p id="nameCheck"></p></div>
                         <div class="inputField" style="grid-column: 2;"><label>부서</label>
                           <select name="posNo">
                           <c:forEach items="${pos}" var="p">
@@ -178,7 +182,7 @@
                         
                         <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address" value="${m.address}"></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail" value="${m.addressDetail}"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" oninput="autoHyphen(this);" maxlength="13" required></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" oninput="autoHyphen(this);" maxlength="13"><p id="phoneCheck"></p></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" value="${m.email}" readonly></div>
                         <div class="inputField" style="margin-left: 150px;"><label>권한</label>
                             <br>
@@ -238,6 +242,23 @@
                 reviewImg.src = "${root}/resources/upload/profile/${m.photoName}";
             }
        }
+
+       function check(){
+            document.querySelectorAll("p").forEach(node => node.innerHTML = "");
+
+            if(form.name.value == "" || form.phone.value == ""){
+                if(form.name.value == ""){
+                    document.getElementById('nameCheck').innerHTML = "이름을 입력해주세요."
+                }
+                if(form.phone.value == ""){
+                    document.getElementById('phoneCheck').innerHTML = "전화번호를 입력해주세요."
+                }
+                
+                return false;
+            }
+            
+
+        }
        
        //전화번호
        const autoHyphen = (target) => {

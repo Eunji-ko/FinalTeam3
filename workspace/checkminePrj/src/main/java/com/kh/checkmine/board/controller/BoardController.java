@@ -50,7 +50,7 @@ public class BoardController {
 	
 	//게시물 조회
 	@GetMapping("list/{type}")
-	public String notice(@PathVariable String type, @RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(value = "sort", defaultValue = "l") String sort, Model model) {
+	public String list(@PathVariable String type, @RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(value = "sort", defaultValue = "l") String sort, Model model) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("type", type);
 		map.put("sort", sort);
@@ -61,7 +61,7 @@ public class BoardController {
 		if("gallery".equals(type)) {
 			pv = Pagination.getPageVo(totalCount, pno, 5, 8);
 		}else {
-			pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+			pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		}
 		
 
@@ -81,7 +81,7 @@ public class BoardController {
 
 		int totalCount = service.selectKeywordCnt(keyword);
 		
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 14);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<BoardVo> boardList = service.selectBoardKeyword(pv, keyword);
 		model.addAttribute("boardList", boardList);
