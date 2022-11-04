@@ -76,5 +76,12 @@
 		AND E.NO = #{no}
 		AND E.RESIGN_YN = 'N'
   </select>
+  
+  <select id="selectIdByMail" resultType="string">
+  	SELECT
+  		ID
+  	FROM EMPLOYEE
+  	WHERE EMAIL=#{email}
+  </select>
  
 </mapper>

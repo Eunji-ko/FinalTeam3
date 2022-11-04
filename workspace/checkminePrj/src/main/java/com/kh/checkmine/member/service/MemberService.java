@@ -14,4 +14,6 @@ public interface MemberService {
 
 	MemberVo changePhoto(MemberVo vo);
 
+	String findIdByMail(String email);
+
 }
