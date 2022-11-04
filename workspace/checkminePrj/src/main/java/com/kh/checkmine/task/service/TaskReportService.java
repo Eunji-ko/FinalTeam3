@@ -17,6 +17,10 @@ public interface TaskReportService {
 		//파일 X
 	int write(TaskReportVo reportVo, List<TaskReportAttVo> attVoList);
 	
+	// 수신참조용 멤버 목록 받아오기
+	List<MemberVo> selectMemberList();
+
+	
 	//보고서 작성 화면 - 수신 리스트
 	List<MemberVo> selectWriteAttList();
 	

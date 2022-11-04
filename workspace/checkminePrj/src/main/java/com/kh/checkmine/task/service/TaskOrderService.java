@@ -48,4 +48,7 @@ public interface TaskOrderService {
 	//지시서 검색
 	List<TaskOrderVo> selectTaskKeyword(PageVo pv, Map<String, String> map);
 	
+	//수신참조용 회원 목록
+	List<MemberVo> selectMemberList();
+	
 }

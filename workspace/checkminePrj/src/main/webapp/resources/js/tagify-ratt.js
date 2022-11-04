@@ -1,7 +1,7 @@
 // https://www.mockaroo.com/
 
 
-var inputElm = document.querySelector('input[name=attNoA]');
+var inputElm = document.querySelector('input[name=attNoR]');
 
 function tagTemplate(tagData){
     return `
@@ -70,75 +70,8 @@ var tagify = new Tagify(inputElm, {
     whitelist: [
         {
             "value": 1,
-            "name": "Justinian Hattersley",
+            "name": "테스트",
             "email": "jhattersley0@ucsd.edu",
-            "team": "A"
-        },
-        {
-            "value": 2,
-            "name": "Antons Esson",
-            "email": "aesson1@ning.com",
-            "team": "B"
-
-        },
-        {
-            "value": 3,
-            "name": "Ardeen Batisse",
-            "email": "abatisse2@nih.gov",
-            "team": "A"
-        },
-        {
-            "value": 4,
-            "name": "Graeme Yellowley",
-            "email": "gyellowley3@behance.net",
-            "team": "C"
-        },
-        {
-            "value": 5,
-            "name": "Dido Wilford",
-            "email": "dwilford4@jugem.jp",
-            "team": "A"
-        },
-        {
-            "value": 6,
-            "name": "Celesta Orwin",
-            "email": "corwin5@meetup.com",
-            "team": "C"
-        },
-        {
-            "value": 7,
-            "name": "Sally Main",
-            "email": "smain6@techcrunch.com",
-            "team": "A"
-        },
-        {
-            "value": 8,
-            "name": "Grethel Haysman",
-            "email": "ghaysman7@mashable.com",
-            "team": "B"
-        },
-        {
-            "value": 9,
-            "name": "Marvin Mandrake",
-            "email": "mmandrake8@sourceforge.net",
-            "team": "B"
-        },
-        {
-            "value": 10,
-            "name": "Corrie Tidey",
-            "email": "ctidey9@youtube.com",
-            "team": "A"
-        },
-        {
-            "value": 11,
-            "name": "foo",
-            "email": "foo@bar.com",
-            "team": "B"
-        },
-        {
-            "value": 12,
-            "name": "foo",
-            "email": "foo.aaa@foo.com",
             "team": "A"
         },
     ],

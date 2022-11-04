@@ -13,8 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
-<script defer src="${root}/resources/js/tagify-att.js"></script>
-<script defer src="${root}/resources/js/tagify-ratt.js"></script>
+<script defer src="${root}/resources/js/tagify-att.js?v=<%=System.currentTimeMillis() %>"></script>
+<script defer src="${root}/resources/js/tagify-ratt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
 
 <!DOCTYPE html>
 <html>
@@ -296,7 +296,6 @@
 </head>
 <body>
 
-
 	<div class="d-flex">
         <%@ include file="/WEB-INF/views/common/side-nav.jsp" %>
         
@@ -324,7 +323,7 @@
                         </div>
                         <div class="division">참　조</div>
                         <div class="reference">
-                            <input type="text" class="tag" name="attNoR" placeholder="참조할 직원의 이름을 적으세요.">
+                            <input class="tag" id="ratt" name='attNoR' placeholder="참조할 직원의 이름을 적으세요.">
                         </div>
                         <div class="division importance">중요도</div>
                         <div id="radio-area">

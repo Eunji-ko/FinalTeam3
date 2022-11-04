@@ -3,15 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 
-<% //테스트용 멤버
-	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
-	vo.setNo("10");
-	vo.setName("박정규");
-	vo.setPosNo("6");
-	vo.setDeptNo("5");
-	session.setAttribute("loginMember", vo);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -187,111 +178,111 @@
                         console.log(data);
 
                         //이부분부터 DB 연결 이전 기존에 있던 내용
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    locale: 'ko', // 한국어 설정
-                    headerToolbar: {
-                        left: 'prevYear prev today next nextYear',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                    },
-                    footerToolbar:{
-                        right: 'addEventButton'
-                    }, 
-                    displayEventTime: function(data){
-                        if(data.event.start != data.event.end){
-                            true;
-                        }else{
-                            false;
-                        };
-                    }, //시간 표시
-
-                    customButtons: { //일정 추가 커스텀
-                        addEventButton: { // 추가한 버튼 설정
-                            text : "일정 추가",  // 버튼 내용
-                            click : function(){ // 버튼 클릭 시 이벤트 추가
-                                $("#calendarModal").modal("show"); // modal 나타내기
-    
-                                $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                    var content = $("#calendar_content").val();
-                                    var start_date = $("#calendar_start_date").val();
-                                    var end_date = $("#calendar_end_date").val();
-                                    
-                                    //내용 입력 여부 확인
-                                    if(content == null || content == ""){
-                                        alert("내용을 입력하세요.");
-                                    }else if(start_date == "" || end_date ==""){
-                                        alert("날짜를 입력하세요.");
-                                    }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                        alert("종료일이 시작일보다 먼저입니다.");
-                                    }else{ // 정상적인 입력 시
-                                        var obj = {
-                                            "title" : content,
-                                            "start" : start_date,
-                                            "end" : end_date
-                                        }//전송할 객체 생성
-                                        console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                    }
-                                });
-                            }
-                        }
-                    },
-    
-                    navLinks: true, //날짜 선택시 day 캘린더로 링크
-                    selectable: false, //달력 일자 드래그 설정
-                    dayMaxEvents: true, //이벤트 오버되면 높이 제한
-                    eventLimit:true,
-                    editable:true,//draggable 작동
-                    displayEventEnd:{
-                        month: false,
-                        basickWeek: true
-                    },
-                    //구글 캘린더 - 공휴일 연동
-                    googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY", //api id
-                    eventSources :[
-                        {
-                            googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', //캘린더 id
-                            color: 'firebrick',
-                            textColor: 'white',
-                        }
-                    ],
-                    allDaySlot: false,
-                    events: data,
-                    eventClick : function(data, element){
-
-                        var eventObj = data.event;
-                        if(eventObj.id > 0){
-                            if(confirm("<" + eventObj.title + ">" + '\n' + "해당 지시서로 이동하겠습니까?") == true){
-                                location.href = '${root}/task/order/detail/' + data.event.id;
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        locale: 'ko', // 한국어 설정
+                        headerToolbar: {
+                            left: 'prevYear prev today next nextYear',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+                        footerToolbar:{
+                            right: 'addEventButton'
+                        }, 
+                        displayEventTime: function(data){
+                            if(data.event.start != data.event.end){
+                                true;
                             }else{
-                                alert("취소되었습니다.");
-                            }
-                        }else{
-                            alert("[일정명]" + '\n'  + eventObj.title + '\n' + "[일정 내용]" + '\n' + eventObj.extendedProps.content);
-                        }
+                                false;
+                            };
+                        }, //시간 표시
 
-                    },
-                    eventDragStop:function(data, jsEvent, ui, view){
-                        var eventObj = data.event;
-                        if(eventObj.id.charAt(0) == 'S'){
-                            if(confirm("<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?") == true){
-                                location.href = '${root}/schedule/del/' + eventObj.id.replace('S', '');
+                        customButtons: { //일정 추가 커스텀
+                            addEventButton: { // 추가한 버튼 설정
+                                text : "일정 추가",  // 버튼 내용
+                                click : function(){ // 버튼 클릭 시 이벤트 추가
+                                    $("#calendarModal").modal("show"); // modal 나타내기
+        
+                                    $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+                                        var content = $("#calendar_content").val();
+                                        var start_date = $("#calendar_start_date").val();
+                                        var end_date = $("#calendar_end_date").val();
+                                        
+                                        //내용 입력 여부 확인
+                                        if(content == null || content == ""){
+                                            alert("내용을 입력하세요.");
+                                        }else if(start_date == "" || end_date ==""){
+                                            alert("날짜를 입력하세요.");
+                                        }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
+                                            alert("종료일이 시작일보다 먼저입니다.");
+                                        }else{ // 정상적인 입력 시
+                                            var obj = {
+                                                "title" : content,
+                                                "start" : start_date,
+                                                "end" : end_date
+                                            }//전송할 객체 생성
+                                            console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                        }
+                                    });
+                                }
+                            }
+                        },
+        
+                        navLinks: true, //날짜 선택시 day 캘린더로 링크
+                        selectable: false, //달력 일자 드래그 설정
+                        dayMaxEvents: true, //이벤트 오버되면 높이 제한
+                        eventLimit:true,
+                        editable:true,//draggable 작동
+                        displayEventEnd:{
+                            month: false,
+                            basickWeek: true
+                        },
+                        //구글 캘린더 - 공휴일 연동
+                        googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY", //api id
+                        eventSources :[
+                            {
+                                googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', //캘린더 id
+                                color: 'firebrick',
+                                textColor: 'white',
+                            }
+                        ],
+                        allDaySlot: false,
+                        events: data,
+                        eventClick : function(data, element){
+
+                            var eventObj = data.event;
+                            if(eventObj.id > 0){
+                                if(confirm("<" + eventObj.title + ">" + '\n' + "해당 지시서로 이동하겠습니까?") == true){
+                                    location.href = '${root}/task/order/detail/' + data.event.id;
+                                }else{
+                                    alert("취소되었습니다.");
+                                }
                             }else{
-                                alert("취소되었습니다.");
+                                alert("[일정명]" + '\n'  + eventObj.title + '\n' + "[일정 내용]" + '\n' + eventObj.extendedProps.content);
+                            }
+
+                        },
+                        eventDragStop:function(data, jsEvent, ui, view){
+                            var eventObj = data.event;
+                            if(eventObj.id.charAt(0) == 'S'){
+                                if(confirm("<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?") == true){
+                                    location.href = '${root}/schedule/del/' + eventObj.id.replace('S', '');
+                                }else{
+                                    alert("취소되었습니다.");
+                                }
                             }
                         }
-                    }
-                    
-                });
-                calendar.render();
+                        
+                        });
+                        calendar.render();
 
                     },
                     error : function(e){
                         alert("실패");
                         console.log(e);
                     }
-                });1
+                });
             });
             
             
