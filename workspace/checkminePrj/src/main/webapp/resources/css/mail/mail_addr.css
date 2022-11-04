@@ -21,25 +21,29 @@
         font-weight: bold;
         margin-bottom: 30px;
     }
-    .addr-box>.list{
+    .list-wrap{
+    	height: 330px;
+        overflow-y: scroll;
+    }
+    .list-wrap>.list{
         display: flex;
         align-items: center;
         border-bottom: 1px solid #c2c2c2;
         padding: 7px 2px 7px 2px;
         font-size: 13px;
     }
-    .addr-box>.list>input[type="checkbox"]{
+    .list-wrap>.list>input[type="checkbox"]{
         width: 17px;
         height: 17px;
         margin-right: 10px;
     }
-    .addr-box>.list>.name{
+    .list-wrap>.list>.name{
         width: 52px;
     }
-    .addr-box>.list>.addr{
+    .list-wrap>.list>.addr{
         width: 190px;
     }
-    .addr-box>.list>.delete{
+    .list-wrap>.list>.delete{
         margin-right: 17px;
     }
     .addr-box>.footer-menu{

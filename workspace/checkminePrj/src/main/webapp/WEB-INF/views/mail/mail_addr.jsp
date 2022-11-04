@@ -55,72 +55,78 @@
                     <div style="margin-left: 12px; margin-bottom: 3px; font-size: 30px;">주소록</div>
                     <div id="addr-box-wrap">
 
-                        <!-- 사내 -->
-                        <div class="addr-box">
+                        <!-- 사내 ========================================================================== -->
+                        
+                        <div class="addr-box" id="inner-box">
                             <div class="category">사내</div>
 
                             <!-- 여기부터 리스트 받아오기 -->
-                            <div class="list">
-                                <input type="checkbox">
-                                <span class="name">박찬규</span>
-                                <span class="addr">chanrb0966@gmail.com</span>
-                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
-                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+                            <div class="list-wrap">
+	                            <c:forEach items="${AddrListInner }" var="addrVo">
+		                            <div class="list">
+		                                <input type="checkbox" value="${addrVo.no}">
+		                                <span class="name">${addrVo.name}</span>
+		                                <span class="addr">${addrVo.email}</span>
+		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                            </div>
+	                            </c:forEach>
                             </div>
                             <!-- 여기까지 -->
 
-                            <div class="footer-menu">
-                                <input type="checkbox">
+                            <div id="inner-footer" class="footer-menu">
+                                <input type="checkbox" onclick="selectAll(this, '#inner-box');">
                                 <a href=""><img src="${imgPath}/trash_icon.png"></a>
-                                <span>1 page</span>
-                                <a class="pre-arrow" href=""><img src="${imgPath}/mail_arrow_pre.png"></a>
-                                <a href=""><img src="${imgPath}/mail_arrow_next.png"></a>
                             </div>
                         </div>
 
-                        <!-- 거래처 -->
-                        <div class="addr-box">
+                        <!-- 거래처 ==========================================================================  -->
+                        
+                        <div class="addr-box" id="acc-box">
                             <div class="category">거래처</div>
 
+							<div class="list-wrap">
                             <!-- 여기부터 리스트 받아오기 -->
-                            <div class="list">
-                                <input type="checkbox">
-                                <span class="name">박찬규</span>
-                                <span class="addr">chanrb0966@gmail.com</span>
-                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
-                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
-                            </div>
+	                            <c:forEach items="${AddrListAcc}" var="addrVo">
+		                            <div class="list">
+		                                <input type="checkbox" id="${addrVo.no}">
+		                                <span class="name">${addrVo.name}</span>
+		                                <span class="addr">${addrVo.email}</span>
+		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                            </div>
+	                            </c:forEach>
+							</div>
                             <!-- 여기까지 -->
 
-                            <div class="footer-menu">
-                                <input type="checkbox">
+                            <div id="acc-footer" class="footer-menu">
+                                <input type="checkbox" onclick="selectAll(this, '#acc-box');">
                                 <a href=""><img src="${imgPath}/trash_icon.png"></a>
-                                <span>1 page</span>
-                                <a class="pre-arrow" href=""><img src="${imgPath}/mail_arrow_pre.png"></a>
-                                <a href=""><img src="${imgPath}/mail_arrow_next.png"></a>
                             </div>
                         </div>
 
-                        <!-- 외부 -->
-                        <div class="addr-box">
+                        <!-- 외부 ==========================================================================  -->
+                        
+                        <div class="addr-box" id="outer-box">
                             <div class="category">외부</div>
-
-                            <!-- 여기부터 리스트 받아오기 -->
-                            <div class="list">
-                                <input type="checkbox">
-                                <span class="name">박찬규</span>
-                                <span class="addr">chanrb0966@gmail.com</span>
-                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
-                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
-                            </div>
+							
+							<div class="list-wrap">
+	                            <!-- 여기부터 리스트 받아오기 -->
+	                            <c:forEach items="${AddrListOuter}" var="addrVo">
+		                            <div class="list">
+		                                <input type="checkbox" id="${addrVo.no}">
+		                                <span class="name">${addrVo.name}</span>
+		                                <span class="addr">${addrVo.email}</span>
+		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                            </div>
+	                            </c:forEach>
+							</div>
                             <!-- 여기까지 -->
 
-                            <div class="footer-menu">
-                                <input type="checkbox">
+                            <div id="outer-footer" class="footer-menu">
+                                <input type="checkbox" onclick="selectAll(this, '#outer-box');">
                                 <a href=""><img src="${imgPath}/trash_icon.png"></a>
-                                <span>1 page</span>
-                                <a class="pre-arrow" href=""><img src="${imgPath}/mail_arrow_pre.png"></a>
-                                <a href=""><img src="${imgPath}/mail_arrow_next.png"></a>
                             </div>
                         </div>
                     </div>
@@ -150,5 +156,18 @@
     </div>
     <!-- 주소록 추가 모달 -->
     <%@ include file="/WEB-INF/views/mail/addr_modal.jsp" %>
+    
+    <script type="text/javascript">
+		// 전체선택 전체 해재
+	    function selectAll(selectAll, targetId)  {
+	        const checkboxes = document.querySelectorAll(targetId +' input[type="checkbox"]');
+	        
+	        checkboxes.forEach((checkbox) => {
+	            checkbox.checked = selectAll.checked;
+	        })
+		}
+		
+		
+    </script>
 </body>
 </html>

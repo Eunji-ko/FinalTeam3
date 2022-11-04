@@ -43,12 +43,6 @@ public class MailController {
 	 */
 	@GetMapping("receive")
 	public String receiveMail(HttpSession session, @RequestParam(value = "p", defaultValue = "1") String page, Model model) {
-		//테스트용 멤버 나중에 없애기
-		com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
-		vo.setNo("11");
-		vo.setEmail("chanrb0966@checkmine.com");
-		session.setAttribute("loginMember", vo);
-		//테스트용 멤버 나중에 없애기
 		
 		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
 		
