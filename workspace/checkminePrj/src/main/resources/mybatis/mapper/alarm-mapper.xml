@@ -58,5 +58,160 @@
 			STATUS = 'Y'
 		WHERE NO = #{no}
 	</update>
+	
+	<select id="selectTask" resultType="int">
+		SELECT COUNT(*)
+		FROM TASK T
+		JOIN TASK_ATT A
+		ON T.NO = A.TASK_NO
+		WHERE A.EMP_NO = #{empNo}
+		<![CDATA[
+		AND T.START_DATE < SYSDATE
+		AND T.END_DATE > SYSDATE
+		]]>
+	</select>
+	
+	<insert id="insertTask">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'업무'
+			,'진행중인 업무가 ${taskSum}건 있습니다.'
+			,'task/report/list/1'
+		)
+	</insert>
+	
+	<select id="selectReadNotice" resultType="int">
+		SELECT SUM("COUNT") SUM
+		FROM
+		(
+		    SELECT
+		        REGEXP_REPLACE("CONTENT",'[^0-9]') COUNT
+		    FROM ALARM
+		    WHERE
+		        EMP_NO = ${no}
+		        AND STATUS = 'Y'
+		        AND "TYPE" = '공지'
+		)
+	</select>
+	
+	<select id="selectNoticeBefore" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		BOARD B
+		JOIN EMPLOYEE E
+		ON E.ENROLL_DATE > B.ENROLL_DATE
+		WHERE
+		    B."TYPE" = 'N'
+		    AND B.DELETE_YN = 'Y'
+		    AND E.NO = #{no}
+	</select>
+	
+	<select id="selectNoticeAll" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE "TYPE" = 'N'
+	</select>
+	
+	<insert id="insertNoticeAlarm">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'공지'
+			,'확인하지 않은 공지가 ${noticeSum}개 있습니다.'
+			,'board/list/notice'
+		)
+	</insert>
+	
+	<insert id="insertScheduleAlarm">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'일정'
+			,'진행중인 일정이 ${scheduleSum}건 있습니다.'
+			,'schedule'
+		)
+	</insert>
+	
+	<select id="selectSchedule" resultType="int">
+		SELECT COUNT(*)
+		FROM SCHEDULE
+		WHERE EMP_NO = #{empNo}
+		<![CDATA[
+		AND START_DATE < SYSDATE
+		AND END_DATE > SYSDATE
+		]]>
+		AND DEL = 'N'
+	</select>
+	
+	<select id="selectReservation" resultType="int">
+		SELECT
+			(SELECT
+			    COUNT(G.NO)
+			FROM GOODS_RESERVATION G
+			WHERE
+			    G.E_NO = #{empNo}
+			    <![CDATA[
+			    AND G.BORROW < SYSDATE
+			    AND G.RSV_END > SYSDATE)
+			    ]]>
+			+
+			(SELECT
+			    COUNT(P.NO)
+			    FROM PLACE_RESERVATION P
+			WHERE
+			    P.EMP_NO = #{empNo}
+			    <![CDATA[
+			    AND P.RSV_BEGIN < SYSDATE
+			    AND P.RSV_END > SYSDATE) AS SUM
+			    ]]>
+		FROM DUAL
+	</select>
+	
+	<insert id="insertReservation">
+		INSERT INTO ALARM
+		(
+			NO
+			,EMP_NO
+			,TYPE
+			,CONTENT
+			,URL
+		)
+		VALUES
+		(
+			SEQ_ALARM_NO.NEXTVAL
+			,#{empNo}
+			,'예약'
+			,'진행중인 예약이 ${reservationSum}건 있습니다.'
+			,'reservation/myreservation'
+		)
+	</insert>
 
 </mapper>

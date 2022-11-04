@@ -18,4 +18,7 @@ public interface AlarmService {
 	//알림 읽음처리
 	int readAlarmOne(String no);
 
+	//공지사항 알림 넣기
+	int insertNoticeAlarm(String no);
+
 }
