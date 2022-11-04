@@ -28,9 +28,12 @@
            </div>
                <span id="mail-check-warn"></span>
            </div>
+           <div>
+              <span id="findId"></span>
+           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success">인증</button>
+          <button type="button" class="btn btn-success" id="idSubmitBtn">인증</button>
         </div>
       </div>
     </div>
@@ -46,7 +49,6 @@
 			type : 'get',
 			url : '/checkmine/mailCheck?email='+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			success : function (data) {
-				console.log("data : " +  data);
 				checkInput.attr('disabled',false);
 				code = data;
 				alert('인증번호가 전송되었습니다.')
@@ -59,6 +61,7 @@
 	$('.mail-check-input').blur(function () {
 		const inputCode = $(this).val();
 		const $resultMsg = $('#mail-check-warn');
+    const emailInId = $('#userEmail1').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
 		
 		if(inputCode === code){
 			$resultMsg.html('인증번호가 일치합니다.');
@@ -67,10 +70,24 @@
 			$('#userEamil1').attr('readonly',true);
 			$('#userEamil2').attr('readonly',true);
 			$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	    $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+      $.ajax({
+        type : 'get',
+        url : '/checkmine/member/findId?email='+emailInId,
+        dataType: "html",
+        success : function (data) {
+          if(data == 'x'){
+            $('#findId').html('>> 해당 이메일 정보를 가진 사원 계정을 찾을 수 없습니다 !');
+          }else{
+            $('#findId').html('>> 아이디 : ' + data);
+          }
+			  }			
+		  }); // end ajax
+      $('#idSubmitBtn').attr("disabled", true);
 		}else{
 			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
+      $('#idSubmitBtn').attr("disabled", false);
 		}
 	});
   </script>

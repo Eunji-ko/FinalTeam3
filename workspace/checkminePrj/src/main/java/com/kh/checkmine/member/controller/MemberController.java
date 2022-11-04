@@ -2,6 +2,7 @@ package com.kh.checkmine.member.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.alarm.service.AlarmService;
 import com.kh.checkmine.approval.service.ApprovalService;
@@ -73,6 +76,19 @@ public class MemberController {
 	@GetMapping("findIdPwd")
 	public String findIdPwd() {
 		return "member/findIdPwd";
+	}
+	
+	@GetMapping("findId")
+	@ResponseBody
+	public String findId(String email, Model model) {
+		
+		String idFind = ms.findIdByMail(email);
+		
+		if(idFind == null) {
+			idFind = "x";
+		}		
+				
+		return idFind;
 	}
 	
 	@PostMapping("login")
@@ -187,5 +203,27 @@ public class MemberController {
 			return "redirect:/member/mypage";
 		}
 	}
+	
+//	@GetMapping("kakaoLogin")
+//	public String kakaoLogin(@RequestParam String code, HttpSession session) throws IOExceptio {
+//		 System.out.println(code);
+//         
+//         //접속토큰 get
+//         String kakaoToken = kakaoService.getReturnAccessToken(code);
+//         
+//         //접속자 정보 get
+//         Map<String,Object> result = kakaoService.getUserInfo(kakaoToken);
+//         System.out.println("컨트롤러 출력"+result.get("nickname")+result.get("profile_image"));
+//         SessionConfigVO configVO =new SessionConfigVO();
+//         configVO.setUser_name((String)result.get("nickname"));
+//         configVO.setProfile_img((String)result.get("profile_image"));
+//         
+//         session.setAttribute("sessionConfigVO", configVO);
+//         /*로그아웃 처리 시, 사용할 토큰 값*/
+//         session.setAttribute("kakaoToken", kakaoToken);
+//     return "redirect:/";
+//	} 
+	
+	
 
 }

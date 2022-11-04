@@ -69,4 +69,9 @@ public class MemberServiceImpl implements MemberService {
 		return updatedMember;
 	}
 
+	@Override
+	public String findIdByMail(String email) {
+		return dao.selectIdByMail(sst, email);
+	}
+
 }//class

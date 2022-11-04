@@ -33,4 +33,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sst.update("memberMapper.updatePhoto", vo);
 	}
 
+	@Override
+	public String selectIdByMail(SqlSessionTemplate sst, String email) {
+		return sst.selectOne("memberMapper.selectIdByMail" ,email);
+	}
+
 }

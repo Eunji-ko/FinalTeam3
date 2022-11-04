@@ -16,4 +16,6 @@ public interface MemberDao {
 
 	int updatePhoto(SqlSessionTemplate sst, MemberVo vo);
 
+	String selectIdByMail(SqlSessionTemplate sst, String email);
+
 }
