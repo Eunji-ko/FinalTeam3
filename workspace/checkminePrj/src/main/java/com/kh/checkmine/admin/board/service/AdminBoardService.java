@@ -41,6 +41,17 @@ public interface AdminBoardService {
 
 	int edit(BoardVo vo);
 
+	//영구 삭제
+	int hardDelete(String string);
+
+	//게시글 복원
+	int restoreBoard(String string);
+
+	//삭제된 게시글 관리
+	int selectDeleteTotalCnt(String sort);
+
+	List<BoardVo> selectDeleteList(PageVo pv, String sort);
+
 
 
 

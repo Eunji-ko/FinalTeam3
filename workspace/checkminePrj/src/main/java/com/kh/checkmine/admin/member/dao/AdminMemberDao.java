@@ -44,4 +44,7 @@ public interface AdminMemberDao {
 	//조직도
 	List<Map<String, String>> selectMemberCnt(SqlSessionTemplate sst);
 
+	//영구 삭제
+	int delete(SqlSessionTemplate sst, String memberNo);
+
 }

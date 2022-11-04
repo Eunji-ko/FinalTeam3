@@ -138,7 +138,7 @@ public class AdminBoardController {
 			result = service.insertBoard(vo);
 		}
 		
-		if(result == 1) {
+		if(result > 0) {
 			session.setAttribute("msg", "정상적으로 등록되었습니다.");
 			return "redirect:/admin/board/list";
 			
@@ -238,7 +238,7 @@ public class AdminBoardController {
 			result = service.edit(vo);
 		}
 
-		if(result == 1) {
+		if(result > 0) {
 			session.setAttribute("msg", "게시물을 수정하였습니다.");
 			return "redirect:/admin/board/detail/" + no;
 			

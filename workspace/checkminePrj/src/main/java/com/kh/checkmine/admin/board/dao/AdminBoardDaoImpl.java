@@ -57,8 +57,8 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 	}
 
 	@Override
-	public int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo attVo) {
-		return sst.insert("boardMapper.insertBoardAtt", attVo);
+	public int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
+		return sst.insert("boardMapper.insertBoardAtt", attVoList);
 	}
 
 	//상세보기
@@ -86,14 +86,40 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//파일 수정
 	@Override
-	public int edit(SqlSessionTemplate sst, BoardAttVo attVo) {
-		return sst.insert("boardMapper.updateBoardAtt", attVo);
+	public int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
+		return sst.insert("boardMapper.updateBoardAtt", attVoList);
 	}
 
 	//기존 파일 삭제
 	@Override
 	public int deleteAtt(SqlSessionTemplate sst, BoardVo vo) {
 		return sst.delete("boardMapper.deleteAtt", vo);
+	}
+
+	//영구 삭제
+	@Override
+	public int hardDelete(SqlSessionTemplate sst, String boardNo) {
+		return sst.delete("boardMapper.hardDelete", boardNo);
+	}
+
+	//게시글 복원
+	@Override
+	public int restoreBoard(SqlSessionTemplate sst, String boardNo) {
+		return sst.update("boardMapper.restoreBoard", boardNo);
+	}
+
+	//삭제된 게시글 관리
+	@Override
+	public int selectDeleteTotalCnt(SqlSessionTemplate sst, String sort) {
+		return sst.selectOne("boardMapper.selectDeleteTotalCnt", sort);
+	}
+
+	@Override
+	public List<BoardVo> selectDeleteList(SqlSessionTemplate sst, PageVo pv, String sort) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("boardMapper.selectDeleteList", sort, rb); 
 	}
 
 }

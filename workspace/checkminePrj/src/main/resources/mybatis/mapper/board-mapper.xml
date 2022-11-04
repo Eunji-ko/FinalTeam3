@@ -43,7 +43,7 @@
   
   
   <update id="deleteBoard">
-  	UPDATE BOARD SET DELETE_YN = 'Y' WHERE NO=#{BOARDNO}
+  	UPDATE BOARD SET MODIFY_DATE = SYSDATE, DELETE_YN = 'Y' WHERE NO=#{BOARDNO}
   </update>
   
   
@@ -86,9 +86,20 @@
   	VALUES(SEQ_BOARD_NO.NEXTVAL, #{writer}, #{title}, #{content}, #{type})
   </insert>
   
+
  <insert id="insertBoardAtt">
+ 	<selectKey keyProperty="bNo" resultType="int" order="BEFORE">
+    SELECT SEQ_BOARD_NO.CURRVAL from dual
+  	</selectKey>
+
  	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
-  	VALUES(SEQ_BATT_NO.NEXTVAL, SEQ_BOARD_NO.CURRVAL, #{name}, #{filePath})
+ 	SELECT SEQ_BATT_NO.NEXTVAL, A.* FROM(
+ 	<foreach item="item" collection="list" separator="UNION ALL " >
+ 	select #{bNo} as B_NO,
+        #{item.name} as NAME,
+        #{item.filePath} as FILE_PATH
+        from dual
+  	</foreach>) A
  </insert>
  
  <select id="selectOne" resultType="BoardVo">
@@ -119,10 +130,16 @@
  	</if>
  	MODIFY_DATE=SYSDATE WHERE NO = #{no}
  </update>
- 
+
    <insert id="updateBoardAtt">
   	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
-  	VALUES(SEQ_BATT_NO.NEXTVAL, #{bNo}, #{name}, #{filePath})
+ 	SELECT SEQ_BATT_NO.NEXTVAL, A.* FROM(
+ 	<foreach item="item" collection="list" separator="UNION ALL " >
+ 	select #{item.bNo} as B_NO,
+        #{item.name} as NAME,
+        #{item.filePath} as FILE_PATH
+        from dual
+  	</foreach>) A
   </insert>
   
   <delete id="deleteAtt">
@@ -210,9 +227,29 @@
   	DELETE FROM BOARD_RECOMMEND WHERE NO = #{bNo} AND M_NO = #{memberNo}
   </delete>
   
+  <delete id="hardDelete">
+  	DELETE FROM BOARD WHERE NO = #{no}
+  </delete>
+  
+  <update id="restoreBoard">
+ 	UPDATE BOARD SET DELETE_YN = 'N'
+ 	WHERE NO = #{no}
+ </update>
+ 
+ <!-- 관리자 > 설정 게시판 -->
+   <select id="selectDeleteList" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
+  	WHERE DELETE_YN = 'Y' 
+  	ORDER BY B.MODIFY_DATE DESC
+  </select>
   
   
-  
+  <select id="selectDeleteTotalCnt" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'Y'
+  </select>
   
   
 </mapper>

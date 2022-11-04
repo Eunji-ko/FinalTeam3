@@ -29,7 +29,7 @@ public interface AdminBoardDao {
 	//공지사항 올리기
 	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
 
-	int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+	int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
 	
 	//상세보기
@@ -43,9 +43,20 @@ public interface AdminBoardDao {
 	//수정
 	int edit(SqlSessionTemplate sst, BoardVo vo);
 
-	int edit(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+	int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
 	int deleteAtt(SqlSessionTemplate sst, BoardVo vo);
+
+	//영구삭제
+	int hardDelete(SqlSessionTemplate sst, String boardNo);
+
+	//게시글 복원
+	int restoreBoard(SqlSessionTemplate sst, String boardNo);
+
+	//삭제된 게시글 관리
+	int selectDeleteTotalCnt(SqlSessionTemplate sst, String sort);
+
+	List<BoardVo> selectDeleteList(SqlSessionTemplate sst, PageVo pv, String sort);
 	
 	
 

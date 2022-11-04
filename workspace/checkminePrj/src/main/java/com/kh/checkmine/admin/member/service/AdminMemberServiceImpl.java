@@ -95,6 +95,13 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	public List<Map<String, String>> memberChart() {
 		return dao.selectMemberCnt(sst);
 	}
+
+	//영구 삭제
+	@Override
+	public int delete(String memberNo) {
+		int result = dao.delete(sst, memberNo);
+		return result;
+	}
 	
 	
 

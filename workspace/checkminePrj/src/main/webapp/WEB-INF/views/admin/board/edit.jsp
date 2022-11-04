@@ -177,7 +177,7 @@
                     fileList += target.files[i].name + '<br>';
                 }
                 target2 = document.getElementById('showFiles');
-                target2.innerHTML = fileList;
+                target2.innerHTML = fileList + '----- 총 ' + target.files.length +'개 -----';
             });
        
     </script>

@@ -141,7 +141,7 @@ public class BoardController {
 			result = service.insertBoard(vo);
 		}
 		
-		if(result == 1) {
+		if(result > 0) {
 			session.setAttribute("alertMsg", "정상적으로 등록되었습니다.");
 			return "redirect:/board/list/"+type;
 			
@@ -288,7 +288,7 @@ public class BoardController {
 			//제목 또는 내용만 수정 시
 			result = service.edit(vo);
 		}
-		if(result == 1) {
+		if(result > 0) {
 			session.setAttribute("alertMsg", "게시물을 수정하였습니다.");
 			return "redirect:/board/detail/" + no;
 			

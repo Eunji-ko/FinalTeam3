@@ -180,7 +180,7 @@
                         </div>
                         <div class="inputField" style="grid-column: 2; margin-right: 70px;"><label>아이디</label><input type="text" name="id" id="memberId" value="${m.id}" readonly></div>
                         
-                        <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address" value="${m.address}"></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" name="address" value="${m.address}" id="address_kakao"></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail" value="${m.addressDetail}"></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" value="${m.phone}" oninput="autoHyphen(this);" maxlength="13"><p id="phoneCheck"></p></div>
                         <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" value="${m.email}" readonly></div>
@@ -223,6 +223,20 @@
         </main>
     </div>
 
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function(){
+            document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+                //카카오 지도 발생
+                new daum.Postcode({
+                    oncomplete: function(data) { //선택시 입력값 세팅
+                        document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                        document.querySelector("input[name=addressDetail]").focus(); //상세입력 포커싱
+                    }
+                }).open();
+            });
+        }
+        </script>
     <script>
         //프로필 이미지 미리보기
        function review(){

@@ -58,12 +58,8 @@ public class BoardServiceImpl implements BoardService{
 		int result1 = dao.insertBoard(sst, vo);
 
 		//첨부파일
-		int result2 = 1;
-		for(int i = 0; i < attVoList.size(); i++) {
-			
-			result2 *= dao.insertBoardAtt(sst, attVoList.get(i));
-		}
-	
+		int	result2 = dao.insertBoardAtt(sst, attVoList);
+		
 		return result1 * result2;
 	}
 
@@ -136,13 +132,10 @@ public class BoardServiceImpl implements BoardService{
 		int result2 = dao.deleteAtt(sst, vo);
 		
 		//첨부파일
-		int result3 = 1;
-		for(int i = 0; i < attVoList.size(); i++) {
-			
-			result3 *= dao.edit(sst, attVoList.get(i));
-		}
+		 int result3 = dao.edit(sst, attVoList);
+
 	
-		return result1 * result3;
+		return result1 * result2 * result3;
 	}
 
 	//게시글만 수정

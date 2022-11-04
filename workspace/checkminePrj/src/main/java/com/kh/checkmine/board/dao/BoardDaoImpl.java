@@ -49,8 +49,8 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo attVo) {
-		return sst.insert("boardMapper.insertBoardAtt", attVo);
+	public int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
+		return sst.insert("boardMapper.insertBoardAtt", attVoList);
 	}
 	
 	//게시글 상세보기
@@ -108,8 +108,8 @@ public class BoardDaoImpl implements BoardDao{
 
 	//파일 수정
 	@Override
-	public int edit(SqlSessionTemplate sst, BoardAttVo attVo) {
-		return sst.insert("boardMapper.updateBoardAtt", attVo);
+	public int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
+		return sst.insert("boardMapper.updateBoardAtt", attVoList);
 	}
 
 	//기존 파일 삭제

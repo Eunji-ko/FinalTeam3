@@ -139,7 +139,7 @@
         justify-content:right;
     }
     #buttonArea > button{
-        margin-right: 10px;
+        margin: 0px 5px;
     }
 
 </style>
@@ -204,6 +204,9 @@
 
                 </div>
                 <div id="buttonArea">
+                   
+                            <button type="button" class="btn" id="correct" onclick ="location.href = '${root}/admin/board/list?sort=a'">목록</button>
+                        
                 <c:if test="${loginAdmin.no eq board.wno}">
                     <button type="button" class="btn" id="correct" onclick ="location.href ='${root}/admin/board/edit/${board.no}'">수정</button>
                 </c:if>

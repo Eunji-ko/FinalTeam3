@@ -132,19 +132,18 @@
         display: flex;
         justify-content: space-around;
     }
-    #correct, #delete, #recommend{
+   
+    #buttonArea{
+        display: flex;
+        justify-content:space-between;
+    }
+    #buttonArea  button{
+        margin: 0px 5px;
         width: 88px;
         font-size: 16px;
         background-color: #5D736F; 
         border-radius: 10px;
         color: white;
-    }
-    #buttonArea{
-        display: flex;
-        justify-content:right;
-    }
-    #buttonArea > button{
-        margin-right: 10px;
     }
 </style>
 </head>
@@ -195,7 +194,7 @@
 
                     </div>
                     <div id="replyArea">
-                        <div id="replyTitle">댓글</div>
+                        <div id="replyTitle">댓글(${board})</div>
                         <div id="replyList">
 
                         </div>
@@ -208,6 +207,7 @@
 
                 </div>
                 <div id="buttonArea">
+                    <div>
                     <c:choose>
                         <c:when test="${recommendList eq '1'}">
                             <button type="button" class="btn" id="recommend" style="background-color: white; color:#5D736F"
@@ -217,10 +217,24 @@
                             <button type="button" class="btn" id="recommend" onclick="recommendBoard()">추천</button>
                         </c:otherwise>
                     </c:choose>
+                </div>
+                    <div>
+                    <c:choose>
+                        <c:when test="${board.type eq 'N'}">
+                            <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/list/notice'">목록</button>
+                        </c:when>
+                        <c:when test="${board.type eq 'C'}">
+                            <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/list/community'">목록</button>
+                        </c:when>
+                        <c:when test="${board.type eq 'G'}">
+                            <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/list/gallery'">목록</button>
+                        </c:when>
+                    </c:choose>
                 <c:if test="${loginMember.no eq board.wno}">   
                     <button type="button" class="btn" id="correct" onclick ="location.href = '${rootPath}/board/edit/${board.no}'">수정</button>
                     <button type="button" class="btn" id="delete" onclick="deleteBoard()">삭제</button>
                 </c:if> 
+            </div>
                 </div>
               
             </div>
