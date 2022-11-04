@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mailAddrMapper">
+	<!-- 사내 주소록 리스트 가져오기 -->
+	<select id="selectAddrListInner" resultType="com.kh.checkmine.mail.vo.MailAddrVo">
+		SELECT * FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'I' 
+	</select>
+	<!-- 사내 주소록 리스트 갯수 가져오기 -->
+	<select id="selectInnerAddrListCount" resultType="int">
+		SELECT COUNT(*) FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'I'
+	</select>
+	
+	<!-- 사외 주소록 리스트 가져오기 -->
+	<select id="selectAddrListOuter" resultType="com.kh.checkmine.mail.vo.MailAddrVo">
+		SELECT * FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'O'
+	</select>
+	<!-- 사외 주소록 리스트 갯수 자겨오기 -->
+	<select id="selectOuterAddrListCount" resultType="int">
+		SELECT COUNT(*) FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'O'
+	</select>
+	
+	<!-- 거래처 주소록 리스트 가져오기 -->
+	<select id="selectAddrListAcc" resultType="com.kh.checkmine.mail.vo.MailAddrVo">
+		SELECT * FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'A'
+	</select>
+	<!-- 거래처 주소록 리스트 갯수 가져오기 -->
+	<select id="selectAccAddrListCount" resultType="int">
+		SELECT COUNT(*) FROM ADDRESS WHERE EMP_NO = #{memberNo} AND TYPE = 'A'
+	</select>
+	
+	<insert id="insertAddr">
+		INSERT INTO ADDRESS(
+			NO
+			,EMP_NO
+			,NAME
+			,EMAIL
+			,TYPE
+		)VALUES(
+			SEQ_ADDRESS.NEXTVAL
+			, #{empNo}
+			, #{name}
+			, #{email}
+			, #{type}
+		)
+	</insert>
+</mapper>
