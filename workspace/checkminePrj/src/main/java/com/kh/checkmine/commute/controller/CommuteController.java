@@ -118,10 +118,6 @@ public class CommuteController {
 	@PostMapping("arrived")
 	public String arrived(CommuteVo vo, HttpSession session) {
 		
-		//MemberVo memberVo = new MemberVo();
-		//memberVo.setNo("1");
-		//session.setAttribute("loginMember", memberVo);
-		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		

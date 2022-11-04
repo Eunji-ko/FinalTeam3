@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.service.ReservationService;
@@ -42,6 +46,60 @@ public class ReservationController {
 		return "reservation/myreservation";
 		
 	}
+	
+	//공유물 예약 취소
+	@PostMapping("goodsDelbtn")
+	@ResponseBody
+	public String goodsDelbtn(@RequestBody GoodsBookVo vo, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String eNo = loginMember.getNo();
+		
+		vo.setENo(eNo);
+		
+		System.out.println(eNo);
+		System.out.println(vo);
+		
+		int result = rs.goodsDelbtn(vo);
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "삭제성공");
+			return "redirect:/reservation/myreservation";
+		}else {
+			session.setAttribute("alertMsg", "삭제실패");
+			return "redirect:/reservation/myreservation";
+		}
+		
+	}
+	
+	//공유물 예약 취소
+		@PostMapping("placeDelbtn")
+		@ResponseBody
+		public String placeDelbtn(@RequestBody PlaceBookVo vo, HttpSession session) {
+			
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+			String empNo = loginMember.getNo();
+			
+			vo.setEmpNo(empNo);
+			
+			System.out.println(empNo);
+			System.out.println(vo);
+			
+			int result = rs.placeDelbtn(vo);
+			
+			System.out.println(result);
+			
+			if(result == 1) {
+				session.setAttribute("alertMsg", "삭제성공");
+				return "redirect:/reservation/myreservation";
+			}else {
+				session.setAttribute("alertMsg", "삭제실패");
+				return "redirect:/reservation/myreservation";
+			}
+			
+		}
 	
 	//빔프로젝트
 	@GetMapping("goodsone")

@@ -23,4 +23,16 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sst.selectList("reservationPlaceMapper.selectListPlace", no);
 	}
 
+	//공유물 예약 취소
+	@Override
+	public int goodsDelbtn(GoodsBookVo vo, SqlSessionTemplate sst) {
+		return sst.delete("reservationGoodsMapper.goodsDelbtn", vo);
+	}
+
+	//장소 예약 취소
+	@Override
+	public int placeDelbtn(PlaceBookVo vo, SqlSessionTemplate sst) {
+		return sst.delete("reservationPlaceMapper.placeDelbtn", vo);
+	}
+
 }
