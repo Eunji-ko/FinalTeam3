@@ -24,6 +24,27 @@ public class AlarmAdviser implements HandlerInterceptor{
 		super();
 		this.service = service;
 	}
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		
+		//세션 설정
+		HttpSession session = request.getSession();
+		
+		//로그인한 사람 가져오기
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		
+		
+		if(loginMember != null) {
+			
+			//공지사항 알림 넣기
+			service.insertNoticeAlarm(loginMember.getNo());
+			
+		}
+		
+		return HandlerInterceptor.super.preHandle(request, response, handler);
+	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -34,6 +55,7 @@ public class AlarmAdviser implements HandlerInterceptor{
 		
 		//로그인한 사람 가져오기
 		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		
 		
 		if(loginMember != null) {
 			

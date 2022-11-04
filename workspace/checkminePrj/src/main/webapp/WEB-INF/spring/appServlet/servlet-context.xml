@@ -37,6 +37,8 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
+			<exclude-mapping path="/alarm/**"/>
+			<exclude-mapping path="/admin/**"/>
 			<beans:bean class="com.kh.checkmine.alarm.controller.AlarmAdviser"></beans:bean>
 		</interceptor>
 	</interceptors>
