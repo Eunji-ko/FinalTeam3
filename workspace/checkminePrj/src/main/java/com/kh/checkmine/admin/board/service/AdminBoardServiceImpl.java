@@ -72,11 +72,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		int result1 = dao.insertBoard(sst, vo);
 
 		//첨부파일
-		int result2 = 1;
-		for(int i = 0; i < attVoList.size(); i++) {
-			
-			result2 *= dao.insertBoardAtt(sst, attVoList.get(i));
-		}
+		int	result2 = dao.insertBoardAtt(sst, attVoList);
 	
 		return result1 * result2;
 	}
@@ -116,13 +112,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		int result2 = dao.deleteAtt(sst, vo);
 		
 		//첨부파일
-		int result3 = 1;
-		for(int i = 0; i < attVoList.size(); i++) {
-			
-			result3 *= dao.edit(sst, attVoList.get(i));
-		}
+		int	result3 = dao.edit(sst, attVoList);
 	
-		return result1 * result3;
+	
+		return result1 * result2 * result3;
 	}
 
 	//게시글만 수정
@@ -130,6 +123,32 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	public int edit(BoardVo vo) {
 		return dao.edit(sst, vo);
 
+	}
+
+	//영구 삭제
+	@Override
+	public int hardDelete(String boardNo) {
+		return dao.hardDelete(sst, boardNo);
+	}
+
+	//게시글 복원
+	@Override
+	public int restoreBoard(String boardNo) {
+		return dao.restoreBoard(sst, boardNo);
+	}
+
+	//삭제된 게시글 관리
+	@Override
+	public int selectDeleteTotalCnt(String sort) {
+		int total = dao.selectDeleteTotalCnt(sst, sort);
+		
+		return total;
+	}
+
+	@Override
+	public List<BoardVo> selectDeleteList(PageVo pv, String sort) {
+		List<BoardVo> boardList = dao.selectDeleteList(sst, pv, sort);
+		return boardList;
 	}
 
 

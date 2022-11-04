@@ -24,7 +24,7 @@ public interface BoardDao {
 	//글 작성
 	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
 
-	int insertBoardAtt(SqlSessionTemplate sst, BoardAttVo attVo);
+	int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
 	//게시글 상세보기
 	int increaseHit(SqlSessionTemplate sst, String no);
@@ -49,7 +49,7 @@ public interface BoardDao {
 	int delete(SqlSessionTemplate sst, String boardNo);
 
 	//게시글 수정
-	int edit(SqlSessionTemplate sst, BoardAttVo boardAttVo);
+	int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
 	int edit(SqlSessionTemplate sst, BoardVo vo);
 	

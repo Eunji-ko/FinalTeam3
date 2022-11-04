@@ -16,7 +16,7 @@
   
   <select id="selectMemberList" resultType="MemberVo">
 		SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
-  		RESIGN_YN FROM EMPLOYEE M 
+  		TO_CHAR(RESIGN_DATE, 'YYYY.MM.DD') RESIGN_DATE, RESIGN_YN FROM EMPLOYEE M 
         LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
         LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
   	<choose>
@@ -121,5 +121,9 @@
 	GROUP BY P.NO
   
   </select>
+  
+  <delete id="deleteMember">
+  	DELETE FROM EMPLOYEE WHERE NO = #{no}
+  </delete>
   
 </mapper>

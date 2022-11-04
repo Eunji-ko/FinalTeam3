@@ -88,7 +88,7 @@
         <div class="d-flex h-100 align-items-center justify-content-between me-5" style="width:200px">
     
             <!-- 설정 -->
-            <div><a href="설정경로">
+            <div><a href="${root}/admin/setting/memberList">
                 <img src="${root}/resources/img/header/cogwheel-button-.png">
             </a></div>
 

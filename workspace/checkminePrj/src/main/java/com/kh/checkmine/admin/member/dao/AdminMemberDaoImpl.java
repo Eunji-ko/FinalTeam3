@@ -86,6 +86,11 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 	public List<Map<String, String>> selectMemberCnt(SqlSessionTemplate sst) {
 		return sst.selectList("adminMemberMapper.selectMemberCnt");
 	}
+
+	@Override
+	public int delete(SqlSessionTemplate sst, String memberNo) {
+		return sst.delete("adminMemberMapper.deleteMember", memberNo);
+	}
 	
 	
 

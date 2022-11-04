@@ -42,4 +42,7 @@ public interface AdminMemberService {
 	//조직도 인원
 	List<Map<String, String>> memberChart();
 
+	//설정 - 영구 삭제
+	int delete(String string);
+
 }
