@@ -16,4 +16,9 @@
 		WHERE PR.EMP_NO = #{empNo}
 	</select>
 	
+	<delete id="placeDelbtn">
+		DELETE FROM PLACE_RESERVATION
+		WHERE EMP_NO = #{empNo} AND NO = #{no}
+	</delete>
+	
 </mapper>

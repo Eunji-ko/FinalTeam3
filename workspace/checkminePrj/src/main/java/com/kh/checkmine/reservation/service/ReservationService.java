@@ -15,4 +15,10 @@ public interface ReservationService {
 	//내가 예약한 장소
 	List<PlaceBookVo> selectListPlace(String no);
 
+	//공유물 예약 취소
+	int goodsDelbtn(GoodsBookVo vo);
+
+	//장소 예약 취소
+	int placeDelbtn(PlaceBookVo vo);
+
 }

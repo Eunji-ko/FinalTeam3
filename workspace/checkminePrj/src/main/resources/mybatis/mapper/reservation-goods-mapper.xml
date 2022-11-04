@@ -16,4 +16,9 @@
 		WHERE GR.E_NO = #{eNo}
 	</select>
 	
+	<delete id="goodsDelbtn">
+		DELETE FROM GOODS_RESERVATION
+		WHERE E_NO = #{eNo} AND NO = #{no}
+	</delete>
+	
 </mapper>

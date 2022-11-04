@@ -57,20 +57,27 @@
     .content{
         width: 70%;
         height: 90;
+        display: grid;
     }
 
     #content-top{
         width: 100%;
-        height: 10%;
+        height: 20%;
         padding-left: 2%;
+        grid-column: 1/span 2;
+        margin-bottom: 0%;
     }
 
     #content-goods{
         width: 100%;
-        height: 10%;
+        height: 100%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         text-align: center;
+    }
+
+    #content-goods>h3{
+        grid-column: 1/span 3;
     }
 
     #content-goods button{
@@ -81,14 +88,23 @@
 
     #content-place{
         width: 100%;
-        height: 10%;
+        height: 100%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        margin-top: 20%;
         text-align: center;
     }
 
+    #content-place>h3{
+        grid-column: 1/span 3;
+    }
+
     #content-place button{
+        background: #5D736F;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .modal a{
         background: #5D736F;
         border-radius: 10px;
         color: white;
@@ -140,25 +156,27 @@
                 </div>
     
                 <div id="content-goods">
+                    <h3>공유물</h3>
 					<c:forEach items="${voListGoods}" var="vo">
-                    <div id="name">${vo.name}</div>
+                    <div id="name" value="${vo.no}">${vo.name}</div>
 
                     <div id="time">${vo.borrow} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
+                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalGoods">예약 취소</button>
                     </div>
                     </c:forEach>
                 </div>
 
                 <div id="content-place">
+                    <h3>장소</h3>
 					<c:forEach items="${voListPlace}" var="vo">
-                    <div id="name">${vo.name}</div>
+                    <div id="name" value="${vo.no}">${vo.name}</div>
 
                     <div id="time">${vo.rsvBegin} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">예약 취소</button>
+                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalPlace">예약 취소</button>
                     </div>
 					</c:forEach>                    
                 </div>
@@ -180,8 +198,8 @@
                 }
             </style>
 
-             <!-- 모달 -->
-             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <!-- 공유물 취소 -->
+             <div class="modal fade" id="exampleModalGoods" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -193,7 +211,27 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button id="reservation" class="btn btn-light btn-sm">예</button>
+                            <a href="${rootPath}/reservation/goodsDelbtn/${no}" id="goods-reservation" class="btn btn-light btn-sm">예</a>
+                            <button id="close" class="btn btn-light btn-sm" data-bs-dismiss="modal">아니오</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+             <!-- 장소 취소 -->
+             <div class="modal fade" id="exampleModalPlace" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">예약취소</h1>
+                        </div>
+
+                        <div class="modal-body">
+                            예약을 정말 취소하시겠습니까?
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="${rootPath}/reservation/placeDelbtn/${no}" id="place-reservation" class="btn btn-light btn-sm">예</a>
                             <button id="close" class="btn btn-light btn-sm" data-bs-dismiss="modal">아니오</button>
                         </div>
                     </div>
@@ -202,6 +240,34 @@
 
         </main>
     </div>
+
+    <script>
+        $('#goods-reservation').on('click', function(){
+            $.ajax({
+                url  :  '${rootPath}/reservation/goodsDelbtn',
+                method : 'get',
+                data : JSON.stringify({no : $('#name').attr('value')}),
+                dataType : 'text',
+                contentType : 'application/json',
+                success : function(){
+                    console.log('성공');
+                }
+                })
+        })
+
+        $('#place-reservation').on('click', function(){
+            $.ajax({
+                url  :  '${rootPath}/reservation/placeDelbtn',
+                method : 'get',
+                data : JSON.stringify({no : $('#name').attr('value')}),
+                dataType : 'text',
+                contentType : 'application/json',
+                success : function(){
+                    console.log('성공');
+                }
+                })
+        })
+    </script>
 
 </body>
 </html>

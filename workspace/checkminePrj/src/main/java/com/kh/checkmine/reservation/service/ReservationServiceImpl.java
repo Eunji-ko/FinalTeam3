@@ -33,5 +33,17 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<PlaceBookVo> selectListPlace(String no) {
 		return dao.selectListPlace(no, sst);
 	}
+
+	//공유물 예약 취소
+	@Override
+	public int goodsDelbtn(GoodsBookVo vo) {
+		return dao.goodsDelbtn(vo, sst);
+	}
+
+	//장소 예약 취소
+	@Override
+	public int placeDelbtn(PlaceBookVo vo) {
+		return dao.placeDelbtn(vo, sst);
+	}
 	
 }
