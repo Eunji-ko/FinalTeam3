@@ -171,14 +171,14 @@
                     <div class="division file">첨부 파일</div>
                     <div class="value" id="file-wrap">
 	                    <c:forEach items="${fileVo}" var="fv">                    	                    	
-	                    	<a href="${root}/task/order/download/${vo.no}/${fv.no}" id="file">${fv.name}</a>
+	                    	<a href="${root}/task/report/download/${vo.no}/${fv.no}" id="file">${fv.name}</a>
 	                    </c:forEach>
                    	</div>
                 </div>
                 <div class="btn-area">
                     <c:if test="${vo.sender eq loginMember.name}">
-                        <a href="${root}/task/report/edit">수정</a>
-                        <a href="${root}/task/report/delete">삭제</a>
+                        <a href="${root}/task/report/edit/${fv.no}">수정</a>
+                        <a href="${root}/task/report/del/${fv.no}">삭제</a>
                     </c:if>
                     <a href="${root}/task/report/list/1">목록</a>
                 </div>

@@ -104,6 +104,12 @@ public class TaskOrderDaoImpl implements TaskOrderDao {
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 		return sst.selectList("taskOrderMapper.selectTaskKeyword", map, rb);
 	}
+	
+	//수신참조용 멤버 목록
+	@Override
+	public List<MemberVo> selectMemberList(SqlSessionTemplate sst) {
+		return sst.selectList("adminMemberMapper.selectMemberList");
+	}
 
 
 }

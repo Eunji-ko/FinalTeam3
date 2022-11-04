@@ -3,14 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% //테스트용 멤버
-	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
-	vo.setNo("10");
-	vo.setName("박정규");
-	vo.setPosNo("6");
-	vo.setDeptNo("5");
-	session.setAttribute("loginMember", vo);
-%>
 
 <!--tagify-->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -22,6 +14,8 @@
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
 <head>
+<script defer src="${root}/resources/js/tagify-att.js"></script>
+<script defer src="${root}/resources/js/tagify-ratt.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -319,51 +313,6 @@
         }
     </script>
 
-    <script>
-        //file 목록 출력
-        window.onload = function(){
-            target = document.getElementById('upload-file');
-            target.addEventListener('change', function(){
-                fileList="";
-                for(i=0; i<target.files.length;i++){
-                    fileList += target.files[i].name + '<br>';
-                }
-                target2 = document.getElementById('show-files');
-                target2.innerHTML = fileList;
-            })
-        }
 
-        //tagify
-        const input = document.querySelector('input[name=attNoA]');
-        const input2 = document.querySelector('input[name=attNoR]');
-        let tagify = new Tagify(input, {//드롭다운
-            whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "MaxScript internal language 3D Studio Max", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "destination-tags", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        }); // initialize Tagify
-
-        let tagify2 = new Tagify(input2, {
-            whitelist: ["..."], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "reference-tag", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        })
-        // 태그가 추가되면 이벤트 발생
-        tagify.on('add', function() {
-          console.log(tagify.value); // 입력된 태그 정보 객체
-        })
-
-    </script>
 </body>
 </html>

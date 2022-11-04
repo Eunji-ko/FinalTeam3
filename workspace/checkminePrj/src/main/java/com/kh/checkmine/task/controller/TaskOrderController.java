@@ -241,4 +241,18 @@ public class TaskOrderController {
 		
 		return "task/order-search";
 	}
+	
+	//멤버 목록(ajax) 요청 핸들러?
+	@GetMapping(value = "write/attList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String attList() {
+		List<MemberVo> attList = orderService.selectMemberList();
+		
+		Gson gson = new Gson();
+		
+		
+		String jsonStr = gson.toJson(attList);
+		System.out.println(jsonStr);
+		return jsonStr;
+	}
 }

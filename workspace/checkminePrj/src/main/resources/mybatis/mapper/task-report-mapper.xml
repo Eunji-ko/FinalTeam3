@@ -108,6 +108,7 @@
 	<!-- 보고서 상세 조회 -->
 	<select id="selectOneByNo" resultType="TaskReportVo">
  		SELECT 
+ 			T.TITLE,
     		R.NO,
 		    E.NAME AS SENDER,
 		    D.NAME AS DEPT_NO,
@@ -122,6 +123,8 @@
 		ON D.NO = E.DEPT_NO
 		JOIN POSITION P
 		ON P.NO = E.POS_NO
+		JOIN TASK T
+		ON T.NO = R.TASK_NO
 		WHERE R.NO = #{no}
 		AND R.DEL = 'N'
 	</select>

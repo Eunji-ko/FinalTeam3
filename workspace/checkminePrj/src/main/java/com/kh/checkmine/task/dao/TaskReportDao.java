@@ -47,6 +47,9 @@ public interface TaskReportDao {
 
 	List<TaskReportVo> selectReportKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
+	//수신참조용 멤버 목록
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
+
 
 
 }

@@ -95,4 +95,10 @@ public class TaskReportDaoImpl implements TaskReportDao {
 		return sst.selectList("taskReportMapper.selectReportKeyword", map, rb);
 	}
 
+	//수신참조 등록용 멤버 목록 
+	@Override
+	public List<MemberVo> selectMemberList(SqlSessionTemplate sst) {
+		return sst.selectList("adminMemberMapper.selectMemberList");
+	}
+
 }

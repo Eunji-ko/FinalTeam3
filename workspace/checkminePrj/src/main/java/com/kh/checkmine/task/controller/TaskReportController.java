@@ -123,7 +123,7 @@ public class TaskReportController {
 		List<Map> listAttNoR = gson.fromJson(attNoR, ArrayList.class);
 		List<TaskReportAttVo> attVoList = new ArrayList<TaskReportAttVo>();
 		
-		//att 추가 테스트 (안되면 삭제)
+		//att 추가
 		if(listAttNoA != null) { //attA not null 일 때
 			for(Map m : listAttNoA) {
 				TaskReportAttVo attVo = new TaskReportAttVo();
@@ -183,6 +183,20 @@ public class TaskReportController {
 		
 	}
 	
+	//멤버 목록(ajax) 요청 핸들러?
+	@GetMapping(value = "write/attList", produces = "application/json; charset=UTF-8")
+	public String attList() {
+		List<MemberVo> attList = reportService.selectMemberList();
+		
+		Gson gson = new Gson();
+		
+		
+		String jsonStr = gson.toJson(attList);
+		System.out.println(jsonStr);
+		return jsonStr;
+	}
+	
+	
 	//보고서 상세보기
 	@GetMapping("detail/{no}")
 	public String reportDetail(@PathVariable(required = false) String no, Model model, HttpSession session) {
@@ -223,14 +237,33 @@ public class TaskReportController {
 	
 	//보고서 수정 (화면)
 	@GetMapping("edit/{no}")
-	public String reportEdit() {
+	public String reportEdit(@PathVariable String no, Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		System.out.println("작성 화면" + loginMember);
+		String empNo = loginMember.getNo();
+		
+		List<TaskOrderVo> taskList = orderService.selectListForAtt(empNo);
+		
+		TaskReportVo vo = reportService.selectOneByNo(no);
+		TaskReportAttVo aVo = reportService.selectAttOne(no);
+		TaskReportAttVo rVo = reportService.selectAttROne(no);
+		
+		List<TaskReportFileVo> fileVo = reportService.selectFileForReportNo(no);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("aVo", aVo);
+		model.addAttribute("rVo", rVo);
+		model.addAttribute("fileVo", fileVo);
+		model.addAttribute("taskList", taskList);
+		
 		return "task/report-edit";
 	}
 	
 	//보고서 삭제
 	@GetMapping("delete")
 	public String reportDelete() {
-		return "redirect:/task/order/list";
+		return "redirect:/task/order/list/1";
 	}
 
 	//게시물 검색

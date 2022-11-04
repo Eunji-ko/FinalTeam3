@@ -54,5 +54,8 @@ public interface TaskOrderDao {
 	//게시글 검색
 	List<TaskOrderVo> selectTaskKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
+	//수신참조용 멤버목록
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
+
 
 }

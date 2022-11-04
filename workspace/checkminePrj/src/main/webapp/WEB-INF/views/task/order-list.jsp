@@ -3,15 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% //테스트용 멤버
-	com.kh.checkmine.member.vo.MemberVo vo = new com.kh.checkmine.member.vo.MemberVo();
-	vo.setNo("10");
-	vo.setName("박정규");
-	vo.setPosNo("6");
-	vo.setDeptNo("5");
-	session.setAttribute("loginMember", vo);
-%>
-
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>

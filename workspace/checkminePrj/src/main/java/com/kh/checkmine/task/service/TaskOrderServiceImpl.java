@@ -122,5 +122,11 @@ public class TaskOrderServiceImpl implements TaskOrderService {
 		return orderDao.selectTaskKeyword(sst, pv, map);
 	}
 
+	//수신참조용 회원 목록
+	@Override
+	public List<MemberVo> selectMemberList() {
+		return orderDao.selectMemberList(sst);
+	}
+
 
 }

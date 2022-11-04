@@ -116,4 +116,10 @@ public class TaskReportServiceImpl implements TaskReportService {
 		return reportDao.selectReportKeyword(sst, pv, map);
 	}
 
+	//수신참고용 멤버 목록
+	@Override
+	public List<MemberVo> selectMemberList() {
+		return reportDao.selectMemberList(sst);
+	}
+
 }
