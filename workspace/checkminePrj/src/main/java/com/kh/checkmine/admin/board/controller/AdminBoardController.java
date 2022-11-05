@@ -80,7 +80,7 @@ public class AdminBoardController {
 	
 	//게시물 검색
 	@GetMapping("search")
-	public String search(@RequestParam(name = "p") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
+	public String search(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
 		Map<String, String> map = new HashMap<>(2);
 		map.put("option", option);
 		map.put("keyword", keyword);
