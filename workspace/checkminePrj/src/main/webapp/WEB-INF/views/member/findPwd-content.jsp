@@ -8,7 +8,9 @@
 </head>
 <body>
     <div class="id-pwd-page">
-        <h3>본인인증 어찌?ㅠㅠ</h3>
+        <button type="button" class="checkmine-btn" data-bs-toggle="modal" data-bs-target="#findPwdModal">비밀번호 찾기</button>
     </div>
+
+    <%@ include file="/WEB-INF/views/member/findPwd-modal.jsp" %>
 </body>
 </html>

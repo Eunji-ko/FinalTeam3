@@ -33,7 +33,7 @@
         <br>
         <button type="button" class="btn checkmine-btn acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
         <button type="button" class="btn checkmine-btn acc-btn" id="acc-del-btn" disabled="disabled" onclick="delAcc();">삭제하기</button>
-        <form class="align-right search-form" onsubmit="changeAccSearch()" id="accForm">
+        <form action="${rootPath}/personnel/main" method="get" class="align-right search-form" onsubmit="changeAccSearch()" id="accForm">
             <input type="hidden" name="ep" id="accSearchEp" value="">
             <input type="hidden" name="ap" value="1">
             <select name="accSearchType" class="search-type-select align-right">
