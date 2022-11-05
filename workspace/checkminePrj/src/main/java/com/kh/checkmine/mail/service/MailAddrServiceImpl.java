@@ -74,6 +74,14 @@ public class MailAddrServiceImpl implements MailAddrService{
 		return dao.insertAddr(sst, mailAddrVo);
 	}
 
+	/**
+	 * 주소록 삭제
+	 */
+	@Override
+	public int deleteAddr(String targetNo) {
+		return dao.deleteAddr(sst, targetNo);
+	}
+
 	
 
 	

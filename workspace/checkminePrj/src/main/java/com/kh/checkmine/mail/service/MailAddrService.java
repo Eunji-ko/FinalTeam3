@@ -51,5 +51,12 @@ public interface MailAddrService {
 	 * @return
 	 */
 	int insertAddr(MailAddrVo mailAddrVo);
+	
+	/**
+	 * 주소록 삭제
+	 * @param targetNo
+	 * @return
+	 */
+	int deleteAddr(String targetNo);
 
 }

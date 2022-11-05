@@ -59,6 +59,13 @@ public interface MailAddrDao {
 	 * @return
 	 */
 	int insertAddr(SqlSessionTemplate sst, MailAddrVo mailAddrVo);
+	/**
+	 * 주소록 삭제
+	 * @param sst
+	 * @param targetNo
+	 * @return
+	 */
+	int deleteAddr(SqlSessionTemplate sst, String targetNo);
 	
 	
 	

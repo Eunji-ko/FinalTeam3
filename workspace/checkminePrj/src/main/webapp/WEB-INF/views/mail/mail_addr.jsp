@@ -67,7 +67,7 @@
 		                                <input type="checkbox" value="${addrVo.no}">
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
-		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
 		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
@@ -92,7 +92,7 @@
 		                                <input type="checkbox" id="${addrVo.no}">
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
-		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
 		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
@@ -117,7 +117,7 @@
 		                                <input type="checkbox" id="${addrVo.no}">
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
-		                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
+		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
 		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
@@ -167,6 +167,22 @@
 	        })
 		}
 		
+        //하나 삭제
+        function addrDelete(target){
+            targetNo = target.id;
+            if(confirm('삭제하시겠습니까?')){
+                $.ajax({
+                    url : "/checkmine/mail/addr/delete"
+                    , type : "post"
+                    , data :{targetNo:targetNo}
+                    , success: function(data){
+                        if(data == '1'){
+                            target.parentNode.remove();
+                        }
+                    }
+                });
+            }
+        }
 		
     </script>
 </body>
