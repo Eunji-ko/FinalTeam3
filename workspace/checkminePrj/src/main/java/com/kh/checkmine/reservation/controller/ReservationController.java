@@ -74,32 +74,32 @@ public class ReservationController {
 		
 	}
 	
-	//공유물 예약 취소
-		@PostMapping("placeDelbtn")
-		@ResponseBody
-		public String placeDelbtn(@RequestBody PlaceBookVo vo, HttpSession session) {
-			
-			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-			String empNo = loginMember.getNo();
-			
-			vo.setEmpNo(empNo);
-			
-			System.out.println(empNo);
-			System.out.println(vo);
-			
-			int result = rs.placeDelbtn(vo);
-			
-			System.out.println(result);
-			
-			if(result == 1) {
-				session.setAttribute("alertMsg", "삭제성공");
-				return "redirect:/reservation/myreservation";
-			}else {
-				session.setAttribute("alertMsg", "삭제실패");
-				return "redirect:/reservation/myreservation";
-			}
-			
+	//장소 예약 취소
+	@PostMapping("placeDelbtn")
+	@ResponseBody
+	public String placeDelbtn(@RequestBody PlaceBookVo vo, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getNo();
+		
+		vo.setEmpNo(empNo);
+		
+		System.out.println(empNo);
+		System.out.println(vo);
+		
+		int result = rs.placeDelbtn(vo);
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "삭제성공");
+			return "redirect:/reservation/myreservation";
+		}else {
+			session.setAttribute("alertMsg", "삭제실패");
+			return "redirect:/reservation/myreservation";
 		}
+		
+	}
 	
 	//빔프로젝트
 	@GetMapping("goodsone")

@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>예약</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 
     .shadow{
@@ -163,7 +164,7 @@
                     <div id="time">${vo.borrow} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalGoods">예약 취소</button>
+                        <button id="goods-reservation" class="btn btn-light btn-sm">예약 취소</a>
                     </div>
                     </c:forEach>
                 </div>
@@ -176,96 +177,87 @@
                     <div id="time">${vo.rsvBegin} ~ ${vo.rsvEnd}</div>
 
                     <div id="rd-btn">
-                        <button id="reservation" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalPlace">예약 취소</button>
+                        <button id="place-reservation" class="btn btn-light btn-sm">예약 취소</button>
                     </div>
 					</c:forEach>                    
                 </div>
 
             </div>
 
-            <!-- Modal 스타일 -->
-            <style>
-                #exampleModal #reservation{
-                    background: #5D736F;
-                    border-radius: 10px;
-                    color: white;
-                }
-
-                #exampleModal #close{
-                    background: white;
-                    border-radius: 10px;
-                    color: #5D736F;
-                }
-            </style>
-
-             <!-- 공유물 취소 -->
-             <div class="modal fade" id="exampleModalGoods" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">예약취소</h1>
-                        </div>
-
-                        <div class="modal-body">
-                            예약을 정말 취소하시겠습니까?
-                        </div>
-
-                        <div class="modal-footer">
-                            <a href="${rootPath}/reservation/goodsDelbtn/${no}" id="goods-reservation" class="btn btn-light btn-sm">예</a>
-                            <button id="close" class="btn btn-light btn-sm" data-bs-dismiss="modal">아니오</button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-
-             <!-- 장소 취소 -->
-             <div class="modal fade" id="exampleModalPlace" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">예약취소</h1>
-                        </div>
-
-                        <div class="modal-body">
-                            예약을 정말 취소하시겠습니까?
-                        </div>
-
-                        <div class="modal-footer">
-                            <a href="${rootPath}/reservation/placeDelbtn/${no}" id="place-reservation" class="btn btn-light btn-sm">예</a>
-                            <button id="close" class="btn btn-light btn-sm" data-bs-dismiss="modal">아니오</button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-
         </main>
     </div>
 
     <script>
-        $('#goods-reservation').on('click', function(){
-            $.ajax({
-                url  :  '${rootPath}/reservation/goodsDelbtn',
-                method : 'get',
-                data : JSON.stringify({no : $('#name').attr('value')}),
-                dataType : 'text',
-                contentType : 'application/json',
-                success : function(){
-                    console.log('성공');
+        $('#goods-reservation').on('click', function deleteBoard(seq){
+            
+            swal({
+                title : '취소',
+                text : '예약을 취소하시겠습니까?',
+                icon : 'info',
+                closeOnClickOutside : false,
+                button : {
+                    cancle : {
+                        text : '아니오',
+                        value : false,
+                    },
+                    confirm : {
+                        text : '예',
+                        value : true
+                    }
                 }
+            }).then((result) => {
+                if(result){
+                    swal('예약이 취소 되었습니다!', '', 'success', {
+                    closeOnClickOutside : false,
+                    closeOnEsc : false,
+                    button : {
+                        confirm : {
+                            text : '확인',
+                            value : true,
+                        }
+                    }
+                }).then((result) => {
+                    if(result){
+                        $.ajax({
+                            url  :  '${rootPath}/reservation/goodsDelbtn',
+                            method : 'post',
+                            data : JSON.stringify({no : $('#name').attr('value')}),
+                            dataType : 'text',
+                            contentType : 'application/json',
+                            success : function(){
+                                console.log('성공');
+                            }
+                        })
+                    }
                 })
+                }else{
+                    swal('다시 선택해 주세요!', '', 'warning', {
+                        closeOnClickOutside : false,
+                        closeOnEsc : false,
+                        button : {
+                            confirm : {
+                                text : '확인',
+                                value : true
+                            }
+                        }
+                    })
+                }
+            })
+            
+            
         })
 
         $('#place-reservation').on('click', function(){
             $.ajax({
                 url  :  '${rootPath}/reservation/placeDelbtn',
-                method : 'get',
+                method : 'post',
                 data : JSON.stringify({no : $('#name').attr('value')}),
                 dataType : 'text',
                 contentType : 'application/json',
                 success : function(){
                     console.log('성공');
                 }
-                })
+            })
         })
     </script>
 
