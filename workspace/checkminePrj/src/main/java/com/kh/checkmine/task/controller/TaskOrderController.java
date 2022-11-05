@@ -250,7 +250,6 @@ public class TaskOrderController {
 		
 		Gson gson = new Gson();
 		
-		
 		String jsonStr = gson.toJson(attList);
 		System.out.println(jsonStr);
 		return jsonStr;
