@@ -65,6 +65,14 @@ public class MailAddrDaoImpl implements MailAddrDao{
 		return sst.insert("mailAddrMapper.insertAddr", mailAddrVo);
 	}
 	
+	/**
+	 * 주소록 삭제
+	 */
+	@Override
+	public int deleteAddr(SqlSessionTemplate sst, String targetNo) {
+		return sst.delete("mailAddrMapper.deleteAddr",targetNo);
+	}
+	
 
 	
 	

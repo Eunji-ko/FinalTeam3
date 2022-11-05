@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +62,12 @@ public class MailAddrController {
 		return "mail/mail_addr";
 	}
 	
+	/**
+	 * 주소록에 추가
+	 * @param mailAddrVo
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("mail/addr/insert")
 	@ResponseBody
 	public String addrInsert(MailAddrVo mailAddrVo, HttpSession session) {
@@ -76,5 +83,18 @@ public class MailAddrController {
 			return "실패";
 		}
 		
+	}
+	
+	/**
+	 * 주소록 삭제
+	 * @param targetNo
+	 * @return
+	 */
+	@PostMapping("mail/addr/delete")
+	@ResponseBody
+	public String addrDelete(String targetNo) {
+		int result = service.deleteAddr(targetNo);
+		
+		return Integer.toString(result);
 	}
 }

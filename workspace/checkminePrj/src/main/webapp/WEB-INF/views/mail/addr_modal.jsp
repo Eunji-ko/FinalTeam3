@@ -40,13 +40,14 @@
     </div>
     
     <script>
+        const myModal = new bootstrap.Modal('#add-addr-modal');
     	function addAddr(){
     		const name = document.querySelector('input[name="name"]').value;
     		const addr = document.querySelector('input[name="addr"]').value;
-    		const type = document.querySelector('input[name="type"]').value;
+    		const type = document.querySelector('input[name="type"]:checked').value;
 
             $.ajax({
-                url : '/chcekmine/mail/addr/insert'
+                url : '/checkmine/mail/addr/insert'
                 , type : 'post'
                 , data :{
                     name: name
@@ -54,8 +55,16 @@
                     , type: type
                 }
                 , success : function(data){
+                    if(window.location.href.includes("write")){
+                        alert("저장되었습니다!!!");
+                        myModal.hide();
+                    }else if(window.location.href.includes("addr")){
+                        alert("저장되었습니다!!!");
+                        window.location.reload();
+                    }
                 	console.log(data);
                 }
+                
             });
             
     	}
