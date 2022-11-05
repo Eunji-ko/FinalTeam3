@@ -22,15 +22,15 @@
 </head>
 <body>
 	<div class="id-pwd-page">
-        <button type="button" class="checkmine-btn" data-bs-toggle="modal" data-bs-target="#checkEmpModal">사원정보 인증</button>
-        <br>
-        <a id="kakao-login-btn" href="javascript:loginWithKakao()">
-            <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="240"
-                alt="카카오 로그인 버튼" />
-        </a>
-        <p id="token-result"></p>
-        <button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
-    </div>
+    <button type="button" class="checkmine-btn" data-bs-toggle="modal" data-bs-target="#checkEmpModal">사원정보 인증</button>
+    <br>
+    <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+        <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="240"
+            alt="카카오 로그인 버튼" />
+    </a>
+    <p id="token-result"></p>
+  </div>
+  <button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
 
 
 
@@ -48,7 +48,8 @@
   function loginWithKakao() {
     Kakao.Auth.authorize({
       redirectUri: 'https://localhost:8888/checkmine/member/kakaoLogin',
-      state: 'userme'
+      state: 'userme',
+      scope: 'account_email'
     });
   }
 

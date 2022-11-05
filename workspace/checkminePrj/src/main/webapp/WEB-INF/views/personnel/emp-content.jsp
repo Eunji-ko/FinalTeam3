@@ -101,7 +101,7 @@
             <option value="N">재직</option>
             <option value="Y">퇴직</option>
         </select>
-        <form class="align-right search-form" onsubmit="changeEmpSearch()" id="empForm">
+        <form action="${rootPath}/personnel/main" method="get" class="align-right search-form" onsubmit="changeEmpSearch()" id="empForm">
             <input type="hidden" name="ep" value="1">
             <input type="hidden" name="ap" id="empSearchAp" value="">
             <select name="empSearchType" class="search-type-select align-right">
