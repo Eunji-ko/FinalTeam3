@@ -6,15 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>CHECKMINE 관리자 페이지</title>
-<link href='${root}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
+    <!-- 풀캘린더 적용 -->
+    <link href='${root}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 	<script src='${root}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 </head>
 <style>
-
     a{
         text-decoration: none;
         color: black;
     }
+
     .shadow{
         display: grid;
         grid-template-rows: 1fr 4fr;
@@ -32,20 +33,21 @@
         margin: 60px auto;
         grid-column: span 3;
     }
+
     #summaryHeader{
         font-size: 20px;
         font-weight: bolder;
         grid-column: span 6;
         margin : 10px 60px;
     }
+
     .summaryItem{
         margin: auto;
         font-size: 15px;
         text-align: center;
         line-height: 30px;
-        
-        
     }
+
     .summaryItem > img{
         width: 40px;
         height: 40px;
@@ -73,6 +75,7 @@
         display: inline-block;
         margin-bottom : 40px;
     }
+
     .list{
         font-size: 13px;
         margin: 0px 20px;
@@ -80,8 +83,8 @@
         border-bottom: 1px solid lightgray;
         width: 428px;
         height: 26px
-       
     }
+
     .list > span, .list a{
         display: inline-block;
         width: 250px;
@@ -113,6 +116,7 @@
         height: 150px;
         border: none;
     }
+
     #calendar-area{
         border: none;
     }
@@ -128,9 +132,11 @@
         height: 500px;
         padding: 20px;
     }
+
     .modal-body{
         overflow: auto;
     }
+
     .list-header{
         text-align: left;
     }
@@ -145,7 +151,6 @@
         text-align: center;
         padding: 5px;
     }
-
 </style>
 <body>
 	<div class="d-flex">
@@ -153,6 +158,7 @@
         
         <main class="shadow">
 			<div id="summary">
+                <!-- 총 사원 수를 제외한 항목들 오늘을 기준으로 조회함 -->
                 <div id="summaryHeader">요약</div>
                 <div class="summaryItem" style="grid-column: 2;">
                     <img src="${root}/resources/img/admin/user-icon.png">
@@ -175,63 +181,65 @@
                     <div id="bookTotal">${summary.BOOK}건</div>
                 </div>
             </div>
+
             <div class="area">
                 <div id="memberChangeArea">
                     <div class="header">사원정보 변동</div>
                     <c:forEach items="${memberList}" var="m" end="2">
-                    <div class="list">
-                        <span>${m.name}님이 
-                        <c:choose>
-                            <c:when test="${m.modifyDate ne null}">
-                                수정되었습니다.
-                            </c:when>
-                            <c:otherwise>
-                                등록되었습니다.
-                            </c:otherwise>
-                        </c:choose>
-                        </span>  
-                        <span id="date">
-                            <c:choose>
-                            <c:when test="${m.modifyDate ne null}">
-                                ${m.modifyDate}
-                            </c:when>
-                            <c:otherwise>
-                                ${m.enrollDate}
-                            </c:otherwise>
-                        </c:choose>
-
-                        </span></div>
+                        <div class="list">
+                            <span>${m.name}님이 
+                                <c:choose>
+                                    <c:when test="${m.modifyDate ne null}">
+                                        수정되었습니다.
+                                    </c:when>
+                                    <c:otherwise>
+                                        등록되었습니다.
+                                    </c:otherwise>
+                                </c:choose>
+                            </span>  
+                            <span id="date">
+                                <c:choose>
+                                    <c:when test="${m.modifyDate ne null}">
+                                        ${m.modifyDate}
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${m.enrollDate}
+                                    </c:otherwise>
+                                </c:choose>
+                            </span>
+                        </div>
                     </c:forEach>
                 </div>
     
                 <div id="bookArea">
-                    <div class="header">예약 현황</div><button id="more" data-bs-toggle="modal" data-bs-target="#myModal">더보기</button>
+                    <div class="header">예약 현황</div>
+                    <button id="more" data-bs-toggle="modal" data-bs-target="#myModal">더보기</button>
                     <c:forEach items="${bookList}" var="r" end="2">
-                    <div class="list">
-                        <span>[${r.plNo}] ${r.empNo}님이 예약하였습니다.</span>  
-                        <span id="date">${r.rsvDate}</span></div>
+                        <div class="list">
+                            <span>[${r.plNo}] ${r.empNo}님이 예약하였습니다.</span>  
+                            <span id="date">${r.rsvDate}</span>
+                        </div>
                     </c:forEach>
 
                     <c:if test="${fn:length(bookList) == 0}">
-                        <div class="list">
-                            금일 예약된 장소가 없습니다.</div>
+                        <div class="list">금일 예약된 장소가 없습니다.</div>
                     </c:if>
                 </div>
-
-
             </div>
+
             <div class="area">
                 <div id="boardArea">
-                    <div class="header">게시판 현황</div><a href="${root}/admin/board/list" id="more">더보기</a>
+                    <div class="header">게시판 현황</div>
+                    <a href="${root}/admin/board/list" id="more">더보기</a>
                     <div>
-                    <c:forEach items="${boardList}" var="b" end="8">
-                    	<div class="list"><a href="${root}/admin/board/detail/${b.no}">${b.title}</a><span id="date">${b.enrollDate}</span></div>
-                    </c:forEach>
+                        <c:forEach items="${boardList}" var="b" end="8">
+                            <div class="list">
+                                <a href="${root}/admin/board/detail/${b.no}">${b.title}</a>
+                                <span id="date">${b.enrollDate}</span>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
-
-                </div>
-
-
             </div>
             
             <div class="area">
@@ -240,65 +248,58 @@
                 </div>
                 <div id="calendar-area">
                     <div id="calendar"></div>
-                    
                 </div>
             </div>
 
-            <!-- The Modal -->
+            <!-- 예약 관련 The Modal -->
             <div class="modal" id="myModal">
                 <div class="modal-dialog">
-                <div class="modal-content">
+                    <div class="modal-content">
             
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                    <h4 class="modal-title">예약 현황</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">예약 현황</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                    
+                        <!-- Modal body -->
+                        <div class="modal-body" align="center">
+                            <div style="color: gray; font-size: smaller;">* 장소 예약만 조회됩니다. 자세한 사항은 공유물 관리 메뉴를 이용해주세요.</div><br>
+                            <c:forEach items="${bookList}" var="r">
+                                <div class="list-header">[${r.plNo}] ${r.empNo}님의 예약 내역입니다.</div>
+                                <hr>
+                                <table class="book-list">
+                                    <tr>
+                                        <th>예약자</th>
+                                        <td>${r.empNo}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>등록일자</th>
+                                        <td>${r.rsvDate}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>예약일자</th>
+                                        <td>${r.rsvBegin}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>종료일자</th>
+                                        <td>${r.rsvEnd}</td>
+                                    </tr>
+                                </table>
+                                <br><br>
+                            </c:forEach>
+                            <c:if test="${fn:length(bookList) == 0}">
+                                <div style="margin-top: 100px;">금일 예약된 장소가 없습니다.</div>
+                            </c:if>
+                        </div>
+                    
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: #5D736F; color: white;" data-bs-dismiss="modal">닫기</button>
+                        </div>
                     </div>
-            
-                    <!-- Modal body -->
-                    <div class="modal-body" align="center">
-                    <div style="color: gray; font-size: smaller;">* 장소 예약만 조회됩니다. 자세한 사항은 공유물 관리 메뉴를 이용해주세요.</div><br>
-                    <c:forEach items="${bookList}" var="r">
-                    <div class="list-header">[${r.plNo}] ${r.empNo}님의 예약 내역입니다.</div><hr>
-                    <table class="book-list">
-                        <tr>
-                            <th>예약자</th>
-                            <td>${r.empNo}</td>
-                        </tr>
-                        <tr>
-                            <th>등록일자</th>
-                            <td>${r.rsvDate}</td>
-                        </tr>
-                        <tr>
-                            <th>예약일자</th>
-                            <td>${r.rsvBegin}</td>
-                        </tr>
-                        <tr>
-                            <th>종료일자</th>
-                            <td>${r.rsvEnd}</td>
-                        </tr>
-
-                    </table>
-                    <br><br>
-                    </c:forEach>
-                    <c:if test="${fn:length(bookList) == 0}">
-                        <div style="margin-top: 100px;">
-                            금일 예약된 장소가 없습니다.</div>
-                    </c:if>
-                    </div>
-            
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                    <button type="button" class="btn" style="background-color: #5D736F; color: white;" data-bs-dismiss="modal">닫기</button>
+                </div>
             </div>
-            
-      </div>
-    </div>
-  </div>
-                
-            
-            
-            
         </main>
     </div>
 
@@ -316,13 +317,12 @@
        
         //풀캘린더 라이브러리 적용
         document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+            });
+            calendar.render();
         });
-        calendar.render();
-        });
-
     </script>
 </body>
 </html>

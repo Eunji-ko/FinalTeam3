@@ -194,7 +194,7 @@
 
                     </div>
                     <div id="replyArea">
-                        <div id="replyTitle">댓글(${board})</div>
+                        <div id="replyTitle">댓글</div>
                         <div id="replyList">
 
                         </div>

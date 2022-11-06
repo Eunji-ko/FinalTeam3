@@ -5,10 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 사원관리</title>
+<title>CHECKMINE 조직도</title>
 <style>
-
-
     main > div {
         width: 1389px;
         margin: 10px auto;
@@ -25,28 +23,35 @@
         font-size: 20px;
         font-weight: bolder;
     }
+
     #area2{
         margin: 100px auto;
     }
+
     #chart_div{
         height: 400px;
         margin: 200px auto;
     }
+
     #chart_div *{
         line-height: 50px;
     }
+
     .google-visualization-orgchart-node{
         width: 120px;
         background: #C4F2EA;
         border-radius: 20px;
         border: none;
     }
+
     .google-visualization-orgchart-node:hover{
         background-color: rgb(236, 236, 110);
     }
+
     .google-visualization-orgchart-linebottom{
         border-bottom: 1px solid gray;
     }
+
     .google-visualization-orgchart-lineleft{
         border-left: 1px solid gray;
     }
@@ -54,7 +59,6 @@
     .google-visualization-orgchart-lineright{
         border-right: 1px solid gray;
     }
-
 </style>
 </head>
 <body>
@@ -68,7 +72,6 @@
             <div id="area2">
                 <div id="chart_div"></div>
             </div>
-          
         </main>
     </div>
 

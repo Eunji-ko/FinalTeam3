@@ -48,7 +48,7 @@ public class AdminController {
 			session.setAttribute("loginAdmin", loginAdmin);
 			return "redirect:/admin/main";
 		}else {
-			session.setAttribute("msg", "로그인에 실패하였습니다.");
+			session.setAttribute("msg", "아이디 또는 비밀번호를 잘못 입력했습니다.");
 			return "redirect:/admin/login";
 		}
 

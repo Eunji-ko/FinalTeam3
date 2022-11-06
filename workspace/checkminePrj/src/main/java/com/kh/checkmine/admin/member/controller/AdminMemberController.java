@@ -100,9 +100,9 @@ public class AdminMemberController {
 			vo.setPhotoPath(savePath);
 		}
 		
-		//권한 ',' 제거, 대문자로 변환
+		//권한 ',' 제거
 		if(vo.getPermission() != null) {
-			String permission = vo.getPermission().replace(",", "").toUpperCase();			
+			String permission = vo.getPermission().replace(",", "");			
 			vo.setPermission(permission);
 		}
 		int result = service.insertMember(vo);
@@ -170,9 +170,9 @@ public class AdminMemberController {
 			vo.setPhotoName(changeName);
 		}
 		
-		//권한 ',' 제거, 대문자로 변환
+		//권한 ',' 제거
 		if(vo.getPermission() != null) {
-			String permission = vo.getPermission().replace(",", "").toUpperCase();
+			String permission = vo.getPermission().replace(",", "");
 			vo.setPermission(permission);			
 		}
 		int result = service.edit(vo);
