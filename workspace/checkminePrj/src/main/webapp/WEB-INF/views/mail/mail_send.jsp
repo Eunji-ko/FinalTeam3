@@ -239,6 +239,12 @@
                 });
             }
         }
+        
+      //메일 검색
+        function mailSearch(input){
+            const keyword = input.value;
+            location.href = '/checkmine/mail/search?k='+keyword;
+        }
     </script>
 </body>
 </html>

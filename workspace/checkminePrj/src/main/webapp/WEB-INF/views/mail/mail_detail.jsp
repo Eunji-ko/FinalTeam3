@@ -26,7 +26,7 @@
                 <span style="font-size: 30px;">메일</span>
                 <div>
                     <img src="${imgPath}/mail_search.png">
-                    <input type="text" placeholder="메일검색">
+                    <input type="text" placeholder="메일검색" onkeyup="if(window.event.keyCode==13){mailSearch(this);}">
                 </div>
             </div>
 
@@ -89,5 +89,13 @@
     
     <!-- 주소록 추가 모달 -->
     <%@ include file="/WEB-INF/views/mail/addr_modal.jsp" %>
+    
+    <script type="text/javascript">
+  	//메일 검색
+    function mailSearch(input){
+        const keyword = input.value;
+        location.href = '/checkmine/mail/search?k='+keyword;
+    }
+  	</script>
 </body>
 </html>

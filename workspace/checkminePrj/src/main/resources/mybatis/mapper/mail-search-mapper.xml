@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="mailBinMapper">
-	<select id="selectMailBinList" resultType="com.kh.checkmine.mail.vo.MailBinVo">
+<mapper namespace="mailSearchMapper">
+	<select id="selectSearchList" resultType="com.kh.checkmine.mail.vo.MailSearchVo">
 		SELECT * FROM
 		((SELECT 
 		    NO
@@ -14,11 +14,13 @@
 		    , 'S' AS READ
 		    , 'S' AS IMPORTANCE
 		FROM MAIL
-		WHERE S_STATUS = 'Y' AND SENDER = #{memberNo})
+		WHERE S_STATUS = 'N' AND SENDER = #{memberNo} AND (TITLE LIKE '%' ||  #{keyword} || '%' OR CONTENT LIKE '%' ||  #{keyword} || '%')
+		)
 		UNION ALL
-		(SELECT
+		(
+		SELECT
 		    MR.NO
-		    , E.EMAIL
+		    , E.EMAIL AS SENDER
 		    , M.TITLE
 		    , M.CONTENT
 		    , M.SEND_DATE AS
@@ -28,12 +30,13 @@
 		FROM MAIL_REF MR
 		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
 		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
-		WHERE MR.STATUS = 'Y' AND MR.RECEIVER = #{memberNo}))
+		WHERE MR.STATUS = 'N' AND MR.RECEIVER = #{memberNo} AND (E.EMAIL LIKE '%' ||  #{keyword} || '%' OR M.TITLE LIKE '%' ||  #{keyword} || '%' OR M.CONTENT LIKE '%' ||  #{keyword} || '%')
+		)) 
 		ORDER BY SEND_DATE DESC
 	</select>
 	
 	<select id="selectListCount" resultType="int">
-		SELECT COUNT(*) FROM
+		SELECT count(*) FROM
 		((SELECT 
 		    NO
 		    , 'ME' AS SENDER
@@ -41,28 +44,27 @@
 		    , CONTENT
 		    , SEND_DATE
 		    , 'S' AS TYPE
+		    , 'S' AS READ
+		    , 'S' AS IMPORTANCE
 		FROM MAIL
-		WHERE S_STATUS = 'Y' AND SENDER = #{memberNo})
+		WHERE S_STATUS = 'N' AND SENDER = #{memberNo} AND (TITLE LIKE '%' ||  #{keyword} || '%' OR CONTENT LIKE '%' ||  #{keyword} || '%')
+		)
 		UNION ALL
-		(SELECT
+		(
+		SELECT
 		    MR.NO
-		    , E.EMAIL
+		    , E.EMAIL AS SENDER
 		    , M.TITLE
 		    , M.CONTENT
 		    , M.SEND_DATE AS
 		    , MR.TYPE
+		    , MR.READ
+		    , MR.IMPORTANCE
 		FROM MAIL_REF MR
 		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
 		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
-		WHERE MR.STATUS = 'Y' AND MR.RECEIVER = #{memberNo}))
+		WHERE MR.STATUS = 'N' AND MR.RECEIVER = #{memberNo} AND (E.EMAIL LIKE '%' ||  #{keyword} || '%' OR M.TITLE LIKE '%' ||  #{keyword} || '%' OR M.CONTENT LIKE '%' ||  #{keyword} || '%')
+		)) 
 		ORDER BY SEND_DATE DESC
 	</select>
-	
-	<update id="updateMailRefStatus">
-		UPDATE MAIL_REF SET STATUS = 'D' WHERE NO = #{recNo}
-	</update>
-	
-	<update id="updateMailSendStatus">
-		UPDATE MAIL SET S_STATUS = 'D' WHERE NO = #{sendNo}
-	</update>
 </mapper>

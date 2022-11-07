@@ -30,5 +30,21 @@ public class MailBinDaoImpl implements MailBinDao{
 	public int getListCount(SqlSessionTemplate sst, String memberNo) {
 		return sst.selectOne("mailBinMapper.selectListCount", memberNo);
 	}
+
+	/**
+	 * 받은메일 휴지통에서 삭제
+	 */
+	@Override
+	public int deleteReceiveMailBin(SqlSessionTemplate sst, String recNo) {
+		return sst.update("mailBinMapper.updateMailRefStatus",recNo);
+	}
+
+	/**
+	 * 보낸메일 휴지통에서 삭제
+	 */
+	@Override
+	public int deleteSendMailBin(SqlSessionTemplate sst, String sendNo) {
+		return sst.update("mailBinMapper.updateMailSendStatus",sendNo);
+	}
 	
 }

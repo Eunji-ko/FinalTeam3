@@ -223,7 +223,7 @@
 								<c:choose>
 									<c:when test="${item.type eq 'S'}">
 										<a href="/checkmine/mail/send/detail?n=${item.no}" class="mail-list-item">
-											<input type="checkbox" value="${item.no}">
+											<input type="checkbox" value="${item.no}" class="cb-send">
 			                                <span style="width: 257px;">나</span>
 			                                <span style="width: 650px;">[보낸편지]${item.title}</span>
 			                                <span style="width: 235px;">${item.sendDate}</span>
@@ -231,7 +231,7 @@
 									</c:when>
 									<c:when test="${item.type eq 'A'}">
 										<a href="/checkmine/mail/receive/detail?n=${item.no}" class="mail-list-item">
-											<input type="checkbox" value="${item.no}">
+											<input type="checkbox" value="${item.no}" class="cb-receive">
 			                                <span style="width: 257px;">${item.sender}</span>
 			                                <span style="width: 650px;">[받은편지]${item.title}</span>
 			                                <span style="width: 235px;">${item.sendDate}</span>
@@ -240,7 +240,7 @@
 									</c:when>
 									<c:when test="${item.type eq 'R'}">
 										<a href="/checkmine/mail/ref/detail?n=${item.no}" class="mail-list-item">
-											<input type="checkbox" value="${item.no}">
+											<input type="checkbox" value="${item.no}" class="cb-ref">
 			                                <span style="width: 257px;">${item.sender}</span>
 			                                <span style="width: 650px;">[참조편지]${item.title}</span>
 			                                <span style="width: 235px;">${item.sendDate}</span>
@@ -328,10 +328,42 @@
             }
         }
         
-        //휴지통으로 보내기
+        //완전히 삭제
         function gotoRecycleBin(){
-           
+            const cbReceive = document.querySelectorAll('input[class="cb-receive"]:checked');
+            const cbRef = document.querySelectorAll('input[class="cb-ref"]:checked');
+            const cbSend = document.querySelectorAll('input[class="cb-send"]:checked');
+
+            let receiveArr = [];
+            let refArr = [];
+            let sendArr = [];
+
+            for(var i = 0;i<cbReceive.length;i++){
+                receiveArr.push(cbReceive[i].value);
+            }
+            for(var i = 0;i<cbRef.length;i++){
+                refArr.push(cbRef[i].value);
+            }
+            for(var i = 0;i<cbSend.length;i++){
+                sendArr.push(cbSend[i].value);
+            }
+            if(confirm(receiveArr.length + refArr.length + sendArr.length + "개의 메일을 삭제하시겠습니까?")){
+                $.ajax({
+                    type: "post",
+                    url: "/checkmine/mail/bin/delete",
+                    traditional:true,
+                    data: {
+                        receiveArr:receiveArr,
+                        refArr:refArr,
+                        sendArr:sendArr
+                    },
+                    success: function (response) {
+                        alert(response+'개의 메일이 삭제되었습니다.');
+                        window.location.reload();
+                    }
+                });
+            }
         }
-    </script>
+</script>
 </body>
 </html>

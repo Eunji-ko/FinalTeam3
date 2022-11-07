@@ -21,5 +21,19 @@ public interface MailBinService {
 	 * @return
 	 */
 	int getListCount(String memberNo);
+
+	/**
+	 * 받은메일 휴지통에서 삭제
+	 * @param receiveArr
+	 * @return
+	 */
+	int deleteReceiveMailBin(String[] receiveArr);
+
+	/**
+	 * 보낸메일 휴지통에서 삭제
+	 * @param sendArr
+	 * @return
+	 */
+	int deleteSendMailBin(String[] sendArr);
 	
 }
