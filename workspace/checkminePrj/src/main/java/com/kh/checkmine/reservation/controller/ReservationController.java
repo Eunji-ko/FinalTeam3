@@ -57,18 +57,13 @@ public class ReservationController {
 		
 		vo.setENo(eNo);
 		
-		System.out.println(eNo);
-		System.out.println(vo);
-		
 		int result = rs.goodsDelbtn(vo);
 		
-		System.out.println(result);
-		
 		if(result == 1) {
-			session.setAttribute("alertMsg", "삭제성공");
+			session.setAttribute("alertMsg", "예약이 취소 되었습니다.");
 			return "redirect:/reservation/myreservation";
 		}else {
-			session.setAttribute("alertMsg", "삭제실패");
+			session.setAttribute("alertMsg", "예약 취소를 실패 하였습니다.");
 			return "redirect:/reservation/myreservation";
 		}
 		
@@ -84,18 +79,13 @@ public class ReservationController {
 		
 		vo.setEmpNo(empNo);
 		
-		System.out.println(empNo);
-		System.out.println(vo);
-		
 		int result = rs.placeDelbtn(vo);
 		
-		System.out.println(result);
-		
 		if(result == 1) {
-			session.setAttribute("alertMsg", "삭제성공");
+			session.setAttribute("alertMsg", "예약이 취소 되었습니다.");
 			return "redirect:/reservation/myreservation";
 		}else {
-			session.setAttribute("alertMsg", "삭제실패");
+			session.setAttribute("alertMsg", "예약 취소를 실패 하였습니다.");
 			return "redirect:/reservation/myreservation";
 		}
 		
