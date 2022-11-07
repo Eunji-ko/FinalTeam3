@@ -101,15 +101,79 @@
         width: 100%;
         height: 100%;
     }
-
-    #time-bar{
-        width: 80px;
-        height: 190px;
+    
+    /* 시간 표시바 */
+    #time-bar9{
+        width: 100%;
+        height: 20%;
         background-color: #5D736F;
-        border-radius: 10px;
+        /*position: absolute;*/
+        margin-top: 10%;
+        margin-left: 28%;
+    }
+    #time-bar10{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
         position: absolute;
-        margin-top: 160px;
-        margin-left: 550px;
+        margin-top: 13%;
+        margin-left: 28%;
+    }
+    #time-bar11{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 16%;
+        margin-left: 28%;
+    }
+    #time-bar12{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 20%;
+        margin-left: 28%;
+    }
+    #time-bar13{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 23%;
+        margin-left: 28%;
+    }
+    #time-bar14{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 26%;
+        margin-left: 28%;
+    }
+    #time-bar15{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 29%;
+        margin-left: 28%;
+    }
+    #time-bar16{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 32%;
+        margin-left: 28%;
+    }
+    #time-bar17{
+        width: 80px;
+        height: 60px;
+        background-color: #5D736F;
+        position: absolute;
+        margin-top: 35%;
+        margin-left: 28%;
     }
 
 </style>
@@ -195,7 +259,7 @@
                             <tbody>
                               <tr>
                                 <th scope="row">9시</th>
-                                <td></td>
+                                <td><div id="time-bar9">9시</div></td>
                                 <td></td>
                                 <td></td>
                               </tr>
@@ -253,7 +317,15 @@
 
                 </div>
 
-                <div id="time-bar">뿡빵사원</div>
+                
+                <div id="time-bar10">10시</div>
+                <div id="time-bar11">11시</div>
+                <div id="time-bar12">12시</div>
+                <div id="time-bar13">13시</div>
+                <div id="time-bar14">14시</div>
+                <div id="time-bar15">15시</div>
+                <div id="time-bar16">16시</div>
+                <div id="time-bar17">17시</div>
 
             </div>
 

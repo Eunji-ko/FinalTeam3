@@ -159,7 +159,7 @@
                 <div id="content-goods">
                     <h3>공유물</h3>
 					<c:forEach items="${voListGoods}" var="vo">
-                    <div id="name" value="${vo.no}">${vo.name}</div>
+                    <div id="goods-name" value="${vo.no}">${vo.name}</div>
 
                     <div id="time">${vo.borrow} ~ ${vo.rsvEnd}</div>
 
@@ -172,7 +172,7 @@
                 <div id="content-place">
                     <h3>장소</h3>
 					<c:forEach items="${voListPlace}" var="vo">
-                    <div id="name" value="${vo.no}">${vo.name}</div>
+                    <div id="place-name" value="${vo.no}">${vo.name}</div>
 
                     <div id="time">${vo.rsvBegin} ~ ${vo.rsvEnd}</div>
 
@@ -188,7 +188,7 @@
     </div>
 
     <script>
-        $('#goods-reservation').on('click', function deleteBoard(seq){
+       /* $('#goods-reservation').on('click', function deleteBoard(seq){
             
             swal({
                 title : '취소',
@@ -226,6 +226,7 @@
                             contentType : 'application/json',
                             success : function(){
                                 console.log('성공');
+                                location.reload();
                             }
                         })
                     }
@@ -245,17 +246,32 @@
             })
             
             
+        }) */
+
+        $('#goods-reservation').on('click', function deleteBoard(seq){
+            $.ajax({
+                url  :  '${rootPath}/reservation/goodsDelbtn',
+                method : 'post',
+                data : JSON.stringify({no : $('#goods-name').attr('value')}),
+                dataType : 'text',
+                contentType : 'application/json',
+                success : function(){
+                    console.log('성공');
+                    location.reload();
+                }
+            })
         })
 
         $('#place-reservation').on('click', function(){
             $.ajax({
                 url  :  '${rootPath}/reservation/placeDelbtn',
                 method : 'post',
-                data : JSON.stringify({no : $('#name').attr('value')}),
+                data : JSON.stringify({no : $('#place-name').attr('value')}),
                 dataType : 'text',
                 contentType : 'application/json',
                 success : function(){
                     console.log('성공');
+                    location.reload();
                 }
             })
         })
