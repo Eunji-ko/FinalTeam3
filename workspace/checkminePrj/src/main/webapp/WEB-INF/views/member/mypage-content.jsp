@@ -42,15 +42,18 @@
     .btn-zone {
         width: 500px;
     }
+    td {
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 </style>
 </head>
 <body>
     <br><br>
     <div class="list-group list-group-horizontal left-space btn-zone" id="list-tab" role="tablist">
         <a class="list-group-item active top-radius-btn" id="list-personal-list" data-bs-toggle="list" href="#list-personal" role="tab" aria-controls="list-personal">개인정보</a>
-        <a class="list-group-item top-radius-btn" id="list-alarm-list" data-bs-toggle="list" href="#list-alarm" role="tab" aria-controls="list-alarm">알림</a>
         <a class="list-group-item top-radius-btn" id="list-address-list" data-bs-toggle="list" href="#list-address" role="tab" aria-controls="list-address">주소록</a>
-        <a class="list-group-item top-radius-btn" id="list-certi-list" data-bs-toggle="list" href="#list-certi" role="tab" aria-controls="list-certi">증명서</a>
         <a class="list-group-item top-radius-btn" id="list-board-list" data-bs-toggle="list" href="#list-board" role="tab" aria-controls="list-board">게시물</a>
     </div>
     <div class="hr-border"></div>
@@ -58,14 +61,8 @@
         <div class="tab-pane fade show active" id="list-personal" role="tabpanel" aria-labelledby="list-personal-list">
             <%@ include file="/WEB-INF/views/member/personal-content.jsp" %>
         </div>
-        <div class="tab-pane fade" id="list-alarm" role="tabpanel" aria-labelledby="list-alarm-list">
-            <%@ include file="/WEB-INF/views/member/alarm-content.jsp" %>
-        </div>
         <div class="tab-pane fade" id="list-address" role="tabpanel" aria-labelledby="list-address-list">
             <%@ include file="/WEB-INF/views/member/address-content.jsp" %>
-        </div>
-        <div class="tab-pane fade" id="list-certi" role="tabpanel" aria-labelledby="list-certi-list">
-            <%@ include file="/WEB-INF/views/member/certi-content.jsp" %>
         </div>
         <div class="tab-pane fade" id="list-board" role="tabpanel" aria-labelledby="list-board-list">
             <%@ include file="/WEB-INF/views/member/board-content.jsp" %>
