@@ -20,7 +20,6 @@ public class ReplyServiceImpl implements ReplyService{
 		this.dao = dao;
 		this.sst = sst;
 	}
-
 	
 	//댓글 리스트 가져오기
 	@Override
@@ -28,17 +27,16 @@ public class ReplyServiceImpl implements ReplyService{
 		return dao.selectList(sst, no);
 	}
 
-
 	//댓글 작성
 	@Override
-	public int reply(ReplyVo vo) {
-		return dao.insertOne(sst, vo);
+	public int reply(ReplyVo replyVo) {
+		return dao.insertOne(sst, replyVo);
 	}
 
 	//댓글 삭제
 	@Override
-	public int replyDelete(ReplyVo vo) {
-		return dao.deleteOne(sst, vo);
+	public int replyDelete(ReplyVo replyVo) {
+		return dao.deleteOne(sst, replyVo);
 	}
 
 }

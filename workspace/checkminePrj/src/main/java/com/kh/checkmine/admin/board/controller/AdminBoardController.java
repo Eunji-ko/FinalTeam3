@@ -23,25 +23,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonObject;
 import com.kh.checkmine.admin.board.service.AdminBoardService;
 import com.kh.checkmine.admin.vo.AdminVo;
-import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
-import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 
+/*
+ * 관리자 > 게시판
+ * */
 @Controller
 @RequestMapping("admin/board")
 public class AdminBoardController {
 	
 	private final AdminBoardService service;
-	private final ReplyService rs;
 	
 	@Autowired
-	public AdminBoardController(AdminBoardService service, ReplyService rs) {
+	public AdminBoardController(AdminBoardService service) {
 		this.service = service;
-		this.rs = rs;	
 	}
 	
 	//게시물 조회
@@ -60,11 +59,11 @@ public class AdminBoardController {
 		
 	}
 	
+	
 	//게시물 선택삭제
 	@PostMapping("delete")
 	@ResponseBody
 	public String delete(@RequestParam(value="checkArr[]") ArrayList<String> checkArr, HttpSession session) {
-	
 		 
 		 for(int i = 0; i < checkArr.size(); i++) { 
 			 int result = service.delete(checkArr.get(i));
@@ -75,7 +74,6 @@ public class AdminBoardController {
 		 }
 		 
 		return "ok";
-		
 	}
 	
 	//게시물 검색
@@ -106,14 +104,14 @@ public class AdminBoardController {
 	//공지사항 작성
 	@PostMapping("write")
 	public String write(BoardVo vo, BoardAttVo attVo, HttpServletRequest req, HttpSession session) {
-		String loginAdminNo = ((AdminVo)session.getAttribute("loginAdmin")).getNo();
+		String loginAdminNo = ((AdminVo)session.getAttribute("loginAdmin")).getNo(); 
 		
 		vo.setWriter(loginAdminNo);
-		vo.setType("N"); //공지사항
+		vo.setType("N"); //관리자 화면에서는 공지사항 작성만 
 		
 		int result = 0;
 		
-		//파일 업로드 후 attVo에 담기
+		//첨부파일 업로드 후 attVo에 담기
 		MultipartFile[] fArr =  attVo.getAttach();
 		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
@@ -129,7 +127,7 @@ public class AdminBoardController {
 				att.setFilePath(savePath);
 				attVoList.add(att);
 
-	}
+			}
 
 			result = service.insertBoard(vo, attVoList);
 
@@ -160,6 +158,7 @@ public class AdminBoardController {
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no, Model model) {
 		BoardVo vo = service.selectOne(no);
+		
 		List<BoardAttVo> attList = service.selectAttList(no);
 	
 		model.addAttribute("board", vo);
@@ -187,32 +186,16 @@ public class AdminBoardController {
 	//게시물 수정 화면
 	@GetMapping("edit/{no}")
 	public String edit(@PathVariable String no, Model model) {
-		BoardVo vo = service.selectOne(no);
-		model.addAttribute("board", vo);
+		BoardVo boardVo = service.selectOne(no);
+		model.addAttribute("board", boardVo);
 		
 		return "admin/board/edit";
-		
 	}
 	
 	
 	//게시물 수정
 	@PostMapping("edit/{no}")
-	public String edit(@PathVariable String no, BoardVo vo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
-		//기존 파일 삭제 (저장소 내 파일)
-		List<BoardAttVo> attList = service.selectAttList(no);
-		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
-		
-		if(!attList.isEmpty()) {
-			for(int i = 0; i < attList.size(); i++) {
-				File file = new File(savePath + attList.get(i).getName());
-				if(file.exists()) {
-					file.delete();
-				}
-				
-			}
-					
-		}
-		
+	public String edit(@PathVariable String no, BoardVo boardVo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
 		//새로 첨부된 파일 처리
 		int result = 0;
 		
@@ -220,6 +203,19 @@ public class AdminBoardController {
 		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
+			//기존 파일 삭제 (저장소 내 파일)
+			List<BoardAttVo> attList = service.selectAttList(no);
+			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+			
+			if(!attList.isEmpty()) {
+				for(int i = 0; i < attList.size(); i++) {
+					File file = new File(savePath + attList.get(i).getName());
+					if(file.exists()) {
+						file.delete();
+					}
+				}	
+			}
+			
 			for(int i = 0; i < fArr.length; i++) {
 				BoardAttVo att = new BoardAttVo();
 				MultipartFile f = fArr[i];
@@ -231,11 +227,11 @@ public class AdminBoardController {
 				attVoList.add(att);
 			}
 		
-			result = service.edit(vo, attVoList);
+			result = service.edit(boardVo, attVoList);
 			
 		}else {
 			//제목 또는 내용만 수정 시
-			result = service.edit(vo);
+			result = service.edit(boardVo);
 		}
 
 		if(result > 0) {
@@ -246,10 +242,9 @@ public class AdminBoardController {
 			session.setAttribute("msg", "처리 중 문제가 발생하였습니다.");
 			return "redirect:/admin/board/list";
 		}
-	
 	}
 	
-	//썸머노트 파일 처리
+	//썸머노트 본문 파일 처리
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
@@ -259,8 +254,8 @@ public class AdminBoardController {
 		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
 		String changeName = FileUploader.fileUpload(multipartFile, savePath);
 
-			jsonObject.addProperty("fileName", changeName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
+		jsonObject.addProperty("fileName", changeName); 
+		jsonObject.addProperty("responseCode", "success");
 		
 		String a = jsonObject.toString();
 		return a;

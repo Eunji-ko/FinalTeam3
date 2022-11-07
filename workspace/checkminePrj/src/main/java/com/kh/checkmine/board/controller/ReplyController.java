@@ -6,9 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +17,9 @@ import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.member.vo.MemberVo;
 
+/*
+ * 게시판 > 댓글
+*/
 @Controller
 @RequestMapping("reply")
 public class ReplyController {
@@ -40,23 +40,22 @@ public class ReplyController {
 		List<ReplyVo> replyList = service.selectReplyList(no);
 		String str = g.toJson(replyList);
 		return str;
-	
 	}
 
 	//댓글 작성
 	@PostMapping("write")
 	@ResponseBody
-	public String reply(ReplyVo vo, HttpSession session) {
+	public String reply(ReplyVo replyVo, HttpSession session) {
 		//관리자 로그인 상태가 아니라면 일반 사용자의 로그인 정보 가져오기
 		if(session.getAttribute("loginAdmin") != null) {
 			AdminVo loginAdmin = (AdminVo)session.getAttribute("loginAdmin");
-			vo.setReplier(loginAdmin.getNo());
+			replyVo.setReplier(loginAdmin.getNo());
 		}else {
 			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-			vo.setReplier(loginMember.getNo());
+			replyVo.setReplier(loginMember.getNo());
 		}
 		
-		int result = service.reply(vo);
+		int result = service.reply(replyVo);
 		
 		if(result == 1) {
 			return "ok";
@@ -69,8 +68,8 @@ public class ReplyController {
 	//댓글 삭제
 	@PostMapping("delete")
 	@ResponseBody
-	public String delete(ReplyVo vo, HttpSession session) {
-		int result = service.replyDelete(vo);
+	public String delete(ReplyVo replyVo, HttpSession session) {
+		int result = service.replyDelete(replyVo);
 		
 		if(result == 1) {
 			return "ok";

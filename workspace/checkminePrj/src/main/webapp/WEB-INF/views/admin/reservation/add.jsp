@@ -82,7 +82,11 @@
         vertical-align: middle;
         width:20px;
         height:20px;
-        border:1px;
+        border:1px solid gray;
+    }
+
+    .form-check-input:checked {
+        background-color: #5d736f !important;
     }
    
     #footer{
@@ -113,10 +117,10 @@
                                 <td><input type="text" class="form-control" name="name"></td>
                             </tr>
                             <tr>
-                                <th>타입</th>
+                                <th>분류</th>
                                 <td>
-                                    <input type="radio" name="type" value="place" checked><label for="place">장소</label>
-                                    <input type="radio" name="type" style="margin-left: 20px;" value="goods"><label for="goods">장비</label>
+                                    <input type="radio" class="form-check-input" name="type" value="place" checked><label for="place">장소</label>
+                                    <input type="radio" class="form-check-input" name="type" style="margin-left: 20px;" value="goods"><label for="goods">공유물</label>
                                 </td>
                             </tr>
                             <tr>

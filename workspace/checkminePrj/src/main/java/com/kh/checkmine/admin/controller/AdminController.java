@@ -9,10 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.checkmine.admin.service.AdminService;
 import com.kh.checkmine.admin.vo.AdminVo;
@@ -20,6 +18,9 @@ import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
+/*
+ * 관리자 > 로그인, 메인
+*/
 @Controller
 @RequestMapping("admin")
 public class AdminController {
@@ -28,7 +29,6 @@ public class AdminController {
 	
 	public AdminController(AdminService service) {
 		this.service = service;
-		
 	}
 	
 	//관리자 로그인 화면
@@ -61,26 +61,24 @@ public class AdminController {
 		return "redirect:/admin/login";
 	}
 	
-	//홈화면으로 이동 
-	
-	  @GetMapping("main") 
-	  public String main(Model model) {
+	//메인화면으로 이동 
+	@GetMapping("main") 
+	public String main(Model model) {
+	 
+	   //summary에 들어갈 항목
+	   HashMap<String, Integer> summary = service.summary();
+	   
+	   //게시판 최신글
+	   List<BoardVo> boardList = service.boardList();
+	   //사원정보 변동
+	   List<MemberVo> memberList = service.MemberList();
+	   //예약 리스트
+	   List<PlaceBookVo> bookList = service.bookList();
 	  
-		  HashMap<String, Integer> summary = service.summary();
-		  //게시판
-		  List<BoardVo> boardList = service.boardList();
-		  //사원
-		  List<MemberVo> memberList = service.MemberList();
-		  //예약
-		  List<PlaceBookVo> bookList = service.bookList();
-		  
-		  model.addAttribute("summary", summary);
-		  model.addAttribute("boardList", boardList);
-		  model.addAttribute("memberList", memberList);
-		  model.addAttribute("bookList", bookList);
-		  return "admin/main/main"; 
+	   model.addAttribute("summary", summary);
+	   model.addAttribute("boardList", boardList);
+	   model.addAttribute("memberList", memberList);
+	   model.addAttribute("bookList", bookList);
+	   return "admin/main/main"; 
 	}
-	  
-	
-
 }

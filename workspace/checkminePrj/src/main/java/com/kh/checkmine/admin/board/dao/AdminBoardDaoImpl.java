@@ -52,8 +52,8 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//공지사항 올리기
 	@Override
-	public int insertBoard(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.insert("boardMapper.insertBoard", vo);
+	public int insertBoard(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.insert("boardMapper.insertBoard", boardVo);
 	}
 
 	@Override
@@ -63,25 +63,25 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//상세보기
 	@Override
-	public BoardVo selectOne(SqlSessionTemplate sst, String no) {
-		return sst.selectOne("boardMapper.selectOne", no);
+	public BoardVo selectOne(SqlSessionTemplate sst, String boardNo) {
+		return sst.selectOne("boardMapper.selectOne", boardNo);
 	}
 
 	@Override
-	public List<BoardAttVo> selectAtt(SqlSessionTemplate sst, String no) {
-		return sst.selectList("boardMapper.selectAtt", no);
+	public List<BoardAttVo> selectAtt(SqlSessionTemplate sst, String boardNo) {
+		return sst.selectList("boardMapper.selectAtt", boardNo);
 	}
 
 	//조회수 증가
 	@Override
-	public int increaseHit(SqlSessionTemplate sst, String no) {
-		return sst.update("boardMapper.increaseHit", no);
+	public int increaseHit(SqlSessionTemplate sst, String boardNo) {
+		return sst.update("boardMapper.increaseHit", boardNo);
 	}
 
 	//글 수정
 	@Override
-	public int edit(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.update("boardMapper.edit", vo);
+	public int edit(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.update("boardMapper.edit", boardVo);
 	}
 
 	//파일 수정
@@ -92,8 +92,8 @@ public class AdminBoardDaoImpl implements AdminBoardDao{
 
 	//기존 파일 삭제
 	@Override
-	public int deleteAtt(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.delete("boardMapper.deleteAtt", vo);
+	public int deleteAtt(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.delete("boardMapper.deleteAtt", boardVo);
 	}
 
 	//영구 삭제

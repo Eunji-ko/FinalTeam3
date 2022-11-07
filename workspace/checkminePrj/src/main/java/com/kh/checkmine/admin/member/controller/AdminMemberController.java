@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.checkmine.admin.member.service.AdminMemberService;
-import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
@@ -26,6 +25,9 @@ import com.kh.checkmine.member.vo.DeptVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.member.vo.PosVo;
 
+/*
+ * 관리자 > 사원 관리
+*/
 @Controller
 @RequestMapping("admin/member")
 public class AdminMemberController {
@@ -73,10 +75,7 @@ public class AdminMemberController {
 		return "admin/member/search";
 	}
 	
-	
-	
-		
-	//사원 관리 > 사원 등록 
+	//사원 등록 페이지
 	@GetMapping("add")
 	public String memberAdd(Model model) {
 		//부서 목록
@@ -91,49 +90,50 @@ public class AdminMemberController {
 		return "admin/member/add";
 	}
 	
+	//사원 등록
 	@PostMapping("add")
-	public String memberAdd(MemberVo vo, HttpServletRequest req, HttpSession session) {
-		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+	public String memberAdd(MemberVo memberVo, HttpServletRequest req, HttpSession session) {
+		//프로필 사진 등록
+		if(memberVo.getProfile() != null && !memberVo.getProfile().isEmpty()) {
 			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
-			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
-			vo.setPhotoName(changeName);
-			vo.setPhotoPath(savePath);
+			String changeName = FileUploader.fileUpload(memberVo.getProfile(), savePath);
+			memberVo.setPhotoName(changeName);
+			memberVo.setPhotoPath(savePath);
 		}
 		
 		//권한 ',' 제거
-		if(vo.getPermission() != null) {
-			String permission = vo.getPermission().replace(",", "");			
-			vo.setPermission(permission);
+		if(memberVo.getPermission() != null) {
+			String permission = memberVo.getPermission().replace(",", "");			
+			memberVo.setPermission(permission);
 		}
-		int result = service.insertMember(vo);
+		
+		int result = service.insertMember(memberVo);
 		
 		if(result == 1) {
 			session.setAttribute("msg", "정상적으로 등록되었습니다.");
 			return "redirect:/admin/member/list";
 			
 		}else {
-			
-			if(!vo.getProfile().isEmpty()) {
-				String savepath = vo.getPhotoPath()+ vo.getPhotoName();
+			//문제 발생 시 업로드된 파일 삭제
+			if(!memberVo.getProfile().isEmpty()) {
+				String savepath = memberVo.getPhotoPath()+ memberVo.getPhotoName();
 				new File(savepath).delete();
 				}
 			}
 			session.setAttribute("msg", "죄송합니다. 문제가 발생하였습니다.");
 			return "redirect:/admin/member/list";
-
 	}
 	
-	//아이디 중복
+	//아이디 중복 확인
 	@PostMapping("dup")
 	@ResponseBody
 	public String dup(String id) {
 		String result = service.checkDup(id);
 
 		return result;
-
 	}
 	
-	//사원 정보
+	//사원 정보 페이지
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no, Model model) {
 		//부서 목록
@@ -150,51 +150,46 @@ public class AdminMemberController {
 	}
 	
 	
-	//사원 수정
+	//사원 정보 수정
 	@PostMapping("edit/{no}")
-	public String edit(@PathVariable String no, MemberVo vo, HttpServletRequest req, HttpSession session) {
+	public String edit(@PathVariable String no, MemberVo memberVo, HttpServletRequest req, HttpSession session) {
 	
 		//새로운 파일 있다면 업로드, 원래 있던 파일 삭제
-		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+		if(memberVo.getProfile() != null && !memberVo.getProfile().isEmpty()) {
 			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
-			if(vo.getPhotoName() != null) {
-				File file = new File(savePath + vo.getPhotoName());
+			if(memberVo.getPhotoName() != null) {
+				File file = new File(savePath + memberVo.getPhotoName());
 				if(file.exists()) {
 					file.delete();
 				}				
 			}else {
 				//기존 사진없으면 path 설정
-				vo.setPhotoPath(savePath);
+				memberVo.setPhotoPath(savePath);
 			}
-			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
-			vo.setPhotoName(changeName);
+			String changeName = FileUploader.fileUpload(memberVo.getProfile(), savePath);
+			memberVo.setPhotoName(changeName);
 		}
 		
 		//권한 ',' 제거
-		if(vo.getPermission() != null) {
-			String permission = vo.getPermission().replace(",", "");
-			vo.setPermission(permission);			
+		if(memberVo.getPermission() != null) {
+			String permission = memberVo.getPermission().replace(",", "");
+			memberVo.setPermission(permission);			
 		}
-		int result = service.edit(vo);
+		
+		int result = service.edit(memberVo);
+		
 		if(result == 1) {
 			session.setAttribute("msg", "정상적으로 수정되었습니다.");
 			return "redirect:/admin/member/list";
 			
 		}else {
 			
-			if(!vo.getProfile().isEmpty()) {
-				String savepath = vo.getPhotoPath()+ vo.getPhotoName();
+			if(!memberVo.getProfile().isEmpty()) {
+				String savepath = memberVo.getPhotoPath()+ memberVo.getPhotoName();
 				new File(savepath).delete();
 				}
 			}
 			session.setAttribute("msg", "죄송합니다. 문제가 발생하였습니다.");
 			return "redirect:/admin/member/list";
-
 	}
-	
-	
-	
-	
-	
-
 }

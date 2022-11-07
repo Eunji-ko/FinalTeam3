@@ -13,7 +13,6 @@ import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
-import com.kh.checkmine.reservation.vo.PlaceVo;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -31,17 +30,16 @@ public class AdminServiceImpl implements AdminService{
 
 	//로그인
 	@Override
-	public AdminVo login(AdminVo vo) {
+	public AdminVo login(AdminVo adminVo) {
 		
-		AdminVo loginAdmin = dao.selectOneById(vo, sst);
+		AdminVo loginAdmin = dao.selectOneById(adminVo, sst);
 		
 		//암호화된 비밀번호와 비교
-		if(loginAdmin != null && pwdEncoder.matches(vo.getPwd(), loginAdmin.getPwd())) {
+		if(loginAdmin != null && pwdEncoder.matches(adminVo.getPwd(), loginAdmin.getPwd())) {
 			return loginAdmin;
 		}
 		
 		return null;
-		
 	}
 
 
@@ -60,7 +58,7 @@ public class AdminServiceImpl implements AdminService{
 		return boardList;
 	}
 
-	//홈 > 사원 리스트
+	//홈 > 사원 변동 리스트
 	@Override
 	public List<MemberVo> MemberList() {
 		List<MemberVo> memberList = dao.selectMemberList(sst);
@@ -73,10 +71,4 @@ public class AdminServiceImpl implements AdminService{
 		List<PlaceBookVo> bookList = dao.selectBookList(sst);
 		return bookList;
 	}
-	 
-	 
-	 
-	
-	
-
 }

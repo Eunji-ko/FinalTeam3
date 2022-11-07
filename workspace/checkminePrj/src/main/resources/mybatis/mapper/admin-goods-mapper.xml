@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminGoodsMapper">
+	<!-- 공유물 총 갯수 -->
 	<select id="selectGoodsTotal" resultType="int">
 		<choose>
 		<when test='sort == "p"'>
@@ -12,51 +13,63 @@
 		</choose>
 	</select>
 
-	<select id="selectGoodsList" resultType="com.kh.checkmine.reservation.vo.GoodsVo">
-			SELECT PG.*, NVL(CNT, 0) CNT FROM PUBLIC_GOODS PG
-         LEFT OUTER JOIN (
-         SELECT GOODS_NO, COUNT(NO) CNT FROM GOODS_RESERVATION 
-         <![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-             GROUP BY GOODS_NO
-         ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
+	<!-- 공유물 리스트 -->
+	<select id="selectGoodsList" resultType="GoodsVo">
+		SELECT PG.*, NVL(CNT, 0) CNT FROM PUBLIC_GOODS PG
+        LEFT OUTER JOIN (
+        SELECT GOODS_NO, COUNT(NO) CNT FROM GOODS_RESERVATION 
+        <![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+          GROUP BY GOODS_NO
+        ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
          ORDER BY PG.NO
 	</select>
 	
-	<select id="selectPlaceList" resultType="com.kh.checkmine.reservation.vo.PlaceVo">
-			SELECT PP.*, NVL(CNT, 0) CNT FROM PUBLIC_PLACE PP
+	<!-- 장소 리스트 -->
+	<select id="selectPlaceList" resultType="PlaceVo">
+		 SELECT PP.*, NVL(CNT, 0) CNT FROM PUBLIC_PLACE PP
          LEFT OUTER JOIN (
          SELECT PL_NO, COUNT(NO) CNT FROM PLACE_RESERVATION
          <![CDATA[WHERE TO_CHAR(RSV_BEGIN,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-             GROUP BY pl_no
+           GROUP BY pl_no
          ) PR ON PP.NO = PR.PL_NO WHERE PP.DELETE_YN = 'N'
          ORDER BY PP.NO
 	</select>
 	
-	<select id="selectPlaceBook" resultType="com.kh.checkmine.reservation.vo.PlaceBookVo">
-		SELECT P.NO, P.PL_NO, E.NAME EMP_NO, TO_CHAR(P.RSV_BEGIN, 'YYYY-MM-DD HH24:MI') RSV_BEGIN, TO_CHAR(P.RSV_END, 'YYYY-MM-DD HH24:MI') RSV_END, P.RSV_DATE FROM PLACE_RESERVATION P
-		  JOIN EMPLOYEE E ON E.NO = P.EMP_NO
-		  <![CDATA[WHERE TO_CHAR(RSV_BEGIN,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-		  AND PL_NO = #{no}
-	
+	<!-- 장소 > 예약 리스트 -->
+	<select id="selectPlaceBook" resultType="PlaceBookVo">
+		SELECT P.NO, P.PL_NO, E.NAME EMP_NO, 
+		TO_CHAR(P.RSV_BEGIN, 'YYYY-MM-DD HH24:MI') RSV_BEGIN, 
+		TO_CHAR(P.RSV_END, 'YYYY-MM-DD HH24:MI') RSV_END, 
+		P.RSV_DATE FROM PLACE_RESERVATION P
+		JOIN EMPLOYEE E ON E.NO = P.EMP_NO
+		<![CDATA[WHERE TO_CHAR(RSV_BEGIN,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+		 AND PL_NO = #{no}
 	</select>
 	
-	<select id="selectGoodsBook" resultType="com.kh.checkmine.reservation.vo.GoodsBookVo">
-		 SELECT G.NO, E.NAME E_NO, G.GOODS_NO, TO_CHAR(G.BORROW, 'YYYY-MM-DD HH24:MI') BORROW, TO_CHAR(G.RSV_END, 'YYYY-MM-DD HH24:MI') RSV_END, G.RSV_DATE FROM GOODS_RESERVATION G
-			  JOIN EMPLOYEE E ON E.NO = G.E_NO
-			  <![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-			  AND G.GOODS_NO = #{no}
+	<!-- 공유물 > 예약 리스트 -->
+	<select id="selectGoodsBook" resultType="GoodsBookVo">
+		SELECT G.NO, E.NAME E_NO, G.GOODS_NO, 
+		TO_CHAR(G.BORROW, 'YYYY-MM-DD HH24:MI') BORROW, 
+		TO_CHAR(G.RSV_END, 'YYYY-MM-DD HH24:MI') RSV_END, 
+		G.RSV_DATE FROM GOODS_RESERVATION G
+		JOIN EMPLOYEE E ON E.NO = G.E_NO
+		<![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+		AND G.GOODS_NO = #{no}
 	</select>
 	
+	<!-- 공유물 > 장소 삭제 -->
 	<update id="deletePlace">
 		UPDATE PUBLIC_PLACE SET DELETE_YN = 'Y'
 		WHERE NO = #{placeNo}
 	</update>
 	
+	<!-- 공유물 > 공유물 삭제 -->
 	<update id="deleteGoods">
 		UPDATE PUBLIC_GOODS SET DELETE_YN = 'Y'
 		WHERE NO = #{goodsNo}
 	</update>
 	
+	<!-- 공유물 등록 -->
 	<insert id="addList">
 		INSERT INTO 
 		<choose>
@@ -69,9 +82,9 @@
 				VALUES(SEQ_GOODS_NO.NEXTVAL, #{name}, #{content}) 
 			</otherwise>
 		</choose>
-		
 	</insert>
 	
+	<!-- 검색결과 총 갯수(공유물) -->
 	<select id="selectGoodsTotalKeyword" parameterType="HashMap" resultType="int">
 		SELECT COUNT(NO) FROM PUBLIC_GOODS WHERE DELETE_YN = 'N'
 		<choose>
@@ -84,13 +97,14 @@
 		</choose>
 	</select>
 	
-	<select id="selectSearchGoodsList" parameterType="HashMap" resultType="com.kh.checkmine.reservation.vo.GoodsVo">
+	<!-- 검색결과 리스트(공유물) -->
+	<select id="selectSearchGoodsList" parameterType="HashMap" resultType="GoodsVo">
 		SELECT PG.*, NVL(CNT, 0) CNT FROM PUBLIC_GOODS PG
-         LEFT OUTER JOIN (
-         SELECT GOODS_NO, COUNT(NO) CNT FROM GOODS_RESERVATION 
-          <![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-             GROUP BY GOODS_NO
-         ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
+        LEFT OUTER JOIN (
+        SELECT GOODS_NO, COUNT(NO) CNT FROM GOODS_RESERVATION 
+        <![CDATA[WHERE TO_CHAR(BORROW,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+        GROUP BY GOODS_NO
+        ) GR ON PG.NO = GR.GOODS_NO WHERE PG.DELETE_YN = 'N'
          <choose>
 			<when test='option == "name"'>
 				AND NAME LIKE '%'||#{keyword}||'%'
@@ -102,6 +116,7 @@
          ORDER BY PG.NO
 	</select>
 	
+	<!-- 검색결과 총 갯수(장소) -->
 	<select id="selectPlaceTotalKeyword" parameterType="HashMap" resultType="int">
 		SELECT COUNT(NO) FROM PUBLIC_PLACE WHERE DELETE_YN = 'N'
 		<choose>
@@ -114,12 +129,13 @@
 		</choose>
 	</select>
 	
-	<select id="selectSearchPlaceList" parameterType="HashMap" resultType="com.kh.checkmine.reservation.vo.PlaceVo">
+	<!-- 검색결과 리스트(장소) -->
+	<select id="selectSearchPlaceList" parameterType="HashMap" resultType="PlaceVo">
 		SELECT PP.*, NVL(CNT, 0) CNT FROM PUBLIC_PLACE PP
          LEFT OUTER JOIN (
          SELECT PL_NO, COUNT(NO) CNT FROM PLACE_RESERVATION
          <![CDATA[WHERE TO_CHAR(RSV_BEGIN,'YYYY-MM-DD') <= TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND  TO_CHAR(RSV_END,'YYYY-MM-DD') >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-             GROUP BY pl_no
+         GROUP BY pl_no
          ) PR ON PP.NO = PR.PL_NO WHERE PP.DELETE_YN = 'N'
          <choose>
 			<when test='option == "name"'>
@@ -132,8 +148,10 @@
          ORDER BY PP.NO
 	</select>
 	
-	<select id="selectBookListByDate" resultType="com.kh.checkmine.reservation.vo.PlaceBookVo">
-		SELECT PP.NAME PL_NO, E.NAME EMP_NO, TO_CHAR(P.RSV_BEGIN, 'YYYY.MM.DD HH24:MI') RSV_BEGIN, 
+	<!-- 관리자 > 예약 리스트 최신순 -->
+	<select id="selectBookListByDate" resultType="PlaceBookVo">
+		SELECT PP.NAME PL_NO, E.NAME EMP_NO, 
+		TO_CHAR(P.RSV_BEGIN, 'YYYY.MM.DD HH24:MI') RSV_BEGIN, 
 	    TO_CHAR(P.RSV_END, 'YYYY.MM.DD HH24:MI') RSV_END, 
 	    TO_CHAR(P.RSV_DATE, 'YYYY.MM.DD HH24:MI') RSV_DATE
 	    FROM PLACE_RESERVATION P 
@@ -142,7 +160,5 @@
 	    <![CDATA[WHERE TO_CHAR(P.RSV_BEGIN, 'YYYY.MM.DD') <= TO_CHAR(SYSDATE, 'YYYY.MM.DD') 
         AND TO_CHAR(P.RSV_END, 'YYYY.MM.DD') >= TO_CHAR(SYSDATE, 'YYYY.MM.DD') ]]> 
 	    ORDER BY P.RSV_DATE DESC
-
 	</select>
-
 </mapper>

@@ -12,7 +12,7 @@ import com.kh.checkmine.member.vo.PosVo;
 
 public interface AdminMemberDao {
 
-	//총사원수
+	//총 사원 수
 	int selectTotalCnt(SqlSessionTemplate sst, String sort);
 
 	//사원 리스트
@@ -33,13 +33,13 @@ public interface AdminMemberDao {
 	String checkDup(SqlSessionTemplate sst, String id);
 
 	//사원 등록
-	int insertMember(SqlSessionTemplate sst, MemberVo vo);
+	int insertMember(SqlSessionTemplate sst, MemberVo memberVo);
 
 	//사원 조회
 	MemberVo selectMember(SqlSessionTemplate sst, String no);
 
 	//사원 수정
-	int updateMember(SqlSessionTemplate sst, MemberVo vo);
+	int updateMember(SqlSessionTemplate sst, MemberVo memberVo);
 
 	//조직도
 	List<Map<String, String>> selectMemberCnt(SqlSessionTemplate sst);

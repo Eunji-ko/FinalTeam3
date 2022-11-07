@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.admin.member.dao.AdminMemberDao;
@@ -71,11 +70,11 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 
 	//사원등록
 	@Override
-	public int insertMember(MemberVo vo) {
+	public int insertMember(MemberVo memberVo) {
 		
-		vo.encodePwd(pwdEnc);
+		memberVo.encodePwd(pwdEnc); //암호화
 		
-		return dao.insertMember(sst, vo);
+		return dao.insertMember(sst, memberVo);
 	}
 
 	//사원조회
@@ -86,8 +85,8 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 
 	//사원수정
 	@Override
-	public int edit(MemberVo vo) {
-		return dao.updateMember(sst, vo);
+	public int edit(MemberVo memberVo) {
+		return dao.updateMember(sst, memberVo);
 	}
 
 	//조직도

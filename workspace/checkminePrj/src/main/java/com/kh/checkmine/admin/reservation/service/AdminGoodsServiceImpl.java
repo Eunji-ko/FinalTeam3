@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.admin.reservation.dao.AdminGoodsDao;
-import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
@@ -25,15 +24,14 @@ public class AdminGoodsServiceImpl implements AdminGoodsService{
 		this.sst = sst;
 	}
 
-	//공유물 수 
+	//총 공유물 수 
 	@Override
 	public int selectTotalCnt(String sort) {
 		int total = dao.selectGoodsTotal(sst, sort);
 		return total;
 	}
 
-	//게시물 리스트
-	
+	//공유물 리스트
 	@Override
 	public List<GoodsVo> selectGoodsList(PageVo pv, String sort) {
 		List<GoodsVo> goodsList = dao.selectGoodsList(sst, pv, sort);
@@ -79,14 +77,14 @@ public class AdminGoodsServiceImpl implements AdminGoodsService{
 		return result;
 	}
 
-	//검색 결과 수
+	//검색 결과 수 goods
 	@Override
 	public int selectKeywordGoodsCnt(HashMap<String, String> map) {
 		int total = dao.selectGoodsTotalKeyword(sst, map);
 		return total;
 	}
 
-	//검색 결과 - 장비
+	//검색 결과 - goods
 	@Override
 	public List<GoodsVo> selectGoodsKeyword(PageVo pv, HashMap<String, String> map) {
 		List<GoodsVo> goodsList = dao.selectSearchGoodsList(sst, pv, map);
@@ -94,14 +92,14 @@ public class AdminGoodsServiceImpl implements AdminGoodsService{
 	}
 
 	
-	//검색 결과 수
+	//검색 결과 수 place
 	@Override
 	public int selectKeywordPlaceCnt(HashMap<String, String> map) {
 		int total = dao.selectPlaceTotalKeyword(sst, map);
 		return total;
 	}
 	
-	//검색 결과 - 장소
+	//검색 결과 - place
 	@Override
 	public List<PlaceVo> selectPlaceKeyword(PageVo pv, HashMap<String, String> map) {
 		List<PlaceVo> goodsList = dao.selectSearchPlaceList(sst, pv, map);

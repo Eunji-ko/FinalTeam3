@@ -9,7 +9,7 @@ import com.kh.checkmine.common.PageVo;
 
 public interface BoardService {
 
-	//게시물 조회
+	//게시물 리스트
 	int selectTotalCnt(String type);
 
 	List<BoardVo> selectBoardList(PageVo pv, Map<String, String> map);
@@ -22,7 +22,7 @@ public interface BoardService {
 	//글 작성
 	int insertBoard(BoardVo vo, List<BoardAttVo> attVoList);
 
-	int insertBoard(BoardVo vo);
+	int insertBoard(BoardVo boardVo);
 
 	//게시글 상세보기
 	BoardVo selectOne(String no);
@@ -44,13 +44,8 @@ public interface BoardService {
 	//게시글 삭제
 	int delete(String boardNo);
 
-	
 	//게시글 수정
-	int edit(BoardVo vo, List<BoardAttVo> attVoList);
+	int edit(BoardVo boardVo, List<BoardAttVo> attVoList);
 
-	int edit(BoardVo vo);
-
-
-	
-
+	int edit(BoardVo boardVo);
 }

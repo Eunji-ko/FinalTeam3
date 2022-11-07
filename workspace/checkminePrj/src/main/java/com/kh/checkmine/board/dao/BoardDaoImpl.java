@@ -44,8 +44,8 @@ public class BoardDaoImpl implements BoardDao{
 
 	//글 작성
 	@Override
-	public int insertBoard(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.insert("boardMapper.insertBoard", vo);
+	public int insertBoard(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.insert("boardMapper.insertBoard", boardVo);
 	}
 
 	@Override
@@ -53,8 +53,7 @@ public class BoardDaoImpl implements BoardDao{
 		return sst.insert("boardMapper.insertBoardAtt", attVoList);
 	}
 	
-	//게시글 상세보기
-
+	//게시글 상세보기 + 조회수 증가
 	@Override
 	public int increaseHit(SqlSessionTemplate sst, String no) {
 		return sst.update("boardMapper.increaseHit", no);
@@ -88,7 +87,7 @@ public class BoardDaoImpl implements BoardDao{
 		return sst.selectOne("boardMapper.selectRecommend", map);
 	}
 
-	//추천 삭제
+	//추천 취소
 	@Override
 	public int recommendDelete(SqlSessionTemplate sst, Map<String, String> map) {
 		return sst.delete("boardMapper.recommendDelete", map);
@@ -102,11 +101,11 @@ public class BoardDaoImpl implements BoardDao{
 
 	//게시글 수정
 	@Override
-	public int edit(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.update("boardMapper.edit", vo);
+	public int edit(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.update("boardMapper.edit", boardVo);
 	}
 
-	//파일 수정
+	//파일 수정 (새로운 파일 업로드)
 	@Override
 	public int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList) {
 		return sst.insert("boardMapper.updateBoardAtt", attVoList);
@@ -114,8 +113,7 @@ public class BoardDaoImpl implements BoardDao{
 
 	//기존 파일 삭제
 	@Override
-	public int deleteAtt(SqlSessionTemplate sst, BoardVo vo) {
-		return sst.delete("boardMapper.deleteAtt", vo);
+	public int deleteAtt(SqlSessionTemplate sst, BoardVo boardVo) {
+		return sst.delete("boardMapper.deleteAtt", boardVo);
 	}
-
 }

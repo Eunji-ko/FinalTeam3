@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
 
-	<!-- 관리자 게시판 -->
+   <!-- 게시물 리스트 -->
    <select id="selectBoardList" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
-  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
-  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+  	TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+  	NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B 
+  	LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R ON B.NO = R.NO 
+  	JOIN employee M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'N' 
   	<choose>
   		<when test='sort=="n"'>
@@ -23,7 +26,7 @@
   	ORDER BY B.ENROLL_DATE DESC
   </select>
   
-  
+  <!-- 게시물 리스트 총 갯수 -->
   <select id="selectBoardTotal" resultType="int">
   	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
   	<choose>
@@ -37,19 +40,22 @@
   			AND TYPE='G'
   		</when>
   	</choose>
-
   </select>
   
   
-  
+  <!-- 게시물 삭제 -->
   <update id="deleteBoard">
   	UPDATE BOARD SET MODIFY_DATE = SYSDATE, DELETE_YN = 'Y' WHERE NO=#{BOARDNO}
   </update>
   
-  
+  <!-- 게시물 삭제 -->
   <select id="selectBoardKeyword" parameterType="HashMap" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, B.DELETE_YN, B.TYPE FROM BOARD B 
-	JOIN employee M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N' 
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+  	TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+  	B.DELETE_YN, B.TYPE FROM BOARD B 
+	JOIN employee M ON M.NO = B.WRITER 
+	WHERE B.DELETE_YN = 'N' 
   	<choose>
   		<when test='option=="title"'>
   			AND TITLE LIKE '%'||#{keyword}||'%'
@@ -62,11 +68,13 @@
   		</when>
   	</choose>
   	ORDER BY B.ENROLL_DATE DESC
-  
   </select>
   
+  <!-- 게시물 검색 결과 총 갯수 -->
   <select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
-	  SELECT COUNT(B.NO) FROM BOARD B JOIN employee M ON M.NO = B.WRITER WHERE B.DELETE_YN = 'N'
+	  SELECT COUNT(B.NO) FROM BOARD B 
+	  JOIN employee M ON M.NO = B.WRITER 
+	  WHERE B.DELETE_YN = 'N'
 	  	<choose>
   		<when test='option=="title"'>
   			AND B.TITLE LIKE '%'||#{keyword}||'%'
@@ -78,82 +86,89 @@
   			AND NAME LIKE '%'||#{keyword}||'%'
   		</when>
   	</choose>
-
   </select>
   
+  <!-- 게시물 작성 -->
   <insert id="insertBoard">
   	INSERT INTO BOARD(NO, WRITER, TITLE, CONTENT, TYPE) 
   	VALUES(SEQ_BOARD_NO.NEXTVAL, #{writer}, #{title}, #{content}, #{type})
   </insert>
   
-
+ <!-- 게시물 작성 (첨부파일) -->
  <insert id="insertBoardAtt">
  	<selectKey keyProperty="bNo" resultType="int" order="BEFORE">
     SELECT SEQ_BOARD_NO.CURRVAL from dual
   	</selectKey>
-
  	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
  	SELECT SEQ_BATT_NO.NEXTVAL, A.* FROM(
- 	<foreach item="item" collection="list" separator="UNION ALL " >
- 	select #{bNo} as B_NO,
-        #{item.name} as NAME,
-        #{item.filePath} as FILE_PATH
-        from dual
-  	</foreach>) A
+	 	<foreach item="item" collection="list" separator="UNION ALL " >
+	 		select #{bNo} as B_NO,
+	        #{item.name} as NAME,
+	        #{item.filePath} as FILE_PATH
+	        from dual
+	  	</foreach>) A
  </insert>
  
- <select id="selectOne" resultType="BoardVo">
- 	SELECT NVL(RECOMMENDCNT, 0) RECOMMENDCNT, B.NO, B.WRITER WNO,  M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE,'YYYY.MM.DD HH24:MI') ENROLL_DATE, 
-    TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, B.TYPE,
-    P.name POSITION, D.NAME DEPARTMENT FROM BOARD B
+  <!-- 게시물 상세조회 -->
+  <select id="selectOne" resultType="BoardVo">
+ 	SELECT NVL(RECOMMENDCNT, 0) RECOMMENDCNT, B.NO, B.WRITER WNO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+ 	TO_CHAR(B.ENROLL_DATE,'YYYY.MM.DD HH24:MI') ENROLL_DATE, 
+    TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+    B.TYPE, P.name POSITION, D.NAME DEPARTMENT FROM BOARD B
     LEFT OUTER JOIN EMPLOYEE M ON M.NO = B.WRITER
     LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
     LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
     LEFT OUTER JOIN (SELECT R.NO, COUNT(R.M_NO) RECOMMENDCNT FROM BOARD_RECOMMEND R GROUP BY R.NO) R ON R.NO = B.NO
     WHERE DELETE_YN = 'N' AND B.NO = #{NO}
- 
  </select>
  
+ <!-- 게시물 상세조회 (첨부파일) -->
  <select id="selectAtt" resultType="com.kh.checkmine.board.vo.BoardAttVo">
  	SELECT * FROM BOARD_ATT WHERE B_NO = #{NO}
  </select>
  
+ <!-- 게시물 상세조회 (조회수 증가) -->
  <update id="increaseHit">
  	UPDATE BOARD SET HIT = HIT + 1 WHERE NO = #{NO} AND DELETE_YN = 'N'
- 
  </update>
  
+ <!-- 게시글 수정 -->
  <update id="edit">
  	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, 
  	<if test="type != null">
-	 	TYPE=#{type}, 
+	 	TYPE=#{type},
  	</if>
  	MODIFY_DATE=SYSDATE WHERE NO = #{no}
  </update>
 
-   <insert id="updateBoardAtt">
-  	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
- 	SELECT SEQ_BATT_NO.NEXTVAL, A.* FROM(
- 	<foreach item="item" collection="list" separator="UNION ALL " >
- 	select #{item.bNo} as B_NO,
-        #{item.name} as NAME,
-        #{item.filePath} as FILE_PATH
-        from dual
-  	</foreach>) A
-  </insert>
+<!-- 게시글 수정 (첨부파일) -->
+ <insert id="updateBoardAtt">
+	INSERT INTO BOARD_ATT(NO, B_NO, NAME, FILE_PATH) 
+	SELECT SEQ_BATT_NO.NEXTVAL, A.* FROM(
+		<foreach item="item" collection="list" separator="UNION ALL " >
+		select #{item.bNo} as B_NO,
+		      #{item.name} as NAME,
+		      #{item.filePath} as FILE_PATH
+		      from dual
+			</foreach>) A
+ </insert>
   
+ <!-- 게시글 수정 (기존 첨부파일 삭제) -->
   <delete id="deleteAtt">
   	DELETE FROM BOARD_ATT WHERE B_NO = #{no}
   </delete>
   
   <!-- 사용자 게시판 -->
-  
+  <!-- 게시물 리스트 조회 (최신순 / 추천순) -->
   <select id="selectBoardListByType" parameterType="HashMap" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE,
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+  	TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+  	NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE,
   	CASE WHEN B.CONTENT LIKE '%.jpg%' THEN SUBSTR(B.CONTENT, INSTR(B.CONTENT, '.jpg')-19, 23)
 	WHEN B.CONTENT LIKE '%.png%' THEN SUBSTR(B.CONTENT, INSTR(B.CONTENT, '.png')-19, 23) END AS THUMBNAIL
-  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	FROM BOARD B 
+  	LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
   	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'N' 
   	<choose>
@@ -177,6 +192,8 @@
   	</choose>
   </select>
   
+  
+  <!-- 게시물 리스트 총 갯수 -->
   <select id="selectTotalCnt" resultType="int">
   	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
   	<choose>
@@ -192,64 +209,74 @@
   	</choose>
   </select>
   
-  
-   <select id="selectBoardListByKeyword" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE 
-  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  <!-- 게시물 리스트 (검색결과) -->
+  <select id="selectBoardListByKeyword" resultType="BoardVo">
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+  	TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+  	NVL(RECOMMEND_CNT, 0) AS recommendCnt, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B 
+  	LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
   	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'N' AND (TITLE LIKE '%'||#{keyword}||'%' OR CONTENT LIKE '%'||#{keyword}||'%')
     ORDER BY B.ENROLL_DATE DESC
-  	
   </select>
   
-  
-   <select id="selectTotalCntByKeyword" resultType="int">
-  	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'N'
+  <!-- 게시물 리스트 총 갯수(검색결과) -->
+  <select id="selectTotalCntByKeyword" resultType="int">
+  	SELECT COUNT(NO) FROM BOARD 
+  	WHERE DELETE_YN = 'N'
   	AND (TITLE LIKE '%'||#{keyword}||'%' OR CONTENT LIKE '%'||#{keyword}||'%')
   </select>
   
+  <!-- 추천 -->
   <insert id="recommend" parameterType="HashMap">
   	INSERT INTO BOARD_RECOMMEND(NO, M_NO)
   	VALUES(#{bNo}, #{memberNo})
-  
   </insert>
   
+  <!-- 특정 게시글의 추천 수 -->
   <select id="selectBoardRecommend" resultType="String">
   	SELECT COUNT(NO) FROM BOARD_RECOMMEND WHERE NO = #{bNo}
   </select>
   
+  <!-- 특정 게시글의 추천 여부 확인 -->
   <select id="selectRecommend" resultType="int">
   	SELECT COUNT(NO) FROM BOARD_RECOMMEND WHERE NO = #{bNo} AND M_NO = #{memberNo}
   </select>
   
+  <!-- 추천 취소 -->
   <delete id="recommendDelete">
   	DELETE FROM BOARD_RECOMMEND WHERE NO = #{bNo} AND M_NO = #{memberNo}
   </delete>
   
+  <!-- 게시글 영구 삭제 -->
   <delete id="hardDelete">
   	DELETE FROM BOARD WHERE NO = #{no}
   </delete>
   
+  <!-- 삭제된 게시글 복원 -->
   <update id="restoreBoard">
  	UPDATE BOARD SET DELETE_YN = 'N'
  	WHERE NO = #{no}
  </update>
  
- <!-- 관리자 > 설정 게시판 -->
+ <!-- 삭제된 게시물 리스트 조회 -->
    <select id="selectDeleteList" resultType="BoardVo">
-  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
-  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
-  	FROM BOARD B LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
-  	ON B.NO = R.NO JOIN employee M ON M.NO = B.WRITER
+  	SELECT B.NO, M.NAME WRITER, B.TITLE, B.CONTENT, B.HIT, 
+  	TO_CHAR(B.ENROLL_DATE, 'YYYY.MM.DD HH24:MI') AS ENROLL_DATE, 
+  	TO_CHAR(B.MODIFY_DATE, 'YYYY.MM.DD HH24:MI') AS MODIFY_DATE, 
+  	NVL(RECOMMEND_CNT, 0) AS CNT, B.DELETE_YN, B.TYPE 
+  	FROM BOARD B 
+  	LEFT OUTER JOIN (SELECT NO, COUNT(M_NO) AS RECOMMEND_CNT FROM BOARD_RECOMMEND GROUP BY NO) R 
+  	ON B.NO = R.NO 
+  	JOIN employee M ON M.NO = B.WRITER
   	WHERE DELETE_YN = 'Y' 
   	ORDER BY B.MODIFY_DATE DESC
   </select>
   
-  
+  <!-- 삭제된 게시물 리스트 총 갯수 -->
   <select id="selectDeleteTotalCnt" resultType="int">
   	SELECT COUNT(NO) FROM BOARD WHERE DELETE_YN = 'Y'
   </select>
-  
-  
 </mapper>

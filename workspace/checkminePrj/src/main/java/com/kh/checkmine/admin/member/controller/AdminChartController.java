@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kh.checkmine.admin.member.service.AdminMemberService;
 
+/*
+ * 관리자 > 조직도
+*/
 @Controller
 public class AdminChartController {
 
@@ -18,6 +21,7 @@ public class AdminChartController {
 		this.service = service;
 	}
 	
+	//조직도 페이지
 	@GetMapping("admin/chart")
 	public String chart(Model model) {
 		
@@ -26,6 +30,4 @@ public class AdminChartController {
 		model.addAttribute("chart", chart);
 		return "admin/chart/chart";
 	}
-	
-	
 }
