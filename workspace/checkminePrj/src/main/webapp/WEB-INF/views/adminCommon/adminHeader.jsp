@@ -12,67 +12,67 @@
 			alert('${msg}');
 		</script>
 	</c:if>
-
-  
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta charset="UTF-8">
-    <style>
-        @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-        * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-    	
-        nav{
-            background-color: #B0D9D1;
-            width: 310px;
-            height: 850px;
-            margin-top: 20px;
-            margin-right: 60px;
-            border-top-right-radius: 30px;
-            border-bottom-right-radius: 30px;
-        }
-        main{
-            width: 1520px;
-            height: 880px;
-            border: 1px solid #CECECE;
-            margin-bottom: 20px;
-            flex: none;
-        }
+<!-- 부트스트랩 & 제이쿼리-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<style>
+    @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+    * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+    
+    nav{
+        background-color: #B0D9D1;
+        width: 310px;
+        height: 850px;
+        margin-top: 20px;
+        margin-right: 60px;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
 
-        nav{
-            padding: 70px;
-        }
+    main{
+        width: 1520px;
+        height: 880px;
+        border: 1px solid #CECECE;
+        margin-bottom: 20px;
+        flex: none;
+    }
 
-        nav a{
-            font-size: 25px;
-            text-decoration: none;
-            color: #293533;
-            margin-bottom: 3rem;
+    nav{
+        padding: 70px;
+    }
 
-        }
+    nav a{
+        font-size: 25px;
+        text-decoration: none;
+        color: #293533;
+        margin-bottom: 3rem;
+    }
 
-        nav a:hover{
-            color: #ffffff;
-        }
-        .side-nav-selected{
-            color: #ffffff;
-        }
-        .side-nav-home{
-            font-size: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            color: #000000;
-            margin-bottom: 4rem;
-        }
-        #profileImg > img {
-            width: 100%;
-        }
+    nav a:hover{
+        color: #ffffff;
+    }
 
+    .side-nav-selected{
+        color: #ffffff;
+    }
 
-    </style>
+    .side-nav-home{
+        font-size: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 4rem;
+    }
+
+    #profileImg > img {
+        width: 100%;
+    }
+</style>
 </head>
 <body>
     <header class="d-flex " style="width: 1920px; height: 140px;">
@@ -87,9 +87,11 @@
         <div class="d-flex h-100 align-items-center justify-content-between me-5" style="width:200px">
     
             <!-- 설정 -->
-            <div><a href="${root}/admin/setting/memberList">
-                <img src="${root}/resources/img/header/cogwheel-button-.png">
-            </a></div>
+            <div>
+                <a href="${root}/admin/setting/memberList">
+                    <img src="${root}/resources/img/header/cogwheel-button-.png">
+                </a>
+            </div>
 
             <!-- 사용자 TODO: 프로필 이미지 처리, 사용자 이름 처리-->
             <div class="d-flex align-items-center justify-content-between" style="width: 110px; margin-left: 30px;">
@@ -101,9 +103,7 @@
         </div>
     </header>
 
-
-</body>
-<script>
+    <script>
 		service();
 
     	function service(){
@@ -114,5 +114,5 @@
     		} 
     	}
     </script>
-
+</body>
 </html>

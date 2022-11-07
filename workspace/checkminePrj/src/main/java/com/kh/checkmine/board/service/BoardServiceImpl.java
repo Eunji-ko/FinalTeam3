@@ -25,7 +25,7 @@ public class BoardServiceImpl implements BoardService{
 		this.dao = dao;
 	}
 
-	//게시물 리스트 - 공지사항
+	//게시물 리스트
 	@Override
 	public int selectTotalCnt(String type) {
 		int total = dao.selectTotalCnt(sst, type);
@@ -38,7 +38,7 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 
-	//검색
+	//검색 결과
 	@Override
 	public int selectKeywordCnt(String keyword) {
 		int total = dao.selectTotalKeyword(sst, keyword);
@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 
-	//글 작성
+	//글 작성 (+첨부파일)
 	@Override
 	@Transactional
 	public int insertBoard(BoardVo vo, List<BoardAttVo> attVoList) {
@@ -63,13 +63,14 @@ public class BoardServiceImpl implements BoardService{
 		return result1 * result2;
 	}
 
+	//글 작성
 	@Override
 	public int insertBoard(BoardVo vo) {
 		int result = dao.insertBoard(sst, vo);
 		return result;
 	}
 
-	//게시글 상세보기 + 조회수
+	//게시글 상세보기 + 조회수 증가
 	@Override
 	public BoardVo selectOne(String no) {
 		int result = dao.increaseHit(sst, no);
@@ -124,26 +125,22 @@ public class BoardServiceImpl implements BoardService{
 	//게시물 수정 (+첨부파일)
 	@Override
 	@Transactional
-	public int edit(BoardVo vo, List<BoardAttVo> attVoList) {
+	public int edit(BoardVo boardVo, List<BoardAttVo> attVoList) {
 		//게시글
-		int result1 = dao.edit(sst, vo);
+		int result1 = dao.edit(sst, boardVo);
 
 		//기존 첨부파일 삭제
-		int result2 = dao.deleteAtt(sst, vo);
+		int result2 = dao.deleteAtt(sst, boardVo);
 		
 		//첨부파일
-		 int result3 = dao.edit(sst, attVoList);
+		int result3 = dao.edit(sst, attVoList);
 
-	
 		return result1 * result2 * result3;
 	}
 
 	//게시글만 수정
 	@Override
-	public int edit(BoardVo vo) {
-		return dao.edit(sst, vo);
-
+	public int edit(BoardVo boardVo) {
+		return dao.edit(sst, boardVo);
 	}
-
-	
 }

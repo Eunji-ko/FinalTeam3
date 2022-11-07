@@ -2,34 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMemberMapper">
   
+  <!-- 사원 리스트 총 갯수 -->
   <select id="selectTotalCnt" resultType="int">
   	SELECT COUNT(NO) FROM EMPLOYEE
+  	WHERE NOT NO IN ('0')
   	<choose>
   		<when test='sort=="n"'>
-  			WHERE RESIGN_YN = 'N'
+  			AND RESIGN_YN = 'N'
   		</when>
   		<when test='sort=="y"'>
-  			WHERE RESIGN_YN = 'Y'
+  			AND RESIGN_YN = 'Y'
   		</when>
   	</choose>
   </select>
   
+  <!-- 사원 리스트 -->
   <select id="selectMemberList" resultType="MemberVo">
-		SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
-  		TO_CHAR(RESIGN_DATE, 'YYYY.MM.DD') RESIGN_DATE, RESIGN_YN FROM EMPLOYEE M 
+		SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, 
+		TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
+  		TO_CHAR(RESIGN_DATE, 'YYYY.MM.DD') RESIGN_DATE, 
+  		RESIGN_YN FROM EMPLOYEE M 
         LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
         LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+        WHERE NOT M.NO IN ('0')
   	<choose>
   		<when test='sort=="n"'>
-  			WHERE RESIGN_YN = 'N'
+  			AND RESIGN_YN = 'N'
   		</when>
   		<when test='sort=="y"'>
-  			WHERE RESIGN_YN = 'Y'
+  			AND RESIGN_YN = 'Y'
   		</when>
   	</choose>
   			ORDER BY M.NO ASC
   </select>
   
+  <!-- 사원 리스트 총 갯수 (검색 결과) -->
   <select id="selectTotalKeyword" parameterType="HashMap" resultType="int">
   		SELECT COUNT(M.NO) FROM EMPLOYEE M
         LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
@@ -44,56 +51,63 @@
   			WHERE M.ID LIKE '%'||#{keyword}||'%'
   		</when>
   	</choose>
-  			
   </select>
   
+  <!-- 사원 리스트 (검색 결과) -->
   <select id="selectMemberKeyword" parameterType="HashMap" resultType="MemberVo">
-  	SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
-  		RESIGN_YN FROM EMPLOYEE M 
-        LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
-        LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
- 	 <choose>
-  		<when test='option=="name"'>
-  			WHERE M.NAME LIKE '%'||#{keyword}||'%'
-  		</when>
-  		<when test='option=="dept"'>
-  			WHERE D.NAME LIKE '%'||#{keyword}||'%'
-  		</when>
-  		<when test='option=="id"'>
-  			WHERE M.ID LIKE '%'||#{keyword}||'%'
-  		</when>
-  	</choose> 
+  	SELECT M.NO, M.NAME, P.NAME POS_NO, D.NAME DEPT_NO, M.ID, 
+  	TO_CHAR(ENROLL_DATE, 'YYYY.MM.DD') ENROLL_DATE, 
+	RESIGN_YN FROM EMPLOYEE M 
+    LEFT OUTER JOIN POSITION P ON P.NO = M.POS_NO
+    LEFT OUTER JOIN DEPARTMENT D ON D.NO = M.DEPT_NO
+	 <choose>
+ 		<when test='option=="name"'>
+ 			WHERE M.NAME LIKE '%'||#{keyword}||'%'
+ 		</when>
+ 		<when test='option=="dept"'>
+ 			WHERE D.NAME LIKE '%'||#{keyword}||'%'
+ 		</when>
+ 		<when test='option=="id"'>
+ 			WHERE M.ID LIKE '%'||#{keyword}||'%'
+ 		</when>
+ 	</choose> 
   			ORDER BY M.NO ASC
   </select>
   
+  <!-- 부서 리스트 -->
   <select id="selectDeptList" resultType="com.kh.checkmine.member.vo.DeptVo">
   	SELECT NO, NAME FROM DEPARTMENT
   </select>
   
+  <!-- 직위 리스트 -->
   <select id="selectPosList" resultType="com.kh.checkmine.member.vo.PosVo">
   	SELECT NO, NAME FROM POSITION
   </select>
   
+  <!-- 아이디 중복 확인 -->
   <select id="checkDup" resultType="String">
   	SELECT COUNT(ID) FROM EMPLOYEE WHERE ID=#{id} 
   </select>
   
+  <!-- 사원 등록 -->
   <insert id="insertMember" parameterType="MemberVo">
   	INSERT INTO EMPLOYEE(NO, POS_NO, DEPT_NO, ID, PWD, NAME, EMAIL, PHONE, ADDRESS,
-         ADDRESS_DETAIL, PHOTO_NAME, PHOTO_PATH, PERMISSION)
-        VALUES(SEQ_EMP_NO.nextval, #{posNo}, #{deptNo}, #{id}, #{pwd}, #{name}, #{email},
-        #{phone}, #{address}, #{addressDetail}, #{photoName}, #{photoPath},
-        #{permission})
+        ADDRESS_DETAIL, PHOTO_NAME, PHOTO_PATH, PERMISSION)
+        VALUES(SEQ_EMP_NO.nextval, #{posNo}, #{deptNo}, #{id}, #{pwd}, #{name}, #{email}, #{phone}, #{address}, 
+        #{addressDetail}, #{photoName}, #{photoPath}, #{permission})
   </insert>
   
+  <!-- 사원 상세 정보 -->
   <select id="selectMember" resultType="MemberVo">
-  	SELECT NO, NAME, POS_NO, DEPT_NO, ID, PWD, EMAIL, PHONE,
-        ADDRESS, ADDRESS_DETAIL, TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD') MODIFY_DATE, 
-        TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(RESIGN_DATE, 'YYYY-MM-DD') 
-        RESIGN_DATE, RESIGN_YN, PHOTO_NAME, PHOTO_PATH, PERMISSION FROM EMPLOYEE 
+  	SELECT NO, NAME, POS_NO, DEPT_NO, ID, PWD, EMAIL, PHONE, ADDRESS, ADDRESS_DETAIL, 
+        TO_CHAR(MODIFY_DATE, 'YYYY-MM-DD') MODIFY_DATE, 
+        TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, 
+        TO_CHAR(RESIGN_DATE, 'YYYY-MM-DD') RESIGN_DATE, 
+        RESIGN_YN, PHOTO_NAME, PHOTO_PATH, PERMISSION FROM EMPLOYEE 
         WHERE NO = #{no}
   </select>
   
+  <!-- 사원 정보 수정 -->
   <update id="updateMember" parameterType="MemberVo">
 	UPDATE EMPLOYEE SET NAME = #{name}, POS_NO = #{posNo}, DEPT_NO = #{deptNo}, ADDRESS = #{address},
 	  	ADDRESS_DETAIL = #{addressDetail}, PHONE = #{phone}, PHOTO_NAME = #{photoName}, PHOTO_PATH = #{photoPath},
@@ -108,6 +122,8 @@
 	  	</choose>
 	  WHERE NO = #{no}
   </update>
+  
+  <!-- 관리자 메인 > 사원정보 변동 리스트 -->
   <select id="selectMemberByDate" resultType="MemberVo">
   	SELECT e.name, to_char(MODIFY_DATE, 'YYYY.MM.DD HH24:MI') MODIFY_DATE, 
   	to_char(ENROLL_DATE, 'YYYY.MM.DD HH24:MI') ENROLL_DATE,
@@ -115,15 +131,15 @@
     ORDER BY sort DESC
   </select>
   
+  <!-- 관리자 메인 > 조직도 > 직위별 리스트 -->
   <select id="selectMemberCnt" resultType="map">
   SELECT P.NO, COUNT(POS_NO) CNT FROM EMPLOYEE E
 	RIGHT OUTER JOIN POSITION P ON E.POS_NO = P.NO
 	GROUP BY P.NO
-  
   </select>
   
+  <!-- 사원정보 영구 삭제 -->
   <delete id="deleteMember">
   	DELETE FROM EMPLOYEE WHERE NO = #{no}
   </delete>
-  
 </mapper>

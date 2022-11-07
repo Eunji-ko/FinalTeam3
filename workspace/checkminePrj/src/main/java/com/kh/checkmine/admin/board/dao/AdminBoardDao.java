@@ -22,12 +22,13 @@ public interface AdminBoardDao {
 
 	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
 
+	
 	//게시글 수 + 검색
 	int selectTotalKeyword(SqlSessionTemplate sst, Map<String, String> map);
 
 	
 	//공지사항 올리기
-	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
+	int insertBoard(SqlSessionTemplate sst, BoardVo boardVo);
 
 	int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
@@ -41,11 +42,11 @@ public interface AdminBoardDao {
 
 	
 	//수정
-	int edit(SqlSessionTemplate sst, BoardVo vo);
+	int edit(SqlSessionTemplate sst, BoardVo boardVo);
 
 	int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
-	int deleteAtt(SqlSessionTemplate sst, BoardVo vo);
+	int deleteAtt(SqlSessionTemplate sst, BoardVo boardVo);
 
 	//영구삭제
 	int hardDelete(SqlSessionTemplate sst, String boardNo);

@@ -31,18 +31,18 @@ public interface AdminMemberService {
 	String checkDup(String id);
 
 	//사원등록
-	int insertMember(MemberVo vo);
+	int insertMember(MemberVo memberVo);
 
 	//사원조회
 	MemberVo selectMember(String no);
 
 	//사원 수정
-	int edit(MemberVo vo);
+	int edit(MemberVo memberVo);
 
 	//조직도 인원
 	List<Map<String, String>> memberChart();
 
-	//설정 - 영구 삭제
-	int delete(String string);
+	//설정 - 사원 정보 영구 삭제
+	int delete(String memberNo);
 
 }

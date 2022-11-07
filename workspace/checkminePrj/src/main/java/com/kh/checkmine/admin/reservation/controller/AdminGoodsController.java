@@ -3,7 +3,6 @@ package com.kh.checkmine.admin.reservation.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.checkmine.admin.reservation.service.AdminGoodsService;
-import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
@@ -25,6 +23,9 @@ import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 import com.kh.checkmine.reservation.vo.PlaceVo;
 
+/*
+ * 관리자 > 공유물 관리
+*/
 @Controller
 @RequestMapping("admin/goods")
 public class AdminGoodsController {
@@ -35,7 +36,7 @@ public class AdminGoodsController {
 		this.service = service;
 	}
 	
-	//공유물 리스트
+	//공유물 리스트 (장소 / 공유물 정렬)
 	@GetMapping("list")
 	public String list(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam(value = "sort", defaultValue = "p") String sort, Model model) {
 		
@@ -56,7 +57,6 @@ public class AdminGoodsController {
 			model.addAttribute("goodsList", goodsList);
 			return "admin/reservation/goodsList";
 		}
-	
 	}
 	
 	//예약 리스트
@@ -73,8 +73,8 @@ public class AdminGoodsController {
 			str = g.toJson(bookList);
 		}
 		return str;
-
 	}
+	
 	
 	//선택 삭제
 	@PostMapping("delete")
@@ -96,26 +96,26 @@ public class AdminGoodsController {
 					 session.setAttribute("msg", "오류가 발생하였습니다."); 
 					 return "fail"; 
 				 }
-			 }
-			 
+			 } 
 		 }
 		 
 		return "ok";		
 	}
 
-	//공유물 등록
+	//공유물 등록 페이지
 	@GetMapping("add")
 	public String add() {
 		return "admin/reservation/add";
 	}
 	
+	//공유물 등록
 	@PostMapping("add")
 	public String add(@RequestParam String type, @RequestParam HashMap<String, String> map, HttpSession session) {
 		
 		int result = service.addList(map);
 
 		if(result == 1) {
-			session.setAttribute("msg", "등록되었습니다.");
+			session.setAttribute("msg", "정상적으로 등록되었습니다.");
 		}else {
 			session.setAttribute("msg", "오류가 발생하였습니다.");
 		}
@@ -123,7 +123,7 @@ public class AdminGoodsController {
 		return "redirect:/admin/goods/list";
 	}
 
-	//공유물 검색 - 장비
+	//공유물 검색 - 공유물
 	@GetMapping("searchGoods")
 	public String searchGoods(@RequestParam(value = "p", defaultValue = "1") int pno,  @RequestParam String option, @RequestParam String keyword, Model model) {
 		HashMap<String, String> map = new HashMap<>(2);
@@ -143,25 +143,21 @@ public class AdminGoodsController {
 	}
 	
 	//공유물 검색 - 장소
-		@GetMapping("searchPlace")
-		public String searchPlace(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
-			HashMap<String, String> map = new HashMap<>(2);
-			map.put("option", option);
-			map.put("keyword", keyword);
-			
-			int totalCount = service.selectKeywordPlaceCnt(map);
-			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
-			
-			List<PlaceVo> goodsList = service.selectPlaceKeyword(pv, map);
-			model.addAttribute("goodsList", goodsList);
-			model.addAttribute("pv", pv);
-			model.addAttribute("map", map);
-			return "admin/reservation/placeSearch";
-		}
-	
-	
-	
-	
-	
-
+	@GetMapping("searchPlace")
+	public String searchPlace(@RequestParam(value = "p", defaultValue = "1") int pno, @RequestParam String option, @RequestParam String keyword, Model model) {
+		HashMap<String, String> map = new HashMap<>(2);
+		map.put("option", option);
+		map.put("keyword", keyword);
+		
+		int totalCount = service.selectKeywordPlaceCnt(map);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
+		
+		List<PlaceVo> goodsList = service.selectPlaceKeyword(pv, map);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("pv", pv);
+		model.addAttribute("map", map);
+		
+		return "admin/reservation/placeSearch";
+		
+	}
 }

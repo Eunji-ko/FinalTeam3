@@ -67,7 +67,7 @@ public class AdminGoodsDaoImpl implements AdminGoodsDao{
 		return sst.insert("adminGoodsMapper.addList", map);
 	}
 
-	//검색결과 수
+	//검색 결과 - goods
 	@Override
 	public int selectGoodsTotalKeyword(SqlSessionTemplate sst, HashMap<String, String> map) {
 		return sst.selectOne("adminGoodsMapper.selectGoodsTotalKeyword", map);
@@ -81,6 +81,7 @@ public class AdminGoodsDaoImpl implements AdminGoodsDao{
 		return sst.selectList("adminGoodsMapper.selectSearchGoodsList", map, rb);
 	}
 
+	//검색 결과 - place
 	@Override
 	public int selectPlaceTotalKeyword(SqlSessionTemplate sst, HashMap<String, String> map) {
 		return sst.selectOne("adminGoodsMapper.selectPlaceTotalKeyword", map);

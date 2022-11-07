@@ -11,7 +11,7 @@ import com.kh.checkmine.common.PageVo;
 
 public interface BoardDao {
 
-	//게시물 리스트 - 공지사항
+	//게시물 리스트
 	int selectTotalCnt(SqlSessionTemplate sst, String type);
 
 	List<BoardVo> selectBoardList(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
@@ -22,11 +22,11 @@ public interface BoardDao {
 	List<BoardVo> selectBoardKeyword(SqlSessionTemplate sst, PageVo pv, String keyword);
 
 	//글 작성
-	int insertBoard(SqlSessionTemplate sst, BoardVo vo);
+	int insertBoard(SqlSessionTemplate sst, BoardVo boardVo);
 
 	int insertBoardAtt(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
-	//게시글 상세보기
+	//게시글 상세보기 + 조회수 증가
 	int increaseHit(SqlSessionTemplate sst, String no);
 
 	BoardVo selectOne(SqlSessionTemplate sst, String no);
@@ -42,7 +42,7 @@ public interface BoardDao {
 	//추천 기록 확인
 	int selectRecommend(SqlSessionTemplate sst, Map<String, String> map);
 
-	//추천 삭제
+	//추천 취소
 	int recommendDelete(SqlSessionTemplate sst, Map<String, String> map);
 
 	//게시글 삭제
@@ -51,9 +51,7 @@ public interface BoardDao {
 	//게시글 수정
 	int edit(SqlSessionTemplate sst, List<BoardAttVo> attVoList);
 
-	int edit(SqlSessionTemplate sst, BoardVo vo);
+	int edit(SqlSessionTemplate sst, BoardVo boardVo);
 	
-	int deleteAtt(SqlSessionTemplate sst, BoardVo vo);
-
-
+	int deleteAtt(SqlSessionTemplate sst, BoardVo boardVo);
 }

@@ -10,9 +10,8 @@ public interface ReplyService {
 	List<ReplyVo> selectReplyList(String no);
 
 	//댓글 작성
-	int reply(ReplyVo vo);
+	int reply(ReplyVo replyVo);
 
 	//댓글 삭제
-	int replyDelete(ReplyVo vo);
-
+	int replyDelete(ReplyVo replyVo);
 }

@@ -1,6 +1,5 @@
 package com.kh.checkmine.admin.dao;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,23 +16,23 @@ public class AdminDaoImpl implements AdminDao{
 
 	//로그인
 	@Override
-	public AdminVo selectOneById(AdminVo vo, SqlSessionTemplate sst) {
-		return sst.selectOne("adminMapper.selectOneById", vo);
+	public AdminVo selectOneById(AdminVo adminVo, SqlSessionTemplate sst) {
+		return sst.selectOne("adminMapper.selectOneById", adminVo);
 	}
 
 	//요약
 	 @Override 
 	 public HashMap<String, Integer> summary(SqlSessionTemplate sst) { 
 		return sst.selectOne("adminMapper.summary"); 
-		 }
+	}
 
-	 //게시글 리스트
+	//게시글 리스트
 	@Override
 	public List<BoardVo> selectBoardList(SqlSessionTemplate sst) {
 		return sst.selectList("boardMapper.selectBoardList"); 
 	}
 
-	//사원 리스트
+	//사원변동 리스트
 	@Override
 	public List<MemberVo> selectMemberList(SqlSessionTemplate sst) {
 		return sst.selectList("adminMemberMapper.selectMemberByDate"); 
@@ -44,10 +43,4 @@ public class AdminDaoImpl implements AdminDao{
 	public List<PlaceBookVo> selectBookList(SqlSessionTemplate sst) {
 		return sst.selectList("adminGoodsMapper.selectBookListByDate"); 
 	}
-	 
-	 
-
-	
-	
-
 }

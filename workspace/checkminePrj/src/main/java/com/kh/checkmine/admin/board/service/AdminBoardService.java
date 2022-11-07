@@ -25,10 +25,10 @@ public interface AdminBoardService {
 	int selectKeywordCnt(Map<String, String> map);
 
 	//게시글 올리기+첨부파일
-	int insertBoard(BoardVo vo, List<BoardAttVo> attVoList);
+	int insertBoard(BoardVo boardVo, List<BoardAttVo> attVoList);
 
-	//게시글 올리기
-	int insertBoard(BoardVo vo);
+	//게시글 올리기 (글만)
+	int insertBoard(BoardVo boardVo);
 
 	//상세보기
 	BoardVo selectOne(String no);
@@ -39,7 +39,7 @@ public interface AdminBoardService {
 	//게시물 수정
 	int edit(BoardVo vo, List<BoardAttVo> attVoList);
 
-	int edit(BoardVo vo);
+	int edit(BoardVo boardVo);
 
 	//영구 삭제
 	int hardDelete(String string);
@@ -47,7 +47,7 @@ public interface AdminBoardService {
 	//게시글 복원
 	int restoreBoard(String string);
 
-	//삭제된 게시글 관리
+	//삭제된 게시글 조회
 	int selectDeleteTotalCnt(String sort);
 
 	List<BoardVo> selectDeleteList(PageVo pv, String sort);

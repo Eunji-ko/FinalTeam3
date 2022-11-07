@@ -65,8 +65,8 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 
 	//사원등록
 	@Override
-	public int insertMember(SqlSessionTemplate sst, MemberVo vo) {
-		return sst.insert("adminMemberMapper.insertMember", vo);
+	public int insertMember(SqlSessionTemplate sst, MemberVo memberVo) {
+		return sst.insert("adminMemberMapper.insertMember", memberVo);
 	}
 
 	//사원조회
@@ -77,8 +77,8 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 
 	//사원 수정
 	@Override
-	public int updateMember(SqlSessionTemplate sst, MemberVo vo) {
-		return sst.update("adminMemberMapper.updateMember", vo);
+	public int updateMember(SqlSessionTemplate sst, MemberVo memberVo) {
+		return sst.update("adminMemberMapper.updateMember", memberVo);
 	}
 
 	//조직도
@@ -87,6 +87,7 @@ public class AdminMemberDaoImpl implements AdminMemberDao{
 		return sst.selectList("adminMemberMapper.selectMemberCnt");
 	}
 
+	//사원정보 영구 삭제
 	@Override
 	public int delete(SqlSessionTemplate sst, String memberNo) {
 		return sst.delete("adminMemberMapper.deleteMember", memberNo);

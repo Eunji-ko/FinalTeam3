@@ -9,29 +9,21 @@ import com.kh.checkmine.admin.vo.AdminVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
-import com.kh.checkmine.reservation.vo.PlaceVo;
 
 public interface AdminDao {
 	
 	//selectOne(로그인)
-	AdminVo selectOneById(AdminVo vo, SqlSessionTemplate sst);
+	AdminVo selectOneById(AdminVo adminVo, SqlSessionTemplate sst);
 
-	
-	
 	//요약 
 	HashMap<String, Integer> summary(SqlSessionTemplate sst);
-
 
 	//게시글 리스트
 	List<BoardVo> selectBoardList(SqlSessionTemplate sst);
 
-
-	//사원 리스트
+	//사원변동 리스트
 	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
-
 
 	//예약 리스트
 	List<PlaceBookVo> selectBookList(SqlSessionTemplate sst);
-	 
-
 }

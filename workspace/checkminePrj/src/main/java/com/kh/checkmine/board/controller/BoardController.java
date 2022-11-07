@@ -1,18 +1,14 @@
 package com.kh.checkmine.board.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kh.checkmine.board.service.BoardService;
-import com.kh.checkmine.board.service.ReplyService;
 import com.kh.checkmine.board.vo.BoardAttVo;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.common.FileUploader;
@@ -35,17 +30,18 @@ import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
 
+/*
+ * 사용자 > 게시판
+*/
 @Controller
 @RequestMapping("board")
 public class BoardController {
 	
 	private final BoardService service;
-	private final ReplyService rs;
 	
 	@Autowired
-	public BoardController(BoardService service, ReplyService rs) {
-		this.service = service;
-		this.rs = rs;	
+	public BoardController(BoardService service) {
+		this.service = service;	
 	}
 	
 	//게시물 조회
@@ -58,20 +54,18 @@ public class BoardController {
 		int totalCount = service.selectTotalCnt(type);
 
 		PageVo pv = null;
-		if("gallery".equals(type)) {
+		if("gallery".equals(type)) { //갤러리는 8개씩 조회
 			pv = Pagination.getPageVo(totalCount, pno, 5, 8);
 		}else {
 			pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		}
 		
-
 		List<BoardVo> boardList = service.selectBoardList(pv, map);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("type", type);
 		model.addAttribute("sort", sort);
 		model.addAttribute("pv", pv);
 
-		
 		return "board/"+type+"List";
 	}
 	
@@ -88,13 +82,13 @@ public class BoardController {
 		model.addAttribute("pv", pv);
 		model.addAttribute("keyword", keyword);
 		
-		return "board/boardSearch";
+		return "board/search";
 	}
 	
-	//글 작성
+	//게시물 작성 페이지
 	@GetMapping("write")
 	public String write() {
-		return "board/boardWrite";
+		return "board/write";
 	}
 
 	//게시물 작성
@@ -103,7 +97,7 @@ public class BoardController {
 		String loginMemberNo = ((MemberVo)session.getAttribute("loginMember")).getNo();
 		vo.setWriter(loginMemberNo);
 		
-		//타입 지정
+		//타입 지정 (완료 후 관련 목록으로 보내기 위함)
 		String type = "";
 		
 		if("N".equals(vo.getType())) {
@@ -131,11 +125,8 @@ public class BoardController {
 				att.setName(changeName);
 				att.setFilePath(savePath);
 				attVoList.add(att);
-
-	}
-
+			}
 			result = service.insertBoard(vo, attVoList);
-
 		}else {
 			//첨부파일 없이 글만 작성
 			result = service.insertBoard(vo);
@@ -144,7 +135,6 @@ public class BoardController {
 		if(result > 0) {
 			session.setAttribute("alertMsg", "정상적으로 등록되었습니다.");
 			return "redirect:/board/list/"+type;
-			
 		}else {
 			//문제 발생하면 이전에 올렸던 파일 제거
 			if(!attVoList.isEmpty()) {
@@ -155,7 +145,6 @@ public class BoardController {
 			}
 			session.setAttribute("alertMsg", "죄송합니다. 문제가 발생하였습니다.");
 			return "redirect:/board/list/"+type;
-			
 		}
 	}
 	
@@ -169,15 +158,15 @@ public class BoardController {
 		map.put("memberNo", member.getNo());
 		
 		
-		BoardVo vo = service.selectOne(no);
+		BoardVo boardVo = service.selectOne(no);
 		List<BoardAttVo> attList = service.selectAttList(no);
 		int recommendList = service.selectRecommend(map);
 	
-		model.addAttribute("board", vo);
+		model.addAttribute("board", boardVo);
 		model.addAttribute("attList", attList);
 		model.addAttribute("recommendList", recommendList);
 			
-		return "board/boardDetail";
+		return "board/detail";
 	}
 	
 	
@@ -192,6 +181,7 @@ public class BoardController {
 		//추천 기록이 있는지 확인
 		int recommendList = service.selectRecommend(map);
 		
+		//있으면 지우고 없으면 insert
 		if(recommendList == 0) {
 			service.recommend(map);	
 		}else {
@@ -208,8 +198,6 @@ public class BoardController {
 		String str = g.toJson(recommend);
 
 		return str;
-
-		
 	}
 	
 	
@@ -218,6 +206,7 @@ public class BoardController {
 	public String delete(@PathVariable String no, @PathVariable String type, HttpSession session, Model model) {
 		int result = service.delete(no);
 		
+		//타입 지정 (완료 후 관련 목록으로 보내기 위함)
 		if("N".equals(type)) {
 			type = "notice";
 		}else if("C".equals(type)){
@@ -225,6 +214,7 @@ public class BoardController {
 		}else {
 			type = "gallery";
 		}
+		
 		if(result == 1) {
 			session.setAttribute("alertMsg", "게시물을 삭제하였습니다.");
 			return "redirect:/board/list/"+type;
@@ -234,36 +224,19 @@ public class BoardController {
 		}
 	}
 	
-	
 	//게시물 수정
 	@GetMapping("edit/{no}")
 	public String edit(@PathVariable String no, Model model) {
-		BoardVo vo = service.selectOne(no);
-		model.addAttribute("board", vo);
+		BoardVo boardVo = service.selectOne(no);
+		model.addAttribute("board", boardVo);
 		
-		return "board/boardEdit";
+		return "board/edit";
 		
 	}
 	
-	
 	//게시물 수정
 	@PostMapping("edit/{no}")
-	public String edit(@PathVariable String no, BoardVo vo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
-		//기존 파일 삭제 (저장소 내 파일)
-		List<BoardAttVo> attList = service.selectAttList(no);
-		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
-		
-		if(!attList.isEmpty()) {
-			for(int i = 0; i < attList.size(); i++) {
-				File file = new File(savePath + attList.get(i).getName());
-				if(file.exists()) {
-					file.delete();
-				}
-				
-			}
-					
-		}
-		
+	public String edit(@PathVariable String no, BoardVo boardVo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
 		//새로 첨부된 파일 처리
 		int result = 0;
 		
@@ -271,6 +244,19 @@ public class BoardController {
 		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
+			List<BoardAttVo> attList = service.selectAttList(no);
+			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
+			
+			//기존 파일 삭제 후 업로드 (저장소 내 파일)
+			if(!attList.isEmpty()) {
+				for(int i = 0; i < attList.size(); i++) {
+					File file = new File(savePath + attList.get(i).getName());
+					if(file.exists()) {
+						file.delete();
+					}
+				}			
+			}
+			
 			for(int i = 0; i < fArr.length; i++) {
 				BoardAttVo att = new BoardAttVo();
 				MultipartFile f = fArr[i];
@@ -281,17 +267,15 @@ public class BoardController {
 				att.setBNo(no);
 				attVoList.add(att);
 			}
-		
-			
-			result = service.edit(vo, attVoList);
+			result = service.edit(boardVo, attVoList);
 		}else {
 			//제목 또는 내용만 수정 시
-			result = service.edit(vo);
+			result = service.edit(boardVo);
 		}
+		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시물을 수정하였습니다.");
 			return "redirect:/board/detail/" + no;
-			
 		}else {
 			session.setAttribute("alertMsg", "처리 중 문제가 발생하였습니다.");
 			return "redirect:/board/list/notice";
@@ -300,7 +284,7 @@ public class BoardController {
 	}
 	
 	
-	//썸머노트 파일 처리
+	//썸머노트 본문 파일 처리
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req)  {
@@ -310,12 +294,10 @@ public class BoardController {
 		String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
 		String changeName = FileUploader.fileUpload(multipartFile, savePath);
 
-			jsonObject.addProperty("fileName", changeName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("fileName", changeName);
 			jsonObject.addProperty("responseCode", "success");
 		
 		String a = jsonObject.toString();
 		return a;
 	}
-	
-	
 }

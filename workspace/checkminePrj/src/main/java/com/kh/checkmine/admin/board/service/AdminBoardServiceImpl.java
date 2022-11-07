@@ -36,7 +36,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	@Override
 	public int selectTotalCnt(String sort) {
 		int total = dao.selectBoardTotal(sst, sort);
-		
 		return total;
 	}
 
@@ -66,10 +65,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	//게시글 + 첨부파일
 	@Override
 	@Transactional
-	public int insertBoard(BoardVo vo, List<BoardAttVo> attVoList) {
+	public int insertBoard(BoardVo boardVo, List<BoardAttVo> attVoList) {
 		
 		//게시글
-		int result1 = dao.insertBoard(sst, vo);
+		int result1 = dao.insertBoard(sst, boardVo);
 
 		//첨부파일
 		int	result2 = dao.insertBoardAtt(sst, attVoList);
@@ -79,8 +78,8 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	//게시글 올리기
 	@Override
-	public int insertBoard(BoardVo vo) {
-		int result = dao.insertBoard(sst, vo);
+	public int insertBoard(BoardVo boardVo) {
+		int result = dao.insertBoard(sst, boardVo);
 		return result;
 	}
 
@@ -104,12 +103,12 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	//게시물 수정 (+첨부파일)
 	@Override
 	@Transactional
-	public int edit(BoardVo vo, List<BoardAttVo> attVoList) {
+	public int edit(BoardVo boardVo, List<BoardAttVo> attVoList) {
 		//게시글
-		int result1 = dao.edit(sst, vo);
+		int result1 = dao.edit(sst, boardVo);
 
 		//기존 첨부파일 삭제
-		int result2 = dao.deleteAtt(sst, vo);
+		int result2 = dao.deleteAtt(sst, boardVo);
 		
 		//첨부파일
 		int	result3 = dao.edit(sst, attVoList);
@@ -120,8 +119,8 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	//게시글만 수정
 	@Override
-	public int edit(BoardVo vo) {
-		return dao.edit(sst, vo);
+	public int edit(BoardVo boardVo) {
+		return dao.edit(sst, boardVo);
 
 	}
 
