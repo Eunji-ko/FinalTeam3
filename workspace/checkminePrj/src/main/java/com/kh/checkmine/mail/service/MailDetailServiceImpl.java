@@ -75,4 +75,12 @@ public class MailDetailServiceImpl implements MailDetailService{
 		return vo;
 	}
 
+	/**
+	 * 읽음으로 표시
+	 */
+	@Override
+	public int updateReadStatus(String mailNo) {
+		return dao.updateReadStatus(sst, mailNo);
+	}
+
 }

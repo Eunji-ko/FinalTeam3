@@ -27,4 +27,11 @@ public interface MailDetailService {
 	 */
 	MailSendFormVo getSaveMailVo(String mailNo);
 
+	/**
+	 * 읽음으로 표시
+	 * @param mailNo
+	 * @return
+	 */
+	int updateReadStatus(String mailNo);
+
 }

@@ -64,19 +64,18 @@
                             <div class="list-wrap">
 	                            <c:forEach items="${AddrListInner }" var="addrVo">
 		                            <div class="list">
-		                                <input type="checkbox" value="${addrVo.no}">
+		                                <input type="checkbox" id="${addrVo.no}">
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
 		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
-		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                                <a class="send" href="/checkmine/mail/reply?t=${addrVo.email}"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
                             </div>
                             <!-- 여기까지 -->
 
                             <div id="inner-footer" class="footer-menu">
-                                <input type="checkbox" onclick="selectAll(this, '#inner-box');">
-                                <a href=""><img src="${imgPath}/trash_icon.png"></a>
+                                <a href="javascript:return false;" onclick="deleteChecked('inner-box');"><img src="${imgPath}/trash_icon.png"></a>
                             </div>
                         </div>
 
@@ -93,15 +92,14 @@
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
 		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
-		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                                <a class="send" href="/checkmine/mail/reply?t=${addrVo.email}"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
 							</div>
                             <!-- 여기까지 -->
 
                             <div id="acc-footer" class="footer-menu">
-                                <input type="checkbox" onclick="selectAll(this, '#acc-box');">
-                                <a href=""><img src="${imgPath}/trash_icon.png"></a>
+                                <a href="javascript:return false;" onclick="deleteChecked('inner-box');"><img src="${imgPath}/trash_icon.png"></a>
                             </div>
                         </div>
 
@@ -118,15 +116,14 @@
 		                                <span class="name">${addrVo.name}</span>
 		                                <span class="addr">${addrVo.email}</span>
 		                                <a class="delete" href="javascript:return false;" onclick="addrDelete(this);" id="${addrVo.no}"><img src="${imgPath}/trash_icon.png"></a>
-		                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
+		                                <a class="send" href="/checkmine/mail/reply?t=${addrVo.email}"><img src="${imgPath}/mail_d_reply.png"></a>
 		                            </div>
 	                            </c:forEach>
 							</div>
                             <!-- 여기까지 -->
 
                             <div id="outer-footer" class="footer-menu">
-                                <input type="checkbox" onclick="selectAll(this, '#outer-box');">
-                                <a href=""><img src="${imgPath}/trash_icon.png"></a>
+                                <a href="javascript:return false;" onclick="deleteChecked('inner-box');"><img src="${imgPath}/trash_icon.png"></a>
                             </div>
                         </div>
                     </div>
@@ -134,17 +131,11 @@
                     <div>
                         <div id="addr-search">
                             <img src="${imgPath}/mail_search.png">
-                            <input type="text" placeholder="주소록 검색">
+                            <input id="searchInput" type="text" placeholder="주소록 검색" onkeyup="if(window.event.keyCode==13){addrSearch();}">
                         </div>
 
                         <div id="addr-search-result">
                             <!-- 결과 리스트 가져오기 -->
-                            <div class="result">
-                                <span>박찬규</span>
-                                <span>chanrb0966@gmail.com</span>
-                                <a class="delete" href="주소록에서_삭제"><img src="${imgPath}/trash_icon.png"></a>
-                                <a class="send" href="이_주소로_메일_쓰기"><img src="${imgPath}/mail_d_reply.png"></a>
-                            </div>
                         </div>
                     </div>
 
@@ -158,14 +149,7 @@
     <%@ include file="/WEB-INF/views/mail/addr_modal.jsp" %>
     
     <script type="text/javascript">
-		// 전체선택 전체 해재
-	    function selectAll(selectAll, targetId)  {
-	        const checkboxes = document.querySelectorAll(targetId +' input[type="checkbox"]');
-	        
-	        checkboxes.forEach((checkbox) => {
-	            checkbox.checked = selectAll.checked;
-	        })
-		}
+		
 		
         //하나 삭제
         function addrDelete(target){
@@ -184,6 +168,64 @@
             }
         }
 		
+        //체크된 것 삭제
+        function deleteChecked(targetId){
+            const checked =  document.querySelectorAll('#'+targetId+' input[type="checkbox"]:checked');
+            
+            if(confirm(checked.length + '개의 주소록 삭제하시겠습니끼?')){   
+                var addrNoArr = new Array();
+                
+                for(var i = 0; i<checked.length; i++){
+                    addrNoArr[i] = checked[i].id; 
+                }
+                
+                $.ajax({
+                    type: "post",
+                    url: "/checkmine/mail/addr/deleteAll",
+                    traditional : true,
+                    data: {addrNoArr:addrNoArr},
+                    success: function (response) {
+                        if(response == '1'){
+                            alert(checked.length + '개 삭제되었습니다!');
+                            window.location.reload();
+                        }else{
+                            alert("fail");
+                            window.location.reload();
+                        }
+                    }
+                });
+                
+            }
+        }
+
+        function addrSearch(){
+            const keyword = document.querySelector('#searchInput').value;
+
+            $.ajax({
+                type: "post",
+                url: "/checkmine/mail/addr/search",
+                data: {keyword:keyword},
+                success: function (resListStr) {
+                    const list = JSON.parse(resListStr);
+                    console.log(list);
+                    
+                    document.querySelector('#searchInput').value = "";
+
+                    const resultDiv = document.querySelector("#addr-search-result");
+                    resultDiv.innerHTML = "";
+
+                    for(var i = 0;i<list.length ; i++){
+                        resultDiv.innerHTML = resultDiv.innerHTML
+                            +'<div class="result">'
+                            +   '<span>' + list[i].name + '</span>'    
+                            +   '<span>' + list[i].email + '</span>'
+                            +   '<a class="delete" id="' + list[i].no + '" href="javascript:return false;"  onclick="addrDelete(this);"><img src="${imgPath}/trash_icon.png"></a>'
+                            +   '<a class="send" href="/checkmine/mail/reply?t=' + list[i].email + '"><img src="${imgPath}/mail_d_reply.png"></a>'
+                            +'</div>'
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

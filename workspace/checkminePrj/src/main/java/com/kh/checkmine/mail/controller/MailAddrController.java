@@ -1,6 +1,9 @@
 package com.kh.checkmine.mail.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.checkmine.mail.service.MailAddrService;
 import com.kh.checkmine.mail.service.MailService;
 import com.kh.checkmine.mail.vo.MailAddrVo;
@@ -96,5 +101,42 @@ public class MailAddrController {
 		int result = service.deleteAddr(targetNo);
 		
 		return Integer.toString(result);
+	}
+	
+	/**
+	 * 주소록 일괄 삭제
+	 * @param addrNoArr
+	 * @return
+	 */
+	@PostMapping("mail/addr/deleteAll")
+	@ResponseBody
+	public String addrDeleteAll(@RequestParam("addrNoArr") String[] addrNoArr) {
+		
+		int result = service.addrDeleteAll(addrNoArr);
+		
+		return Integer.toString(result);
+	}
+	
+	/**
+	 * 주소록 검색
+	 * @param keyword
+	 * @return
+	 */
+	@PostMapping(value = "mail/addr/search", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String addrSearch(String keyword , HttpSession session) {
+		Gson gson = new Gson();
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
+		
+		HashMap<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("keyword", keyword);
+		searchMap.put("memberNo", memberNo);
+		
+		System.out.println(searchMap);
+		
+		ArrayList<MailAddrVo> resList = (ArrayList<MailAddrVo>) service.addrSearch(searchMap);
+		
+		
+		return gson.toJson(resList);
 	}
 }

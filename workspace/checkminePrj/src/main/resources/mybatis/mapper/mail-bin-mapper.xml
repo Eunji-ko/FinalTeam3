@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mailBinMapper">
+	<select id="selectMailBinList" resultType="com.kh.checkmine.mail.vo.MailBinVo">
+		SELECT * FROM
+		((SELECT 
+		    NO
+		    , 'ME' AS SENDER
+		    , TITLE
+		    , CONTENT
+		    , SEND_DATE
+		    , 'S' AS TYPE
+		    , 'S' AS READ
+		    , 'S' AS IMPORTANCE
+		FROM MAIL
+		WHERE S_STATUS = 'Y' AND SENDER = #{memberNo})
+		UNION ALL
+		(SELECT
+		    MR.NO
+		    , E.EMAIL
+		    , M.TITLE
+		    , M.CONTENT
+		    , M.SEND_DATE AS
+		    , MR.TYPE
+		    , MR.READ
+		    , MR.IMPORTANCE
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
+		WHERE MR.STATUS = 'Y' AND M.SENDER = #{memberNo}))
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	<select id="selectListCount" resultType="int">
+		SELECT COUNT(*) FROM
+		((SELECT 
+		    NO
+		    , 'ME' AS SENDER
+		    , TITLE
+		    , CONTENT
+		    , SEND_DATE
+		    , 'S' AS TYPE
+		FROM MAIL
+		WHERE S_STATUS = 'Y' AND SENDER = #{memberNo})
+		UNION ALL
+		(SELECT
+		    MR.NO
+		    , E.EMAIL
+		    , M.TITLE
+		    , M.CONTENT
+		    , M.SEND_DATE AS
+		    , MR.TYPE
+		FROM MAIL_REF MR
+		INNER JOIN MAIL M ON MR.MAIL_NO = M.NO
+		INNER JOIN EMPLOYEE E ON M.SENDER = E.NO
+		WHERE MR.STATUS = 'Y' AND M.SENDER = #{memberNo}))
+		ORDER BY SEND_DATE DESC
+	</select>
+</mapper>

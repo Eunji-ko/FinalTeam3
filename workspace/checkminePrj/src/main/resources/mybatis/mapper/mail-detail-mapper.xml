@@ -59,4 +59,9 @@
 	<select id="selectSaveMailFileList" resultType="com.kh.checkmine.mail.vo.MailAttVo">
 		SELECT * FROM MAIL_SAVE_ATT WHERE MAIL_SAVE_NO = #{mailNo}
 	</select>
+	
+	<!-- 읽음으로 표시 -->
+	<update id="updateReadStatus">
+		UPDATE MAIL_REF SET READ = 'Y' WHERE NO = #{mailNo}
+	</update>
 </mapper>

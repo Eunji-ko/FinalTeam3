@@ -48,4 +48,10 @@
 	<delete id="deleteAddr">
 		DELETE FROM ADDRESS WHERE NO = #{targetNo}
 	</delete>
+	
+	<select id="selectSearchList" resultType="com.kh.checkmine.mail.vo.MailAddrVo">
+		SELECT * FROM ADDRESS 
+		WHERE EMP_NO = #{memberNo} 
+		AND (NAME LIKE '%' ||  #{keyword} || '%' OR EMAIL LIKE '%' ||  #{keyword} || '%')
+	</select>
 </mapper>

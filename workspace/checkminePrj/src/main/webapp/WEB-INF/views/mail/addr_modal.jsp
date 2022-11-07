@@ -61,6 +61,9 @@
                     }else if(window.location.href.includes("addr")){
                         alert("저장되었습니다!!!");
                         window.location.reload();
+                    }else if(window.location.href.includes("detail")){
+                        alert("저장되었습니다!!!");
+                        myModal.hide();
                     }
                 	console.log(data);
                 }

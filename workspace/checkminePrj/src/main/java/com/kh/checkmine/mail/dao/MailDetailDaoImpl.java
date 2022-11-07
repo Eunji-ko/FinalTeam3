@@ -71,5 +71,13 @@ public class MailDetailDaoImpl implements MailDetailDao{
 	public List<MailAttVo> selectSaveMailFileList(SqlSessionTemplate sst, String mailNo) {
 		return sst.selectList("mailDetailMapper.selectSaveMailFileList", mailNo);
 	}
+
+	/**
+	 * 읽음으로 표시
+	 */
+	@Override
+	public int updateReadStatus(SqlSessionTemplate sst, String mailNo) {
+		return sst.update("mailDetailMapper.updateReadStatus",mailNo);
+	}
 	
 }
