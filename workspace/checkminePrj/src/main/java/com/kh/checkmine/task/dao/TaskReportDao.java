@@ -50,6 +50,16 @@ public interface TaskReportDao {
 	//수신참조용 멤버 목록
 	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
 
+	//보고서 본문 수정
+	int updateReport(SqlSessionTemplate sst, TaskReportVo reportVo);
 
+	//보고서 삭제
+	int delete(SqlSessionTemplate sst, String no);
+
+	//첨부파일 삭제
+	int deleteFile(SqlSessionTemplate sst, String no);
+
+	//수신참고 삭제
+	int deleteAtt(SqlSessionTemplate sst, String no);
 
 }

@@ -67,7 +67,7 @@ function tag(usersList){
                 closeOnSelect: false,
                 enabled: 0,
                 classname: 'users-list',
-                searchKeys: ['name', 'deptNo']  // very important to set by which keys to search for suggesttions when typing
+                searchKeys: ['name', 'deptNo', 'posNo']  // very important to set by which keys to search for suggesttions when typing
             },
             templates: {
                 tag: tagTemplate,
@@ -105,7 +105,7 @@ function tag(usersList){
                 name: "Add all",
                 deptNo: tagify.settings.whitelist.reduce(function (remainingSuggestions, item) {
                     return tagify.isTagDuplicate(item.value) ? remainingSuggestions : remainingSuggestions + 1
-                }, 0) + " Members"
+                }, 0) + " 명"
             }]
             )
         }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -121,5 +122,50 @@ public class TaskReportServiceImpl implements TaskReportService {
 	public List<MemberVo> selectMemberList() {
 		return reportDao.selectMemberList(sst);
 	}
+	
+	//수정
+	@Override
+	@Transactional
+	public int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList, List<TaskReportFileVo> fileVoList) {
+		int fileDel = reportDao.deleteFile(sst, reportVo.getNo());
+		int attDel = reportDao.deleteAtt(sst, reportVo.getNo());
+		
+		int result1 = reportDao.updateReport(sst, reportVo);
+		int result2 = 1; //수신,참조 첨부
+		int result3 = 1; //파일 첨부
+
+		for(int i = 0; i < attVoList.size(); i++) {
+			result2 = reportDao.insertReportAtt(sst, attVoList.get(i));
+		}
+		
+		for(int j = 0; j < fileVoList.size(); j++) {
+			result3 *= reportDao.insertFile(sst, fileVoList.get(j)); 
+		}
+		
+		return result1 * result2 * result3;
+	}
+	
+	@Override
+	@Transactional
+	public int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList) {
+		int fileDel = reportDao.deleteFile(sst, reportVo.getNo());
+		int attDel = reportDao.deleteAtt(sst, reportVo.getNo());
+		
+		int result1 = reportDao.updateReport(sst, reportVo);
+		int result2 = 1; //수신,참조 첨부
+
+		for(int i = 0; i < attVoList.size(); i++) {
+			result2 = reportDao.insertReportAtt(sst, attVoList.get(i));
+		}
+		
+		return result1 * result2;
+	}
+
+	//삭제
+	@Override
+	public int delete(String no) {
+		return reportDao.delete(sst,no);
+	}
+
 
 }

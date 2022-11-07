@@ -143,8 +143,6 @@ public class TaskReportController {
 				}
 			}
 			
-			System.out.println("attVoList ::: " + attVoList);
-			
 			if(!fArr[0].isEmpty() && fArr != null) {
 				String savePath = req.getServletContext().getRealPath("/resources/upload/task/report/");
 				
@@ -260,10 +258,98 @@ public class TaskReportController {
 		return "task/report-edit";
 	}
 	
+	//보고서 수정
+	@PostMapping("edit/{no}")
+	private String edit(@PathVariable String no, TaskReportVo reportVo, TaskReportAttVo reportAttVo, TaskReportFileVo reprotFileVo, HttpServletRequest req, HttpSession session) {
+		reportVo.setNo(no);
+		 
+		String attNoA = reportAttVo.getAttNoA();
+		String attNoR = reportAttVo.getAttNoR();
+	
+		int reportResult = 0;
+		int attNoAResult = 0;
+		int attNoRResult = 0;
+
+		//파일 등록
+		MultipartFile[] fArr = reprotFileVo.getFiles();
+		List<TaskReportFileVo> fileVoList = new ArrayList<TaskReportFileVo>();
+		
+		//수신 참조 등록
+		Gson gson = new Gson();
+		List<Map> listAttNoA = gson.fromJson(attNoA, ArrayList.class);
+		List<Map> listAttNoR = gson.fromJson(attNoR, ArrayList.class);
+		List<TaskReportAttVo> attVoList = new ArrayList<TaskReportAttVo>();
+		
+		//att 추가
+		if(listAttNoA != null) { //attA not null 일 때
+			for(Map m : listAttNoA) {
+				TaskReportAttVo attVo = new TaskReportAttVo();
+				String value = (String)m.get("value");
+				attVo.setEmpNo(value);
+				attVo.setType("A");
+				attVoList.add(attVo); 
+			}
+			
+			if(listAttNoR != null){
+				for(Map m : listAttNoR) {
+					TaskReportAttVo attVo = new TaskReportAttVo();
+					String value = (String)m.get("value");
+					attVo.setEmpNo(value);
+					attVo.setType("R");
+					attVoList.add(attVo);
+				}
+			}
+			
+			if(!fArr[0].isEmpty() && fArr != null) {
+				String savePath = req.getServletContext().getRealPath("/resources/upload/task/report/");
+				
+				for(int i = 0; i < fArr.length; i++) {
+					TaskReportFileVo fileVo = new TaskReportFileVo();
+					MultipartFile f = fArr[i];
+					
+					String changeName = FileUploader.fileUpload(f, savePath);
+					fileVo.setName(changeName);
+					fileVo.setPath(savePath);
+					fileVoList.add(fileVo);
+				}
+				System.out.println("fileVoList ::: " + fileVoList);
+				reportResult = reportService.edit(reportVo, attVoList, fileVoList);
+			}else {
+				reportResult = reportService.edit(reportVo, attVoList);
+			}
+		}
+		
+		
+		if(reportResult == 1) {
+			session.setAttribute("alertMsg", "보고서를 수정했습니다.");
+			return "redirect:/task/report/detail/" + no;
+		}else { //지웠던 파일 복구도 해야하나?
+			//문제 발생 시 파일 제거
+			if(!fileVoList.isEmpty()) {
+				for(int i=0; i<fileVoList.size(); i++) {
+					String savePath = fileVoList.get(i).getPath()+fileVoList.get(i).getName();
+					new File(savePath).delete();
+				}
+			}
+			session.setAttribute("alertMsg", "보고서를 수정하지 못했습니다.");
+			return "redirect:/task/report/detail/" + no;
+		}
+	}
+	
 	//보고서 삭제
-	@GetMapping("delete")
-	public String reportDelete() {
-		return "redirect:/task/order/list/1";
+	@GetMapping("del/{no}")
+	public String reportDelete(@PathVariable String no, HttpSession session, Model model) {
+		
+		int result = reportService.delete(no);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "보고서를 삭제했습니다.");
+			return "redirect:/task/order/list/1";
+		}else {
+			session.setAttribute("alertMsg", "보고서를 삭제하지 못했습니다.");
+			return "redirect:/";
+		}
+		
 	}
 
 	//게시물 검색

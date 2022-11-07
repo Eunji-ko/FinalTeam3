@@ -245,4 +245,24 @@
 		</choose>
 		ORDER BY R.NO DESC
 	</select>
+	
+	<!-- 보고서 삭제 -->
+	<update id="deleteReport">
+		UPDATE REPORT
+			SET
+				DEL = 'Y'
+		WHERE NO = #{no}
+	</update>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteFile">
+		DELETE FROM REPORT_FILE
+		WHERE REP_NO = #{no}
+	</delete>
+	
+	<!-- 수신참조 삭제 -->
+	<delete id="deleteAtt">	
+		DELETE FROM REPORT_ATT
+		WHERE REP_NO = #{no}
+	</delete>
 </mapper>

@@ -101,4 +101,26 @@ public class TaskReportDaoImpl implements TaskReportDao {
 		return sst.selectList("adminMemberMapper.selectMemberList");
 	}
 
+	@Override
+	public int delete(SqlSessionTemplate sst, String no) {
+		return sst.update("taskReportMapper.deleteReport", no);
+	}
+
+	@Override
+	public int updateReport(SqlSessionTemplate sst, TaskReportVo reportVo) {
+		return sst.update("taskReportMapper.updateReport", reportVo);
+	}
+
+	//첨부파일 삭제
+	@Override
+	public int deleteFile(SqlSessionTemplate sst, String no) {
+		return sst.delete("taskReportMapper.deleteFile", no);
+	}
+
+	//수신참조 삭제
+	@Override
+	public int deleteAtt(SqlSessionTemplate sst, String no) {
+		return sst.delete("taskReportMapper.deleteAtt", no);
+	}
+
 }
