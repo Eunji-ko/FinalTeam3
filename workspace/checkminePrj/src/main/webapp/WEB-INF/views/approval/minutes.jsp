@@ -2,11 +2,6 @@
     pageEncoding="UTF-8"%>
  
 <style>
-	#draft-wrapper, form{
-		width : 100%;
-		height : 100%;
-		border: none;
-	}
 	#main-top{
 		width : 100%;
 		height : 200px;
@@ -67,12 +62,9 @@
 		height: 10%;
 		display : grid;
 		grid-template-columns : 1fr 6fr;
-		border-top : 1px solid black;
-		border-bottom : 1px solid black;
 		margin-bottom: 15px;
 	}
 	#approval-title{
-		border-right : 1px solid black;
 		font-size : 20px;
 	}
 	#approval-content-div{
@@ -103,6 +95,9 @@
 		background-color: #5d736f;
 		margin: auto;
 		display: block;
+	}
+	#minutes-ta{
+		height: 200px;
 	}
 </style>
 
@@ -148,7 +143,7 @@
 			<div id="approval-content" class="minutes-grid">
 				<div id="minutes-purpose" class="input-group-text">참석자</div>
 				<input type="text" maxlength="50" class="form-control" name="emp" value="${minutesVo.emp}">
-				<textarea class="form-control" maxlength="2000" name="content">${minutesVo.content}</textarea>
+				<textarea class="form-control" id="minutes-ta" maxlength="2000" name="content">${minutesVo.content}</textarea>
 			</div>
 			
 		</div>

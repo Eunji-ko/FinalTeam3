@@ -73,6 +73,12 @@
 	a:hover{
 		color: #5d736f !important;
 	}
+	#approval-wrapper{
+		height: 800px;
+	}
+	.tab-pane{
+		height: 800px !important;
+	}
 </style>
 <c:if test="${docVo ne null}">
 	<style>

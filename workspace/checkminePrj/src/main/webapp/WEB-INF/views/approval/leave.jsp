@@ -2,11 +2,6 @@
     pageEncoding="UTF-8"%>
  
 <style>
-	#draft-wrapper, form{
-		width : 100%;
-		height : 100%;
-		border: none;
-	}
 	#main-top{
 		width : 100%;
 		height : 200px;
@@ -67,12 +62,9 @@
 		height: 10%;
 		display : grid;
 		grid-template-columns : 1fr 6fr;
-		border-top : 1px solid black;
-		border-bottom : 1px solid black;
 		margin-bottom: 15px;
 	}
 	#approval-title{
-		border-right : 1px solid black;
 		font-size : 20px;
 	}
 	#approval-content-div{

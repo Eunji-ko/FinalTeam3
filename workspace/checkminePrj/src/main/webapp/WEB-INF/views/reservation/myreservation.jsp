@@ -49,6 +49,14 @@
         display: grid;
         grid-template-columns: repeat(1, 1fr);
     }
+    #side-goods::after{
+        content: "";
+        width: 60%;
+        border-bottom: 1px solid #5D736F;
+        height: 0px;
+        margin-left: 30px;
+        margin-top: 30px;
+    }
 
     #side-place{
         display: grid;
@@ -59,12 +67,13 @@
         width: 70%;
         height: 90;
         display: grid;
+        grid-template-rows: 1fr 4fr;
     }
 
     #content-top{
         width: 100%;
         height: 20%;
-        padding-left: 2%;
+        padding-left: 30px;
         grid-column: 1/span 2;
         margin-bottom: 0%;
     }
@@ -75,6 +84,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         text-align: center;
+        border-right: 1px solid gray;
     }
 
     #content-goods>h3{
@@ -129,7 +139,7 @@
             <div id="side">
                 
                 <div id="side-content">
-
+                    
                     <h4><a href="/checkmine/reservation/myreservation">나의 예약</a></h4>
 
                     <div id="side-goods">
@@ -153,6 +163,7 @@
             <div class="content">
 
                 <div id="content-top">
+                    <br><br>
                     <h1>나의 예약</h1>
                 </div>
     
