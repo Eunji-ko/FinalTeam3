@@ -7,8 +7,6 @@
 <meta charset="UTF-8">
 <title>CHECKMINE 공유물관리</title>
 <style>
-
-
     main > div {
         width: 1389px;
         margin: 10px auto;
@@ -20,6 +18,7 @@
         justify-content:space-between;
         align-items: center;
     }
+
     #area2{
         height: 65px;
         display: flex;
@@ -32,11 +31,13 @@
         margin: 0px auto;
         border: 1px solid lightgray;
     }
+
     #pageArea {
         height: 50px;
         display: flex;
         justify-content: center;
     }
+
     #header{
         font-size: 20px;
         font-weight: bolder;
@@ -53,6 +54,7 @@
     #filter{
         width: 110px;
     }
+
     #option{
         width: 183px;
     }
@@ -62,14 +64,15 @@
         display: inline-block;
         border: none;
     }
+
     #search{
         background:url(${root}/resources/img/admin/search.png);
         background-repeat: no-repeat;
         width:20px;
         height:17px;
         border: none;
-        
     }
+
     #listArea > table{
         width: 100%;
         border-collapse: collapse;
@@ -108,6 +111,7 @@
         border-spacing: 0 15px;
         table-layout: fixed;
     }
+
     .modal-body{
         overflow: auto;
     }
@@ -125,12 +129,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     .modal-body > table td{
         word-break :break-word;
     }
-
-   
-
 </style>
 </head>
 <body>
