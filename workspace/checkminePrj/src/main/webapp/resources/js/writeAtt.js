@@ -1,13 +1,5 @@
 
-var usersList = [ //이부분에 data를 넣어서 70열의 whitelist에 넣고 싶어요.
-{ "value": 1, "name": 'Emma Smith', "deptNo": '인사부', "posNo" : '사원'},
-{ value: 2, name: 'Max Smith', email: 'max@kt.com'},
-{ value: 3, name: 'Sean Bean', email: 'sean@dellito.com'},
-{ value: 4, name: 'Brian Cox', email: 'brian@exchange.com'},
-{ value: 5, name: 'Francis Mitcham', email: 'f.mitcham@kpmg.com.au'},
-{ value: 6, name: 'Dan Wilson', email: 'dam@consilting.com'},
-{ value: 7, name: 'Ana Crown', email: 'ana.cf@limtel.com'},
-{ value: 8, name: 'John Miller', email: 'miller@mapple.com'},
+var attList = [
 ];
 
 
@@ -16,13 +8,16 @@ $(function(){ //데이터 가져온 코드
         url : "write/attList",
         method:"GET",
         success:function(att){
-                usersList = att;
-                tag(usersList);
+                $.each(att,function(idx, v){
+                    att[idx].value = v.no;
+                })
+                attList = att;
+                tag(attList);
         }
     })
 });
 
-function tag(usersList){
+function tag(attList){
 
     var inputElm = document.querySelector('#att');
 
@@ -73,7 +68,7 @@ function tag(usersList){
                 tag: tagTemplate,
                 dropdownItem: suggestionItemTemplate
             },
-            whitelist: usersList,
+            whitelist: attList,
         })
 
         tagify.on('dropdown:show dropdown:updated', onDropdownShow)

@@ -13,8 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
-<script defer src="${root}/resources/js/tagify-att.js?v=<%=System.currentTimeMillis() %>"></script>
-<script defer src="${root}/resources/js/tagify-ratt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
+<script defer src="${root}/resources/js/writeAtt.js?v=<%=System.currentTimeMillis() %>"></script>
+<script defer src="${root}/resources/js/writeRatt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
 
 <!DOCTYPE html>
 <html>

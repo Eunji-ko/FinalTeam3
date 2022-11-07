@@ -13,6 +13,9 @@
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
 <head>
+    <script defer src="${root}/resources/js/editAtt.js?v=<%=System.currentTimeMillis() %>"></script>
+    <script defer src="${root}/resources/js/editRatt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
+    
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -255,22 +258,26 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="division" id="title-diveision">제　목</div><div id="title"><input type="text" name="title" value={vo.title}></div>
+                        <div class="division" id="title-diveision">제　목</div><div id="title"><input type="text" name="title" value="${vo.title}"></div>
                         <div class="division">수　신</div>
                         <div class="destination">
-                            <input type="text" class="tag" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요." value="${aVo.empNo}">
+                            <input type="text" class="tag" id="att" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
                         </div>
                         <div class="division">참　조</div>
                         <div class="reference">
-                            <input type="text" class="tag" name="attNoR" placeholder="참조할 직원의 이름을 적으세요." value="${rVo.empNo}">
+                            <input type="text" class="tag" id="ratt" name="attNoR" placeholder="참조할 직원의 이름을 적으세요.">
                         </div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division">
-                            <textarea name="content" id="text" cols="30" rows="10" value=${vo.content}></textarea>
+                            <textarea name="content" id="text" cols="30" rows="10">${vo.content}</textarea>
                         </div>
                         <div class="division attachments">첨부 파일</div>
                         <div class="file"><input type="file" id="upload-file" name="files" multiple></div>
-                        <div id="show-files">${fileVo.name}</div>
+                        <div id="show-files">
+                            <c:forEach items="${fileVo}" var="fv">
+                                ${fv.name}
+                            </c:forEach>
+                        </div>
 
                     </div>
                     <div id="submit-area">
@@ -323,38 +330,6 @@
                 target2.innerHTML = fileList;
             })
         }
-
-        //tagify
-        const input = document.querySelector('input[name=attNoA]');
-        const input2 = document.querySelector('input[name=attNoR]');
-        let tagify = new Tagify(input, {//드롭다운
-            whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "MaxScript internal language 3D Studio Max", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "destination-tags", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        }); // initialize Tagify
-
-        let tagify2 = new Tagify(input2, {
-            whitelist: ["..."], // 화이트리스트 배열
-            maxTags: 100, // 최대 허용 태그 갯수
-            
-            dropdown: {
-                maxItems: 20,           // 드롭다운 메뉴에서 몇개 정도 항목을 보여줄지
-                classname: "reference-tag", // 드롭다운 메뉴 엘리먼트 클래스 이름. 이걸로 css 선택자로 쓰면 된다.
-                enabled: 0,             // 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
-                closeOnSelect: false    // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
-            }
-        })
-        // 태그가 추가되면 이벤트 발생
-        tagify.on('add', function() {
-          console.log(tagify.value); // 입력된 태그 정보 객체
-        })
-
     </script>
 </body>
 </html>

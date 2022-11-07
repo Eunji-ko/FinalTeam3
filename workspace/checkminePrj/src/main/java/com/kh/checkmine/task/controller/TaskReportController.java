@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -58,7 +59,6 @@ public class TaskReportController {
 	@GetMapping("list/{pno}")
 	public String reportList(Model model, @PathVariable int pno, HttpSession session) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println("목록" + loginMember);
 		
 		int totalCount = reportService.selectTotalCnt();
 		
@@ -78,7 +78,7 @@ public class TaskReportController {
 	public String reportWrite(HttpSession session, Model model) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println("작성 화면" + loginMember);
+		
 		String empNo = loginMember.getNo();
 		
 		List<TaskOrderVo> taskList = orderService.selectListForAtt(empNo);
@@ -155,7 +155,7 @@ public class TaskReportController {
 					fileVo.setPath(savePath);
 					fileVoList.add(fileVo);
 				}
-				System.out.println("fileVoList ::: " + fileVoList);
+				
 				reportResult = reportService.write(reportVo, attVoList, fileVoList);
 			}else {
 				reportResult = reportService.write(reportVo, attVoList);
@@ -181,19 +181,31 @@ public class TaskReportController {
 		
 	}
 	
-	//멤버 목록(ajax) 요청 핸들러?
+	//보고서 작성 - 멤버 목록(ajax) 요청 핸들러
 	@GetMapping(value = "write/attList", produces = "application/json; charset=UTF-8")
-	public String attList() {
-		List<MemberVo> attList = reportService.selectMemberList();
+	@ResponseBody
+	public String writeAttList() {
+		List<MemberVo> attList = orderService.selectMemberList();
 		
 		Gson gson = new Gson();
 		
-		
 		String jsonStr = gson.toJson(attList);
-		System.out.println(jsonStr);
+		
 		return jsonStr;
 	}
 	
+	//보고서 수정 - 멤버 목록(ajax) 요청 핸들러
+	@GetMapping(value = "edit/attList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String editAttList() {
+		List<MemberVo> attList = orderService.selectMemberList();
+		
+		Gson gson = new Gson();
+		
+		String jsonStr = gson.toJson(attList);
+		
+		return jsonStr;
+	}
 	
 	//보고서 상세보기
 	@GetMapping("detail/{no}")
@@ -215,7 +227,6 @@ public class TaskReportController {
 	public ResponseEntity<ByteArrayResource> download(@PathVariable String no, @PathVariable String fno, HttpServletRequest req) throws Exception{
 		List<TaskReportFileVo> fileVo = reportService.selectFileForNo(fno);
 		
-		System.out.println(fileVo);
 		//파일 객체 준비
 		String rootPath = req.getServletContext().getRealPath("/resources/upload/task/report/");
 		String name = fileVo.get(0).getName();
@@ -238,7 +249,7 @@ public class TaskReportController {
 	public String reportEdit(@PathVariable String no, Model model, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println("작성 화면" + loginMember);
+		
 		String empNo = loginMember.getNo();
 		
 		List<TaskOrderVo> taskList = orderService.selectListForAtt(empNo);
@@ -261,8 +272,9 @@ public class TaskReportController {
 	//보고서 수정
 	@PostMapping("edit/{no}")
 	private String edit(@PathVariable String no, TaskReportVo reportVo, TaskReportAttVo reportAttVo, TaskReportFileVo reprotFileVo, HttpServletRequest req, HttpSession session) {
+		
 		reportVo.setNo(no);
-		 
+		
 		String attNoA = reportAttVo.getAttNoA();
 		String attNoR = reportAttVo.getAttNoR();
 	
@@ -286,6 +298,7 @@ public class TaskReportController {
 				TaskReportAttVo attVo = new TaskReportAttVo();
 				String value = (String)m.get("value");
 				attVo.setEmpNo(value);
+				attVo.setRepNo(no);
 				attVo.setType("A");
 				attVoList.add(attVo); 
 			}
@@ -295,6 +308,7 @@ public class TaskReportController {
 					TaskReportAttVo attVo = new TaskReportAttVo();
 					String value = (String)m.get("value");
 					attVo.setEmpNo(value);
+					attVo.setRepNo(no);
 					attVo.setType("R");
 					attVoList.add(attVo);
 				}
@@ -309,10 +323,11 @@ public class TaskReportController {
 					
 					String changeName = FileUploader.fileUpload(f, savePath);
 					fileVo.setName(changeName);
+					fileVo.setRepNo(no);
 					fileVo.setPath(savePath);
 					fileVoList.add(fileVo);
 				}
-				System.out.println("fileVoList ::: " + fileVoList);
+
 				reportResult = reportService.edit(reportVo, attVoList, fileVoList);
 			}else {
 				reportResult = reportService.edit(reportVo, attVoList);
@@ -323,7 +338,7 @@ public class TaskReportController {
 		if(reportResult == 1) {
 			session.setAttribute("alertMsg", "보고서를 수정했습니다.");
 			return "redirect:/task/report/detail/" + no;
-		}else { //지웠던 파일 복구도 해야하나?
+		}else { 
 			//문제 발생 시 파일 제거
 			if(!fileVoList.isEmpty()) {
 				for(int i=0; i<fileVoList.size(); i++) {
@@ -365,9 +380,7 @@ public class TaskReportController {
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 15);
 		
 		List<TaskReportVo> voList = reportService.selectReportKeyword(pv, map);
-
-		System.out.println("검색 voList ::: " + voList);
-
+		
 		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
 		model.addAttribute("type", type);
@@ -376,4 +389,5 @@ public class TaskReportController {
 		return "task/report-search";
 	}
 	
+
 }

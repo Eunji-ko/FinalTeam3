@@ -15,7 +15,7 @@
 		JOIN EMPLOYEE E
 		ON T.ORDERER = E.NO
 		JOIN DEPARTMENT D
-		ON T.DEPT_NO = D.NO
+		ON E.DEPT_NO = D.NO
 	</select>
 	
 	<select id="selectScheduleList" resultType="ScheduleVo">

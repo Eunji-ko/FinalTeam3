@@ -8,7 +8,6 @@
 		(
 		    NO,
 		    ORDERER,
-		    DEPT_NO,
 		    TITLE,
 		    CONTENT,
 		    START_DATE,
@@ -19,7 +18,6 @@
 		(
 		    SEQ_TASK_NO.NEXTVAL,
 		    #{orderer},
-		    #{deptNo},
 		    #{title},
 		    #{content},
 		    #{startDate},
@@ -90,7 +88,6 @@
 		    T.NO,
 		    E.NAME AS ORDERER,
 		    A.ATT_NAME,
-		    T.DEPT_NO,
 		    T.TITLE,
 		    T.CONTENT,
 		    T.ENROLL_DATE,
@@ -131,7 +128,7 @@
 		JOIN EMPLOYEE E
 		ON E.NO = T.ORDERER
 		JOIN DEPARTMENT D
-		ON D.NO = T.DEPT_NO
+		ON D.NO = E.DEPT_NO
 		JOIN POSITION P
 		ON P.NO = E.POS_NO
 		WHERE T.NO = #{no}
@@ -237,7 +234,6 @@
 		    T.NO,
 		    E.NAME AS ORDERER,
 		    A.ATT_NAME,
-		    T.DEPT_NO,
 		    T.TITLE,
 		    T.CONTENT,
 		    T.ENROLL_DATE,

@@ -61,9 +61,21 @@ public class ScheduleController {
 			calendarVo.setContent(orderList.get(i).getContent());
 			calendarVo.setStart(orderList.get(i).getStartDate());
 			calendarVo.setEnd(orderList.get(i).getEndDate());
-			calendarVo.setBackgroundColor("#5D736F");
-			calendarVo.setBorderColor("#5D736F");
-			calendarVo.setColor("#5D736F");
+			calendarVo.setImportance(orderList.get(i).getImportance());
+			
+			if("N".equals(orderList.get(i).getImportance())) {//보통			
+				calendarVo.setBackgroundColor("#5D736F");
+				calendarVo.setBorderColor("#5D736F");
+				calendarVo.setColor("#5D736F");
+			}else if("I".equals(orderList.get(i).getImportance())) {//중요				
+				calendarVo.setBackgroundColor("#e66200");
+				calendarVo.setBorderColor("#e66200");
+				calendarVo.setColor("#e66200");
+			}else {//긴급
+				calendarVo.setBackgroundColor("#e61919");
+				calendarVo.setBorderColor("#e61919");
+				calendarVo.setColor("#e61919");
+			}
 			calendarVo.setTextColor("white");
 
 			calendarList.add(calendarVo);

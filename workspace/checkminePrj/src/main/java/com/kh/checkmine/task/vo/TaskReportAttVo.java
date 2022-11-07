@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TaskReportAttVo {
 	private String no;
-	private String reptNo;
+	private String repNo;
 	private String empNo;
 	private String type;
 	

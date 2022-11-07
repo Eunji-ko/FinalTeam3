@@ -62,4 +62,10 @@ public interface TaskReportDao {
 	//수신참고 삭제
 	int deleteAtt(SqlSessionTemplate sst, String no);
 
+	//수신참고 수정
+	int editReportAtt(SqlSessionTemplate sst, TaskReportAttVo taskReportAttVo);
+
+	//파일 수정
+	int editFile(SqlSessionTemplate sst, TaskReportFileVo taskReportFileVo);
+
 }

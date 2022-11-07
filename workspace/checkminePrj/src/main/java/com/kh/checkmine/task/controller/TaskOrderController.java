@@ -85,7 +85,7 @@ public class TaskOrderController {
 		model.addAttribute("aVo", aVo);
 		model.addAttribute("rVo", rVo);
 		model.addAttribute("fileVo", fileVo);
-		System.out.println(fileVo);
+		
 		return "task/order-detail";
 	}
 	
@@ -115,15 +115,15 @@ public class TaskOrderController {
 	public String orderWrite(TaskOrderVo orderVo, TaskOrderAttVo orderAttVo, TaskOrderFileVo orderFileVo, HttpServletRequest req, HttpSession session) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
+		
+		
 		//지시서 입력
 		String orderer = loginMember.getNo();
-		String deptNo = loginMember.getDeptNo();
 				
 		String attNoA = orderAttVo.getAttNoA();
 		String attNoR = orderAttVo.getAttNoR();
 
 		orderVo.setOrderer(orderer);
-		orderVo.setDeptNo(deptNo);
 		
 		int orderResult = 0;
 		int attNoAResult = 0;
@@ -139,7 +139,7 @@ public class TaskOrderController {
 		List<Map> listAttNoR = gson.fromJson(attNoR, ArrayList.class);
 		List<TaskOrderAttVo> attVoList = new ArrayList<TaskOrderAttVo>();
 		
-		//att 추가 테스트 (안되면 삭제)
+		//att 추가
 		if(listAttNoA != null) { //attA not null 일 때
 			for(Map m : listAttNoA) {
 				TaskOrderAttVo attVo = new TaskOrderAttVo();
@@ -149,7 +149,7 @@ public class TaskOrderController {
 				attVoList.add(attVo); 
 			}
 			
-			if(listAttNoR != null){
+			if(listAttNoR != null){ //attR not null 일 때
 				for(Map m : listAttNoR) {
 					TaskOrderAttVo attVo = new TaskOrderAttVo();
 					String value = (String)m.get("value");
@@ -159,7 +159,7 @@ public class TaskOrderController {
 				}
 			}
 			
-			if(!fArr[0].isEmpty() && fArr != null) {
+			if(!fArr[0].isEmpty() && fArr != null) { //파일이 있을 때
 				String savePath = req.getServletContext().getRealPath("/resources/upload/task/order/");
 				
 				for(int i = 0; i < fArr.length; i++) {
@@ -172,10 +172,10 @@ public class TaskOrderController {
 					fileVoList.add(fileVo);
 				}
 				orderResult = orderService.write(orderVo, attVoList, fileVoList);
-			}else {
+			}else {//파일 없을 때.
 				orderResult = orderService.write(orderVo, attVoList);
 			}
-		}
+		}//insert 완료
 		
 		
 		if(orderResult == 1) {
@@ -232,8 +232,6 @@ public class TaskOrderController {
 		
 		List<TaskOrderVo> voList = orderService.selectTaskKeyword(pv, map);
 
-		System.out.println("검색 voList ::: " + voList);
-
 		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
 		model.addAttribute("type", type);
@@ -254,4 +252,5 @@ public class TaskOrderController {
 		System.out.println(jsonStr);
 		return jsonStr;
 	}
+
 }

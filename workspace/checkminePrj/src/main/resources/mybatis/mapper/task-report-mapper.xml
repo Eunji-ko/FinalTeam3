@@ -108,7 +108,7 @@
 	<!-- 보고서 상세 조회 -->
 	<select id="selectOneByNo" resultType="TaskReportVo">
  		SELECT 
- 			T.TITLE,
+ 			R.TITLE,
     		R.NO,
 		    E.NAME AS SENDER,
 		    D.NAME AS DEPT_NO,
@@ -130,7 +130,7 @@
 	</select>
 	
 	<!-- 보고서 상세 - 수신 -->
-	<select id="selectAttOne" resultType="TaskReportAttVo">
+ 	<select id="selectAttOne" resultType="TaskReportAttVo">
  		SELECT
 		    A.REP_NO,
 		    LISTAGG(CONCAT(CONCAT(E.NAME, ' '), P.NAME), ',') WITHIN GROUP (ORDER BY E.NAME) AS EMP_NO,
@@ -146,6 +146,7 @@
 		    A.REP_NO,
 		    A.TYPE
 	</select>
+
 	
 	<select id="selectAttROne" resultType="TaskReportAttVo">
 		SELECT
@@ -254,6 +255,15 @@
 		WHERE NO = #{no}
 	</update>
 	
+	<update id="updateReport">
+		UPDATE REPORT
+			SET
+				TITLE = #{title},
+				CONTENT = #{content},
+				MODIFY_DATE = SYSDATE
+		WHERE NO = #{no}
+	</update>
+	
 	<!-- 첨부파일 삭제 -->
 	<delete id="deleteFile">
 		DELETE FROM REPORT_FILE
@@ -265,4 +275,39 @@
 		DELETE FROM REPORT_ATT
 		WHERE REP_NO = #{no}
 	</delete>
+	
+	<!-- 수신참조 수정 -->
+	<insert id="editReportAtt">
+		INSERT INTO REPORT_ATT
+ 		(
+	 		NO,
+			EMP_NO,
+			REP_NO,
+			TYPE
+		)
+		VALUES
+		(
+			SEQ_REP_ATT_NO.NEXTVAL,
+			#{empNo},
+			#{repNo},
+			#{type}
+		)
+	</insert>
+	<!-- 파일 수정 -->
+	<insert id="editFile">
+		INSERT INTO REPORT_FILE
+ 		(
+ 			NO,
+			REP_NO,
+			NAME,
+			PATH
+ 		)
+ 		VALUES
+ 		(
+ 			SEQ_REP_FILE_NO.NEXTVAL,
+ 			#{repNo},
+ 			#{name},
+ 			#{path}
+ 		)
+	</insert>
 </mapper>
