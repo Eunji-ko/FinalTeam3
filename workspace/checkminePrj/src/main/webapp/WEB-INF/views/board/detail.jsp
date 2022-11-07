@@ -184,7 +184,14 @@
                 <div id="info">
                 	<div id="recommendCnt">추천 ${board.recommendCnt}</div>
                     <div>조회수 ${board.hit}</div>
-                    <div id="writer"><b>${board.department}&nbsp${board.writer}</b></div>
+                    <div id="writer">
+                        <b>
+                            <c:choose>
+                                <c:when test="${board.department eq '-'}">${board.writer}</c:when>
+                                <c:otherwise>${board.department}&nbsp${board.writer}</c:otherwise>
+                            </c:choose>
+                        </b>
+                    </div>
                     <div id="dateArea">
                         <c:choose>
                             <c:when test="${board.modifyDate ne null}">

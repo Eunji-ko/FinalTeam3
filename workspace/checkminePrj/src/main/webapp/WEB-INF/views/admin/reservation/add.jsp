@@ -87,6 +87,7 @@
 
     .form-check-input:checked {
         background-color: #5d736f !important;
+        border: none;
     }
    
     #footer{
