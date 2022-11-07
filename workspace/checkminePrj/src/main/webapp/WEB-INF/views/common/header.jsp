@@ -50,8 +50,9 @@
             color: #000000;
             margin-bottom: 5rem;
         }
-
-
+        #alarm-title{
+            margin-bottom: 25px;
+        }
     </style>
     <!-- 제이쿼리 -->    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -91,8 +92,7 @@
 					</span>
                 </a>
                 <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton1" style="width: 560px;">
-                    <h5 class="fw-bold" style="margin-bottom: 25px;">알림 목록</h5>
-
+                    <h5 class="fw-bold" id="alarm-title">알림 목록</h5>
                     <c:forEach items="${alarmList}" var="list">
                         <div id="list-div${list.no}">
                             <li class="d-flex align-items-center">

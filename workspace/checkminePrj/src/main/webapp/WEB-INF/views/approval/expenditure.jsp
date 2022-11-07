@@ -2,11 +2,6 @@
     pageEncoding="UTF-8"%>
  
 <style>
-	#draft-wrapper, form{
-		width : 100%;
-		height : 100%;
-		border: none;
-	}
 	#main-top{
 		width : 100%;
 		height : 200px;
@@ -67,12 +62,9 @@
 		height: 10%;
 		display : grid;
 		grid-template-columns : 1fr 6fr;
-		border-top : 1px solid black;
-		border-bottom : 1px solid black;
 		margin-bottom: 15px;
 	}
 	#approval-title{
-		border-right : 1px solid black;
 		font-size : 20px;
 	}
 	#approval-content-div{
@@ -96,6 +88,8 @@
 		display: block;
 	}
 	#expenditure-table-div{
+		overflow-y: scroll;
+		height: 270px;
 		grid-column: 1/3;
 		grid-row: 1/3;
 	}
@@ -211,7 +205,7 @@
 		//칸 추가
 		let eidNum = 0;
 		$('#eplus-btn').click(function(){
-			if(eidNum <5){
+			if(eidNum <10){
 				$('#eplus-btn').prop('disabled', false);
 				$('#eminus-btn').prop('disabled', false);
 				const eoriDiv = document.querySelector('#etable-div');
