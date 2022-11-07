@@ -25,4 +25,20 @@ public interface MailBinDao {
 	 */
 	int getListCount(SqlSessionTemplate sst, String memberNo);
 
+	/**
+	 * 받은메일 휴지통에서 삭제
+	 * @param sst
+	 * @param recNo
+	 * @return
+	 */
+	int deleteReceiveMailBin(SqlSessionTemplate sst, String recNo);
+
+	/**
+	 * 보낸메일 휴지통에서 삭제
+	 * @param sst
+	 * @param sendNo
+	 * @return
+	 */
+	int deleteSendMailBin(SqlSessionTemplate sst, String sendNo);
+
 }

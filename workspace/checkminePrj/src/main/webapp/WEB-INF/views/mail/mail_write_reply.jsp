@@ -184,7 +184,7 @@
                 <span style="font-size: 30px;">메일</span>
                 <div>
                     <img src="${imgPath}/mail_search.png">
-                    <input type="text" placeholder="메일검색">
+                    <input type="text" placeholder="메일검색" onkeyup="if(window.event.keyCode==13){mailSearch(this);}">
                 </div>
             </div>
 
@@ -364,6 +364,11 @@
         }else{}
     }
 
+  //메일 검색
+    function mailSearch(input){
+        const keyword = input.value;
+        location.href = '/checkmine/mail/search?k='+keyword;
+    }
 
 </script>
 
