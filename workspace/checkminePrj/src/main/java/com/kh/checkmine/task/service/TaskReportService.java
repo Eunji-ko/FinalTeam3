@@ -45,4 +45,12 @@ public interface TaskReportService {
 	int selectKeywordCnt(Map<String, String> map);
 	List<TaskReportVo> selectReportKeyword(PageVo pv, Map<String, String> map);
 
+	//수정
+	int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList, List<TaskReportFileVo> fileVoList);
+	int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList);
+	
+	//삭제
+	int delete(String no);
+
+
 }
