@@ -1,8 +1,8 @@
 package com.kh.checkmine.member.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,13 +19,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.checkmine.alarm.service.AlarmService;
 import com.kh.checkmine.approval.service.ApprovalService;
 import com.kh.checkmine.approval.vo.ApprovalDocVo;
+import com.kh.checkmine.board.vo.BoardVo;
+import com.kh.checkmine.board.vo.ReplyVo;
 import com.kh.checkmine.common.FileUploader;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.commute.service.CommuteService;
 import com.kh.checkmine.commute.vo.CommuteVo;
+import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.member.service.MemberService;
 import com.kh.checkmine.member.vo.MemberVo;
+import com.kh.checkmine.schedule.vo.ScheduleVo;
+import com.kh.checkmine.task.vo.TaskOrderVo;
 
 @Controller
 @RequestMapping("member")
@@ -34,13 +40,15 @@ public class MemberController {
 	private final MemberService ms;
 	private final ApprovalService as;
 	private final CommuteService cs;
+	private final MailService mls;
 	private final AlarmService alarmService;
 	
 	@Autowired
-	public MemberController(MemberService ms, ApprovalService as, CommuteService cs, AlarmService alarmService) {
+	public MemberController(MemberService ms, ApprovalService as, CommuteService cs, MailService mls, AlarmService alarmService) {
 		this.ms = ms;
 		this.as = as;
 		this.cs = cs;
+		this.mls = mls;
 		this.alarmService = alarmService;
 	}
 	
@@ -68,6 +76,32 @@ public class MemberController {
 				}
 			}
 			
+			//메일 수 보여주기
+			int mailCnt = mls.getReceiveListCount(loginMember.getNo());
+			model.addAttribute("mailCnt", mailCnt);
+			
+			//메일함 메인 화면에 보여주기
+			List<MailVo> mailList = ms.selectMailList(loginMember.getNo());
+			if(mailList != null) {
+				model.addAttribute("mailList", mailList);
+			}
+			
+			//업무 메인 화면에 보여주기
+			List<TaskOrderVo> taskList = ms.selectTaskList(loginMember.getNo());
+			if(taskList != null) {
+				model.addAttribute("taskList", taskList);
+			}
+			
+			//일정 메인 화면에 보여주기
+			List<ScheduleVo> eventList = ms.selectEventList(loginMember.getNo());
+			if(eventList != null) {
+				model.addAttribute("eventList", eventList);
+			}
+			
+			//공유물 수 보여주기
+			int publicCnt = ms.getPublicCnt(loginMember.getNo());
+			System.out.println(publicCnt);
+			model.addAttribute("publicCnt", publicCnt);
 		}
 		
 		return "member/main";
@@ -91,6 +125,19 @@ public class MemberController {
 		return idFind;
 	}
 	
+	@PostMapping("findPwd")
+	@ResponseBody
+	public String findPwd(MemberVo vo) {
+		
+		String mailFind = ms.findMailByVo(vo);
+		
+		if(mailFind == null) {
+			mailFind = "x";
+		}
+		
+		return mailFind;
+	}
+	
 	@PostMapping("login")
 	public String login(MemberVo vo, HttpSession session, Model model) {
 		
@@ -110,8 +157,9 @@ public class MemberController {
 			
 			//알람 넣기
 			alarmService.insertTotalAlarm(loginMember.getNo());
+			alarmService.insertNoticeAlarm(loginMember.getNo());
 			
-			return "member/main";
+			return "redirect:/member/main";
 		}else {
 			//로그인 실패
 			session.setAttribute("alertMsg", "로그인 실패 !");
@@ -126,7 +174,22 @@ public class MemberController {
 	}
 	
 	@GetMapping("mypage")
-	public String myPage() {
+	public String myPage(HttpSession session, Model model) {
+		//로그인 정보 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		List<BoardVo> boardList = ms.selectBoardList(loginMember.getNo());
+		
+		if(boardList != null) {
+			model.addAttribute("boardList", boardList);
+		}
+		
+		List<ReplyVo> replyList = ms.selectReplyList(loginMember.getNo());
+		
+		if(replyList != null) {
+			model.addAttribute("replyList", replyList);
+		}
+		
 		return "member/mypage";
 	}
 	
@@ -143,6 +206,20 @@ public class MemberController {
 		}else {
 			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다 !");
 			return "redirect:/member/mypage";
+		}
+		
+	}
+	
+	@GetMapping("changePwdById")
+	public String changePwdById(MemberVo vo, HttpSession session) {
+		
+		int result = ms.changePwdById(vo);
+		
+		if(result == 1) {
+			return "redirect:/";
+		}else {
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다 !");
+			return "redirect:/";
 		}
 		
 	}
@@ -204,25 +281,22 @@ public class MemberController {
 		}
 	}
 	
-//	@GetMapping("kakaoLogin")
-//	public String kakaoLogin(@RequestParam String code, HttpSession session) throws IOExceptio {
-//		 System.out.println(code);
-//         
-//         //접속토큰 get
-//         String kakaoToken = kakaoService.getReturnAccessToken(code);
-//         
-//         //접속자 정보 get
-//         Map<String,Object> result = kakaoService.getUserInfo(kakaoToken);
-//         System.out.println("컨트롤러 출력"+result.get("nickname")+result.get("profile_image"));
-//         SessionConfigVO configVO =new SessionConfigVO();
-//         configVO.setUser_name((String)result.get("nickname"));
-//         configVO.setProfile_img((String)result.get("profile_image"));
-//         
-//         session.setAttribute("sessionConfigVO", configVO);
-//         /*로그아웃 처리 시, 사용할 토큰 값*/
-//         session.setAttribute("kakaoToken", kakaoToken);
-//     return "redirect:/";
-//	} 
+	@RequestMapping("/kakaoLogin")
+	public String login(@RequestParam("code") String code, HttpSession session) {
+	    String access_Token = ms.getAccessToken(code);
+	    HashMap<String, Object> userInfo = ms.getUserInfo(access_Token);
+	    System.out.println("login Controller : " + userInfo);
+	    
+	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+	    if(userInfo.get("email") != null) {
+	        session.setAttribute("userId", userInfo.get("email"));
+	        session.setAttribute("access_Token", access_Token);
+	    }
+	    
+	    return "redirect:/member/findIdPwd";
+	    //https://antdev.tistory.com/34 참고했음
+	}
+
 	
 	
 

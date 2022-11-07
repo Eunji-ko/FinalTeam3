@@ -42,7 +42,7 @@
             </div> 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-success">인증</button>
+            <button type="button" class="btn btn-success" id="findPwdBtn">인증</button>
         </div>
         </div>
     </div>
@@ -55,4 +55,40 @@
       $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
     });
 
+</script>
+
+<script>
+    $('#findPwdBtn').click(function(){
+        const userId = $('#floatingId').val();
+        const userDept = $('#floatingDept').val();
+        const userPos = $('#floatingPosi').val();
+        const userPhone = $('#floatingPhone').val();
+
+        if(userId && userDept && userPos && userPhone) {
+            $.ajax({
+                type : 'post',
+                url : '/checkmine/member/findPwd',
+                data : {
+                    "id" : userId,
+                    "deptNo" : userDept,
+                    "posNo" : userPos,
+                    "phone" : userPhone
+                },
+                success : function (data) {
+                    if(data == 'x'){
+                        alert('해당 사원 정보를 찾을 수 없습니다 !');
+                    }else{
+                        $.ajax({
+                            type : 'get',
+                            url : '/checkmine/sendPwd?email='+data,
+                            success : function (x) {
+                                alert('등록된 메일로 임시 비밀번호가 전송되었습니다 !');
+                                location.href = '/checkmine/member/changePwdById?id=' + userId + '&pwd=' + x;
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    })
 </script>

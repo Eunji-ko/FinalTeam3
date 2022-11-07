@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn checkmine-btn" value="신청하기">
+            <input type="submit" class="btn checkmine-btn" value="변경하기">
           </div>
         </div>
       </div>

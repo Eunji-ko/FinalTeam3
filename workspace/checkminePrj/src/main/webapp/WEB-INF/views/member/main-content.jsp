@@ -135,22 +135,22 @@
 
     /* 출근 및 퇴근하면 확인하고 버튼 비활성화 시키기 */
     #attend-btn:hover {
-        background-color: #b4ddd5;
+        background-color: #8dcfc2;
+        border-color: #8dcfc2;
         font-weight: 600;
     }
     #attend-btn {
         cursor: pointer;
         margin-left: 17px;
         margin-top: 24px;
-        padding-top: 6px;
+        border-color: #B0D9D1;
         float: left;
         width: 120px;
         height: 35px;
         background-color: #B0D9D1;
-        border-radius: 17px;
+        border-radius: 15px;
         font-size: 14px;
         text-align: center;
-        box-shadow: 1px 2px 2px rgb(170, 170, 170);
         font-weight: 500;
     }
     #main-content {
@@ -163,7 +163,7 @@
         width: 100%;
         height: 350px;
         display: grid;
-        grid-template-columns: 600px 400px;
+        grid-template-columns: 550px 450px;
         grid-template-rows: 350px;
         align-content: center;
         gap: 50px;
@@ -221,6 +221,10 @@
         font-size: 14px;
         color: red;
     }
+    .right-box-imp {
+        font-size: 14px;
+        color: orangered;
+    }
     #calendar {
     	margin: 3px;
     }
@@ -230,6 +234,21 @@
     }
     .fc-daygrid-day-number:hover, .fc-col-header-cell-cushion:hover {
     	cursor: pointer;
+    }
+    .fc-event-time{
+        display: none;
+    }
+    .container::-webkit-scrollbar {
+        width: 10px;
+    }
+    .container::-webkit-scrollbar-thumb {
+        background-color: #769791;
+        border-radius: 10px;
+    }
+    .container::-webkit-scrollbar-track {
+        background-color: #bddbd5;
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px white;
     }
 </style>
 <link href='${rootPath}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
@@ -258,7 +277,7 @@
                 <div onclick="location.href='${rootPath}/mail';">
                     <img src="${imgPath}/mail_icon.png">
                     <div>메일</div>
-                    <div>6개</div>
+                    <div>${mailCnt}개</div>
                 </div>
                 <div onclick="location.href='${rootPath}/approval/list';">
                     <img src="${imgPath}/approval_icon.png">
@@ -268,7 +287,7 @@
                 <div onclick="location.href='${rootPath}/reservation/myreservation';">
                     <img src="${imgPath}/reservation_icon.png">
                     <div>예약</div>
-                    <div>1건</div>
+                    <div>${publicCnt}건</div>
                 </div>
             </div>
             <div id="attend-content">
@@ -321,26 +340,18 @@
                         <a href="${rootPath}/mail"><h4>메일함</h4></a>
                         <div id="right-box-content">
                             <table class="table">
-                                <tr>
-                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
-                                    <td><div class="right-box-name">김이름</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
-                                    <td><div class="right-box-name">김이름</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="" class="right-box-title">[회신요청] 9월 채용 실적 조사 - 설문하고...</a></td>
-                                    <td><div class="right-box-name">김이름</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
+                                <c:forEach items="${mailList}" var="mail">
+                                    <tr>
+                                        <td><a class="right-box-title" href="/checkmine/mail/ref/detail?n=${mail.no}">${mail.title}</td>
+                                        <td><div class="right-box-name">${mail.sender}</div></td>
+                                        <td><div class="right-box-date">${mail.sendDate}</div></td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div>
+                <div style="overflow: auto;" class="container">
                 	<div id="calendar"></div>
                 </div>
             </div>
@@ -368,18 +379,24 @@
                         <a href="${rootPath}/task/report/list"><h4>업무</h4></a>
                         <div id="right-box-content">
                             <table class="table">
-                                <tr>
-                                    <td><div class="right-box-urg">긴급</div></td>
-                                    <td><a href="" class="right-box-title">figma 레이아웃 및 디자인 ...</a></td>
-                                    <td><div class="right-box-name">지시자</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="right-box-urg"></div></td>
-                                    <td><a href="" class="right-box-title">erd 다이어그램 수정 및 참조 ...</a></td>
-                                    <td><div class="right-box-name">지시자</div></td>
-                                    <td><div class="right-box-date">2022.09.27 11:20</div></td>
-                                </tr>
+                                <c:forEach items="${taskList}" var="task">
+                                    <tr>
+                                        <td>
+                                            <c:if test="${task.importance eq 'N'}">
+                                                <div class="right-box-urg"></div>
+                                            </c:if>
+                                            <c:if test="${task.importance eq 'E'}">
+                                                <div class="right-box-urg">긴급</div>
+                                            </c:if>
+                                            <c:if test="${task.importance eq 'I'}">
+                                                <div class="right-box-imp">중요</div>
+                                            </c:if>
+                                        </td>
+                                        <td><a href="${root}/task/order/detail/${task.no}" class="right-box-title">${task.title}</a></td>
+                                        <td><div class="right-box-name">${task.orderer}</div></td>
+                                        <td><div class="right-box-date">${task.enrollDate}</div></td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
@@ -436,6 +453,31 @@
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
 	        initialView: 'dayGridMonth',
+            googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY",
+            contentHeight:"auto",
+            eventSources :[ 
+                {
+                    googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com'
+                    , color: 'white'   // an option!
+                    , textColor: 'red' // an option!
+                } 
+            ],
+            events: [
+            <c:forEach items="${eventList}" var="event">
+                {
+                    title : '${event.title}',
+                    color : "#B0D9D1",
+                    start : '${event.startDate}',
+                    end : '${event.endDate}',
+                },
+            </c:forEach>
+            ],
+            buttonText: {
+                today : "오늘",
+                month : "월별",
+                week : "주별",
+                day : "일별",
+                }
 	    });
 	    calendar.render();
 	    });

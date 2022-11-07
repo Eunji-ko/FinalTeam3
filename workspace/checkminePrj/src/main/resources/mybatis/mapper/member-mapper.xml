@@ -34,6 +34,12 @@
  		WHERE NO = #{no} 
   </update>
   
+  <update id="updatePwdById">
+  	UPDATE EMPLOYEE
+  		SET PWD = #{pwd}
+  		WHERE ID = #{id}
+  </update>
+  
   <update id="updateInfo">
   	UPDATE EMPLOYEE
   		SET EMAIL = #{email}
@@ -82,6 +88,108 @@
   		ID
   	FROM EMPLOYEE
   	WHERE EMAIL=#{email}
+  </select>
+  
+  <select id="selectMailByOne" resultType="string">
+  	SELECT
+  		EMAIL
+  	FROM EMPLOYEE
+  	WHERE ID = #{id}
+ 	AND DEPT_NO = #{deptNo}
+  	AND POS_NO = #{posNo}
+  	AND PHONE = #{phone}
+  </select>
+  
+  <select id="selectMailList" resultType="com.kh.checkmine.mail.vo.MailVo">
+  	SELECT
+  		MR.NO NO,
+	    E.NAME SENDER,
+	    M.TITLE TITLE,
+	    M.SEND_DATE SEND_DATE
+	FROM MAIL_REF MR
+	INNER JOIN MAIL M
+	ON MR.MAIL_NO = M.NO
+	JOIN EMPLOYEE E
+	ON M.SENDER = E.NO
+	WHERE MR.STATUS = 'N'
+	AND MR.READ = 'N'
+	AND MR.RECEIVER = #{no}
+	<![CDATA[AND ROWNUM <= 7]]>
+	ORDER BY M.SEND_DATE DESC
+  </select>
+  
+  <select id="selectTaskList" resultType="TaskOrderVo">
+  	SELECT 
+  			T.NO,
+		    E.NAME AS ORDERER,
+		    T.TITLE,
+		    T.CONTENT,
+		    T.ENROLL_DATE,
+		    T.IMPORTANCE
+		FROM TASK T
+		JOIN EMPLOYEE E
+		ON T.ORDERER = E.NO
+		JOIN (
+	        SELECT
+		        A.TASK_NO,
+		        LISTAGG(E.NAME, ',') WITHIN GROUP (ORDER BY E.NAME) AS ATT_NAME
+		    FROM TASK_ATT A
+		    JOIN EMPLOYEE E
+		    ON A.EMP_NO = E.NO
+		    WHERE A.EMP_NO = #{no}
+		    GROUP BY A.TASK_NO
+		) A
+		ON T.NO = A.TASK_NO
+		<![CDATA[WHERE ROWNUM <= 7]]>
+		ORDER BY T.NO DESC
+  </select>
+  
+  <select id="selectBoardList" resultType="BoardVo">
+  	SELECT
+  		  NO
+  		, TITLE
+  		, CONTENT
+  		, TYPE
+  	FROM BOARD
+  	WHERE WRITER = #{no}
+  	ORDER BY NO DESC
+  </select>
+  
+  <select id="selectReplyList" resultType="com.kh.checkmine.board.vo.ReplyVo">
+  	SELECT
+  		  B.NO
+  		, B.TITLE REPLIER
+  		, R.CONTENT
+  	FROM BOARD B
+  	JOIN BOARD_REPLY R
+  	ON B.NO = R.B_NO
+  	WHERE R.REPLIER = #{no}
+  	ORDER BY R.NO DESC
+  </select>
+  
+  <select id="selectEventList" resultType="ScheduleVo">
+  	SELECT
+	    S.TITLE,
+	    S.START_DATE,
+	    S.END_DATE
+	FROM SCHEDULE S
+	JOIN EMPLOYEE E
+	ON S.EMP_NO = E.NO
+	WHERE DEL = 'N'
+    AND E.NO = #{no}
+  </select>
+  
+  <select id="getPublicCnt" resultType="int">
+  	SELECT ((SELECT
+  		COUNT(NO)
+  	FROM GOODS_RESERVATION
+  	WHERE E_NO = #{no})
+  	+
+  	(SELECT
+  		COUNT(NO)
+  	FROM PLACE_RESERVATION
+  	WHERE EMP_NO = #{no})) CNT
+  	FROM DUAL
   </select>
  
 </mapper>

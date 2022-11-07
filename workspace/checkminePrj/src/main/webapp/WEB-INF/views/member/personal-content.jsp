@@ -147,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn checkmine-btn" style="margin-left: 90px;"  data-bs-toggle="modal" data-bs-target="#changeImg">사진 변경 신청</button>
+                <button class="btn checkmine-btn" style="margin-left: 90px;"  data-bs-toggle="modal" data-bs-target="#changeImg">사진 변경하기</button>
             </div>
         </div>
         <div id="psn-all-zone">

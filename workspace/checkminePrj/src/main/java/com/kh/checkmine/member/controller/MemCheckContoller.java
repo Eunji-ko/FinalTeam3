@@ -17,9 +17,16 @@ public class MemCheckContoller {
 	@GetMapping("mailCheck")
 	@ResponseBody
 	public String mailCheck(String email) {
-		System.out.println("이메일 인증 요청이 들어옴!");
 		System.out.println("이메일 인증 이메일 : " + email);
 		return ms.joinEmail(email);
+	}
+	
+	//임시번호 메일로 전송
+	@GetMapping("sendPwd")
+	@ResponseBody
+	public String sendPwd(String email) {
+		System.out.println("해당 이메일 : " + email);
+		return ms.sendPwd(email);
 	}
 
 }

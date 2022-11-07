@@ -27,7 +27,7 @@ public class MemCheckService {
 	}
 	
 	
-			//이메일 보낼 양식! 
+	//이메일 보낼 양식
 	public String joinEmail(String email) {
 		makeRandomNumber();
 		String setFrom = ".com"; // email-config에 설정한 자신의 이메일 주소를 입력 
@@ -43,6 +43,24 @@ public class MemCheckService {
 		mailSend(setFrom, toMail, title, content);
 		return Integer.toString(authNumber);
 	}
+	
+	//메일로 임시비밀번호 전송
+	public String sendPwd(String email) {
+		makeRandomNumber();
+		String setFrom = ".com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		System.out.println(email);
+		String toMail = email;
+		String title = "체크마인 임시 비밀번호입니다."; // 이메일 제목 
+		String content = 
+				"체크마인을 이용해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+                "<br><br>" + 
+			    "임시 비밀번호는 " + authNumber + "입니다." + 
+			    "<br>" + 
+			    "해당 비밀번호로 로그인한 뒤 변경해주세요."; //이메일 내용 삽입
+		mailSend(setFrom, toMail, title, content);
+		return Integer.toString(authNumber);
+	}
+	
 	
 	//이메일 전송 메소드
 	public void mailSend(String setFrom, String toMail, String title, String content) { 
@@ -60,5 +78,7 @@ public class MemCheckService {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }
