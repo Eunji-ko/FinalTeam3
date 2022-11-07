@@ -93,23 +93,10 @@
         color: white;
     }
 
-    #buttonArea{
-        display: flex;
-        justify-content:right;
-    }
-
-    #buttonArea > button{
-        margin-right: 10px;
-    }
-
     #footer{
         margin: 10px;
         display: flex;
         justify-content: space-between;
-    }
-
-    textarea{
-        resize: none;
     }
 
     .dropdown-toggle::after {
@@ -142,10 +129,10 @@
             
             <div id="infoWrap">
                 <form action="${root}/admin/board/edit/${board.no}" name="form" method="post" enctype="multipart/form-data" onSubmit="return Checkform();">
-                    <div id="title"><div><input type="text" class="form-control" value=${board.title} name="title"></div></div>
+                    <div id="title"><input type="text" class="form-control" value=${board.title} name="title"></div>
                     <div id="content-box">
                         <div id="content">
-                            <textarea style="width: 100%; height: 100%;" class="summernote" name="content" style="width:650px; height:350px;">${board.content}</textarea>
+                            <textarea class="summernote" name="content">${board.content}</textarea>
                         </div>
                         <div id="footer">
                             <div style="display: flex; align-items: flex-start;">
@@ -166,7 +153,6 @@
     <script>
         //첨부된 파일 목록 보여주기
         target = document.querySelector('input[name=attach]');
-            console.log(target);
             target.addEventListener('change', function(){
                 fileList = "";
                 for(i = 0; i < target.files.length; i++){
@@ -194,7 +180,8 @@
             	}
             }
 	    });
-           
+        
+        //썸머노트 이미지 업로드 ajax
         function uploadSummernoteImageFile(file, el) {
                 data = new FormData();
                 data.append("file", file);

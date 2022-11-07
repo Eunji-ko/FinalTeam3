@@ -5,10 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 사원관리</title>
+<title>CHECKMINE 사원등록</title>
 <style>
-
-
     main > div, main > form > div {
         width: 1389px;
         margin: 10px auto;
@@ -20,10 +18,12 @@
         justify-content:space-between;
         align-items: center;
     }
+
     #infoWrap{
         height: 596px;
         border: 1px solid lightgray;
     }
+
     #area button:first-child{
         width: 20px; 
         height: 20px; 
@@ -32,7 +32,6 @@
         font-size: 20px;
         font-weight: bolder;
     }
-
 
     #memberInfo {
         width: 1350px;
@@ -60,11 +59,13 @@
         border-radius: 30px;
         color: white;
     }
+
     label{
         margin-right: 15px;
         font-size: 20px;
         font-weight: bolder;
     }
+
     #profileImg{
         background-color: #C4F2EA;
         width: 317px;
@@ -75,18 +76,20 @@
     #imgArea > img{
         display: block;
         margin: 20px auto;
+        width: 200px; 
+        height: 200px; 
+        border-radius: 50%;
     }
+
     #photo{
         padding-left: 40px;
         width: 300px;
     }
-    #modify{
+
+    #blank{
         grid-column: span 3;
-        text-align: right;
-        color: lightgray;
-        font-size: 18px;
-        padding-right: 5px;
     }
+
     input[type="checkbox"]{
         margin-right: 20px;
     }
@@ -95,6 +98,7 @@
         width: 219px;
         height: 36px;
     }
+
     #checkDupBtn{
         background-color: #C4F2EA;
         border: 1px outset #C4F2EA;
@@ -103,6 +107,7 @@
         width: 50px;
         height: 40px;
     }
+
     input[type=text], select, input[type=date], input[type=password]{
         font-size: 17px;
         height: 40px;
@@ -114,8 +119,6 @@
         font-size: 13px;
         color: red;
     }
-   
-
 </style>
 </head>
 <body>
@@ -124,66 +127,87 @@
         
         <main class="shadow">
             <form action="${root}/admin/member/add" method="post" name="form" enctype="multipart/form-data" onsubmit="return check();">
-            <div id="area">
-                <div>
-                    <button onclick="history.back()">←</button>
-                    <span id="header">&nbsp;&nbsp;사원 등록</span>
+                <div id="area">
+                    <div>
+                        <button onclick="history.back()">←</button>
+                        <span id="header">&nbsp;&nbsp;사원 등록</span>
+                    </div>
+                    <button type="submit" class="btn">등록하기</button>
                 </div>
-                
-                <button type="submit" class="btn">등록하기</button>
-            </div>
             
                 <div id="infoWrap">
                     <div id="memberInfo">
-                    <div id="modify"></div>
-                    
+                        <div id="blank"></div>
                         <div id="profileImg">
                             <div id="imgArea">
-                                <img src="${root}/resources/img/admin/user-icon-thum.png" alt="기본이미지" id="reviewImg"style="width: 200px; height: 200px; border-radius: 50%;">
+                                <img src="${root}/resources/img/admin/user-icon-thum.png" alt="기본이미지" id="reviewImg">
                             </div>
                             <input type="file" name="profile" id="photo" onchange="review()">
                         </div>
                         
-                        <div class="inputField" style="grid-column: 2;"><label>이름</label><input type="text" name="name" id="name"><p id="nameCheck"></p></div>
-                        <div class="inputField" style="grid-column: 2;"><label>부서</label>
-                          
+                        <div class="inputField" style="grid-column: 2;">
+                            <label>이름</label>
+                            <input type="text" name="name" id="name"><p id="nameCheck"></p>
+                        </div>
+                        <div class="inputField" style="grid-column: 2;">
+                            <label>부서</label>
                             <select name="deptNo">
                                 <c:forEach items="${dept}" var="d">
-                            <option value="${d.no}">${d.name}</option>
-                          </c:forEach>
-                          </select>
-                        </div>
-                        <div class="inputField" style="grid-column: 2;"><label>직위</label>
-                            <select name="posNo">
-                            
-                            <c:forEach items="${pos}" var="p">
-                            	<option value="${p.no}">${p.name}</option>
-                            </c:forEach>
+                                    <option value="${d.no}">${d.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
-                        <div class="inputField" style="grid-column: 2; margin-right: 10px;"><label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();">
+                        <div class="inputField" style="grid-column: 2;">
+                            <label>직위</label>
+                            <select name="posNo">
+                                <c:forEach items="${pos}" var="p">
+                                    <option value="${p.no}">${p.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="inputField" style="grid-column: 2; margin-right: 10px;">
+                            <label>아이디</label><input type="text" name="id" id="memberId" onchange="inputId();">
                             <button id="checkDupBtn" type="button" onclick="checkDup();">확인</button>
                         </div>
+                        <!-- 중복 확인 체크-->
                         <input type="hidden" value="X" id="dup">
-                        <div class="inputField" style="grid-column: 3; grid-row: 2;"><label>주소</label><input type="text" id="address_kakao" name="address"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;"><label>상세주소</label><input type="text" name="addressDetail"></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;"><label>전화번호</label><input type="text" name="phone" oninput="autoHyphen(this);" maxlength="13"><p id="phoneCheck"></p></div>
-                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;"><label>이메일</label><input type="text" name="email" id="email" readonly></div>
-                        <div class="inputField" style="margin-left: 150px;"><label>권한</label>
-                            <br><input type="checkbox" name="permission" value="n"><label style="font-weight: normal;">공지 등록</label>
-                            <br><input type="checkbox" name="permission" value="r"><label style="font-weight: normal;">장비/장소 예약 승인</label>
-                            <br><input type="checkbox" name="permission" value="h"><label style="font-weight: normal;">인사 관리</label>
+
+                        <div class="inputField" style="grid-column: 3; grid-row: 2;">
+                            <label>주소</label><input type="text" id="address_kakao" name="address">
                         </div>
-                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>입사일</label><input type="date" name="enrollDate"><p id="enrollCheck"></p></div>
-                        <div class="inputField" style="margin-top:50px; margin-right: 70px;"><label>비밀번호</label><input type="password" name="pwd" autoComplete="off"><p id="pwdCheck"></p></div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 3; margin-right: 75px;">
+                            <label>상세주소</label><input type="text" name="addressDetail">
+                        </div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 4; margin-right: 75px;">
+                            <label>전화번호</label>
+                            <input type="text" name="phone" oninput="autoHyphen(this);" maxlength="13"><p id="phoneCheck"></p>
+                        </div>
+                        <div class="inputField" style="grid-column: 3; grid-row: 5; margin-right: 75px;">
+                            <label>이메일</label>
+                            <input type="text" name="email" id="email" readonly>
+                        </div>
+                        <div class="inputField" style="margin-left: 150px;">
+                            <label>권한</label>
+                            <br><input type="checkbox" name="permission" value="N"><label style="font-weight: normal;">공지 등록</label>
+                            <br><input type="checkbox" name="permission" value="R"><label style="font-weight: normal;">장비/장소 예약 승인</label>
+                            <br><input type="checkbox" name="permission" value="H"><label style="font-weight: normal;">인사 관리</label>
+                        </div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;">
+                            <label>입사일</label>
+                            <input type="date" name="enrollDate"><p id="enrollCheck"></p>
+                        </div>
+                        <div class="inputField" style="margin-top:50px; margin-right: 70px;">
+                            <label>비밀번호</label>
+                            <input type="password" name="pwd" autoComplete="off"><p id="pwdCheck"></p>
+                        </div>
                     </div>
-                    
                 </div>
-        </form>
-            
+            </form> 
         </main>
     </div>
     
+    <!-- 카카오 주소 입력 적용-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         window.onload = function(){
@@ -197,32 +221,33 @@
                 }).open();
             });
         }
-        </script>
+    </script>
+
     <script>
         //프로필 이미지 미리보기
-       function review(){
+        function review(){
             const photo = document.querySelector('#photo');
             const reviewImg = document.querySelector('#reviewImg');
             
             if(photo.files.length > 0){
                 const fr = new FileReader();
                 fr.onload = function(data){
-                    console.log(data);
                     reviewImg.src = data.target.result;
                 }
                 fr.readAsDataURL(photo.files[0]); 
             }else{
                 reviewImg.src = "${root}/resources/img/admin/user-icon-thum.png";
             }
-       }
+        }
 
-        //이메일을 아이디 + @checkmine.com으로 자동 설정, 중복 확인 전까지 X로
+        //이메일을 아이디 + @checkmine.com으로 자동 설정, 중복 확인 전까지 히든 값 X로
         function inputId(){
             document.querySelector('#dup').value = 'X';
             const id = document.querySelector('#memberId').value;
             document.querySelector('#email').value = id + '@checkmine.com';
         }
 
+        //폼 필수 입력값 체크 + 중복확인 여부 체크
         function check(){
             document.querySelectorAll("p").forEach(node => node.innerHTML = "");
 
@@ -247,24 +272,25 @@
                 }
                 return false;
             }
-            
-
         }
     </script>
+
     <script>
         //아이디 중복확인 ajax
         function checkDup(){
             const dup = document.querySelector('#dup');
             const id = document.querySelector('#memberId').value;
+            //아이디 5~15자리 영문자 + 숫자 조합 정규식
             var idReg = /^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{4,14}$/g;
 
             if(id == null || id == ""){
                 alert("아이디를 입력해주세요.");
                 return;
             }else if( !idReg.test(id)) {
-            alert("아이디는 영문자로 시작하는 5~15자 영문자+숫자 조합이어야 합니다.");
+                alert("아이디는 영문자로 시작하는 5~15자 영문자+숫자 조합이어야 합니다.");
                 return;
             }
+
             $.ajax({
                 url : "${root}/admin/member/dup",
                 type : "POST",
@@ -282,19 +308,14 @@
                     alert("처리 중 문제가 발생하였습니다.");
                 }
             });
-
-
         }
 
-        //전화번호
-    const autoHyphen = (target) => {
-        target.value = target.value
-        .replace(/[^0-9]/g, '')
-        .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        //전화번호 '-' 삽입
+        const autoHyphen = (target) => {
+            target.value = target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
         }
-
-
-
     </script>
 </body>
 </html>

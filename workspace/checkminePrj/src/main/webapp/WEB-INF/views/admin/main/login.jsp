@@ -18,6 +18,7 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
     <style>
         @font-face {
             font-family: 'SDSamliphopangche_Basic';
@@ -38,9 +39,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            
-            
         }
+
         #background{
             width: 1373px;
             height: 839px;
@@ -49,16 +49,20 @@
             display: grid;
             grid-template-columns: 1fr 4fr 4fr 1fr;
         }
+
         #logo{
             grid-column: 2;
             margin: auto;
         }
+
         #login-form{
             margin: auto;
         }
+
         input:focus{
             outline: none;
         }
+
         input:-webkit-autofill {
             -webkit-box-shadow: 0 0 0px 1000px #B6CED9 inset;
         }
@@ -70,15 +74,18 @@
             border-radius: 50px;
             margin: 10px auto;
         }
+
         .input-box *{
             margin-left: 15px;
             line-height: 35px;
             border: none;
             background-color: #B6CED9;
         }
+
         .input-box > input{
             width: 260px;
         }
+
         input[type="submit"]{
             width: 327px;
             height: 49px;
@@ -94,7 +101,6 @@
             font-weight: bolder;
             color: #326A60;
             text-align: end;
-            
         }
 
         #mainText{
@@ -113,9 +119,6 @@
             color: #326A60;
             text-decoration: none;
         }
-
-
-        
     </style>
 </head>
 <body>
@@ -127,18 +130,33 @@
 	        <div id="login-form">
 	       		<div id="subText">ADMIN</div>
 	            <div id="mainText">CHECKMINE</div>
-	            <form action="" method="post">
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px"><input type="text" name="id" placeholder="아이디" required></div>
-	                <div class="input-box"><img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px"><input type="password" name="pwd" placeholder="비밀번호" required></div>
+	            <form action="${root}/admin/login" method="post" name="form" onSubmit="return Checkform();">
+	                <div class="input-box">
+                        <img src="${root}/resources/img/admin/free-icon-user-2549965 1.png" alt="유저아이콘" width="20px">
+                        <input type="text" name="id" placeholder="아이디">
+                    </div>
+	                <div class="input-box">
+                        <img src="${root}/resources/img/admin/free-icon-password-7817000 1.png" alt="잠금아이콘" width="20px">
+                        <input type="password" name="pwd" placeholder="비밀번호" autocomplete="off">
+                    </div>
 	                <input type="submit" value="로그인">
 	            </form>
 	            <div id="bottom"><a href="${root}" id="userLogin">사용자로 로그인</a></div>
-	           
-	
 	        </div>
 	    </div>
     </div>
-
-    
+    <script>
+        //필수 입력값 확인
+        function Checkform(){
+            if(form.id.value == "") {
+                form.id.focus();
+                alert("아이디를 입력해주세요.");
+                return false;
+            }else if(form.pwd.value == ""){
+                alert("비밀번호를 입력해주세요.");
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>

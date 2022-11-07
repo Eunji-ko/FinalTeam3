@@ -6,10 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CHECKMINE 공유물 등록</title>
-
 <style>
-
-
     main > div {
         width: 1450px;
         margin: 10px auto;
@@ -21,10 +18,12 @@
         justify-content:space-between;
         align-items: center;
     }
+
     #infoWrap{
         height: 700px;
         border: 1px solid lightgrey;
     }
+
     #area button:first-child{
         width: 20px; 
         height: 20px; 
@@ -39,7 +38,6 @@
         font-weight: bolder;
     }
     
-
     .btn{
         width: 178px;
         font-size: 16px;
@@ -47,45 +45,51 @@
         border-radius: 30px;
         color: white;
     }
+
     #content-box{
         height: 630px;
         margin: 10px;
-        
     }
+
     #content-box *{
         margin: 0 auto;
         font-size: 20px; 
     }
+
     #content-box input[type="text"], textarea{
        width: 600px; 
     }
+
     table{
         border-collapse: separate;
         border-spacing: 0 20px;
     }
+
     table th{
         padding-right: 20px;
     }
+
     textarea{
         resize: none;
         height: 450px;
     }
+
     label{
         padding-left: 10px;
-        
     }
+
     input[type="radio"]{
         vertical-align: middle;
+        width:20px;
+        height:20px;
+        border:1px;
     }
    
-    
     #footer{
         margin: 10px;
         display: flex;
         justify-content: right;
     }
-
-  
 </style>
 </head>
 <body>
@@ -103,59 +107,46 @@
             <div id="infoWrap">
                 <form action="${root}/admin/goods/add" name="form" method="post" onSubmit="return Checkform();">
                     <div id="content-box">
-                    <table>
-                        <tr>
-                            <th>이름</th>
-                            <td><input type="text" class="form-control" name="name" id=""></td>
-                        </tr>
-                        <tr>
-                            <th>타입</th>
-                            <td><input type="radio" name="type" style="width:20px;height:20px;border:1px;" value="place" checked><label for="place">장소</label>
-                                <input type="radio" name="type" style="width:20px;height:20px;border:1px;margin-left: 20px;" value="goods"><label for="goods">장비</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>설명</th>
-                            <td><textarea class="form-control" name="content" id=""></textarea></td>
-                        </tr>
-                    </table>
-                </div>
+                        <table>
+                            <tr>
+                                <th>이름</th>
+                                <td><input type="text" class="form-control" name="name"></td>
+                            </tr>
+                            <tr>
+                                <th>타입</th>
+                                <td>
+                                    <input type="radio" name="type" value="place" checked><label for="place">장소</label>
+                                    <input type="radio" name="type" style="margin-left: 20px;" value="goods"><label for="goods">장비</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>설명</th>
+                                <td><textarea class="form-control" name="content"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+
                     <div id="footer">
                         <div id="buttonArea"><button type="submit" class="btn" id="regist">등록하기</button></div>
                     </div>
-                
-               
-
-                
                 </form>
-                
             </div>
-            
- 
-            
         </main>
     </div>
    
     <script>
-
          //필수 입력값 확인
          function Checkform(){
             if(form.name.value == "") {
                 form.name.focus();
-                alert("이름을 입력해 주십시오.");
+                alert("이름을 입력해주세요.");
             return false;
                 }else if(form.content.value == ""){
                     form.content.focus();
-                    alert("설명을 입력해 주십시오.");
+                    alert("설명을 입력해주세요.");
             return false;
                 }
             }
-       
     </script>
-    
-
-
-
-
 </body>
 </html>
