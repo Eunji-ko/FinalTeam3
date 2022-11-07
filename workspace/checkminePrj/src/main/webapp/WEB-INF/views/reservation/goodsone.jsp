@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>예약</title>
 <style>
 
     .shadow{
@@ -376,15 +376,15 @@
                     <div class="modal-body">
                         <div id="rsv-name">
                             <div>예약자</div>
-                            <div>뿡빵 사원</div>
+                            <div>${loginMember.name} 님</div>
                         </div>
 
                         <div id="type">
                             <div>종류</div>
                             <select name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="빔1">빔1</option>
-                                <option value="빔2">빔2</option>
-                                <option value="빔3">빔3</option>
+                                <c:forEach items="${voList}" var="vo">
+                                <option id="name" value="${vo.no}">${vo.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
@@ -397,26 +397,26 @@
                         <div id="time">
                             <select name="rsv-begin" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>대여시간</option>
-                                <option value="9시">9시</option>
-                                <option value="10시">10시</option>
-                                <option value="11시">11시</option>
-                                <option value="12시">12시</option>
-                                <option value="13시">13시</option>
-                                <option value="14시">14시</option>
-                                <option value="15시">15시</option>
-                                <option value="16시">16시</option>
+                                <option value="09:00">9시</option>
+                                <option value="10:00">10시</option>
+                                <option value="11:00">11시</option>
+                                <option value="12:00">12시</option>
+                                <option value="13:00">13시</option>
+                                <option value="14:00">14시</option>
+                                <option value="15:00">15시</option>
+                                <option value="16:00">16시</option>
                             </select>
                             <div>~</div>
                             <select name="rsv-end" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>반납시간</option>
-                                <option value="10시">10시</option>
-                                <option value="11시">11시</option>
-                                <option value="12시">12시</option>
-                                <option value="13시">13시</option>
-                                <option value="14시">14시</option>
-                                <option value="15시">15시</option>
-                                <option value="16시">16시</option>
-                                <option value="17시">17시</option>
+                                <option value="10:00">10시</option>
+                                <option value="11:00">11시</option>
+                                <option value="12:00">12시</option>
+                                <option value="13:00">13시</option>
+                                <option value="14:00">14시</option>
+                                <option value="15:00">15시</option>
+                                <option value="16:00">16시</option>
+                                <option value="17:00">17시</option>
                             </select>
                         </div>
                         
@@ -432,6 +432,22 @@
 			
         </main>
     </div>
+
+    <script>
+        $('#reservation').on('click', function deleteBoard(seq){
+            $.ajax({
+                url  :  '${rootPath}/reservation/rsvbtn',
+                method : 'post',
+                data : JSON.stringify({no : $('#name').attr('value')}, {}),
+                dataType : 'text',
+                contentType : 'application/json',
+                success : function(){
+                    console.log('성공');
+                    location.reload();
+                }
+            })
+        })
+    </script>
 
     <!-- 날짜 스크립트 -->
     <script>

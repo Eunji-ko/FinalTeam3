@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
+import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 public interface ReservationDao {
@@ -20,5 +21,8 @@ public interface ReservationDao {
 
 	//장소 예약 취소
 	int placeDelbtn(PlaceBookVo vo, SqlSessionTemplate sst);
+
+	//빔
+	List<GoodsVo> selectList(SqlSessionTemplate sst);
 
 }

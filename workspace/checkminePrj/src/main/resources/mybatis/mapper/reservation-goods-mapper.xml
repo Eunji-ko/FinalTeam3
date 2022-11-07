@@ -21,4 +21,8 @@
 		WHERE E_NO = #{eNo} AND NO = #{no}
 	</delete>
 	
+	<select id="selectList" resultType="GoodsVo">
+		SELECT NO, NAME FROM PUBLIC_GOODS WHERE TYPE = 'B'
+	</select>
+	
 </mapper>
