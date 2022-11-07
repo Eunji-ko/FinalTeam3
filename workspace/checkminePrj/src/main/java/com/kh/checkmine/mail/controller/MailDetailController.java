@@ -61,6 +61,8 @@ public class MailDetailController {
         model.addAttribute("notReadCountReceive", notReadCountReceive);
         model.addAttribute("notReadCountRef", notReadCountRef);
 		
+        //읽음으로 표시
+        service.updateReadStatus(mailNo);
 		//리스트 객체 가져오기
 		ReceiveMailVo mailVo = service.getReceiveMailVo(mailNo);
 		
@@ -122,7 +124,14 @@ public class MailDetailController {
 	 * @return
 	 */
 	@GetMapping("mail/reply")
-	public String mailReply(@RequestParam(value = "t") String target, Model model) {
+	public String mailReply(@RequestParam(value = "t") String target, Model model, HttpSession session) {
+		//안읽은 메일 갯수 가져오기
+		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
+        int notReadCountReceive = mailService.getNotReadCount(memberNo, "A");
+        int notReadCountRef = mailService.getNotReadCount(memberNo, "R");
+        
+        model.addAttribute("notReadCountReceive", notReadCountReceive);
+        model.addAttribute("notReadCountRef", notReadCountRef);
 		
 		model.addAttribute("target", target);
 		return "mail/mail_write_reply";
@@ -145,7 +154,9 @@ public class MailDetailController {
         
         model.addAttribute("notReadCountReceive", notReadCountReceive);
         model.addAttribute("notReadCountRef", notReadCountRef);
-		
+
+        //읽음으로 표시
+        service.updateReadStatus(mailNo);
 		//리스트 객체 가져오기
 		ReceiveMailVo mailVo = service.getReceiveMailVo(mailNo);
 		

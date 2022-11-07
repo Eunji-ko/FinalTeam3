@@ -68,4 +68,12 @@ public interface MailDetailDao {
 	 */
 	List<MailAttVo> selectSaveMailFileList(SqlSessionTemplate sst, String mailNo);
 
+	/**
+	 * 읽음으로 표시
+	 * @param sst
+	 * @param mailNo
+	 * @return
+	 */
+	int updateReadStatus(SqlSessionTemplate sst, String mailNo);
+
 }

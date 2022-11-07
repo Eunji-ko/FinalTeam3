@@ -1,5 +1,7 @@
 package com.kh.checkmine.mail.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.checkmine.mail.vo.MailAddrVo;
@@ -58,5 +60,18 @@ public interface MailAddrService {
 	 * @return
 	 */
 	int deleteAddr(String targetNo);
+	/**
+	 * 주소록 일괄 삭제
+	 * @param addrNoArr
+	 * @return
+	 */
+	int addrDeleteAll(String[] addrNoArr);
+	
+	/**
+	 * 주소록 검색
+	 * @param searchMap
+	 * @return
+	 */
+	List<MailAddrVo> addrSearch(HashMap<String, String> searchMap);
 
 }

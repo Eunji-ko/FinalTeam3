@@ -1,5 +1,7 @@
 package com.kh.checkmine.mail.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -82,7 +84,28 @@ public class MailAddrServiceImpl implements MailAddrService{
 		return dao.deleteAddr(sst, targetNo);
 	}
 
-	
+	/**
+	 * 주소록 일괄 삭제
+	 */
+	@Override
+	public int addrDeleteAll(String[] addrNoArr) {
+		int result = 1;
+		
+		for(String target:addrNoArr) {
+			result = result * dao.deleteAddr(sst, target);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 주소록 검색
+	 */
+	@Override
+	public List<MailAddrVo> addrSearch(HashMap<String, String> searchMap) {
+		return dao.addrSearch(sst, searchMap);
+	}
+
 
 	
 

@@ -1,5 +1,6 @@
 package com.kh.checkmine.mail.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -71,6 +72,14 @@ public class MailAddrDaoImpl implements MailAddrDao{
 	@Override
 	public int deleteAddr(SqlSessionTemplate sst, String targetNo) {
 		return sst.delete("mailAddrMapper.deleteAddr",targetNo);
+	}
+	
+	/**
+	 * 주소록 검색
+	 */
+	@Override
+	public List<MailAddrVo> addrSearch(SqlSessionTemplate sst, HashMap<String, String> searchMap) {
+		return sst.selectList("mailAddrMapper.selectSearchList", searchMap);
 	}
 	
 
