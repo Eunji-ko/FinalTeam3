@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.checkmine.reservation.dao.ReservationDao;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
+import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 @Service
@@ -44,6 +45,12 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int placeDelbtn(PlaceBookVo vo) {
 		return dao.placeDelbtn(vo, sst);
+	}
+
+	//빔
+	@Override
+	public List<GoodsVo> selectList() {
+		return dao.selectList(sst);
 	}
 	
 }

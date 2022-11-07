@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.service.ReservationService;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
+import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 @Controller
@@ -93,8 +94,18 @@ public class ReservationController {
 	
 	//빔프로젝트
 	@GetMapping("goodsone")
-	public String goodsOne() {
+	public String goodsOne(Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
+		List<GoodsVo> voList = rs.selectList();
+		
+		model.addAttribute("voList", voList);
+		model.addAttribute("loginMember", loginMember);
+		
 		return "reservation/goodsone";
+		
 	}
 	
 	//법인차

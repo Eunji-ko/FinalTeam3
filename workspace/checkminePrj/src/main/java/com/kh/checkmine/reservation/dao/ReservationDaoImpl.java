@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
+import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
 
 @Repository
@@ -33,6 +34,12 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Override
 	public int placeDelbtn(PlaceBookVo vo, SqlSessionTemplate sst) {
 		return sst.delete("reservationPlaceMapper.placeDelbtn", vo);
+	}
+
+	//빔
+	@Override
+	public List<GoodsVo> selectList(SqlSessionTemplate sst) {
+		return sst.selectList("reservationGoodsMapper.selectList");
 	}
 
 }
