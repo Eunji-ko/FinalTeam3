@@ -64,13 +64,13 @@ public class PersonnelDaoImpl implements PersonnelDao {
 	}
 
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("personnelMapper.selectCountAll");
+	public int selectCountAll(SqlSessionTemplate sst, HashMap<String, String> empMap) {
+		return sst.selectOne("personnelMapper.selectCountAll", empMap);
 	}
 
 	@Override
-	public int selectCountAAll(SqlSessionTemplate sst) {
-		return sst.selectOne("personnelMapper.selectCountAAll");
+	public int selectCountAAll(SqlSessionTemplate sst, HashMap<String, String> accMap) {
+		return sst.selectOne("personnelMapper.selectCountAAll", accMap);
 	}
 
 }

@@ -5,8 +5,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -107,10 +109,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public HashMap<String, Object> getUserInfo (String access_Token) {
-	    
+		
 	    //요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
 	    HashMap<String, Object> userInfo = new HashMap<>();
 	    String reqURL = "https://kapi.kakao.com/v2/user/me";
+	   
 	    try {
 	        URL url = new URL(reqURL);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -118,8 +121,11 @@ public class MemberServiceImpl implements MemberService {
 	        
 	        //요청에 필요한 Header에 포함될 내용
 	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        System.out.println(access_Token);
+	        
 	        
 	        int responseCode = conn.getResponseCode();
+	        System.out.println("===========================");
 	        System.out.println("responseCode : " + responseCode);
 	        
 	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -170,6 +176,7 @@ public class MemberServiceImpl implements MemberService {
             sb.append("&client_id=9f5225ef543fafc73d86a09fb5c33da9");
             sb.append("&redirect_uri=http://localhost:8888/checkmine/member/kakaoLogin");
             sb.append("&code=" + authorize_code);
+            //sb.append("&property_keys=kakao_account.email");
             bw.write(sb.toString());
             bw.flush();
             

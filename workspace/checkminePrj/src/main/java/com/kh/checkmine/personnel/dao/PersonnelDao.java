@@ -27,8 +27,8 @@ public interface PersonnelDao {
 
 	int delAcc(SqlSessionTemplate sst, List<String> no);
 
-	int selectCountAll(SqlSessionTemplate sst);
+	int selectCountAll(SqlSessionTemplate sst, HashMap<String, String> empMap);
 
-	int selectCountAAll(SqlSessionTemplate sst);
+	int selectCountAAll(SqlSessionTemplate sst, HashMap<String, String> accMap);
 
 }

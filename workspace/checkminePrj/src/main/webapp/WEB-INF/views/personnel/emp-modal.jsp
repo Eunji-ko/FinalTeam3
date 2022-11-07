@@ -34,7 +34,7 @@
           </div>
           <div class="modal-body">
             <div id="emp-img">
-              <img src="${imgPath}/none-profile.jpg">
+              <img src="" id="empModalImg">
             </div>
             <input type="hidden" id="modalENo" name="no">
             <input type="text" class="form-control" id="modalName" name="name" disabled  style="margin-bottom: 10px;">
@@ -91,6 +91,7 @@
             alert("사원 정보를 조회하는데에 실패하였습니다 !")
           }else{
             $('#modalENo').val(no);
+            $('#empModalImg').attr('src', '${rootPath}/resources/upload/profile/' + data.photoName);
             $('#modalName').val(data.name);
             $('#floatingDept').val(data.deptNo).prop("selected", true);
             $('#floatingPosi').val(data.posNo).prop("selected", true);

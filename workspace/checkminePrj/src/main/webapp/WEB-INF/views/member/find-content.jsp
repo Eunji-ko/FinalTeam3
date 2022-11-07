@@ -58,6 +58,21 @@
     .checkmine-btn:hover {
         background-color: #72918b;
     }
+    .kakao-btn {
+        background-color: rgb(247, 247, 0);
+        color: black;
+        width: 240px;
+        height: 60px;
+        font-size: 25px;
+        border-radius: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 3px;
+        padding-top: 3px;
+    }
+    .kakao-btn:hover {
+        background-color: rgb(240, 236, 0);
+    }
 </style>
 <script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
