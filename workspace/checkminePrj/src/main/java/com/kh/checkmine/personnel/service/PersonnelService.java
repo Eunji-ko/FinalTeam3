@@ -25,8 +25,8 @@ public interface PersonnelService {
 
 	int delAcc(List<String> no);
 
-	int selectTotalCnt();
+	int selectTotalCnt(HashMap<String, String> empMap);
 
-	int selectTotalACnt();
+	int selectTotalACnt(HashMap<String, String> accMap);
 
 }

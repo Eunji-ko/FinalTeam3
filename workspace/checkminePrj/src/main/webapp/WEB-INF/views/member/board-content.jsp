@@ -124,24 +124,6 @@
                         <td><div class="mp-board-btn" onclick="location.href='${rootPath}/board/delete/${board.type}/${board.no}'"><img src="${imgPath}/delete_icon.png" alt="해당 글 삭제" width="27px"></div></td>
                     </tr>
                 </c:forEach>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>dd</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>dd</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
-                <tr><td>dd</td><td></td><td></td><td></td></tr>
-                <tr><td>d</td><td></td><td></td><td></td></tr>
             </table>
         </div>
         <div id="right-comment" style="overflow:auto;" class="right-container">

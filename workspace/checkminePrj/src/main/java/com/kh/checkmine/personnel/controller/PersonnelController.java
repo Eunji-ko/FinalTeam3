@@ -43,12 +43,6 @@ public class PersonnelController {
 						 @RequestParam(name="accSearchText", required=false) String accSearchText,
 			Model model) {
 		
-		int totalCount = ps.selectTotalCnt();
-		int totalACount = ps.selectTotalACnt();
-		
-		PageVo epv = Pagination.getPageVo(totalCount, ep, 5, 10);
-		PageVo apv = Pagination.getPageVo(totalACount, ap, 5, 10);
-		
 		HashMap<String, String> empMap = new HashMap<>();
 		empMap.put("rsn", rsn);
 		empMap.put("type", empSearchType);
@@ -57,6 +51,13 @@ public class PersonnelController {
 		HashMap<String, String> accMap = new HashMap<>();
 		accMap.put("type", accSearchType);
 		accMap.put("text", accSearchText);
+		
+		
+		int totalCount = ps.selectTotalCnt(empMap);
+		int totalACount = ps.selectTotalACnt(accMap);
+		
+		PageVo epv = Pagination.getPageVo(totalCount, ep, 5, 10);
+		PageVo apv = Pagination.getPageVo(totalACount, ap, 5, 10);
 		
 		//디비 다녀오기
 		List<MemberVo> memList = ps.selectMemberList(epv, empMap);

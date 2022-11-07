@@ -274,7 +274,7 @@
                 <a href="${rootPath}/member/logout">로그아웃</a>
             </div>
             <div id="duty-content">
-                <div onclick="location.href='${rootPath}/mail';">
+                <div onclick="location.href='${rootPath}/mail/receive';">
                     <img src="${imgPath}/mail_icon.png">
                     <div>메일</div>
                     <div>${mailCnt}개</div>

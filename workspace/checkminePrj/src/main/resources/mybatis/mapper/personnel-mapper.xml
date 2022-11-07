@@ -48,6 +48,7 @@
        , NAME
        , EMAIL
        , PHONE
+       , PHOTO_NAME
     FROM EMPLOYEE
     WHERE NO = #{no}
   </select>
@@ -138,14 +139,26 @@
   </update>
   
   <select id="selectCountAll" resultType="int">
-  	SELECT COUNT(NO)
-  	FROM EMPLOYEE
+  	SELECT
+          COUNT(E.NO)
+	FROM EMPLOYEE E, POSITION P, DEPARTMENT D
+	WHERE E.POS_NO = P.NO
+	AND E.DEPT_NO = D.NO
+	<if test='type neq null and !type.equals("")'>
+		AND ${type} LIKE '%${text}%'
+	</if>
+	<if test='rsn neq null and !rsn.equals("")'>
+		AND E.RESIGN_YN = #{rsn}
+	</if>
   </select>
   
   <select id="selectCountAAll" resultType="int">
   	SELECT COUNT(NO)
   	FROM ACCOUNT
   	WHERE DELETE_YN = 'N'
+  	<if test='type neq null and !type.equals("")'>
+  		AND ${type} LIKE '%${text}%'
+  	</if>
   </select>
  
 </mapper>

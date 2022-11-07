@@ -65,13 +65,13 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 
 	@Override
-	public int selectTotalCnt() {
-		return dao.selectCountAll(sst);
+	public int selectTotalCnt(HashMap<String, String> empMap) {
+		return dao.selectCountAll(sst, empMap);
 	}
 
 	@Override
-	public int selectTotalACnt() {
-		return dao.selectCountAAll(sst);
+	public int selectTotalACnt(HashMap<String, String> accMap) {
+		return dao.selectCountAAll(sst, accMap);
 	}
 
 

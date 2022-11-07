@@ -47,6 +47,9 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    #list-address > * {
+        padding-left: 120px;
+    }
 </style>
 </head>
 <body>

@@ -82,7 +82,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int getPublicCnt(SqlSessionTemplate sst, String no) {
-		return sst.selectOne("memberMapper.getPublicCnt");
+		return sst.selectOne("memberMapper.getPublicCnt", no);
 	}
 
 }

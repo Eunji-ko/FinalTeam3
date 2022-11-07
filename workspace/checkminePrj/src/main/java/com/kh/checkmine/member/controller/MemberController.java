@@ -100,7 +100,6 @@ public class MemberController {
 			
 			//공유물 수 보여주기
 			int publicCnt = ms.getPublicCnt(loginMember.getNo());
-			System.out.println(publicCnt);
 			model.addAttribute("publicCnt", publicCnt);
 		}
 		
@@ -286,12 +285,22 @@ public class MemberController {
 	    String access_Token = ms.getAccessToken(code);
 	    HashMap<String, Object> userInfo = ms.getUserInfo(access_Token);
 	    System.out.println("login Controller : " + userInfo);
+	    System.out.println(userInfo.get("email"));
+	    String email = (String)userInfo.get("email");
 	    
 	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 	    if(userInfo.get("email") != null) {
-	        session.setAttribute("userId", userInfo.get("email"));
-	        session.setAttribute("access_Token", access_Token);
+	        String findId = ms.findIdByMail(email);
+	        
+	        if(findId != null) {
+	        	session.setAttribute("findId", "아이디 : " + findId);
+	        }else {
+	        	session.setAttribute("findId", "해당 카카오 계정 이메일과 일치하는 이메일 정보를 가진 사원 계정이 없습니다 !");
+	        }
+	    } else {
+	    	session.setAttribute("findId", "카카오 계정의 이메일 조회에 실패하였습니다 !");
 	    }
+	    
 	    
 	    return "redirect:/member/findIdPwd";
 	    //https://antdev.tistory.com/34 참고했음
