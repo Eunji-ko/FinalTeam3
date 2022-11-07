@@ -108,7 +108,7 @@
         margin: auto;
 
         display: grid;
-        grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-columns: 100px 250px 800px 100px 200px;
         grid-template-rows: repeat(16, 40px);
     }
     
@@ -118,6 +118,7 @@
 
     .list-header{
         background-color: #B0D9D1;
+        border-right: 1px solid white;
         font-weight: bolder;
         font-size: large;
         line-height: 40px;
@@ -204,7 +205,7 @@
                 <!--보고서 목록-->
                 <div id="center">
                     <div class="list-header">번호</div>
-                    <div class="list-header">받은이</div>
+                    <div class="list-header">수신자</div>
                     <div class="list-header">제목</div>
                     <div class="list-header">작성자</div>
                     <div class="list-header">날짜</div>

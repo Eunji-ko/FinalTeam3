@@ -11,6 +11,7 @@ public class FullcalendarVo {
 	private String content;
 	private String start;
 	private String end;
+	private String importance;
 	private boolean allday;
 	private String textColor;
 	private String color;

@@ -243,7 +243,7 @@
                             eventSources :[
                                 {
                                     googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', //캘린더 id
-                                    color: 'firebrick',
+                                    color: '#a51b0b',
                                     textColor: 'white',
                                 }
                             ],

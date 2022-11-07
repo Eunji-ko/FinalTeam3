@@ -14,8 +14,9 @@
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <html>
 <head>
-<script defer src="${root}/resources/js/tagify-att.js"></script>
-<script defer src="${root}/resources/js/tagify-ratt.js"></script>
+    <script defer src="${root}/resources/js/writeAtt.js?v=<%=System.currentTimeMillis() %>"></script>
+    <script defer src="${root}/resources/js/writeRatt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
+    
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -261,11 +262,11 @@
                         <div class="division" id="title-diveision">제　목</div><div id="title"><input type="text" name="title"></div>
                         <div class="division">수　신</div>
                         <div class="destination">
-                            <input type="text" class="tag" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
+                            <input type="text" class="tag" id="att" name="attNoA" placeholder="수신받을 직원의 이름을 적으세요.">
                         </div>
                         <div class="division">참　조</div>
                         <div class="reference">
-                            <input type="text" class="tag" name="attNoR" placeholder="참조할 직원의 이름을 적으세요.">
+                            <input type="text" class="tag" id="ratt" name="attNoR" placeholder="참조할 직원의 이름을 적으세요.">
                         </div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division">

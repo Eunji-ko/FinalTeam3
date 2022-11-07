@@ -125,6 +125,7 @@
         display: flex;
         justify-content: right;
         margin-right: 40px;
+        margin-bottom: 10px;
     }
 
     .btn-area a {
@@ -177,8 +178,8 @@
                 </div>
                 <div class="btn-area">
                     <c:if test="${vo.sender eq loginMember.name}">
-                        <a href="${root}/task/report/edit/${fv.no}">수정</a>
-                        <a href="${root}/task/report/del/${fv.no}">삭제</a>
+                        <a href="${root}/task/report/edit/${vo.no}">수정</a>
+                        <a href="${root}/task/report/del/${vo.no}">삭제</a>
                     </c:if>
                     <a href="${root}/task/report/list/1">목록</a>
                 </div>

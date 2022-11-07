@@ -28,8 +28,8 @@ public class TaskReportServiceImpl implements TaskReportService {
 		this.sst = sst;
 	}
 	
-	//지시서 작성
-		//지시서 + 수신참조 + 파일
+	//보고서 작성
+		//보고서 + 수신참조 + 파일
 	@Override
 	public int write(TaskReportVo reportVo, List<TaskReportAttVo> attVoList, List<TaskReportFileVo> fileVoList) {
 		int result1 = reportDao.insertReport(sst, reportVo);
@@ -47,7 +47,7 @@ public class TaskReportServiceImpl implements TaskReportService {
 		return result1 * result2 * result3;
 	}
 	
-		//지시서 + 수신참조 
+		//보고서 + 수신참조 
 	@Override
 	public int write(TaskReportVo reportVo, List<TaskReportAttVo> attVoList) {
 		int result1 = reportDao.insertReport(sst, reportVo);
@@ -127,6 +127,7 @@ public class TaskReportServiceImpl implements TaskReportService {
 	@Override
 	@Transactional
 	public int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList, List<TaskReportFileVo> fileVoList) {
+
 		int fileDel = reportDao.deleteFile(sst, reportVo.getNo());
 		int attDel = reportDao.deleteAtt(sst, reportVo.getNo());
 		
@@ -135,29 +136,30 @@ public class TaskReportServiceImpl implements TaskReportService {
 		int result3 = 1; //파일 첨부
 
 		for(int i = 0; i < attVoList.size(); i++) {
-			result2 = reportDao.insertReportAtt(sst, attVoList.get(i));
+			result2 *= reportDao.editReportAtt(sst, attVoList.get(i));
 		}
 		
 		for(int j = 0; j < fileVoList.size(); j++) {
-			result3 *= reportDao.insertFile(sst, fileVoList.get(j)); 
+			result3 *= reportDao.editFile(sst, fileVoList.get(j)); 
 		}
 		
-		return result1 * result2 * result3;
+		return result1 * result2 * result3 ;
 	}
 	
+	//수정
 	@Override
 	@Transactional
 	public int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList) {
-		int fileDel = reportDao.deleteFile(sst, reportVo.getNo());
+
 		int attDel = reportDao.deleteAtt(sst, reportVo.getNo());
 		
 		int result1 = reportDao.updateReport(sst, reportVo);
 		int result2 = 1; //수신,참조 첨부
 
 		for(int i = 0; i < attVoList.size(); i++) {
-			result2 = reportDao.insertReportAtt(sst, attVoList.get(i));
+			result2 *= reportDao.editReportAtt(sst, attVoList.get(i));
 		}
-		
+
 		return result1 * result2;
 	}
 

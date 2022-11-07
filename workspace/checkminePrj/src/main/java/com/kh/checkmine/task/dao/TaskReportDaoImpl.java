@@ -123,4 +123,16 @@ public class TaskReportDaoImpl implements TaskReportDao {
 		return sst.delete("taskReportMapper.deleteAtt", no);
 	}
 
+	//수신참고 수정
+	@Override
+	public int editReportAtt(SqlSessionTemplate sst, TaskReportAttVo taskReportAttVo) {
+		return sst.insert("taskReportMapper.editReportAtt", taskReportAttVo);
+	}
+
+	//파일 수정
+	@Override
+	public int editFile(SqlSessionTemplate sst, TaskReportFileVo taskReportFileVo) {
+		return sst.insert("taskReportMapper.editFile", taskReportFileVo);
+	}
+
 }
