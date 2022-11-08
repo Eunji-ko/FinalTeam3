@@ -21,4 +21,7 @@ public interface AlarmService {
 	//공지사항 알림 넣기
 	int insertNoticeAlarm(String no);
 
+	//모든 알림 읽음 처리
+	int readAlarmAll(String no);
+
 }

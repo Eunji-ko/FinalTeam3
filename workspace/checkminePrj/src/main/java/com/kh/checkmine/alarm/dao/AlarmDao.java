@@ -54,4 +54,7 @@ public interface AlarmDao {
 	//예약 건수 알림 테이블에 집어넣기
 	int insertReservationAlarm(SqlSessionTemplate sst, Map<String, Object> reservationMap);
 
+	//모든 알림 읽기
+	int updateAlarmAll(SqlSessionTemplate sst, String no);
+
 }

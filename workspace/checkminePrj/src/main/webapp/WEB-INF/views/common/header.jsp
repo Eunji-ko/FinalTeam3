@@ -51,7 +51,18 @@
             margin-bottom: 5rem;
         }
         #alarm-title{
-            margin-bottom: 25px;
+            margin-left: 25px;
+        }
+        #read-all-btn{
+            float: right;
+        }
+        #read-all-div{
+            margin-bottom: 10px;
+        }
+        #read-all-div::after{
+            content: "";
+            display: block;
+            clear: both;
         }
     </style>
     <!-- 제이쿼리 -->    
@@ -93,18 +104,23 @@
                 </a>
                 <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton1" style="width: 560px;">
                     <h5 class="fw-bold" id="alarm-title">알림 목록</h5>
-                    <c:forEach items="${alarmList}" var="list">
-                        <div id="list-div${list.no}">
-                            <li class="d-flex align-items-center">
-                                <a class="dropdown-item" href="${rootPath}/${list.url}" onclick="readAlarm('${list.no}');" style="width: 95%;">
-                                    <span>[${list.type}]${list.content}</span>
-                                    <span style="font-size: 10px;">${list.time}</span>
-                                    <span><a type="button" onclick="deleteAlarm('${list.no}');" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
-                                </a>
-                            </li>
-                            <hr>
-                        </div>
-                    </c:forEach>
+                    <div id="read-all-div">
+                        <button class="btn btn-sm" onclick="readAlarmAll();" id="read-all-btn">모두 지우기</button>
+                    </div>
+                    <div id="alarm-div">
+                        <c:forEach items="${alarmList}" var="list">
+                            <div id="list-div${list.no}">
+                                <li class="d-flex align-items-center">
+                                    <a class="dropdown-item" href="${rootPath}/${list.url}" onclick="readAlarm('${list.no}');" style="width: 95%;">
+                                        <span>[${list.type}]${list.content}</span>
+                                        <span style="font-size: 10px;">${list.time}</span>
+                                        <span><a type="button" onclick="deleteAlarm('${list.no}');" style="margin-left: 10px"><img src="/checkmine/resources/img/header/X.png"></a></span>
+                                    </a>
+                                </li>
+                                <hr>
+                            </div>
+                        </c:forEach>
+                    </div>
                     <div id="no-alarm" hidden>
                         <li class="d-flex align-items-center">
                             <a class="dropdown-item" href="#" style="width: 95%;">
@@ -182,7 +198,29 @@
             });
         }
 
-        
+        function readAlarmAll(){
+            if(confirm('알림을 모두 읽으시겠습니까?')){
+                $.ajax({
+                    url : "${rootPath}/alarm/readAll",
+                      type : "GET",
+                      dataType : 'text',
+                      success : function(data){
+                       if(data == 'fail'){
+                        alert('알림 처리에 실패하였습니다.');
+                       }else if(data == 'readAll'){
+                        $('#alarm-div').hide();
+                        $('#no-alarm').prop('hidden', false);
+                        document.querySelector('#badge').innerHTML = 0;
+                       }
+                      },
+                      error : function(){
+                          alert("서버요청실패..");
+                      }
+                });
+            }else{
+                return false;
+            }
+        }
 
     </script>
 

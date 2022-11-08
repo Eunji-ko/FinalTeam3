@@ -213,5 +213,14 @@
 			,'reservation/myreservation'
 		)
 	</insert>
+	
+	<update id="updateAlarmAll">
+		UPDATE ALARM
+		SET
+			STATUS = 'Y'
+		WHERE
+			EMP_NO = #{no}
+			AND STATUS = 'N'
+	</update>
 
 </mapper>
