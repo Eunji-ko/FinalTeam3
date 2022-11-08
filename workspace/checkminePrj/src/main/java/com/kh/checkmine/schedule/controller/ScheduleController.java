@@ -110,10 +110,9 @@ public class ScheduleController {
 	
 	@PostMapping("add")
 	public String addSchedule(ScheduleVo vo, HttpSession session, Model model) {
-//		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-//		
-//		String empNo = loginMember.getNo();
-		vo.setEmpNo("7");
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		vo.setEmpNo(loginMember.getNo());
 		vo.setStartDate(vo.getStartDate()+vo.getStartTime());
 		vo.setEndDate(vo.getEndDate()+vo.getEndTime());
 		

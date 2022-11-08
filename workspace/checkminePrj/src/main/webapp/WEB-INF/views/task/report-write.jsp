@@ -40,7 +40,7 @@
     	border-top: 1px solid #B0D9D1 !important;
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
-    	color: #B0D9D1 !important;
+    	color: #728D89 !important;
     }
 
     #report{
@@ -48,7 +48,7 @@
         border-bottom: none;
         margin-left: 20px;
 
-        color: #B0D9D1;
+        color: #728D89;
         font-weight: bold;
     }
 

@@ -194,31 +194,21 @@ public class TaskReportController {
 		return jsonStr;
 	}
 	
-	//보고서 수정 - 멤버 목록(ajax) 요청 핸들러
-	@GetMapping(value = "edit/attList", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String editAttList() {
-		List<MemberVo> attList = orderService.selectMemberList();
-		
-		Gson gson = new Gson();
-		
-		String jsonStr = gson.toJson(attList);
-		
-		return jsonStr;
-	}
-	
 	//보고서 상세보기
 	@GetMapping("detail/{no}")
 	public String reportDetail(@PathVariable(required = false) String no, Model model, HttpSession session) {
+		
 		TaskReportVo vo = reportService.selectOneByNo(no);
 		TaskReportAttVo aVo = reportService.selectAttOne(no);
 		TaskReportAttVo rVo = reportService.selectAttROne(no);
 		List<TaskReportFileVo> fileVo = reportService.selectFileForReportNo(no);
+		TaskOrderVo taskVo = orderService.selectOneByNo(vo.getTaskNo());
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("aVo", aVo);
 		model.addAttribute("rVo", rVo);
 		model.addAttribute("fileVo", fileVo);
+		model.addAttribute("taskVo", taskVo);
 		
 		return "task/report-detail";
 	}
@@ -252,11 +242,15 @@ public class TaskReportController {
 		
 		String empNo = loginMember.getNo();
 		
-		List<TaskOrderVo> taskList = orderService.selectListForAtt(empNo);
+		List<TaskOrderVo> taskList = orderService.selectListForAtt(empNo); //지시서
 		
-		TaskReportVo vo = reportService.selectOneByNo(no);
+		TaskReportVo vo = reportService.selectOneByNo(no); //보고서 내용
+//		TaskReportAttVo aVo = reportService.selectEditAtt(no);
+//		TaskReportAttVo rVo = reportService.selectEditRatt(no);
 		TaskReportAttVo aVo = reportService.selectAttOne(no);
 		TaskReportAttVo rVo = reportService.selectAttROne(no);
+		System.out.println("att : " + aVo);
+		System.out.println("ratt : " + rVo);
 		
 		List<TaskReportFileVo> fileVo = reportService.selectFileForReportNo(no);
 		
@@ -349,6 +343,19 @@ public class TaskReportController {
 			session.setAttribute("alertMsg", "보고서를 수정하지 못했습니다.");
 			return "redirect:/task/report/detail/" + no;
 		}
+	}
+	
+	//보고서 수정 - 멤버 목록(ajax) 요청 핸들러
+	@GetMapping(value = "edit/attList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String editAttList() {
+		List<MemberVo> attList = orderService.selectMemberList();
+		
+		Gson gson = new Gson();
+		
+		String jsonStr = gson.toJson(attList);
+		
+		return jsonStr;
 	}
 	
 	//보고서 삭제

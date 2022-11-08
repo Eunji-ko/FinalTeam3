@@ -12,6 +12,8 @@ public class TaskOrderVo {
 	private String enrollDate;
 	private String startDate;
 	private String endDate;
+	private String startTime;
+	private String endTime;
 	private String importance;
 	
 	private String attName; //수신

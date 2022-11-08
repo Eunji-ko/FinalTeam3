@@ -97,6 +97,9 @@
         outline: 5px solid lightgray;
     }
 
+    #content{
+        height: 300px;
+    }
 </style>
 </head>
 <body>
@@ -124,7 +127,7 @@
                             <label for="taskId" class="col-form-label">일정명</label>
                             <input type="text" class="form-control" id="title" name="title">
                             <label for="taskId" class="col-form-label">일정 내용</label>
-                            <input type="text" class="form-control" id="content" name="content">
+                            <textarea class="form-control" id="content" name="content"></textarea>
                             <label for="taskId" class="col-form-label">시작 날짜 / 시간</label>
                             <input type="date" class="form-control" id="startDate" name="startDate" > <input class="form-control" type="time" name="startTime">
                             <label for="taskId" class="col-form-label">종료 날짜 / 시간</label>
@@ -165,7 +168,6 @@
         <!-- alert 모달을 쓸 페이지에 추가 end-->
 
     <script>
-        
         //풀캘린더 라이브러리 적용
         document.addEventListener('DOMContentLoaded', function() {
             //data 받아오는 ajax
@@ -197,38 +199,44 @@
                                     false;
                                 };
                             }, //시간 표시
-
                             customButtons: { //일정 추가 커스텀
                                 addEventButton: { // 추가한 버튼 설정
                                     text : "일정 추가",  // 버튼 내용
                                     click : function(){ // 버튼 클릭 시 이벤트 추가
-                                        $("#calendarModal").modal("show"); // modal 나타내기
-            
-                                        $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                            var content = $("#calendar_content").val();
-                                            var start_date = $("#calendar_start_date").val();
-                                            var end_date = $("#calendar_end_date").val();
-                                            
-                                            //내용 입력 여부 확인
-                                            if(content == null || content == ""){
-                                                alert("내용을 입력하세요.");
-                                            }else if(start_date == "" || end_date ==""){
-                                                alert("날짜를 입력하세요.");
-                                            }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                                alert("종료일이 시작일보다 먼저입니다.");
-                                            }else{ // 정상적인 입력 시
-                                                var obj = {
-                                                    "title" : content,
-                                                    "start" : start_date,
-                                                    "end" : end_date
-                                                }//전송할 객체 생성
-                                                console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                            }
-                                        });
+                                        var memberDept = '${loginMember.deptNo}';
+                                        var dept = "인사부";
+                                        console.log("멤버 : " + memberDept);
+                                        console.log("부서 : " + dept);
+                                        if(dept == memberDept){//인사부만 등록
+                                            $("#calendarModal").modal("show"); // modal 나타내기
+                                            $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+
+                                                var content = $("#calendar_content").val();
+                                                var start_date = $("#calendar_start_date").val();
+                                                var end_date = $("#calendar_end_date").val();
+                                                                                            
+                                                //내용 입력 여부 확인
+                                                if(content == null || content == ""){
+                                                    alert("내용을 입력하세요.");
+                                                }else if(start_date == "" || end_date ==""){
+                                                    alert("날짜를 입력하세요.");
+                                                }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
+                                                    alert("종료일이 시작일보다 먼저입니다.");
+                                                }else{ // 정상적인 입력 시
+                                                    var obj = {
+                                                        "title" : content,
+                                                        "start" : start_date,
+                                                        "end" : end_date
+                                                    }//전송할 객체 생성
+                                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                                }
+                                            })
+                                        }else{
+                                            alert("해당 권한이 없습니다.");
+                                        };
                                     }
                                 }
                             },
-            
                             navLinks: true, //날짜 선택시 day 캘린더로 링크
                             selectable: false, //달력 일자 드래그 설정
                             dayMaxEvents: true, //이벤트 오버되면 높이 제한
@@ -272,9 +280,8 @@
                                         alert("취소되었습니다.");
                                     }
                                 }
-                            }
-                            }
-                        );
+                            },
+                        });
                         calendar.render();
 
                     },

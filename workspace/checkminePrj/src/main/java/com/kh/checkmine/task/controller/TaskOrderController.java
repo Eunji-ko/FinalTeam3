@@ -115,15 +115,15 @@ public class TaskOrderController {
 	public String orderWrite(TaskOrderVo orderVo, TaskOrderAttVo orderAttVo, TaskOrderFileVo orderFileVo, HttpServletRequest req, HttpSession session) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
-		
-		
 		//지시서 입력
 		String orderer = loginMember.getNo();
-				
+
 		String attNoA = orderAttVo.getAttNoA();
 		String attNoR = orderAttVo.getAttNoR();
 
 		orderVo.setOrderer(orderer);
+		orderVo.setStartDate(orderVo.getStartDate()+orderVo.getStartTime());
+		orderVo.setEndDate(orderVo.getEndDate()+orderVo.getEndTime());
 		
 		int orderResult = 0;
 		int attNoAResult = 0;
