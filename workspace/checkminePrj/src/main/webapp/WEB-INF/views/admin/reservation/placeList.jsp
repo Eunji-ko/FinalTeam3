@@ -124,6 +124,10 @@
         height: 39.5px;
     }
 
+    table td:last-child{
+        vertical-align: middle;
+    }
+
     #listArea > table td{
         white-space: nowrap;
         overflow: hidden;
@@ -178,9 +182,19 @@
                     </thead>
                     <tbody style="border-top: none;">
                         <c:forEach items="${goodsList}" var="g">
-                                <tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.content}');">
+                                <tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.type}', '${g.name}', '${g.content}');">
                                 <td>${g.no}</td>
-                                <td>장소</td>
+                                <c:choose>
+                                    <c:when test="${g.type eq 'H'}">
+                                        <td>회의실</td>
+                                    </c:when>
+                                    <c:when test="${g.type eq 'L'}">
+                                        <td>응접실</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>기타</td>
+                                    </c:otherwise>
+                                </c:choose>
                                 <td>${g.name}</td>
                                 <td>${g.content}</td>
                                 <td>${g.cnt}</td>
@@ -237,7 +251,15 @@
 
     <script>
         //예약 리스트 모달 ajax
-        function bookList(no, name, note){
+        function bookList(no, type, name, note){
+            if(type == 'H'){
+                type = "회의실";
+            }else if(type == 'L'){
+                type = "응접실";
+            }else{
+                type = "기타";
+            }
+
             $.ajax({
                 type : "POST",
                 url : "${root}/admin/goods/book",
@@ -246,7 +268,7 @@
                     "sort" : '${sort}'
                 },
                 success: function(list){
-                    var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>분류</th><td>장소</td></tr><tr><th>설명</th><td>'
+                    var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>카테고리</th><td>'+type+'</td></tr><tr><th>설명</th><td>'
                         +note+'</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>';
     
                     if(list.length == 0){

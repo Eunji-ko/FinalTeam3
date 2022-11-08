@@ -78,7 +78,7 @@
     #content{
    		width:98%;
    		min-height: 340px;
-        margin: 10px;
+        margin: 14px;
         display: inline-block;
     }
 
@@ -102,6 +102,7 @@
         margin-left: 30px;
         border-bottom: 1px solid lightgrey;
         font-size: 15px;
+        padding: 5px;
     }
 
     #replyTitle, #attachArea > h6{
@@ -122,6 +123,7 @@
         background-color: white;
         border: none;
         color: gray;
+        font-size: 13px;
     }
 
     textarea {
@@ -184,7 +186,14 @@
                 <div id="info">
                 	<div id="recommendCnt">추천 ${board.recommendCnt}</div>
                     <div>조회수 ${board.hit}</div>
-                    <div id="writer"><b>${board.department}&nbsp${board.writer}</b></div>
+                    <div id="writer">
+                        <b>
+                            <c:choose>
+                                <c:when test="${board.department eq '-'}">${board.writer}</c:when>
+                                <c:otherwise>${board.department}&nbsp${board.writer}</c:otherwise>
+                            </c:choose>
+                        </b>
+                    </div>
                     <div id="dateArea">
                         <c:choose>
                             <c:when test="${board.modifyDate ne null}">
@@ -308,16 +317,16 @@
                            result +=
                            '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
                                        '<div style="font-weight:500;">'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
-                                       '<div style="color:gray;">'+ list[i].replyDate +'</div>'+
+                                       '<div style="color:gray; font-size:13px">'+ list[i].replyDate +'</div>'+
                                        '<button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>'+                              
                                        '</div><div>'+list[i].content+'</div></div>'
-                       }else{
+                        }else{
                             result +=
-                            '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
-                                        '<div>'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
-                                        '<div style="color:gray;>'+ list[i].replyDate +'</div>'+                  
-                                        '</div><div>'+list[i].content+'</div></div>'
-                       }            
+                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                                       '<div style="font-weight:500;">'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
+                                       '<div style="color:gray; font-size:13px">'+ list[i].replyDate +'</div>'+                  
+                                       '</div><div>'+list[i].content+'</div></div>'
+                       }              
                     }
                     $("#replyList").html(result);
                 },

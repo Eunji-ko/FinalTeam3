@@ -123,6 +123,14 @@
         text-overflow: ellipsis;
     }
 
+    table td:last-child{
+        vertical-align: middle;
+    }
+
+    table td:last-child{
+        vertical-align: middle;
+    }
+
     .modal-body > table td{
         word-break :break-word;
     }
@@ -177,9 +185,19 @@
                     </thead>
                     <tbody style="border-top: none;">
                         <c:forEach items="${goodsList}" var="g">
-                            <tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.name}', '${g.note}');">
+                            <tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.type}', '${g.name}', '${g.note}');">
                                 <td>${g.no}</td>
-                                <td>공유물</td>
+                                <c:choose>
+                                    <c:when test="${g.type eq 'B'}">
+                                        <td>빔 프로젝터</td>
+                                    </c:when>
+                                    <c:when test="${g.type eq 'C'}">
+                                        <td>법인차</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>기타</td>
+                                    </c:otherwise>
+                                </c:choose>
                                 <td>${g.name}</td>
                                 <td>${g.note}</td>
                                 <td>${g.cnt}</td>
@@ -237,7 +255,15 @@
 
     <script>
         //예약 리스트 모달 ajax
-        function bookList(no, name, note){
+        function bookList(no, type, name, note){
+            if(type == 'B'){
+                type = "빔 프로젝터";
+            }else if(type == 'C'){
+                type = "법인차";
+            }else{
+                type = "기타";
+            }
+
             $.ajax({
                 type : "POST",
                 url : "${root}/admin/goods/book",
@@ -246,7 +272,7 @@
                     "sort" : '${sort}'
                 },
                 success: function(list){
-                    var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>분류</th><td>공유물</td></tr><tr><th>설명</th><td>'
+                    var result = '<table class="goods-info"><tr><th>이름</th><td>'+name+'</td></tr><tr><th>카테고리</th><td>'+type+'</td></tr><tr><th>설명</th><td>'
                         +note+'</td></tr></table><hr><div style="margin: 30px; font-weight: bolder;">예약목록</div>';
     
                     if(list.length == 0){

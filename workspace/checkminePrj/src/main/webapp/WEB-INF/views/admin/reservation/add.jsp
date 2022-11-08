@@ -86,13 +86,20 @@
     }
 
     .form-check-input:checked {
-        background-color: #5d736f !important;
+        background-color: #5d736f;
+        border: none;
     }
    
     #footer{
         margin: 10px;
         display: flex;
         justify-content: right;
+    }
+
+    .form-select{
+        width: 200px;
+        display: inline-block;
+        
     }
 </style>
 </head>
@@ -119,8 +126,13 @@
                             <tr>
                                 <th>분류</th>
                                 <td>
-                                    <input type="radio" class="form-check-input" name="type" value="place" checked><label for="place">장소</label>
-                                    <input type="radio" class="form-check-input" name="type" style="margin-left: 20px;" value="goods"><label for="goods">공유물</label>
+                                    <input type="radio" class="form-check-input" name="category" value="place" checked><label for="place">장소</label>
+                                    <input type="radio" class="form-check-input" name="category" style="margin-left: 20px;" value="goods"><label for="goods">공유물</label>
+                                    <!--장소-->
+                                    <select name="type" class="form-select category" style="margin-left: 30px;">
+                                        <option value="H">회의실</option>
+                                        <option value="L">응접실</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -151,6 +163,21 @@
             return false;
                 }
             }
+    </script>
+
+    <script>
+        //라디오 버튼 변경시 이벤트
+        $("input[name='category']:radio").change(function () {
+            //라디오 버튼 값을 가져온다.
+            var serviceType = this.value;
+                            
+            if(serviceType == "place"){//장소인 경우
+                $(".category").html("<option value='H'>회의실</option><option value='L'>응접실</option>");
+            }else if(serviceType == "goods"){//공유물인 경우
+                $(".category").html("<option value='B'>빔 프로젝터</option><option value='C'>법인차</option>");
+            }
+                            
+        });
     </script>
 </body>
 </html>

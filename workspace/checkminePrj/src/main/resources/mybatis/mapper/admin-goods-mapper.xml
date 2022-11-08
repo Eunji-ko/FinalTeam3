@@ -73,13 +73,13 @@
 	<insert id="addList">
 		INSERT INTO 
 		<choose>
-			<when test="type == 'place'">
-				PUBLIC_PLACE(NO, NAME, CONTENT)
-				VALUES(SEQ_PLACE_NO.NEXTVAL, #{name}, #{content}) 
+			<when test="category == 'place'">
+				PUBLIC_PLACE(NO, NAME, CONTENT, TYPE)
+				VALUES(SEQ_PLACE_NO.NEXTVAL, #{name}, #{content}, #{type}) 
 			</when>
 			<otherwise>
-				PUBLIC_GOODS(NO, NAME, NOTE)
-				VALUES(SEQ_GOODS_NO.NEXTVAL, #{name}, #{content}) 
+				PUBLIC_GOODS(NO, NAME, NOTE, TYPE)
+				VALUES(SEQ_GOODS_NO.NEXTVAL, #{name}, #{content}, #{type}) 
 			</otherwise>
 		</choose>
 	</insert>
