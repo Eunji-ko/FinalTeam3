@@ -118,18 +118,19 @@ public class MailWriteController {
 		String savePath = "/checkmine/resources/upload/mail";
 		List<MailAttVo> mailAttVoList = new ArrayList<MailAttVo>();
 		
-		for(int i = 0;i<fileNames.length;i++) {
-			String[] arr = fileNames[i].split("!!");
-			
-			MailAttVo mailAttVo = new MailAttVo();
-			mailAttVo.setRealName(arr[0]);
-			mailAttVo.setName(arr[1]);
-			mailAttVo.setPath(savePath);
-			
-			mailAttVoList.add(mailAttVo);
+		if(fileNames != null) {
+			for(int i = 0;i<fileNames.length;i++) {
+				String[] arr = fileNames[i].split("!!");
+				
+				MailAttVo mailAttVo = new MailAttVo();
+				mailAttVo.setRealName(arr[0]);
+				mailAttVo.setName(arr[1]);
+				mailAttVo.setPath(savePath);
+				
+				mailAttVoList.add(mailAttVo);
+			}
+			formVo.setMailAttVoList(mailAttVoList);
 		}
-		formVo.setMailAttVoList(mailAttVoList);
-		
 		String memberNo = ((MemberVo) session.getAttribute("loginMember")).getNo();
 		formVo.setEmpNo(memberNo);
 		

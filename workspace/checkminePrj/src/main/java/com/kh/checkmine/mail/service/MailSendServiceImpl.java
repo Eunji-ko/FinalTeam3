@@ -81,10 +81,11 @@ public class MailSendServiceImpl implements MailSendService{
 		
 		String currentMailSaveNum = dao.getCurrentMailSaveNum(sst);
 		formVo.setCurrentMailNum(currentMailSaveNum);
-		
-		for(MailAttVo vo : formVo.getMailAttVoList()) {
-			vo.setMailNo(currentMailSaveNum);
-			result = result * dao.insertMailSaveAtt(sst, vo);
+		if(formVo.getMailAttVoList() != null) {
+			for(MailAttVo vo : formVo.getMailAttVoList()) {
+				vo.setMailNo(currentMailSaveNum);
+				result = result * dao.insertMailSaveAtt(sst, vo);
+			}
 		}
 		
 		return result;

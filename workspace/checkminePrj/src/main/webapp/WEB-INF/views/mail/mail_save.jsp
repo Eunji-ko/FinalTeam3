@@ -223,9 +223,9 @@
                 mailArr.push(checkbox.value);
             });
             
-            if(confirm("선택된 메일을 휴지통으로 보내시겠습니까?")){
+            if(confirm("선택된 메일을 삭제하시겠습니까?")){
                 $.ajax({
-                    url:'/checkmine/mail/moveRecycleBinSend',
+                    url:'/checkmine/mail/moveRecycleBinSave',
                     traditional: true,
                     type:'post',
                     data:{'targetMails' : mailArr},

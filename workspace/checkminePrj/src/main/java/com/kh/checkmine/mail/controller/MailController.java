@@ -1,6 +1,5 @@
 package com.kh.checkmine.mail.controller;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -225,6 +224,23 @@ public class MailController {
 		System.out.println(Arrays.toString(targetMails));
 		
 		int result = service.moveRecycleBinSend(targetMails);
+		
+		System.out.println(result);
+		
+		if(result == 1) {
+			return Integer.toString(targetMails.length);
+		}else {
+			return "[실패]0";
+		}
+	}
+	
+	@PostMapping("moveRecycleBinSave")
+	@ResponseBody
+	public String moveRecycleBinSave(String[] targetMails) {
+		
+		System.out.println(Arrays.toString(targetMails));
+		
+		int result = service.moveRecycleBinSave(targetMails);
 		
 		System.out.println(result);
 		
