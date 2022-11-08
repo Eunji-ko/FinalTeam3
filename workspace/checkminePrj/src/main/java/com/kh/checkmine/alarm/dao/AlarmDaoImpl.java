@@ -104,5 +104,10 @@ public class AlarmDaoImpl implements AlarmDao{
 		return sst.insert("alarmMapper.insertReservation", reservationMap);
 	}
 
+	@Override
+	public int updateAlarmAll(SqlSessionTemplate sst, String no) {
+		return sst.update("alarmMapper.updateAlarmAll", no);
+	}
+
 
 }

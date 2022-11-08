@@ -150,4 +150,9 @@ public class AlarmServiceImpl implements AlarmService{
 		}
 	}
 
+	@Override
+	public int readAlarmAll(String no) {
+		return dao.updateAlarmAll(sst, no);
+	}
+
 }//class

@@ -203,6 +203,9 @@
 		function leaveApproval(){
 			if(($('#l-day').val() > $('#leave-apply').val()) || ($('#l-day').val()%1 == 0.5 && $('#l-day').val() > 0.5)){
 				if(confirm('무급휴가가 포함되어 있는 것이 맞습니까?')){
+					if($('#leave-apply').val() > 0.5 && $('#leave-type').val() == '반차'){
+						$('#leave-apply').val(0.5);
+					}
 					return approval();
 				}else{
 					return false;
@@ -307,6 +310,9 @@
 			}
 			if($('#leave-apply').val() > $('#l-day').val()){
 				$('#l-day').val($('#leave-apply').val());
+			}
+			if($('#leave-apply').val() > 0.5 && $('#leave-type').val() == '반차'){
+				$('#leave-apply').val(0.5);
 			}
 			$("#l-time-select").prop("required", true);
 		});
