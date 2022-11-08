@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.reservation.dao.ReservationDao;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
@@ -51,6 +52,24 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<GoodsVo> selectList() {
 		return dao.selectList(sst);
+	}
+
+	//빔 예약
+	@Override
+	public int insertRsvb(GoodsBookVo vo) {
+		return dao.insertRsvb(vo, sst);
+	}
+
+	//빔 예약 목록
+	@Override
+	public List<GoodsBookVo> selectListBimRsv(PageVo pv) {
+		return dao.selectListBimRsv(pv, sst);
+	}
+
+	//빔 예약 페이징
+	@Override
+	public int bimrsvTotalCount() {
+		return dao.bimrsvTotalCount(sst);
 	}
 	
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.checkmine.common.PageVo;
+import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.reservation.service.ReservationService;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
@@ -93,18 +95,48 @@ public class ReservationController {
 	}
 	
 	//빔프로젝트
-	@GetMapping("goodsone")
-	public String goodsOne(Model model, HttpSession session) {
+	@GetMapping("goodsone/{pno}")
+	public String goodsOne(@PathVariable int pno, Model model, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
+		int bimrsvTotalCount = rs.bimrsvTotalCount();
+		PageVo pv = Pagination.getPageVo(bimrsvTotalCount, pno, 5, 10);
+		
+		List<GoodsBookVo> rsvList = rs.selectListBimRsv(pv);
 		List<GoodsVo> voList = rs.selectList();
 		
+		System.out.println(rsvList);
+		
+		model.addAttribute("rsvList", rsvList);
 		model.addAttribute("voList", voList);
 		model.addAttribute("loginMember", loginMember);
+		model.addAttribute("pv", pv);
 		
 		return "reservation/goodsone";
+		
+	}
+	
+	//빔 예약
+	@PostMapping("rsvbtnb")
+	@ResponseBody
+	public String rsvbtnb(@RequestBody GoodsBookVo vo, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String eNo = loginMember.getNo();
+		
+		vo.setENo(eNo);
+		
+		int result = rs.insertRsvb(vo);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "예약 성공!");
+			return "redirect:/reservation/goodsone";
+		}else {
+			session.setAttribute("alertMsg", "예약 성공!");
+			return "redirect:/reservation/goodsone";
+		}
 		
 	}
 	

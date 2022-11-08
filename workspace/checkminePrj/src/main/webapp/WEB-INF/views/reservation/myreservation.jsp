@@ -145,7 +145,7 @@
                     <div id="side-goods">
                         <h4>공유물</h4>
 
-                        <a href="/checkmine/reservation/goodsone">빔 프로젝트</a>
+                        <a href="/checkmine/reservation/goodsone/1">빔 프로젝트</a>
                         <a href="/checkmine/reservation/goodstwo">법인차</a>
                     </div>
 

@@ -99,6 +99,8 @@ public class CommuteController {
 		List<ApprovalLeaveVo> voList = cs.selectLeaveList(map);
 		
 		double x = 0;
+		double y = 5;
+		double z = y - x;
 		
 		if(voList != null) {
 			for(int i = 0; i < voList.size(); i++) {
@@ -109,6 +111,8 @@ public class CommuteController {
 		
 		model.addAttribute("voList", voList);
 		model.addAttribute("x", x);
+		model.addAttribute("y", y);
+		model.addAttribute("z", z);
 		
 		return "commute/annualleave";
 		
