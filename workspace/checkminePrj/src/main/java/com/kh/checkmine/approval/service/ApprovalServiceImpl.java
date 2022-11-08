@@ -325,6 +325,9 @@ public class ApprovalServiceImpl implements ApprovalService{
 		//휴가원 관련 문서정보, 결재정보, 휴가원 정보 DB에 올리기
 		int docResult = dao.insertDoc(sst, docVo);
 		int apResult = dao.insertApproval(sst, apVo);
+		if(leaveVo.getType() == "반차") {
+			leaveVo.setApply("0.5");
+		}
 		int leaveResult = dao.insertLeave(sst, leaveVo);
 		
 		if(docResult*apResult*leaveResult == 1) {

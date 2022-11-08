@@ -55,6 +55,8 @@
         }
         #read-all-btn{
             float: right;
+            color: white;
+            background-color: #5d736f;
         }
         #read-all-div{
             margin-bottom: 10px;
@@ -206,7 +208,7 @@
                       dataType : 'text',
                       success : function(data){
                        if(data == 'fail'){
-                        alert('알림 처리에 실패하였습니다.');
+                        alert('읽을 알림이 없습니다.');
                        }else if(data == 'readAll'){
                         $('#alarm-div').hide();
                         $('#no-alarm').prop('hidden', false);
