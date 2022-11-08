@@ -76,7 +76,6 @@
 
                         <!-- 다운로드 처리 -->
                         <div>
-                            <button id="down">전부 다운로드</button> :
                             <div id="downloadList">
 	                            <c:forEach items="${mailVo.mailAttVo}" var="fileName">
 		                            <a href="/checkmine/download/${fileName.name}/${fileName.realName}">${fileName.realName}</a>&nbsp;&nbsp;
