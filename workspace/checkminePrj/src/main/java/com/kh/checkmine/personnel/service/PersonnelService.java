@@ -6,6 +6,7 @@ import java.util.List;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
+import com.kh.checkmine.personnel.vo.EmpEvalVo;
 
 public interface PersonnelService {
 
@@ -28,5 +29,7 @@ public interface PersonnelService {
 	int selectTotalCnt(HashMap<String, String> empMap);
 
 	int selectTotalACnt(HashMap<String, String> accMap);
+
+	EmpEvalVo findEmpEval(EmpEvalVo vo);
 
 }

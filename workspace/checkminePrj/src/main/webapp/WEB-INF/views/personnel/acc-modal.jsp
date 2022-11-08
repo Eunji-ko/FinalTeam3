@@ -18,45 +18,47 @@
           <div class="modal-body">
             <input type="hidden" id="modalANo" name="no">
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="corporate" id="floatingCorp">
+              <input type="text" class="form-control" name="corporate" id="floatingCorp" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingCorp">거래처명 *</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="address" id="floatingCAddress">
+              <input type="text" class="form-control" name="address" id="floatingCAddress" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingCAddress">거래처 주소</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="tel" class="form-control" name="tel" id="floatingTel">
+              <input type="tel" class="form-control" name="tel" id="floatingTel" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingTel">거래처 전화번호 *</label>
             </div> 
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="fax" id="floatingFax">
+              <input type="text" class="form-control" name="fax" id="floatingFax" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingFax">거래처 팩스번호</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="pname" id="floatingPName">
+              <input type="text" class="form-control" name="pname" id="floatingPName" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPName">담당자명 *</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="dept" id="floatingPDept">
+              <input type="text" class="form-control" name="dept" id="floatingPDept" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPDept">담당자 부서</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="text" class="form-control" name="position" id="floatingPPosition">
+              <input type="text" class="form-control" name="position" id="floatingPPosition" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPPosition">담당자 직급</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPPhone">
+              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPPhone" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPPhone">담당자 전화번호</label>
             </div> 
             <div class="form-floating">
-              <input type="email" class="form-control" name="email" id="floatingPEmail">
+              <input type="email" class="form-control" name="email" id="floatingPEmail" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPEmail">이메일 주소</label>
             </div>
           </div>
-          <div class="modal-footer">
-            <input type="submit" class="btn checkmine-btn" value="변경하기">
-          </div>
+          <c:if test="${fn:contains(loginMember.permission, 'H')}">
+            <div class="modal-footer">
+              <input type="submit" class="btn checkmine-btn" value="변경하기">
+            </div>
+          </c:if>
         </div>
       </div>
     </div>

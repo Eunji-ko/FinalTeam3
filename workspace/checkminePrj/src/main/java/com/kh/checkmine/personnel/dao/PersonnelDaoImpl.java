@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
+import com.kh.checkmine.personnel.vo.EmpEvalVo;
 
 @Repository
 public class PersonnelDaoImpl implements PersonnelDao {
@@ -71,6 +72,11 @@ public class PersonnelDaoImpl implements PersonnelDao {
 	@Override
 	public int selectCountAAll(SqlSessionTemplate sst, HashMap<String, String> accMap) {
 		return sst.selectOne("personnelMapper.selectCountAAll", accMap);
+	}
+
+	@Override
+	public EmpEvalVo findEmpEval(SqlSessionTemplate sst, EmpEvalVo vo) {
+		return sst.selectOne("personnelMapper.findEmpEval", vo);
 	}
 
 }

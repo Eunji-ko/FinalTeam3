@@ -19,6 +19,7 @@ import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.service.PersonnelService;
 import com.kh.checkmine.personnel.vo.AccountVo;
+import com.kh.checkmine.personnel.vo.EmpEvalVo;
 
 @Controller
 @RequestMapping("personnel")
@@ -155,6 +156,16 @@ public class PersonnelController {
 			session.setAttribute("alertMsg", "거래처를 삭제하는 데 실패하였습니다 !");
 			return "redirect:/personnel/main?ep=1&ap=1&category=acc";
 		}
+		
+	}
+	
+	@PostMapping("checkEval")
+	@ResponseBody
+	public EmpEvalVo checkEval(EmpEvalVo vo) {
+		
+		EmpEvalVo findEval = ps.findEmpEval(vo);
+		
+		return findEval;
 		
 	}
 	

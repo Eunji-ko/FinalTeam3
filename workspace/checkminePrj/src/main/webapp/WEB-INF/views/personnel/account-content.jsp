@@ -26,13 +26,18 @@
     .psn-acc-table>tbody>tr :hover {
         cursor: pointer;
     }
+    .acc-checkbox {
+        accent-color: #5D736F;
+    }
 </style>
 </head>
 <body>
     <div id="acc-area">
         <br>
-        <button type="button" class="btn checkmine-btn acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
-        <button type="button" class="btn checkmine-btn acc-btn" id="acc-del-btn" disabled="disabled" onclick="delAcc();">삭제하기</button>
+        <c:if test="${fn:contains(loginMember.permission, 'H')}">
+            <button type="button" class="btn checkmine-btn acc-btn" data-bs-toggle="modal" data-bs-target="#insertAcc">추가하기</button>
+            <button type="button" class="btn checkmine-btn acc-btn" id="acc-del-btn" disabled="disabled" onclick="delAcc();">삭제하기</button>
+        </c:if>
         <form action="${rootPath}/personnel/main" method="get" class="align-right search-form" onsubmit="changeAccSearch()" id="accForm">
             <input type="hidden" name="ep" id="accSearchEp" value="">
             <input type="hidden" name="ap" value="1">
@@ -56,7 +61,9 @@
                         <th>TEL</th>
                         <th>FAX</th>
                         <th>메일주소</th>
-                        <th></th>
+                        <c:if test="${fn:contains(loginMember.permission, 'H')}">
+                            <th></th>
+                        </c:if>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,9 +89,11 @@
                                     ${acc.email}
                                 </c:if>
                             </td>
-                            <td>
-                                <input type="checkbox" name="no" value="${acc.no}">
-                            </td>
+                            <c:if test="${fn:contains(loginMember.permission, 'H')}">
+                                <td>
+                                    <input type="checkbox" class="acc-checkbox" name="no" value="${acc.no}">
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </tbody>

@@ -11,6 +11,7 @@ import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.dao.PersonnelDao;
 import com.kh.checkmine.personnel.vo.AccountVo;
+import com.kh.checkmine.personnel.vo.EmpEvalVo;
 
 @Service
 public class PersonnelServiceImpl implements PersonnelService {
@@ -72,6 +73,11 @@ public class PersonnelServiceImpl implements PersonnelService {
 	@Override
 	public int selectTotalACnt(HashMap<String, String> accMap) {
 		return dao.selectCountAAll(sst, accMap);
+	}
+
+	@Override
+	public EmpEvalVo findEmpEval(EmpEvalVo vo) {
+		return dao.findEmpEval(sst, vo);
 	}
 
 

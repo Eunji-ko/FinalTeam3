@@ -376,7 +376,7 @@
                 </div>
                 <div>
                     <div id="right-box">
-                        <a href="${rootPath}/task/report/list"><h4>업무</h4></a>
+                        <a href="${rootPath}/task/report/list/1"><h4>업무</h4></a>
                         <div id="right-box-content">
                             <table class="table">
                                 <c:forEach items="${taskList}" var="task">

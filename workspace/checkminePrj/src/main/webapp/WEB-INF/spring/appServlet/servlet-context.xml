@@ -33,13 +33,37 @@
 		<beans:property name="defaultEncoding" value="UTF-8"/>
 	</beans:bean>
 	
-	<!-- 알람 띄우는 인터셉터 -->
 	<interceptors>
+		<!-- 알람 띄우는 인터셉터 -->
 		<interceptor>
 			<mapping path="/**"/>
 			<exclude-mapping path="/alarm/**"/>
 			<exclude-mapping path="/admin/**"/>
 			<beans:bean class="com.kh.checkmine.alarm.controller.AlarmAdviser"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/"/>
+			<mapping path="/member/findIdPwd"/>
+			<mapping path="/member/kakaoLogin"/>
+			<mapping path="/member/logout"/>
+			<mapping path="/member/findPwd"/>
+			<mapping path="/sendPwd"/>
+			<mapping path="/member/changePwdById"/>
+			<mapping path="/admin/**"/>
+			<beans:bean class="com.kh.checkmine.common.LogoutCheckInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/**"/>
+			<!-- 로그인 안되어있을 때 접근 가능한 경로 -->
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/member/findIdPwd"/>
+			<exclude-mapping path="/member/kakaoLogin"/>
+			<exclude-mapping path="/member/logout"/>
+			<exclude-mapping path="/member/findPwd"/>
+			<exclude-mapping path="/sendPwd"/>
+			<exclude-mapping path="/member/changePwdById"/>
+			<exclude-mapping path="/admin/**"/>
+			<beans:bean class="com.kh.checkmine.common.LoginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
 	
