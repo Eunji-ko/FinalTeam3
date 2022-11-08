@@ -97,11 +97,11 @@
 
                     <div id="remain-leave">남은 연차</div>
 
-                    <div>5</div>
+                    <div>${y}</div>
 
                     <div>${x}</div>
                     
-                    <div>5</div>
+                    <div>${z}</div>
 
                 </div>
 

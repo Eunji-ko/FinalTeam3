@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.reservation.vo.GoodsBookVo;
 import com.kh.checkmine.reservation.vo.GoodsVo;
 import com.kh.checkmine.reservation.vo.PlaceBookVo;
@@ -24,5 +25,14 @@ public interface ReservationDao {
 
 	//빔
 	List<GoodsVo> selectList(SqlSessionTemplate sst);
+
+	//빔 예약
+	int insertRsvb(GoodsBookVo vo, SqlSessionTemplate sst);
+
+	//빔 예약 목록
+	List<GoodsBookVo> selectListBimRsv(PageVo pv, SqlSessionTemplate sst);
+
+	//빔 예약 페이징
+	int bimrsvTotalCount(SqlSessionTemplate sst);
 
 }
