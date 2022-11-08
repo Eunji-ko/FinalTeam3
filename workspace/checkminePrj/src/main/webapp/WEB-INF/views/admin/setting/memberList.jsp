@@ -53,7 +53,10 @@
 
     .dropdown-toggle{
         margin-left: 20px;
-        border: 1px solid ;
+        border: 1px solid gray;
+        width: 100px;
+        background-color: #5D736F;
+        color: white;
     }
 
     #listArea > table{

@@ -9,6 +9,7 @@ public class GoodsVo {
 	private String name;
 	private String note;
 	private String deleteYn;
+	private String type;
 	
 	private String cnt;
 }

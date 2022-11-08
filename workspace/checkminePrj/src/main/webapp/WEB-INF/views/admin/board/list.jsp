@@ -93,6 +93,10 @@
         text-overflow: ellipsis;
     }
 
+    table td:last-child{
+        vertical-align: middle;
+    }
+
     thead > tr{
         height: 39px;
     }

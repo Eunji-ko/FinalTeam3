@@ -110,7 +110,7 @@ public class AdminGoodsController {
 	
 	//공유물 등록
 	@PostMapping("add")
-	public String add(@RequestParam String type, @RequestParam HashMap<String, String> map, HttpSession session) {
+	public String add(@RequestParam HashMap<String, String> map, HttpSession session) {
 		
 		int result = service.addList(map);
 
