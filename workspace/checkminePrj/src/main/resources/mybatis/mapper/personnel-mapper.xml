@@ -160,5 +160,16 @@
   		AND ${type} LIKE '%${text}%'
   	</if>
   </select>
+  
+  <select id="findEmpEval" resultType="com.kh.checkmine.personnel.vo.EmpEvalVo">
+  	SELECT
+  		  NO
+  		, EVALEE
+  		, EVALOR
+  		, CONTENT
+  	FROM EMP_EVAL
+  	WHERE EVALEE = #{evalee}
+  	AND EVALOR = #{evalor}
+  </select>
  
 </mapper>

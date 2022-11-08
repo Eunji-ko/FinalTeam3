@@ -34,12 +34,12 @@
           </div>
           <div class="modal-body">
             <div id="emp-img">
-              <img src="" id="empModalImg">
+              <img src="${imgPath}/none-profile.png" id="empModalImg">
             </div>
             <input type="hidden" id="modalENo" name="no">
             <input type="text" class="form-control" id="modalName" name="name" disabled  style="margin-bottom: 10px;">
             <div class="form-floating" style="margin-bottom: 10px;">
-              <select class="form-select" id="floatingDept" name="deptNo" aria-label="Floating label select example">
+              <select class="form-select" id="floatingDept" name="deptNo" aria-label="Floating label select example" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
                 <option value="1" selected>-</option>
                 <option value="2">인사부</option>
                 <option value="3">총무부</option>
@@ -50,7 +50,7 @@
               <label for="floatingDept">부서</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <select class="form-select" id="floatingPosi" name="posNo" aria-label="Floating label select example">
+              <select class="form-select" id="floatingPosi" name="posNo" aria-label="Floating label select example" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
                 <option value="1">사원</option>
                 <option value="2">주임</option>
                 <option value="3">대리</option>
@@ -62,17 +62,21 @@
               <label for="floatingPosi">직위</label>
             </div>
             <div class="form-floating" style="margin-bottom: 10px;">
-              <input type="email" class="form-control" name="email" id="floatingEmail" value="test@checkmine.com">
+              <input type="email" class="form-control" name="email" id="floatingEmail" value="test@checkmine.com" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingEmail">이메일 주소</label>
             </div>
             <div class="form-floating">
-              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPhone" value="010-1234-1234">
+              <input type="tel" class="form-control phoneNumber" name="phone" id="floatingPhone" value="010-1234-1234" <c:if test="${!fn:contains(loginMember.permission, 'H')}">disabled</c:if>>
               <label for="floatingPhone">휴대폰 번호</label>
             </div> 
           </div>
-          <div class="modal-footer">
-            <input type="submit" class="btn checkmine-btn" value="변경하기">
-          </div>
+          
+            <div class="modal-footer">
+              <button type="button" id="emp-eval-btn" class="btn checkmine-btn">사원평가</button>
+              <c:if test="${fn:contains(loginMember.permission, 'H')}">
+                <input type="submit" class="btn checkmine-btn" value="변경하기">
+              </c:if>
+            </div>
         </div>
       </div>
     </div>
@@ -91,7 +95,9 @@
             alert("사원 정보를 조회하는데에 실패하였습니다 !")
           }else{
             $('#modalENo').val(no);
-            $('#empModalImg').attr('src', '${rootPath}/resources/upload/profile/' + data.photoName);
+            if(data.photoName != null){
+              $('#empModalImg').attr('src', '${rootPath}/resources/upload/profile/' + data.photoName);
+            }
             $('#modalName').val(data.name);
             $('#floatingDept').val(data.deptNo).prop("selected", true);
             $('#floatingPosi').val(data.posNo).prop("selected", true);
@@ -111,6 +117,30 @@
       $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
     });
 
+  </script>
+    
+  <script>
+    $(document).on("click", "emp-eval-btn", function(){
+      let evalee = $('#modalENo').val();
+      let evaleeName = $('#modalName').val();
+      let evalor = '${loginMember.no}';
+      $.ajax({
+        url: "/checkmine/personnel/checkEval",
+        type: 'POST',
+        data : {
+          evalee : evalee,
+          evalor : evalor
+        },
+        success : function(data){
+          if(data == null){
+            swal("[" + evaleeName + "]님 인사평가 ", "말은 마음의 초상이다.", {content: "input"})
+            .then((value) => {
+              let content = '${value}';
+            });
+          }
+        }
+      })
+    });
   </script>
 </body>
 </html>

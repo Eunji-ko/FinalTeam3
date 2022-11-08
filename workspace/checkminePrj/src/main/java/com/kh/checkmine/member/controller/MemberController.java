@@ -1,6 +1,7 @@
 package com.kh.checkmine.member.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +27,9 @@ import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
 import com.kh.checkmine.commute.service.CommuteService;
 import com.kh.checkmine.commute.vo.CommuteVo;
+import com.kh.checkmine.mail.service.MailAddrService;
 import com.kh.checkmine.mail.service.MailService;
+import com.kh.checkmine.mail.vo.MailAddrVo;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.member.service.MemberService;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -42,14 +45,16 @@ public class MemberController {
 	private final CommuteService cs;
 	private final MailService mls;
 	private final AlarmService alarmService;
+	private final MailAddrService mas;
 	
 	@Autowired
-	public MemberController(MemberService ms, ApprovalService as, CommuteService cs, MailService mls, AlarmService alarmService) {
+	public MemberController(MemberService ms, ApprovalService as, CommuteService cs, MailService mls, AlarmService alarmService, MailAddrService mas) {
 		this.ms = ms;
 		this.as = as;
 		this.cs = cs;
 		this.mls = mls;
 		this.alarmService = alarmService;
+		this.mas = mas;
 	}
 	
 	@GetMapping("main")
@@ -188,6 +193,19 @@ public class MemberController {
 		if(replyList != null) {
 			model.addAttribute("replyList", replyList);
 		}
+		
+		//사내 주소록 리스트 가져오기
+		ArrayList<MailAddrVo> AddrListInner = (ArrayList<MailAddrVo>) mas.getAddrListInner(loginMember.getNo());
+		//사외 주소록 리스트 가져오기
+		ArrayList<MailAddrVo> AddrListOuter = (ArrayList<MailAddrVo>) mas.getAddrListOuter(loginMember.getNo());
+		//거래처 주소록 리스트 가져오기
+		ArrayList<MailAddrVo> AddrListAcc = (ArrayList<MailAddrVo>) mas.getAddrListAcc(loginMember.getNo());
+		
+		
+		//각각 리스트 모델에 담기
+		model.addAttribute("AddrListInner", AddrListInner);
+		model.addAttribute("AddrListOuter", AddrListOuter);
+		model.addAttribute("AddrListAcc", AddrListAcc);
 		
 		return "member/mypage";
 	}

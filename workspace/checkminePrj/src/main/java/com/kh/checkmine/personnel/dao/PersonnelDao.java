@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.member.vo.MemberVo;
 import com.kh.checkmine.personnel.vo.AccountVo;
+import com.kh.checkmine.personnel.vo.EmpEvalVo;
 
 public interface PersonnelDao {
 
@@ -30,5 +31,7 @@ public interface PersonnelDao {
 	int selectCountAll(SqlSessionTemplate sst, HashMap<String, String> empMap);
 
 	int selectCountAAll(SqlSessionTemplate sst, HashMap<String, String> accMap);
+
+	EmpEvalVo findEmpEval(SqlSessionTemplate sst, EmpEvalVo vo);
 
 }
