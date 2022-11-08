@@ -135,4 +135,14 @@ public class TaskReportDaoImpl implements TaskReportDao {
 		return sst.insert("taskReportMapper.editFile", taskReportFileVo);
 	}
 
+	@Override
+	public TaskReportAttVo selectEditAtt(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("taskReportMapper.editReportAtt", no);
+	}
+
+	@Override
+	public TaskReportAttVo selectEditRatt(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("taskReportMapper.selectEditRatt", no);
+	}
+
 }

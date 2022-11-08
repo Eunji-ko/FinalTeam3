@@ -46,13 +46,13 @@
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
         border-bottom: 1px solid white !important;
-    	color: #B0D9D1 !important;
+    	color: #728D89 !important;
     }
 
     #order{
         border: 3px solid #B0D9D1;
 
-        color: #B0D9D1;
+        color: #728D89;
         font-weight: bold;
     }
 
@@ -62,7 +62,7 @@
         width:95%;
         height: 90%;
         display: grid;
-        grid-template-columns: 100px 2fr 100px 2fr 100px 2fr;
+        grid-template-columns: 1fr 300px 1fr 400px 1fr 400px;
         grid-template-rows: 40px 40px 40px 40px 40px 550px 40px 40px ;
 		border: 1px solid #5D736F;
         border-radius: 10px;
@@ -182,7 +182,6 @@
 
     /*날짜*/
     .date-control{
-        width: 100%;
         height: 100%;
         border: none;
         text-align: center;
@@ -337,8 +336,10 @@
                                 <input type="radio" name="importance" id="emergency" value="E"/><label for="emergency"><span>긴급</span></label>
                             </div>
                         </div>
-                        <div class="division start-date">시작일</div><div><input type="date" class="date-control" id="order_start_date" name="startDate"></div>
-                        <div class="division end-date">마감일</div><div><input type="date" class="date-control" id="order_end_date" name="endDate"></div>
+                        <div class="division start-date">시작일</div>
+                        <div id="start-wrap"><input type="date" class="date-control" id="order_start_date" name="startDate"><input type="time" name="startTime"></div>
+                        <div class="division end-date">마감일</div>
+                        <div id="end-wrap"><input type="date" class="date-control" id="order_end_date" name="endDate"><input type="time" name="endTime"></div>
                         <div class="division" id="subject">내　용</div>
                         <div id="text-area" class="division">
                             <textarea name="content" id="content" cols="30" rows="10"></textarea>
@@ -357,6 +358,8 @@
     
     <!--빈칸 방지-->
     <script>
+        document.getElementsByClassName('date-control').value = new Date().toISOString().substring(0, 10);
+
         const title = document.querySelector('#title');
         const content = document.querySelector('#content');
         const att = document.querySelector('#att');
@@ -391,6 +394,12 @@
             //마감일
             if(endDate.value.length == 0){
                 alert("마감일을 지정해주세요.");
+                return false;
+            }
+
+            //시작일보다 마감일이 빠를 때
+            if(startDate.value > endDate.value){
+                alert("마감일을 다시 지정해주세요.");
                 return false;
             }
         }

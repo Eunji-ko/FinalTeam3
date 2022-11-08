@@ -12,7 +12,7 @@
 
     /*카테고리*/
     .nav-tabs{
-        margin-top: 40px;
+        margin-top: 20px;
         border-bottom: 1px solid #B0D9D1;
     }
     
@@ -29,7 +29,7 @@
     	border-top: 1px solid #B0D9D1 !important;
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
-    	color: #B0D9D1 !important;
+    	color: #728D89 !important;
     }
 
     #report{
@@ -37,14 +37,14 @@
         border-bottom: none;
         margin-left: 20px;
 
-        color: #B0D9D1;
+        color: #728D89;
         font-weight: bold;
     }
 
     #table{
         display: grid;
         grid-template-columns: 100px 1fr 100px 2fr 100px 1fr;
-        grid-template-rows: 30px 30px 30px 30px 30px 600px;
+        grid-template-rows: 30px 30px 30px 30px 30px 30px 600px;
 
         margin: 10px auto;
         width:95%;
@@ -65,11 +65,22 @@
         font-weight: 700;
     }
 
-    #title{
+    .title{
         grid-column-start: 2; grid-column-end: 7;
     }
 
-    .title{
+    #task-title a{
+        text-decoration: none;
+        color: black;
+    }
+
+    #task-title a:hover{
+        text-decoration: none;
+        color: white;
+        background-color: #5D736F;
+    }
+
+    .top{
         border-radius: 10px 0 0 0 ;
     }
 
@@ -159,7 +170,8 @@
 			    </ul>
                 
                 <div id="table">
-                    <div class="division title">제　목</div><div class="value" id="title">${vo.title}</div>
+                    <div class="division top">지시서</div><div class="value title" id="task-title"><a href="${root}/task/order/detail/${taskVo.no}">${taskVo.no} | ${taskVo.orderer} | ${taskVo.title}</a></div>
+                    <div class="division">제　목</div><div class="value title" id="title">${vo.title}</div>
                     <div class="division">작성자</div><div class="value">${vo.sender}</div>
                     <div class="division">부서 / 직위</div><div class="value">${vo.deptNo} / ${vo.posName}</div>
                     <div class="division">작성 일시</div><div class="value">${vo.enrollDate}</div>

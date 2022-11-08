@@ -162,6 +162,19 @@ public class TaskReportServiceImpl implements TaskReportService {
 
 		return result1 * result2;
 	}
+	
+	//수정 - 수신 목록
+	@Override
+	public TaskReportAttVo selectEditAtt(String no) {
+		return reportDao.selectEditAtt(sst, no);
+	}
+
+	//수정 - 참조 목록
+	@Override
+	public TaskReportAttVo selectEditRatt(String no) {
+		return reportDao.selectEditRatt(sst, no);
+	}
+
 
 	//삭제
 	@Override

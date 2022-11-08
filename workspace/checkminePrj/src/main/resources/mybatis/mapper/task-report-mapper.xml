@@ -113,6 +113,7 @@
 		    E.NAME AS SENDER,
 		    D.NAME AS DEPT_NO,
 		    P.NAME AS POS_NAME,
+		    R.TASK_NO,
 		    R.TITLE,
 		    R.CONTENT,
 		    R.ENROLL_DATE
@@ -163,6 +164,34 @@
 		GROUP BY
 		    A.REP_NO,
 		    A.TYPE
+	</select>
+	
+	<select id="selectEditAtt" resultType="TaskReportAttVo">
+		SELECT
+		    A.REP_NO,
+		    A.EMP_NO,
+		    A.TYPE
+		FROM REPORT_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		WHERE A.TYPE = 'A'
+		AND A.REP_NO = #{no}
+	</select>
+	
+	<select id="selectEditRatt" resultType="TaskReportAttVo">
+		SELECT
+		    A.REP_NO,
+		    A.EMP_NO,
+		    A.TYPE
+		FROM REPORT_ATT A
+		JOIN EMPLOYEE E
+		ON A.EMP_NO = E.NO
+		JOIN POSITION P
+		ON E.POS_NO = P.NO
+		WHERE A.TYPE = 'R'
+		AND A.REP_NO = #{no}
 	</select>
 	
 	<!-- 파일 목록 -->

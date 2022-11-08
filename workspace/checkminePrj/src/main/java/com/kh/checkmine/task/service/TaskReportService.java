@@ -49,8 +49,13 @@ public interface TaskReportService {
 	int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList, List<TaskReportFileVo> fileVoList);
 	int edit(TaskReportVo reportVo, List<TaskReportAttVo> attVoList);
 	
+	//수정 수신참조
+	TaskReportAttVo selectEditAtt(String no);
+	TaskReportAttVo selectEditRatt(String no);
+	
 	//삭제
 	int delete(String no);
+	
 
 
 }

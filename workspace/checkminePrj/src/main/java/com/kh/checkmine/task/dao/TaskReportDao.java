@@ -68,4 +68,8 @@ public interface TaskReportDao {
 	//파일 수정
 	int editFile(SqlSessionTemplate sst, TaskReportFileVo taskReportFileVo);
 
+	//수정-수신참고 목록
+	TaskReportAttVo selectEditAtt(SqlSessionTemplate sst, String no);
+	TaskReportAttVo selectEditRatt(SqlSessionTemplate sst, String no);
+
 }

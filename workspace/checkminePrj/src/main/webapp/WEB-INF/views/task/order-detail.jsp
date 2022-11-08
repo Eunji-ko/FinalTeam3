@@ -34,13 +34,13 @@
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
         border-bottom: 1px solid white !important;
-    	color: #B0D9D1 !important;
+    	color: #728D89 !important;
     }
 
     #order{
         border: 3px solid #B0D9D1;
         
-        color: #B0D9D1;
+        color: #728D89;
         font-weight: bold;
     }
 
