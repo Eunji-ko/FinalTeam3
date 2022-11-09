@@ -5,10 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta charset="UTF-8">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <title>예약</title>
 <style>
 
@@ -45,12 +41,35 @@
     }
 
     #side-content *{
+        margin-top: 15px;
+    }
+
+    #side-myreservation{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #side-myreservation::after{
+        content: "";
+        width: 60%;
+        border-bottom: 1px solid #5D736F;
+        height: 0px;
+        margin-left: 30px;
         margin-top: 30px;
     }
 
     #side-goods{
         display: grid;
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    #side-goods::after{
+        content: "";
+        width: 60%;
+        border-bottom: 1px solid #5D736F;
+        height: 0px;
+        margin-left: 30px;
+        margin-top: 30px;
     }
 
     #side-place{
@@ -82,15 +101,15 @@
     #content-main{
         width: 100%;
         height: 90%;
-        border: 1px solid black;
-        border-radius: 10px;
-        display: block;
         padding: 10px;
     }
 
-    #content-main-bot>table{
-        width: 100%;
-        height: 100%;
+    .table{
+        text-align: center;
+    }
+
+    #page-btn{
+      text-align: center;
     }
     
 </style>
@@ -112,20 +131,25 @@
                 
                 <div id="side-content">
 
-                    <h4><a href="/checkmine/reservation/myreservation">나의 예약</a></h4>
+                    <div id="side-myreservation">
+                        <h4>나의 예약</h4>
+
+                        <a href="/checkmine/reservation/mygoodsreservation/1">공유물 예약</a>
+                        <a href="/checkmine/reservation/myplacereservation/1">장소 예약</a>
+                    </div>
 
                     <div id="side-goods">
                         <h4>공유물</h4>
 
-                        <a href="/checkmine/reservation/goodsone">빔 프로젝트</a>
-                        <a href="/checkmine/reservation/goodstwo">법인차</a>
+                        <a href="/checkmine/reservation/goodsone/1">빔 프로젝트</a>
+                        <a href="/checkmine/reservation/goodstwo/1">법인차</a>
                     </div>
 
                    <div id="side-place">
                         <h4>장소</h4>
 
-                        <a href="/checkmine/reservation/placeone">회의실</a>
-                        <a href="/checkmine/reservation/placetwo">응접실</a>
+                        <a href="/checkmine/reservation/placeone/1">회의실</a>
+                        <a href="/checkmine/reservation/placetwo/1">응접실</a>
                    </div>
                     
                 </div>
@@ -178,7 +202,7 @@
                         
                         <c:if test="${pv.endPage ne pv.maxPage}">
                             <button onclick="location.href='${rootPath}/reservation/goodsone/${pv.endPage + 1}'" type="button" class="btn btn-sm">&gt;</button>
-                        </c:if>                            
+                        </c:if>
 
                       </div>
 
@@ -240,7 +264,7 @@
                             <div>종류</div>
                             <select id="name" name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>--선택--</option>
-                                <c:forEach items="${voList}" var="vo">
+                                <c:forEach items="${voBimList}" var="vo">
                                 <option value="${vo.no}">${vo.name}</option>
                                 </c:forEach>
                             </select>

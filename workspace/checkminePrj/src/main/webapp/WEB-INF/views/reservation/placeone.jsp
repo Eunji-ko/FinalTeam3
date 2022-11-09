@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>예약</title>
 <style>
 
     .shadow{
@@ -41,12 +41,35 @@
     }
 
     #side-content *{
+        margin-top: 15px;
+    }
+
+    #side-myreservation{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #side-myreservation::after{
+        content: "";
+        width: 60%;
+        border-bottom: 1px solid #5D736F;
+        height: 0px;
+        margin-left: 30px;
         margin-top: 30px;
     }
 
     #side-goods{
         display: grid;
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    #side-goods::after{
+        content: "";
+        width: 60%;
+        border-bottom: 1px solid #5D736F;
+        height: 0px;
+        margin-left: 30px;
+        margin-top: 30px;
     }
 
     #side-place{
@@ -78,38 +101,17 @@
     #content-main{
         width: 100%;
         height: 90%;
-        border: 1px solid black;
-        border-radius: 10px;
-        display: block;
         padding: 10px;
     }
 
-    #content-main-top{
-        width: 100%;
-        height: 5%;
+    .table{
         text-align: center;
     }
 
-    #content-main-bot{
-        width: 100%;
-        height: 95%;
+    #page-btn{
+      text-align: center;
     }
-
-    #content-main-bot>table{
-        width: 100%;
-        height: 100%;
-    }
-
-    #time-bar{
-        width: 80px;
-        height: 190px;
-        background-color: #5D736F;
-        border-radius: 10px;
-        position: absolute;
-        margin-top: 160px;
-        margin-left: 390px;
-    }
-
+    
 </style>
 </head>
 <body>
@@ -129,20 +131,25 @@
                 
                 <div id="side-content">
 
-                    <h4><a href="/checkmine/reservation/myreservation">나의 예약</a></h4>
+                    <div id="side-myreservation">
+                        <h4>나의 예약</h4>
+
+                        <a href="/checkmine/reservation/mygoodsreservation/1">공유물 예약</a>
+                        <a href="/checkmine/reservation/myplacereservation/1">장소 예약</a>
+                    </div>
 
                     <div id="side-goods">
                         <h4>공유물</h4>
 
-                        <a href="/checkmine/reservation/goodsone">빔 프로젝트</a>
-                        <a href="/checkmine/reservation/goodstwo">법인차</a>
+                        <a href="/checkmine/reservation/goodsone/1">빔 프로젝트</a>
+                        <a href="/checkmine/reservation/goodstwo/1">법인차</a>
                     </div>
 
                    <div id="side-place">
                         <h4>장소</h4>
 
-                        <a href="/checkmine/reservation/placeone">회의실</a>
-                        <a href="/checkmine/reservation/placetwo">응접실</a>
+                        <a href="/checkmine/reservation/placeone/1">회의실</a>
+                        <a href="/checkmine/reservation/placetwo/1">응접실</a>
                    </div>
                     
                 </div>
@@ -158,96 +165,48 @@
     
                 <div id="content-main">
                     
-                    <div id="content-main-top">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">이름</th>
+                            <th scope="col">부서</th>
+                            <th scope="col">비품명</th>
+                            <th scope="col">빌린시간</th>
+                            <th scope="col">반납시간</th>
+                            <th scope="col">예약한 일자</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${rsvList}" var="l">
+                          <tr>
+                            <td>${l.empNo}</td>
+                            <td>${l.deptName}</td>
+                            <td>${l.name}</td>
+                            <td>${l.rsvBegin}</td>
+                            <td>${l.rsvEnd}</td>
+                            <td>${l.rsvDate}</td>
+                          </tr>
+                         </c:forEach>
+                        </tbody>
+                      </table>
+
+                      <div id="page-btn">
+
+                        <c:if test="${pv.startPage ne 1}">
+                            <button onclick="location.href='${rootPath}/reservation/placeone/${pv.startPage - 1}'" type="button" class="btn btn-sm">&lt;</button>
+                        </c:if>
+
+                        <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+                            <a class="btn btn-sm" href="${rootPath}/reservation/placeone/${i}">${i}</a>
+                        </c:forEach>
                         
-                        <div>
-                            <button type="button" class="btn btn-sm" onClick="prevCalendar();">&lt;</button>
-                        </div>
+                        <c:if test="${pv.endPage ne pv.maxPage}">
+                            <button onclick="location.href='${rootPath}/reservation/placeone/${pv.endPage + 1}'" type="button" class="btn btn-sm">&gt;</button>
+                        </c:if>
 
-                        <div id="calYear">YYYY</div>
-
-                        <div>-</div>
-                        
-                        <div id="calMonth">MM</div>
-
-                        <div>
-                            <button type="button" class="btn btn-sm" onClick="nextCalendar();">&gt;</button>
-                        </div>
-
-                    </div>
-
-                    <div id="content-main-bot">
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">시간/회의실</th>
-                                <th scope="col">회의실1</th>
-                                <th scope="col">회의실2</th>
-                                <th scope="col">회의실3</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">9시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">10시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">11시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">12시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">13시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">14시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">15시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">16시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">17시</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
+                      </div>
 
                 </div>
-
-                <div id="time-bar">뿡빵사원</div>
 
             </div>
 
@@ -298,47 +257,48 @@
                     <div class="modal-body">
                         <div id="rsv-name">
                             <div>예약자</div>
-                            <div>뿡빵 사원</div>
+                            <div>${loginMember.name} 님</div>
                         </div>
 
                         <div id="type">
                             <div>종류</div>
-                            <select name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="회의실1">회의실1</option>
-                                <option value="회의실2">회의실2</option>
-                                <option value="회의실3">회의실3</option>
+                            <select id="name" name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option>--선택--</option>
+                                <c:forEach items="${voLiList}" var="vo">
+                                <option value="${vo.no}">${vo.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
                         <div id="date">
                             <div>날짜</div>
-                            <div>22-10-13</div>
+                            <div><input  type="date" id="dateSelect"></div>
                         </div>
 
                         <div>예약시간</div>
                         <div id="time">
-                            <select name="rsv-begin" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <select id="rsv-begin" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>대여시간</option>
-                                <option value="9시">9시</option>
-                                <option value="10시">10시</option>
-                                <option value="11시">11시</option>
-                                <option value="12시">12시</option>
-                                <option value="13시">13시</option>
-                                <option value="14시">14시</option>
-                                <option value="15시">15시</option>
-                                <option value="16시">16시</option>
+                                <option value="09:00">9시</option>
+                                <option value="10:00">10시</option>
+                                <option value="11:00">11시</option>
+                                <option value="12:00">12시</option>
+                                <option value="13:00">13시</option>
+                                <option value="14:00">14시</option>
+                                <option value="15:00">15시</option>
+                                <option value="16:00">16시</option>
                             </select>
                             <div>~</div>
-                            <select name="rsv-end" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <select id="rsv-end" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>반납시간</option>
-                                <option value="10시">10시</option>
-                                <option value="11시">11시</option>
-                                <option value="12시">12시</option>
-                                <option value="13시">13시</option>
-                                <option value="14시">14시</option>
-                                <option value="15시">15시</option>
-                                <option value="16시">16시</option>
-                                <option value="17시">17시</option>
+                                <option value="10:00">10시</option>
+                                <option value="11:00">11시</option>
+                                <option value="12:00">12시</option>
+                                <option value="13:00">13시</option>
+                                <option value="14:00">14시</option>
+                                <option value="15:00">15시</option>
+                                <option value="16:00">16시</option>
+                                <option value="17:00">17시</option>
                             </select>
                         </div>
                         
@@ -355,82 +315,51 @@
         </main>
     </div>
 
-    <!-- 날짜 스크립트 -->
     <script>
+        //ajax
+        let plNo;
+        $('#name').on('change', function () {
+            goodsNo = $('#name option:selected').val();
+            console.log(goodsNo);
+        })
 
-        document.addEventListener("DOMContentLoaded", function() {
-                buildCalendar();
-        });
-  
-        var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
-        var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
-  
-        /**
-         * @brief   이전달 버튼 클릭
-         */
-        function prevCalendar() {
-            this.today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-            buildCalendar();    // @param 전월 캘린더 출력 요청
-        }
-  
-        /**
-         * @brief   다음달 버튼 클릭
-         */
-        function nextCalendar() {
-            this.today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-            buildCalendar();    // @param 명월 캘린더 출력 요청
-        }
-  
-        /**
-         * @brief   캘린더 오픈
-         * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
-         */
-        function buildCalendar() {
-  
-            let doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-            let lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-  
-            let tbCalendar = document.querySelector(".scriptCalendar > tbody");
-  
-            document.getElementById("calYear").innerText = today.getFullYear();                                  // @param YYYY월
-            document.getElementById("calMonth").innerText = autoLeftPad((today.getMonth() + 1), 2);   // @param MM월
-              
-        }
-  
-        /**
-         * @brief   날짜 선택
-         * @details 사용자가 선택한 날짜에 체크표시를 남긴다.
-         */
-        function calendarChoiceDay(column) {
-  
-            // @param 기존 선택일이 존재하는 경우 기존 선택일의 표시형식을 초기화 한다.
-            if(document.getElementsByClassName("choiceDay")[0]) {
-                document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
-                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
-            }
-  
-            // @param 선택일 체크 표시
-            column.style.backgroundColor = "#FF9999";
-  
-  
-            // @param 선택일 클래스명 변경
-            column.classList.add("choiceDay");
-        }
-  
-        /**
-         * @brief   숫자 두자릿수( 00 ) 변경
-         * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
-         * @param   num     앞에 0을 붙일 숫자 값
-         * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
-         */
-        function autoLeftPad(num, digit) {
-            if(String(num).length < digit) {
-                num = new Array(digit - String(num).length + 1).join("0") + num;
-            }
-            return num;
-        }
-  
-      </script>
+        let rsvBegin;
+        $('#rsv-begin').on('change', function () {
+            borrow = $('#rsv-begin option:selected').val();
+            console.log(borrow);
+        })
+
+        let rsvEnd;
+        $('#rsv-end').on('change', function () {
+            rsvEnd = $('#rsv-end option:selected').val();
+            console.log(rsvEnd);
+        })   
+        
+        let rsvDate;
+        $('#dateSelect').on('change', function () {
+            rsvDate = $('#dateSelect').val();
+            console.log(rsvDate)
+        })
+
+        $('#reservation').on('click', function (){
+            $.ajax({
+                url  :  '${rootPath}/reservation/rsvbtnc',
+                method : 'post',
+                data : JSON.stringify({plNo : plNo,
+                                    rsvBegin : rsvBegin,
+                                    rsvEnd : rsvEnd,
+                                    rsvDate : rsvDate}),
+                dataType : 'text',
+                contentType : 'application/json',
+                success : function(data){
+                    console.log(data + '성공');
+                    location.reload();
+                }
+            })
+        })
+
+    </script>
+
 
 </body>
 </html>

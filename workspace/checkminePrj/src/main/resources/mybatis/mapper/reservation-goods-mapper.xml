@@ -7,6 +7,7 @@
 		    GR.NO
 		    , TO_CHAR(GR.BORROW, 'HH24:MI') BORROW
 		    , TO_CHAR(GR.RSV_END, 'HH24:MI') RSV_END
+		    , TO_CHAR(GR.RSV_DATE, 'YYYY-MM-DD') RSV_DATE
 		    , PG.NAME NAME
 		FROM GOODS_RESERVATION GR
 		JOIN EMPLOYEE E
@@ -14,6 +15,7 @@
 		JOIN PUBLIC_GOODS PG
 		    ON GR.GOODS_NO = PG.NO
 		WHERE GR.E_NO = #{eNo}
+		ORDER BY RSV_DATE DESC
 	</select>
 	
 	<delete id="goodsDelbtn">
@@ -21,11 +23,22 @@
 		WHERE E_NO = #{eNo} AND NO = #{no}
 	</delete>
 	
-	<select id="selectList" resultType="GoodsVo">
+	<select id="selectBimList" resultType="GoodsVo">
 		SELECT NO, NAME FROM PUBLIC_GOODS WHERE TYPE = 'B'
 	</select>
 	
+	<select id="selectCarList" resultType="GoodsVo">
+		SELECT NO, NAME FROM PUBLIC_GOODS WHERE TYPE = 'C'
+	</select>
+	
 	<insert id="insertRsvb">
+		INSERT INTO GOODS_RESERVATION(
+		NO, E_NO, GOODS_NO, BORROW, RSV_END, RSV_DATE)
+		 VALUES(SEQ_GOODS_RES_NO.NEXTVAL, #{eNo}, #{goodsNo}, TO_DATE(#{borrow}, 'HH24:MI'),
+		  TO_DATE(#{rsvEnd}, 'HH24:MI'), TO_DATE(#{rsvDate}, 'YYYY-MM-DD'))
+	</insert>
+	
+	<insert id="insertRsvc">
 		INSERT INTO GOODS_RESERVATION(
 		NO, E_NO, GOODS_NO, BORROW, RSV_END, RSV_DATE)
 		 VALUES(SEQ_GOODS_RES_NO.NEXTVAL, #{eNo}, #{goodsNo}, TO_DATE(#{borrow}, 'HH24:MI'),
@@ -52,12 +65,46 @@
 		ORDER BY RSV_DATE DESC
 	</select>
 	
+	<select id="selectListCarRsv" resultType="GoodsBookVo">
+		SELECT 
+		    GR.NO
+		    , PG.NAME
+		    , TO_CHAR(GR.BORROW, 'HH24:MI') BORROW
+		    , TO_CHAR(GR.RSV_END, 'HH24:MI') RSV_END
+		    , TO_CHAR(GR.RSV_DATE, 'YYYY-MM-DD') RSV_DATE
+		    , E.NAME E_NO
+		    , D.NAME DEPT_NAME
+		FROM GOODS_RESERVATION GR
+		JOIN EMPLOYEE E
+		ON GR.E_NO = E.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		JOIN PUBLIC_GOODS PG
+		ON GR.GOODS_NO = PG.NO
+		WHERE TYPE = 'C'
+		ORDER BY RSV_DATE DESC
+	</select>
+	
 	<select id="bimrsvTotalCount" resultType="int">
 		SELECT COUNT(*)
 		FROM GOODS_RESERVATION GR
 		JOIN PUBLIC_GOODS PG
 		ON GR.GOODS_NO = PG.NO
 		WHERE PG.TYPE = 'B'
+	</select>
+	
+	<select id="carrsvTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM GOODS_RESERVATION GR
+		JOIN PUBLIC_GOODS PG
+		ON GR.GOODS_NO = PG.NO
+		WHERE PG.TYPE = 'C'
+	</select>
+	
+	<select id="goodsrsvTotalCount" resultType="int">
+		SELECT COUNT(*)
+      	FROM GOODS_RESERVATION
+      	WHERE E_NO = #{eNo}
 	</select>
 	
 </mapper>
