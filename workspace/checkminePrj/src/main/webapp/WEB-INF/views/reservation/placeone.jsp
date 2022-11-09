@@ -343,7 +343,7 @@
 
         $('#reservation').on('click', function (){
             $.ajax({
-                url  :  '${rootPath}/reservation/rsvbtnc',
+                url  :  '${rootPath}/reservation/rsvbtnl',
                 method : 'post',
                 data : JSON.stringify({plNo : plNo,
                                     rsvBegin : rsvBegin,

@@ -227,9 +227,9 @@ public class ReservationController {
 	}
 	
 	//회의실 예약
-	@PostMapping("rsvbtnc")
+	@PostMapping("rsvbtnl")
 	@ResponseBody
-	public String rsvbtnc(@RequestBody PlaceBookVo vo, HttpSession session) {
+	public String rsvbtnl(@RequestBody PlaceBookVo vo, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getNo();
