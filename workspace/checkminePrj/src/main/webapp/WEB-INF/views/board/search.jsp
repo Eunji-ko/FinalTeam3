@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 게시글 검색</title>
+<title>게시판 - 게시글 검색</title>
 <style>
     main > div {
         width: 1389px;

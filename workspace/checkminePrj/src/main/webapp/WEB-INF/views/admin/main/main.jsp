@@ -151,6 +151,17 @@
         text-align: center;
         padding: 5px;
     }
+    
+    a.fc-event {
+	  border-radius: 10px; /* round edges */
+	  width: 15px; /* fixed width */
+	  color: transparent; /* hide text */
+	}
+
+	/* inline the tr's for events */
+	div.fc-content-skeleton > table > tbody > tr {
+	  display: inline-block;
+	}
 </style>
 <body>
 	<div class="d-flex">
@@ -320,6 +331,15 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                googleCalendarApiKey : "AIzaSyAE-9fkmGRA-7ctlIj5SemknsE-SI5glxY",
+                contentHeight:"auto",
+                eventSources :[ 
+                    {
+                        googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com'
+                        , color: 'white'   // an option!
+                        , textColor: 'red' // an option!
+                    } 
+                ]
             });
             calendar.render();
         });

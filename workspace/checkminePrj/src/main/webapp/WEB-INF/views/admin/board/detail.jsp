@@ -256,16 +256,16 @@
                         var a = list[i].mno;
                        if("${loginAdmin.no}" == a){
                            result +=
-                           '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
+                           '<div id="reply-bot"><div id="replyWriter">'+
                                        '<div style="font-weight:500;">'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
                                        '<div style="color:gray; font-size:13px">'+ list[i].replyDate +'</div>'+
-                                       '<button type="button" id="deleteReply" onclick="deleteReply()">삭제</button>'+                              
+                                       '<button type="button" id="deleteReply" onclick="deleteReply('+list[i].no+')">삭제</button>'+                              
                                        '</div><div>'+list[i].content+'</div></div>'
                        }else{
                         result +=
                            '<div id="reply-bot"><div id="replyWriter"><input type="hidden" value="'+list[i].no+'" id="replyNo">'+
                                        '<div style="font-weight:500;">'+list[i].replier+'&nbsp'+list[i].position+'</div>'+
-                                       '<div style="color:gray; font-size:10px">'+ list[i].replyDate +'</div>'+                  
+                                       '<div style="color:gray; font-size:13px">'+ list[i].replyDate +'</div>'+                  
                                        '</div><div>'+list[i].content+'</div></div>'
                        }            
                     }
@@ -321,14 +321,12 @@
 
     <script>
         //댓글 삭제 ajax
-        function deleteReply(){
+        function deleteReply(replyNo){
             let answer = confirm("삭제하시겠습니까?");
             if(!answer){
                 return;
             }
 
-            const replyNo = document.querySelector('#replyNo').value;
-	
             $.ajax({
                 url: "${root}/reply/delete",
                 type : "POST",
