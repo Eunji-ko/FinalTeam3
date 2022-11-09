@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.checkmine.board.vo.BoardVo;
 import com.kh.checkmine.board.vo.ReplyVo;
+import com.kh.checkmine.mail.dao.MailDao;
 import com.kh.checkmine.mail.vo.MailVo;
 import com.kh.checkmine.member.dao.MemberDao;
 import com.kh.checkmine.member.vo.MemberVo;
@@ -36,12 +37,14 @@ public class MemberServiceImpl implements MemberService {
 	private final SqlSessionTemplate sst;
 	private final MemberDao dao;
 	private final BCryptPasswordEncoder pwdEnc;
+	private final MailDao mailDao;
 	
 	@Autowired
-	public MemberServiceImpl(SqlSessionTemplate sst, MemberDao dao, BCryptPasswordEncoder pwdEnc) {
+	public MemberServiceImpl(SqlSessionTemplate sst, MemberDao dao, BCryptPasswordEncoder pwdEnc, MailDao mailDao) {
 		this.sst = sst;
 		this.dao = dao;
 		this.pwdEnc = pwdEnc;
+		this.mailDao = mailDao;
 	}
 
 	@Override
@@ -240,6 +243,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int getPublicCnt(String no) {
 		return dao.getPublicCnt(sst, no);
+	}
+
+	@Override
+	public int countMail(String no) {
+		//안읽은 그냥메일 맵작업
+		HashMap<String, String> mailCountMap1 = new HashMap<String, String>();
+		mailCountMap1.put("memberNo", no);
+		mailCountMap1.put("type", "A");
+		//안읽은 참조메일 맵작업
+		HashMap<String, String> mailCountMap2 = new HashMap<String, String>();
+		mailCountMap2.put("memberNo", no);
+		mailCountMap2.put("type", "R");
+		int mailSum = mailDao.getNotReadCount(sst, mailCountMap1) + mailDao.getNotReadCount(sst, mailCountMap2);
+		return mailSum;
 	}
 
 

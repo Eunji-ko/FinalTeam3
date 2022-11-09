@@ -80,15 +80,16 @@
   				data : {'corporate' : corporate},
   				dataType : 'json',
   				success : function(data){
-            if(Object.keys(data).length == 1){
+            var list = JSON.parse(data.list);
+            if(list.length == 0){
                 //거래처 없음
                 alert('해당 거래처가 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/10 > 1){
+  					}else if(list.length > 1){
                 //거래처 존재, 동명회사 있음
                 alert('거래처를 선택해주세요.');
                 //선택인풋 늘리는 반복문
-                for(var i=0; i<((Object.keys(data).length-1)/10); i++){
-                    $($('.select-account')[i]).val((i+1) + "|" + data['corporate' + i] + "|" + data['address' + i] + "|" + data['pname' + i]);
+                for(var i=0; i<list.length; i++){
+                    $($('.select-account')[i]).val(list[i].no + "|" + list[i].corporate + "|" + list[i].address + "|" + list[i].pname);
                     var oriInput = document.getElementsByClassName('select-account')[i];
                     $(oriInput).css('display','block');
                     var newInput = oriInput.cloneNode(true);
@@ -98,31 +99,31 @@
                 $('.select-account').on('click', selectName);
                 //함수 리턴값으로 값채우기
                 $('.select-account').click(function(e){
-                  $('#corporate').val(data['corporate' + e.result]);
-                  $('#addr').val(data['address' + e.result]);
-                  $('#tel').val(data['tel' + e.result]);
-                  $('#fax').val(data['fax' + e.result]);
-                  $('#charger').val(data['pname' + e.result]);
-                  $('#department').val(data['dept' + e.result]);
-                  $('#position').val(data['position' + e.result]);
-                  $('#phone').val(data['phone' + e.result]);
-                  $('#mail').val(data['email' + e.result]);
+                  $('#corporate').val(list[e.result].corporate);
+                  $('#addr').val(list[e.result].address);
+                  $('#tel').val(list[e.result].tel);
+                  $('#fax').val(list[e.result].fax);
+                  $('#charger').val(list[e.result].panme);
+                  $('#department').val(list[e.result].dept);
+                  $('#position').val(list[e.result].position);
+                  $('#phone').val(list[e.result].phone);
+                  $('#mail').val(list[e.result].email);
                   $('.select-account').hide();
-                  $('#account-no').val(data['no' + e.result]);
+                  $('#account-no').val(list[e.result].no);
                 });
-                $($('.select-member')[((Object.keys(data).length-1)/10)-1]).hide();
+                $($('.select-account')[0]).hide();
   					}else{
               //거래처 존재 동명회사 없음
-              $('#corporate').val(data.corporate0);
-              $('#addr').val(data.address0);
-              $('#tel').val(data.tel0);
-              $('#fax').val(data.fax0);
-              $('#charger').val(data.pname0);
-              $('#department').val(data.dept0);
-              $('#position').val(data.position0);
-              $('#phone').val(data.phone0);
-              $('#mail').val(data.email0);
-              $('#account-no').val(data.no0);
+              $('#corporate').val(list[0].corporate);
+              $('#addr').val(list[0].address);
+              $('#tel').val(list[0].tel);
+              $('#fax').val(list[0].fax);
+              $('#charger').val(list[0].pnam0);
+              $('#department').val(list[0].dept);
+              $('#position').val(list[0].position);
+              $('#phone').val(list[0].phone);
+              $('#mail').val(list[0].email);
+              $('#account-no').val(list[0].no);
             }
   				},
   				error : function(){
