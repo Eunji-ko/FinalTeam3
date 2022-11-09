@@ -169,4 +169,21 @@ public class PersonnelController {
 		
 	}
 	
+	@PostMapping("evalEmp")
+	@ResponseBody
+	public int evalEmp(EmpEvalVo vo) {
+
+		EmpEvalVo findEval = ps.findEmpEval(vo);
+		int result;
+		
+		if(findEval != null) {
+			vo.setNo(findEval.getNo());
+			result = ps.updateEval(vo);
+		}else {
+			result = ps.insertEval(vo);
+		}
+		
+		return result;
+	}
+	
 }

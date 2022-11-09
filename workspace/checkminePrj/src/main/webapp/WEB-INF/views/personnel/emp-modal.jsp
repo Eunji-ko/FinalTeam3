@@ -72,7 +72,7 @@
           </div>
           
             <div class="modal-footer">
-              <button type="button" id="emp-eval-btn" class="btn checkmine-btn">사원평가</button>
+              <button type="button" class="btn checkmine-btn" id="empEvalBtn" data-bs-target="#evalModalToggle" data-bs-toggle="modal">사원평가</button>
               <c:if test="${fn:contains(loginMember.permission, 'H')}">
                 <input type="submit" class="btn checkmine-btn" value="변경하기">
               </c:if>
@@ -81,6 +81,7 @@
       </div>
     </div>
   </form>
+
 
 	<script>
 		
@@ -120,26 +121,26 @@
   </script>
     
   <script>
-    $(document).on("click", "emp-eval-btn", function(){
-      let evalee = $('#modalENo').val();
-      let evaleeName = $('#modalName').val();
-      let evalor = '${loginMember.no}';
+    $('#empEvalBtn').on("click", function(){
+      const evalee = $('#modalENo').val();
+      const evaleeName = $('#modalName').val();
+      const evalor = '${loginMember.no}';
+
+      $('#evalModalToggleLabel').text('\''+evaleeName+'\' 님 사원평가');
+
       $.ajax({
-        url: "/checkmine/personnel/checkEval",
+        url: '/checkmine/personnel/checkEval',
         type: 'POST',
         data : {
           evalee : evalee,
           evalor : evalor
         },
         success : function(data){
-          if(data == null){
-            swal("[" + evaleeName + "]님 인사평가 ", "말은 마음의 초상이다.", {content: "input"})
-            .then((value) => {
-              let content = '${value}';
-            });
+          if(data != null) {
+            $('#empEvalText').html(data.content);
           }
         }
-      })
+      });
     });
   </script>
 </body>

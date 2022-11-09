@@ -34,4 +34,8 @@ public interface PersonnelDao {
 
 	EmpEvalVo findEmpEval(SqlSessionTemplate sst, EmpEvalVo vo);
 
+	int updateEval(SqlSessionTemplate sst, EmpEvalVo vo);
+
+	int insertEval(SqlSessionTemplate sst, EmpEvalVo vo);
+
 }
