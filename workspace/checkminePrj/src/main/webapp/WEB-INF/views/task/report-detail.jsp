@@ -7,37 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${vo.title}</title>
 <style>
 
-    /*카테고리*/
-    .nav-tabs{
-        margin-top: 20px;
-        border-bottom: 1px solid #B0D9D1;
-    }
-    
-    .nav-link {
-    	border-top: 1px solid lightgray !important;
-    	border-left: 1px solid lightgray !important;
-    	border-right: 1px solid lightgray !important;
-    	color: lightgray;
-    }
-    
-    /*활성화 카테고리 색상 변경*/
-    .active	{
-    	margin-left: 40px;
-    	border-top: 1px solid #B0D9D1 !important;
-    	border-left: 1px solid #B0D9D1 !important;
-    	border-right: 1px solid #B0D9D1 !important;
-    	color: #728D89 !important;
-    }
-
     #report{
-        border: 3px solid #B0D9D1;
-        border-bottom: none;
-        margin-left: 20px;
-
-        color: #728D89;
+        border-top: 1px solid #B0D9D1 !important;
+        border-left: 1px solid #B0D9D1 !important;
+        border-right: 1px solid #B0D9D1 !important;
+        border-bottom: 1px solid white !important;
+        color: #728D89 !important;
         font-weight: bold;
     }
 
@@ -160,14 +138,7 @@
         <main class="shadow">
 			<div id="wrap">
                 <!--카테고리-->
-				<ul class="nav nav-tabs">
-			        <li class="nav-item">
-			          <a class="nav-link active" href="${root}/task/report/list/1">보고</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="${root}/task/order/list/1">지시</a>
-			        </li>
-			    </ul>
+				<%@ include file="/WEB-INF/views/task/navi.jsp" %>
                 
                 <div id="table">
                     <div class="division top">지시서</div><div class="value title" id="task-title"><a href="${root}/task/order/detail/${taskVo.no}">${taskVo.no} | ${taskVo.orderer} | ${taskVo.title}</a></div>

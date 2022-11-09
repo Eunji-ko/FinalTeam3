@@ -23,36 +23,12 @@
 <title>Insert title here</title>
 <style>
 
-    /*카테고리*/
-    .nav-tabs{
-        margin-top: 20px;
-        border-bottom: 1px solid #B0D9D1;
-    }
-    
-    .nav-link {
-    	border-top: 1px solid lightgray !important;
-    	border-left: 1px solid lightgray !important;
-    	border-right: 1px solid lightgray !important;
-    	color: lightgray;
-    }
-
-    #report{
-    	margin-left: 40px;
-    }
-    
-    /*활성화 카테고리 색상 변경*/
-    .active	{
-    	border-top: 1px solid #B0D9D1 !important;
-    	border-left: 1px solid #B0D9D1 !important;
-    	border-right: 1px solid #B0D9D1 !important;
+    #order {
+        border-top: 1px solid #B0D9D1 !important;
+        border-left: 1px solid #B0D9D1 !important;
+        border-right: 1px solid #B0D9D1 !important;
         border-bottom: 1px solid white !important;
-    	color: #728D89 !important;
-    }
-
-    #order{
-        border: 3px solid #B0D9D1;
-
-        color: #728D89;
+        color: #728D89 !important;
         font-weight: bold;
     }
 
@@ -304,14 +280,7 @@
             <div id="wrap">
 
                 <!--카테고리-->
-				<ul class="nav nav-tabs">
-			        <li class="nav-item">
-			          <a class="nav-link" id="report" href="${root}/task/report/list/1">보고</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link active" id="order" href="${root}/task/order/list/1">지시</a>
-			        </li>
-			    </ul>
+				<%@ include file="/WEB-INF/views/task/navi.jsp" %>
 
                 <form action="" method="post" enctype="multipart/form-data" onsubmit="return check();">
                     <div id="table">
