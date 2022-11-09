@@ -11,6 +11,8 @@
 <link href='${root}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 <script src='${root}/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script src="${root}/resources/fullcalendar-5.11.3/lib/locales/ko.js"></script>
+<!--seweetalert2-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
     #calendar{ /*캘린더 설정*/
         width: 1100px;
@@ -258,27 +260,58 @@
                             allDaySlot: false,
                             events: data,
                             eventClick : function(data, element){
-
                                 var eventObj = data.event;
                                 if(eventObj.id > 0){
-                                    if(confirm("<" + eventObj.title + ">" + '\n' + "해당 지시서로 이동하겠습니까?") == true){
-                                        location.href = '${root}/task/order/detail/' + data.event.id;
-                                    }else{
-                                        alert("취소되었습니다.");
-                                    }
+                                    Swal.fire({
+                                        title : "<" + eventObj.title + ">",
+                                        icon: 'question',
+                                        text :  "해당 지시서로 이동하시겠습니까?",
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#b0d9d1',
+                                        cancelButtonColor: '#6c757d',
+                                        confirmButtonText: '네',
+                                        cancelButtonText: '아니오'
+                                    }).then((result)=>{
+                                        if(result.isConfirmed){
+                                            location.href = '${root}/task/order/detail/' + data.event.id;
+                                        }
+                                    })
                                 }else{
-                                    alert("[일정명]" + '\n'  + eventObj.title + '\n' + "[일정 내용]" + '\n' + eventObj.extendedProps.content);
+                                    Swal.fire({
+                                        icon:'info',
+                                        title: eventObj.title,
+                                        text: eventObj.extendedProps.content,
+                                        confirmButtonColor: '#b0d9d1'
+                                    })
                                 }
 
                             },
                             eventDragStop:function(data, jsEvent, ui, view){
                                 var eventObj = data.event;
                                 if(eventObj.id.charAt(0) == 'S'){
-                                    if(confirm("<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?") == true){
-                                        location.href = '${root}/schedule/del/' + eventObj.id.replace('S', '');
-                                    }else{
-                                        alert("취소되었습니다.");
-                                    }
+                                    Swal.fire({
+                                        icon:'warning',
+                                        title:"<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?",
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#b0d9d1',
+                                        cancelButtonColor: '#6c757d',
+                                        confirmButtonText: '네',
+                                        cancelButtonText: '아니오',
+                                        preConfirm: (eventObj) => {
+                                            return fetch('${root}/schedule/del/' + eventObj.id.replace('S', ''))
+                                            .then(result => {
+                                                if (result == 1) {
+                                                    Swal.fire({
+                                                    title: '일정이 삭제되었습니다.'
+                                                    })
+                                                }else{
+                                                    Swal.fire({
+                                                    title: '일정을 삭제하지 못했습니다.'
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
                                 }
                             },
                         });

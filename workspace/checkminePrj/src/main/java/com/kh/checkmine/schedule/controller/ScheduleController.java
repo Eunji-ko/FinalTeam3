@@ -128,19 +128,15 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("del/{no}")
-	public String delSchedule(@PathVariable String no, FullcalendarVo vo, HttpSession session, Model model) {
+	@ResponseBody
+	public int delSchedule(@PathVariable String no, FullcalendarVo vo, HttpSession session, Model model) {
 		
 		//String no = vo.getId().replace("S", "");
 		
 		int result = service.updateSchedule(no);
 		
-		if(result == 1) {
-			session.setAttribute("alertMsg", "일정이 삭제되었습니다.");
-			return "schedule/main";
-		}else {
-			session.setAttribute("alertMsg", "일정을 삭제하지 못했습니다. ");
-			return "schedule/main";
-		}
+		return result;
+		
 	}
 	
 }

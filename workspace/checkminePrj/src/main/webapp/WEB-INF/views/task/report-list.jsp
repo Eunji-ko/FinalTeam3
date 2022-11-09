@@ -8,37 +8,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업무</title>
+<title>업무 | 보고서 목록</title>
 <style>
 
-    /*카테고리*/
-    .nav-tabs{
-        margin-top: 40px;
-        border-bottom: 1px solid #B0D9D1;
-    }
-    
-    .nav-link {
-    	border-top: 1px solid lightgray !important;
-    	border-left: 1px solid lightgray !important;
-    	border-right: 1px solid lightgray !important;
-    	color: lightgray;
-    }
-    
     /*활성화 카테고리 색상 변경*/
-    .active	{
+    #report	{
     	margin-left: 40px;
     	border-top: 1px solid #B0D9D1 !important;
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
+    	border-bottom: 1px solid white !important;
     	color: #728D89 !important;
-    }
-
-    #report{
-        border: 3px solid #B0D9D1;
-        border-bottom: none;
-        margin-left: 20px;
-
-        color: #728D89;
         font-weight: bold;
     }
 
@@ -146,18 +126,28 @@
         text-align: center;
     }
 
+    .page-no{
+        padding: 3px 10px 3px 10px;
+        border-radius: 10px;
+    }
+
     #page-area > a {
         font-size: large;
         text-decoration: none;
         color: black;
-        height: 10px;
-        padding: 5px 10px 5px 10px;
-        border-radius: 10px;
+        /*height: 10px;
+        padding: ;*/
     }
-
+    
+    .p-active{
+        border: 2px solid #B0D9D1;
+        color: #728D89 !important;
+    }
+    
     #page-area > a:hover {
-        background-color: #B0D9D1;
-        color: white;
+        border: 2px solid #5D736F;
+        background-color: #5D736F;
+        color: white !important;
     }
 </style>
 </head>
@@ -170,14 +160,7 @@
             <div id="wrap">
 				
                 <!--카테고리-->
-				<ul class="nav nav-tabs">
-			        <li class="nav-item">
-			          <a class="nav-link active" href="${root}/task/report/list/1">보고</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="${root}/task/order/list/1">지시</a>
-			        </li>
-			      </ul>
+				<%@ include file="/WEB-INF/views/task/navi.jsp" %>
 
                 <!--검색 기능-->
                 <div id="search-write-box">
@@ -213,7 +196,7 @@
                     <c:forEach items="${voList}" var="vo">
  	                   <c:if test="${vo.sender eq loginMember.name or vo.attName eq loginMember.name}">
 		                    <div class="list">${vo.no}</div>
-		                    <div class="list">
+		                    <div class="list" id="att">
 		                    	${vo.attName}
 		                    </div>
 		                    <div class="list" id="title"><a href="${root}/task/report/detail/${vo.no}">${vo.title}</a></div>
@@ -230,7 +213,7 @@
 	                    <a href="${root}/task/report/list/${pv.startPage-1}"><</a>
                 	</c:if>
                     <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                    	<a href="${root}/task/report/list/${i}">${i}</a>
+                    	<a href="${root}/task/report/list/${i}" class="page-no">${i}</a>
                     </c:forEach>
                     <c:if test="${pv.endPage ne pv.maxPage}">
                     	<a href="${root}/task/report/list/${pv.endPage + 1}">></a>
@@ -240,5 +223,54 @@
         
         </main>
     </div>
+
+    <script>
+        var url = window.location.pathname;
+
+        $('#page-area').find('a').each(function(){
+            $(this).toggleClass('p-active', $(this).attr('href') == url);
+        });
+
+        //제목/수신자 화면 넘어가면
+        function CheckMaxString(obj, maxNum){               
+          var li_str_len = obj.length;
+          var li_byte = 0;
+          var li_len = 0;
+          var ls_one_char = "";
+          var ls_str2 = "";
+          for( var j=0; j<li_str_len; j++){
+                    ls_one_char = obj.charAt(j);
+                    if(escape(ls_one_char).length > 4 ) {
+                              li_byte += 2;
+                    }else{
+                              li_byte++;
+                    }
+                    if(li_byte <= maxNum){
+                              li_len = j+1;
+                    }
+          }
+          if(li_byte > maxNum){
+                    ls_str2 = obj.substr(0, li_len)+"...";
+          }else{
+                    ls_str2 = obj;
+          }
+          console.log("변환 후 ::: " + ls_str2);
+          return ls_str2;
+        }
+
+        var attList = document.getElementsByClassName('att');
+        $.each(attList, function(idx, att){
+            attList[idx].innerText = att.innerText;
+            console.log("att ::: " + att.innerText);
+            attList[idx].innerText = CheckMaxString(att.innerText, 29);
+        })
+        
+        var titleList = document.getElementsByClassName('title');
+        $.each(titleList, function(idx, title){
+            titleList[idx].innerText = title.innerText;
+            console.log("att ::: " + title.innerText);
+            titleList[idx].innerText = CheckMaxString(title.innerText, 80);
+        })
+    </script>
 </body>
 </html>

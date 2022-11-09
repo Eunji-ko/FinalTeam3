@@ -8,37 +8,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업무</title>
+<title>업무 | 보고서 '${keyword}' 검색</title>
 <style>
 
-    /*카테고리*/
-    .nav-tabs{
-        margin-top: 40px;
-        border-bottom: 1px solid #B0D9D1;
-    }
-    
-    .nav-link {
-    	border-top: 1px solid lightgray !important;
-    	border-left: 1px solid lightgray !important;
-    	border-right: 1px solid lightgray !important;
-    	color: lightgray;
-    }
-    
-    /*활성화 카테고리 색상 변경*/
-    .active	{
-    	margin-left: 40px;
+    #report{
     	border-top: 1px solid #B0D9D1 !important;
     	border-left: 1px solid #B0D9D1 !important;
     	border-right: 1px solid #B0D9D1 !important;
+        border-bottom: 1px solid white !important;
     	color: #728D89 !important;
-    }
-
-    #report{
-        border: 3px solid #B0D9D1;
-        border-bottom: none;
-        margin-left: 20px;
-
-        color: #728D89;
         font-weight: bold;
     }
 
@@ -169,14 +147,7 @@
             <div id="wrap">
 				
                 <!--카테고리-->
-				<ul class="nav nav-tabs">
-			        <li class="nav-item">
-			          <a class="nav-link active" href="${root}/task/report/list/1">보고</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="${root}/task/order/list/1">지시</a>
-			        </li>
-			      </ul>
+				<%@ include file="/WEB-INF/views/task/navi.jsp" %>
 
                 <!--검색 기능-->
                 <div id="search-write-box">
@@ -186,14 +157,14 @@
                                 <td>
                                     <img src="${root}\resources\img\personnel\search_icon.png" alt="검색 아이콘" width="20px" id="search-img">
                                 </td>
-                                <td><select class="form-control" name="type">
+                                <td><select class="form-control" name="type" id="select">
                                         <option value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="sender">작성자</option>
                                 </select></td>
                                 <td>
                                     <input type="text" class="form-control"
-                                    placeholder="보고서 검색" name="keyword" maxlength="100"></td>
+                                    placeholder="보고서 검색" name="keyword" maxlength="100" value="${keyword}"></td>
                                 <td><button type="submit"class="search-btn">검색</button></td>
                             </tr>
                         </table>
@@ -212,10 +183,10 @@
                     <c:forEach items="${voList}" var="vo">
  	                   <c:if test="${vo.sender eq loginMember.name or vo.attName eq loginMember.name}">
 		                    <div class="list">${vo.no}</div>
-		                    <div class="list">
+		                    <div class="list att">
 		                    	${vo.attName}
 		                    </div>
-		                    <div class="list" id="title"><a href="${root}/task/report/detail/${vo.no}">${vo.title}</a></div>
+		                    <div class="list" id="title"><a href="${root}/task/report/detail/${vo.no}" class="title">${vo.title}</a></div>
 		                    <div class="list">${vo.sender}</div>
 		                    <div class="list">${vo.enrollDate}</div>
 	                    </c:if>
@@ -238,6 +209,53 @@
             </div>
         
         </main>
+
+        <script>
+            $(document).ready(function() {
+                $('select[id="select"]').find('option[value=${type}]').attr("selected",true);
+            });
+
+             //제목/수신자 화면 넘어가면
+            function CheckMaxString(obj, maxNum){               
+            var li_str_len = obj.length;
+            var li_byte = 0;
+            var li_len = 0;
+            var ls_one_char = "";
+            var ls_str2 = "";
+            for( var j=0; j<li_str_len; j++){
+                        ls_one_char = obj.charAt(j);
+                        if(escape(ls_one_char).length > 4 ) {
+                                li_byte += 2;
+                        }else{
+                                li_byte++;
+                        }
+                        if(li_byte <= maxNum){
+                                li_len = j+1;
+                        }
+            }
+            if(li_byte > maxNum){
+                        ls_str2 = obj.substr(0, li_len)+"...";
+            }else{
+                        ls_str2 = obj;
+            }
+            console.log("변환 후 ::: " + ls_str2);
+            return ls_str2;
+            }
+
+            var attList = document.getElementsByClassName('att');
+            $.each(attList, function(idx, att){
+                attList[idx].innerText = att.innerText;
+                console.log("att ::: " + att.innerText);
+                attList[idx].innerText = CheckMaxString(att.innerText, 29);
+            })
+            
+            var titleList = document.getElementsByClassName('title');
+            $.each(titleList, function(idx, title){
+                titleList[idx].innerText = title.innerText;
+                console.log("att ::: " + title.innerText);
+                titleList[idx].innerText = CheckMaxString(title.innerText, 80);
+            })
+        </script>
     </div>
 </body>
 </html>
