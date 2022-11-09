@@ -245,7 +245,7 @@ public class ApprovalController {
 			fileVo.setFileName(changeName);
 			fileVo.setFpath(savePath);
 			fileVo.setDocNo(docVo.getNo());
-			fileResult = service.insertFile(fileVo);
+			service.insertFile(fileVo);
 			fileResult++;
 		}
 		

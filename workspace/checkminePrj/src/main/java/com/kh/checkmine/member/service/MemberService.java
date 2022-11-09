@@ -44,4 +44,6 @@ public interface MemberService {
 
 	int getPublicCnt(String no);
 
+	int countMail(String no);
+
 }

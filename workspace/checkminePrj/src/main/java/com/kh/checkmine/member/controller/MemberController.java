@@ -82,7 +82,7 @@ public class MemberController {
 			}
 			
 			//메일 수 보여주기
-			int mailCnt = mls.getReceiveListCount(loginMember.getNo());
+			int mailCnt = ms.countMail(loginMember.getNo());
 			model.addAttribute("mailCnt", mailCnt);
 			
 			//메일함 메인 화면에 보여주기
