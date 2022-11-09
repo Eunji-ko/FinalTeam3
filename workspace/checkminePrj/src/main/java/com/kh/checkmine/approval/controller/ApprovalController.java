@@ -353,22 +353,26 @@ public class ApprovalController {
 		
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
-		if(accountList != null) {
-			for(int i=0; i<accountList.size(); i++) {
-				obj.addProperty("no" + i, accountList.get(i).getNo());
-				obj.addProperty("corporate" + i, accountList.get(i).getCorporate());
-				obj.addProperty("address" + i, accountList.get(i).getAddress());
-				obj.addProperty("tel" + i, accountList.get(i).getTel());
-				obj.addProperty("fax" + i, accountList.get(i).getFax());
-				obj.addProperty("pname" + i, accountList.get(i).getPname());
-				obj.addProperty("dept" + i, accountList.get(i).getDept());
-				obj.addProperty("position" + i, accountList.get(i).getPosition());
-				obj.addProperty("email" + i, accountList.get(i).getEmail());
-				obj.addProperty("phone" + i, accountList.get(i).getPhone());
-			}
-		}
-		String allAccCnt = Integer.toString(service.selectAccountByName("").size());
-		obj.addProperty("allAccCnt", allAccCnt);
+		
+		String list = gson.toJson(accountList);
+		obj.addProperty("list", list);
+		
+//		if(accountList != null) {
+//			for(int i=0; i<accountList.size(); i++) {
+//				obj.addProperty("no" + i, accountList.get(i).getNo());
+//				obj.addProperty("corporate" + i, accountList.get(i).getCorporate());
+//				obj.addProperty("address" + i, accountList.get(i).getAddress());
+//				obj.addProperty("tel" + i, accountList.get(i).getTel());
+//				obj.addProperty("fax" + i, accountList.get(i).getFax());
+//				obj.addProperty("pname" + i, accountList.get(i).getPname());
+//				obj.addProperty("dept" + i, accountList.get(i).getDept());
+//				obj.addProperty("position" + i, accountList.get(i).getPosition());
+//				obj.addProperty("email" + i, accountList.get(i).getEmail());
+//				obj.addProperty("phone" + i, accountList.get(i).getPhone());
+//			}
+//		}
+//		String allAccCnt = Integer.toString(service.selectAccountByName("").size());
+//		obj.addProperty("allAccCnt", allAccCnt);
 	
 		return gson.toJson(obj);
 	}
