@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 게시판</title>
+<title>게시판 - 갤러리</title>
 <style>
     main > div {
         width: 1389px;

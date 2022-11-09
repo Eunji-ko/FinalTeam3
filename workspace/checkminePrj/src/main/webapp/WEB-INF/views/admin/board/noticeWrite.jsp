@@ -112,6 +112,10 @@
         opacity: 100%;
         border: none;
     }
+    
+    .note-editable{
+    	background-color: white; 
+    }
 </style>
 </head>
 <body>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHECKMINE 글 수정하기</title>
+<title>게시판 - 글 수정하기</title>
 <!-- summernote -->
 <script src="${rootPath}/resources/summernote/summernote-lite.js"></script>
 <script src="${rootPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
@@ -132,6 +132,10 @@
         color: white;
         opacity: 100%;
         border: none;
+    }
+    
+    .note-editable{
+    	background-color: white; 
     }
 </style>
 </head>
