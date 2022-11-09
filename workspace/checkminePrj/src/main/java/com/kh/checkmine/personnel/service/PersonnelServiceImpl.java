@@ -80,5 +80,15 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return dao.findEmpEval(sst, vo);
 	}
 
+	@Override
+	public int updateEval(EmpEvalVo vo) {
+		return dao.updateEval(sst, vo);
+	}
+
+	@Override
+	public int insertEval(EmpEvalVo vo) {
+		return dao.insertEval(sst, vo);
+	}
+
 
 }

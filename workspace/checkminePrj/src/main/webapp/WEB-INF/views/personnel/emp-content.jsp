@@ -236,5 +236,6 @@
     </script>
 
     <%@ include file="/WEB-INF/views/personnel/emp-modal.jsp" %>
+    <%@ include file="/WEB-INF/views/personnel/eval-modal.jsp" %>
 </body>
 </html>

@@ -161,7 +161,7 @@
   	</if>
   </select>
   
-  <select id="findEmpEval" resultType="com.kh.checkmine.personnel.vo.EmpEvalVo">
+  <select id="findEmpEval" resultType="EmpEvalVo">
   	SELECT
   		  NO
   		, EVALEE
@@ -171,5 +171,31 @@
   	WHERE EVALEE = #{evalee}
   	AND EVALOR = #{evalor}
   </select>
+  
+  <update id="updateEval">
+  	UPDATE
+  		EMP_EVAL
+  	SET
+  		CONTENT = #{content}
+  	WHERE NO = #{no}
+  </update>
+  
+  <insert id="insertEval">
+  	INSERT
+  		INTO EMP_EVAL
+  		(
+  			  NO
+  			, EVALEE
+  			, EVALOR
+  			, CONTENT
+  		)
+  		VALUES
+  		(
+  			  SEQ_EVAL_NO.NEXTVAL
+  			, #{evalee}
+  			, #{evalor}
+  			, #{content}
+  		)
+  </insert>
  
 </mapper>

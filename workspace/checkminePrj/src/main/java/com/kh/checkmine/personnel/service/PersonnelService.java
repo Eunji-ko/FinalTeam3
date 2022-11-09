@@ -32,4 +32,8 @@ public interface PersonnelService {
 
 	EmpEvalVo findEmpEval(EmpEvalVo vo);
 
+	int updateEval(EmpEvalVo vo);
+
+	int insertEval(EmpEvalVo vo);
+
 }

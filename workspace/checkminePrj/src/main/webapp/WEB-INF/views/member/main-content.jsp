@@ -392,7 +392,7 @@
                                                 <div class="right-box-imp">중요</div>
                                             </c:if>
                                         </td>
-                                        <td><a href="${root}/task/order/detail/${task.no}" class="right-box-title">${task.title}</a></td>
+                                        <td><a href="${rootPath}/task/order/detail/${task.no}" class="right-box-title">${task.title}</a></td>
                                         <td><div class="right-box-name">${task.orderer}</div></td>
                                         <td><div class="right-box-date">${task.enrollDate}</div></td>
                                     </tr>
