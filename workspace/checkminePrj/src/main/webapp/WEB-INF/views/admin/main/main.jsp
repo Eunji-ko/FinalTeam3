@@ -154,14 +154,18 @@
     
     a.fc-event {
 	  border-radius: 10px; /* round edges */
-	  width: 15px; /* fixed width */
+	  width: 10px; /* fixed width */
+      height: 5px;
 	  color: transparent; /* hide text */
 	}
 
-	/* inline the tr's for events */
-	div.fc-content-skeleton > table > tbody > tr {
-	  display: inline-block;
-	}
+    .fc-event-title-container{
+        height: 5px;
+    }
+
+    .fc-daygrid-day-frame{
+        height: 46px;
+    }
 </style>
 <body>
 	<div class="d-flex">
@@ -336,13 +340,13 @@
                 eventSources :[ 
                     {
                         googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com'
-                        , color: 'white'   // an option!
-                        , textColor: 'red' // an option!
+                        , color: 'red'   // an option!
                     } 
                 ]
             });
             calendar.render();
-        });
+        })
+
     </script>
 </body>
 </html>

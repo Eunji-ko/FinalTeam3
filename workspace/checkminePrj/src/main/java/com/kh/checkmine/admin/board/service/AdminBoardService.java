@@ -37,7 +37,7 @@ public interface AdminBoardService {
 
 	
 	//게시물 수정
-	int edit(BoardVo vo, List<BoardAttVo> attVoList);
+	int edit(BoardVo vo, List<BoardAttVo> attVoList, List<BoardAttVo> existFileList);
 
 	int edit(BoardVo boardVo);
 

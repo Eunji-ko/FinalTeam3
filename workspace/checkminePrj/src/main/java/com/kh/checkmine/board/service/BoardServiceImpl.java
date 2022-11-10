@@ -125,12 +125,15 @@ public class BoardServiceImpl implements BoardService{
 	//게시물 수정 (+첨부파일)
 	@Override
 	@Transactional
-	public int edit(BoardVo boardVo, List<BoardAttVo> attVoList) {
+	public int edit(BoardVo boardVo, List<BoardAttVo> attVoList, List<BoardAttVo> existFileList) {
 		//게시글
 		int result1 = dao.edit(sst, boardVo);
 
-		//기존 첨부파일 삭제
-		int result2 = dao.deleteAtt(sst, boardVo);
+		int result2 = 1;
+		//기존 첨부파일 있다면 삭제
+		if(!existFileList.isEmpty()) {
+			result2 = dao.deleteAtt(sst, boardVo);
+		}
 		
 		//첨부파일
 		int result3 = dao.edit(sst, attVoList);
