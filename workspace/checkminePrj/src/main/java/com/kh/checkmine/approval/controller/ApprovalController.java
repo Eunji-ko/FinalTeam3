@@ -168,19 +168,22 @@ public class ApprovalController {
 		
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
-		if(memberList != null) {
-			for(int i=0; i<memberList.size(); i++) {
-				obj.addProperty("approver" + i, memberList.get(i).getName());
-				obj.addProperty("email" + i, memberList.get(i).getEmail());
-				obj.addProperty("num" + i, memberList.get(i).getNo());
-			}
-		}
 		
-//		String list = gson.toJson(memberList);
-//		obj.addProperty("list", list);
+//		if(memberList != null) {
+//			for(int i=0; i<memberList.size(); i++) {
+//				obj.addProperty("approver" + i, memberList.get(i).getName());
+//				obj.addProperty("email" + i, memberList.get(i).getEmail());
+//				obj.addProperty("num" + i, memberList.get(i).getNo());
+//			}
+//		}
 		
 		String allEmpCnt = Integer.toString(service.selectEmpByName("").size());
 		obj.addProperty("allEmpCnt", allEmpCnt);
+
+		if(memberList != null) {
+			String list = gson.toJson(memberList);
+			obj.addProperty("list", list);
+		}
 	
 		return gson.toJson(obj);
 	}
@@ -354,9 +357,11 @@ public class ApprovalController {
 		Gson gson = new Gson();
 		JsonObject obj = new JsonObject();
 		
-		String list = gson.toJson(accountList);
-		obj.addProperty("list", list);
-		
+		if(accountList != null) {
+			String list = gson.toJson(accountList);
+			obj.addProperty("list", list);
+		}
+
 //		if(accountList != null) {
 //			for(int i=0; i<accountList.size(); i++) {
 //				obj.addProperty("no" + i, accountList.get(i).getNo());

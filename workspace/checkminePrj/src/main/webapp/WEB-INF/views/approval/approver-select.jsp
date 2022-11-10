@@ -115,24 +115,25 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-  					if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
+                    var list = JSON.parse(data.list);
+  					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/3 > 1){
+  					}else if(list.length > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
-                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<list.length; i++){
+                            $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember1);
-                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
+                        $($('.select-member')[list.length-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        $('#search-first').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
+                        $('#search-first').val(list[0].no + " " + list[0].name + " " + list[0].email);
                     }
   				},
   				error : function(){
@@ -150,24 +151,25 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
+                    var list = JSON.parse(data.list);
+  					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/3 > 1){
+  					}else if(list.length > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
-                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<list.length; i++){
+                            $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember2);
-                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
+                        $($('.select-member')[list.length-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        $('#search-second').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
+                        $('#search-second').val(list[0].no + " " + list[0].name + " " + list[0].email);
                     }
   				},
   				error : function(){
@@ -185,24 +187,25 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
+                    var list = JSON.parse(data.list);
+  					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/3 > 1){
+  					}else if(list.length > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
-                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<list.length; i++){
+                            $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember3);
-                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
+                        $($('.select-member')[list.length-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        $('#search-third').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
+                        $('#search-third').val(list[0].no + " " + list[0].name + " " + list[0].email);
                     }
   				},
   				error : function(){
@@ -220,24 +223,25 @@
   				data : {'approver' : approver},
   				dataType : 'json',
   				success : function(data){
-                    if((Object.keys(data).length - 1)/3 == data.allEmpCnt || Object.keys(data).length == 1){
+                    var list = JSON.parse(data.list);
+  					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
-  					}else if((Object.keys(data).length - 1)/3 > 1){
+  					}else if(list.length > 1){
                         //사원 존재, 동명이인 있음
                         alert('사원을 선택해주세요.');
-                        for(var i=0; i<((Object.keys(data).length-1)/3); i++){
-                            $($('.select-member')[i]).val(data['num' + i] + " " + data['approver' + i] + " " + data['email' + i]);
+                        for(var i=0; i<list.length; i++){
+                            $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
                         $($('.select-member')).on('click', selectMember4);
-                        $($('.select-member')[((Object.keys(data).length-1)/3)-1]).hide();
+                        $($('.select-member')[list.length-1]).hide();
                         $('#footer').prop('hidden', false);
   					}else{
                         //사원 존재 동명이인 없음
-                        $('#search-final').val(data['num0'] + " " + data['approver0'] + " " + data['email0']);
+                        $('#search-final').val(list[0].no + " " + list[0].name + " " + list[0].email);
                     }
   				},
   				error : function(){

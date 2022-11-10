@@ -95,6 +95,7 @@
                     var newInput = oriInput.cloneNode(true);
                     oriInput.after(newInput);
                 }
+                $($('.select-account')[list.length-1]).hide();
                 //클릭시 발동하는 함수 설정
                 $('.select-account').on('click', selectName);
                 //함수 리턴값으로 값채우기
@@ -111,7 +112,6 @@
                   $('.select-account').hide();
                   $('#account-no').val(list[e.result].no);
                 });
-                $($('.select-account')[0]).hide();
   					}else{
               //거래처 존재 동명회사 없음
               $('#corporate').val(list[0].corporate);
