@@ -28,7 +28,7 @@
     <div class="modal fade" id="changeEmp" tabindex="-1" aria-labelledby="changeEmpLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #c6f0e7;">
             <h1 class="modal-title fs-5" id="changeEmpLabel">사원 정보</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -72,6 +72,9 @@
           </div>
           
             <div class="modal-footer">
+              <c:if test="${fn:contains(loginMember.permission, 'H')}">
+                <button type="button" class="btn checkmine-btn" onclick="location.href='${rootPath}/personnel/evalList/'+$('#modalENo').val()" style="position: absolute; left: 12px; bottom: 12px;">전체평가</button>
+              </c:if>
               <button type="button" class="btn checkmine-btn" id="empEvalBtn" data-bs-target="#evalModalToggle" data-bs-toggle="modal">사원평가</button>
               <c:if test="${fn:contains(loginMember.permission, 'H')}">
                 <input type="submit" class="btn checkmine-btn" value="변경하기">
@@ -137,7 +140,7 @@
         },
         success : function(data){
           if(data != null) {
-            $('#empEvalText').html(data.content);
+            $('#empEvalText').val(data.content);
           }
         }
       });

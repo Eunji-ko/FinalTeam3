@@ -90,5 +90,10 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return dao.insertEval(sst, vo);
 	}
 
+	@Override
+	public List<EmpEvalVo> findEvalList(String no) {
+		return dao.findEvalList(sst, no);
+	}
+
 
 }

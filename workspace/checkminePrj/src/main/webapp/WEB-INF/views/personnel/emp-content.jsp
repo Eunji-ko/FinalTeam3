@@ -150,7 +150,7 @@
                 </tbody>
             </table>
         </div>
-        <br><br>
+        <br>
         <div id="psn-page-zone">
             <c:if test="${epv.startPage ne 1}">
                 <a href="javascript:void(0);" onclick="changeEPage(${epv.startPage -1})">&lt;</a>

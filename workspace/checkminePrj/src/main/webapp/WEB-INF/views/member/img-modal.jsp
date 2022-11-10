@@ -22,7 +22,7 @@
     <div class="modal fade" id="changeImg" tabindex="-1" aria-labelledby="changeImgLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #c6f0e7;">
             <h1 class="modal-title fs-5" id="changeImgLabel">사진 변경</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>

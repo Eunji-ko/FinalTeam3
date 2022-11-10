@@ -36,4 +36,6 @@ public interface PersonnelService {
 
 	int insertEval(EmpEvalVo vo);
 
+	List<EmpEvalVo> findEvalList(String no);
+
 }
