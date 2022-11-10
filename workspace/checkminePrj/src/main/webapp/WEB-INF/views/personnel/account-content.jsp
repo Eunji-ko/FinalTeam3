@@ -99,7 +99,7 @@
                 </tbody>
             </table>
         </div>
-        <br><br>
+        <br>
         <div id="psn-page-zone">
             <c:if test="${apv.startPage ne 1}">
                 <a href="javascript:void(0);" onclick="changeAPage(${apv.startPage -1})">&lt;</a>

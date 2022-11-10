@@ -197,5 +197,13 @@
   			, #{content}
   		)
   </insert>
+  
+  <select id="findEvalList" resultType="EmpEvalVo">
+  	SELECT
+    	CONTENT
+	FROM EMP_EVAL
+    	WHERE EVALEE = #{no}
+    ORDER BY NO DESC
+  </select>
  
 </mapper>

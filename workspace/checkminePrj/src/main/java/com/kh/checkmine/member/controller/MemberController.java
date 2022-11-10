@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.checkmine.alarm.service.AlarmService;
 import com.kh.checkmine.approval.service.ApprovalService;
@@ -164,10 +165,12 @@ public class MemberController {
 			alarmService.insertNoticeAlarm(loginMember.getNo());
 			
 			return "redirect:/member/main";
-		}else {
+		}
+		else {
 			//로그인 실패
 			session.setAttribute("alertMsg", "로그인 실패 !");
-			return "redirect:/";
+			System.out.println("멤버컨트롤러의 로그인 메소드인데 로그인 멤버 객체가 널임");
+			return "redirect:";
 		}
 	}
 	

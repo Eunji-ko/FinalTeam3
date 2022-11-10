@@ -250,6 +250,12 @@
         border-radius: 10px;
         box-shadow: inset 0px 0px 5px white;
     }
+    .cut-title{
+        display: block;
+        width: 240px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
 </style>
 <link href='${rootPath}/resources/fullcalendar-5.11.3/lib/main.css' rel='stylesheet' />
 <script src='${rootPath}/resources/fullcalendar-5.11.3/lib/main.js'></script>
@@ -337,13 +343,13 @@
             <div id="main-content1f">
                 <div>
                     <div id="right-box">
-                        <a href="${rootPath}/mail"><h4>메일함</h4></a>
+                        <a href="${rootPath}/mail/receive"><h4>메일함</h4></a>
                         <div id="right-box-content">
-                            <table class="table">
+                            <table class="table" style="width: 500px;">
                                 <c:forEach items="${mailList}" var="mail">
                                     <tr>
-                                        <td><a class="right-box-title" href="/checkmine/mail/ref/detail?n=${mail.no}">${mail.title}</td>
-                                        <td><div class="right-box-name">${mail.sender}</div></td>
+                                        <td nowrap><a class="right-box-title cut-title" href="/checkmine/mail/ref/detail?n=${mail.no}">${mail.title}</td>
+                                        <td nowrap><div class="right-box-name cut-title" style="width: 50px;">${mail.sender}</div></td>
                                         <td><div class="right-box-date">${mail.sendDate}</div></td>
                                     </tr>
                                 </c:forEach>
@@ -381,7 +387,7 @@
                             <table class="table">
                                 <c:forEach items="${taskList}" var="task">
                                     <tr>
-                                        <td>
+                                        <td width="45px">
                                             <c:if test="${task.importance eq 'N'}">
                                                 <div class="right-box-urg"></div>
                                             </c:if>
@@ -392,8 +398,8 @@
                                                 <div class="right-box-imp">중요</div>
                                             </c:if>
                                         </td>
-                                        <td><a href="${rootPath}/task/order/detail/${task.no}" class="right-box-title">${task.title}</a></td>
-                                        <td><div class="right-box-name">${task.orderer}</div></td>
+                                        <td nowrap><a href="${rootPath}/task/order/detail/${task.no}" class="right-box-title cut-title" style="width: 150px;">${task.title}</a></td>
+                                        <td nowrap><div class="right-box-name cut-title" style="width: 50px;">${task.orderer}</div></td>
                                         <td><div class="right-box-date">${task.enrollDate}</div></td>
                                     </tr>
                                 </c:forEach>

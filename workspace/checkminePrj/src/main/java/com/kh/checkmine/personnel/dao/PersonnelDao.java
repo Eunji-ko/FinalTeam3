@@ -38,4 +38,6 @@ public interface PersonnelDao {
 
 	int insertEval(SqlSessionTemplate sst, EmpEvalVo vo);
 
+	List<EmpEvalVo> findEvalList(SqlSessionTemplate sst, String no);
+
 }

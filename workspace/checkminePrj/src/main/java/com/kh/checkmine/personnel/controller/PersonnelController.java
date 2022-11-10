@@ -3,16 +3,19 @@ package com.kh.checkmine.personnel.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.common.Pagination;
@@ -57,8 +60,8 @@ public class PersonnelController {
 		int totalCount = ps.selectTotalCnt(empMap);
 		int totalACount = ps.selectTotalACnt(accMap);
 		
-		PageVo epv = Pagination.getPageVo(totalCount, ep, 5, 10);
-		PageVo apv = Pagination.getPageVo(totalACount, ap, 5, 10);
+		PageVo epv = Pagination.getPageVo(totalCount, ep, 5, 15);
+		PageVo apv = Pagination.getPageVo(totalACount, ap, 5, 15);
 		
 		//디비 다녀오기
 		List<MemberVo> memList = ps.selectMemberList(epv, empMap);
@@ -185,5 +188,37 @@ public class PersonnelController {
 		
 		return result;
 	}
+	
+	@GetMapping("evalList/{no}")
+	public String evalList(Model model, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes, @PathVariable String no) {
+		
+		List<EmpEvalVo> evalList = ps.findEvalList(no);
+		MemberVo emp = ps.selectEmpByNo(no);
+		
+		if(evalList == null) {
+			
+			session.setAttribute("alertMsg", "사원평가 조회를 실패하였습니다!");
+			
+			return "redirect:/personnel/main?ep=1&ap=1";	
+			
+		} else if(evalList.isEmpty()) {
+			
+			session.setAttribute("swalEmpty", "해당 사원에 대하여 작성된 사원평가가 없습니다 !");
+			String referer = request.getHeader("Referer");
+			
+			return "redirect:"+ referer;
+			
+		} else {
+			
+			model.addAttribute("evalList", evalList);
+			if(emp != null) {
+				model.addAttribute("empName", emp.getName()); 
+			}
+			
+			return "personnel/evalList";	
+			
+		}
+	}
+	
 	
 }

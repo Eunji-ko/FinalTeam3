@@ -3,7 +3,7 @@
 <div class="modal fade" id="evalModalToggle" aria-hidden="true" aria-labelledby="evalModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: #c6f0e7;">
           <h1 class="modal-title fs-5" id="evalModalToggleLabel">사원평가</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -41,6 +41,7 @@
               success : function(x){
                 console.log('evalEmp 성공!');
                 swal(evaleeName2+'님의 사원평가를 등록하였습니다 !', '','success');
+                $('#empEvalText').val('');
               }
             });
          }

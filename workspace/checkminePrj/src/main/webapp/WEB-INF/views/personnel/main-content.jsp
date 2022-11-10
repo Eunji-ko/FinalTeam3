@@ -55,6 +55,14 @@
         background-color: #72918b;
     }
 </style>
+<c:set var="swalEmpty" value="${sessionScope.swalEmpty}"/>
+<c:remove var="swalEmpty" scope="session"/>
+
+<c:if test="${not empty swalEmpty}">
+    <script>
+        swal('${swalEmpty}', '','info');
+    </script>
+</c:if>
 </head>
 <body onload="checkPsn()">
     <br><br>

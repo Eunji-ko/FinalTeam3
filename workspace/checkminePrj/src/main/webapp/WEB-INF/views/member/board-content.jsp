@@ -107,6 +107,11 @@
         background-color: #CFFFF6;
         border-radius: 10px;
     }
+    .cut-title{
+        display: block;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
 </style>
 <c:set var="imgPath" value="/checkmine/resources/img/member"/>
 </head>
@@ -118,8 +123,8 @@
             <table class="table" id="mp-board-tbl">
                 <c:forEach items="${boardList}" var="board">
                     <tr>
-                        <th><a href="${rootPath}/board/detail/${board.no}" class="black-noline">${board.title}</a></th>
-                        <td><a href="${rootPath}/board/detail/${board.no}" class="black-noline">${board.content}</a></td>
+                        <th nowrap><a href="${rootPath}/board/detail/${board.no}" class="black-noline cut-title" style="width: 250px;">${board.title}</a></th>
+                        <td nowrap><a href="${rootPath}/board/detail/${board.no}" class="black-noline cut-title" style="width: 250px;">${board.content}</a></td>
                         <td><div class="mp-board-btn" onclick="location.href='${rootPath}/board/edit/${board.no}'"><img src="${imgPath}/update_icon.png" alt="해당 글 수정" width="27px"></div></td>
                         <td><div class="mp-board-btn" onclick="location.href='${rootPath}/board/delete/${board.type}/${board.no}'"><img src="${imgPath}/delete_icon.png" alt="해당 글 삭제" width="27px"></div></td>
                     </tr>
@@ -131,8 +136,8 @@
             <table class="table" id="mp-board-tbl">
                 <c:forEach items="${replyList}" var="reply">
                     <tr>
-                        <th><a href="${rootPath}/board/detail/${reply.no}" class="black-noline">${reply.replier}</a></th>
-                        <td><a href="${rootPath}/board/detail/${reply.no}" class="black-noline">${reply.content}</a></td>
+                        <th nowrap><a href="${rootPath}/board/detail/${reply.no}" class="black-noline cut-title" style="width: 200px;">${reply.replier}</a></th>
+                        <td nowrap><a href="${rootPath}/board/detail/${reply.no}" class="black-noline cut-title" style="width: 250px;">${reply.content}</a></td>
                     </tr>
                 </c:forEach>
             </table>

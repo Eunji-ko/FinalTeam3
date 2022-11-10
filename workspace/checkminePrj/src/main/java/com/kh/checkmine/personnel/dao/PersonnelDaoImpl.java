@@ -89,4 +89,9 @@ public class PersonnelDaoImpl implements PersonnelDao {
 		return sst.update("personnelMapper.insertEval", vo);
 	}
 
+	@Override
+	public List<EmpEvalVo> findEvalList(SqlSessionTemplate sst, String no) {
+		return sst.selectList("personnelMapper.findEvalList", no);
+	}
+
 }
