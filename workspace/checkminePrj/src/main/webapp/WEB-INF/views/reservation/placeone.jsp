@@ -264,7 +264,7 @@
                             <div>종류</div>
                             <select id="name" name="name" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 <option>--선택--</option>
-                                <c:forEach items="${voLiList}" var="vo">
+                                <c:forEach items="${voMeList}" var="vo">
                                 <option value="${vo.no}">${vo.name}</option>
                                 </c:forEach>
                             </select>
@@ -319,14 +319,14 @@
         //ajax
         let plNo;
         $('#name').on('change', function () {
-            goodsNo = $('#name option:selected').val();
-            console.log(goodsNo);
+            plNo = $('#name option:selected').val();
+            console.log(plNo);
         })
 
         let rsvBegin;
         $('#rsv-begin').on('change', function () {
-            borrow = $('#rsv-begin option:selected').val();
-            console.log(borrow);
+            rsvBegin = $('#rsv-begin option:selected').val();
+            console.log(rsvBegin);
         })
 
         let rsvEnd;
@@ -343,7 +343,7 @@
 
         $('#reservation').on('click', function (){
             $.ajax({
-                url  :  '${rootPath}/reservation/rsvbtnl',
+                url  :  '${rootPath}/reservation/rsvbtnm',
                 method : 'post',
                 data : JSON.stringify({plNo : plNo,
                                     rsvBegin : rsvBegin,

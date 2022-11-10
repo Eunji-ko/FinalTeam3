@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.checkmine.common.PageVo;
 import com.kh.checkmine.reservation.dao.ReservationDao;
@@ -70,7 +71,19 @@ public class ReservationServiceImpl implements ReservationService {
 	//빔 예약
 	@Override
 	public int insertRsvb(GoodsBookVo vo) {
-		return dao.insertRsvb(vo, sst);
+		
+		//ㄱㅓㅁㅈㅡㅇ
+		int revCount = dao.selectRevCount(vo, sst);
+
+		//ㅇㅖㅇㅑㄱ
+		
+		if(revCount < 1) {
+			int revResult = dao.insertRsvb(vo, sst);
+			
+			return revResult; 
+		} else {
+			return 0;
+		}
 	}
 
 	//빔 예약 목록
@@ -109,28 +122,52 @@ public class ReservationServiceImpl implements ReservationService {
 		return dao.carrsvTotalCount(sst);
 	}
 
-	//회의실
+	//응접실
 	@Override
 	public List<PlaceVo> selectLiList() {
 		return dao.selectLiList(sst);
 	}
 
-	//회의실 예약
+	//응접실 예약
 	@Override
 	public int insertRsvl(PlaceBookVo vo) {
 		return dao.insertRsvl(vo, sst);
 	}
 
-	//회의실 예약 목록
+	//응접실 예약 목록
 	@Override
 	public List<PlaceBookVo> selectListLiRsv(PageVo pv) {
 		return dao.selectListLiRsv(pv, sst);
 	}
 
-	//회의실 예약 총갯수
+	//응접실 예약 총갯수
 	@Override
 	public int lirsvTotalCount() {
 		return dao.lirsvTotalCount(sst);
+	}
+
+	//회의실
+	@Override
+	public List<PlaceVo> selectMeList() {
+		return dao.selectMeList(sst);
+	}
+
+	//회의실 예약
+	@Override
+	public int insertRsvm(PlaceBookVo vo) {
+		return dao.insertRsvm(vo, sst);
+	}
+
+	//회의실 예약 목록
+	@Override
+	public List<PlaceBookVo> selectListMeRsv(PageVo pv) {
+		return dao.selectListMeRsv(pv, sst);
+	}
+
+	//회의실 예약 총갯수
+	@Override
+	public int mersvTotalCount() {
+		return dao.mersvTotalCount(sst);
 	}
 
 }

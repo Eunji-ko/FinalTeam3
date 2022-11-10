@@ -54,6 +54,7 @@
 		    , TO_CHAR(GR.RSV_DATE, 'YYYY-MM-DD') RSV_DATE
 		    , E.NAME E_NO
 		    , D.NAME DEPT_NAME
+            , GR.GOODS_NO
 		FROM GOODS_RESERVATION GR
 		JOIN EMPLOYEE E
 		ON GR.E_NO = E.NO
@@ -105,6 +106,15 @@
 		SELECT COUNT(*)
       	FROM GOODS_RESERVATION
       	WHERE E_NO = #{eNo}
+	</select>
+	
+	<select id="selectRevCount" resultType="int">
+		SELECT COUNT(*) CNT
+		FROM GOODS_RESERVATION
+		WHERE GOODS_NO = 1
+		AND RSV_DATE = #{rsvDate}
+		AND <![CDATA[BORROW <= #{borrow}]]>
+		AND <![CDATA[RSV_END >= #{rsvEnd}]]>
 	</select>
 	
 </mapper>

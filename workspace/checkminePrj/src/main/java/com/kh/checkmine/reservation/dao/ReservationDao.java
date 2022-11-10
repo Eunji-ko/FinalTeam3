@@ -54,16 +54,31 @@ public interface ReservationDao {
 	//차 예약 총갯수
 	int carrsvTotalCount(SqlSessionTemplate sst);
 
-	//회의실
+	//응접실
 	List<PlaceVo> selectLiList(SqlSessionTemplate sst);
 
-	//회의실 예약
+	//응접실 예약
 	int insertRsvl(PlaceBookVo vo, SqlSessionTemplate sst);
 
-	//회의실 예약 목록
+	//응접실 예약 목록
 	List<PlaceBookVo> selectListLiRsv(PageVo pv, SqlSessionTemplate sst);
 
-	//회의실 예약 총갯수
+	//응접실 예약 총갯수
 	int lirsvTotalCount(SqlSessionTemplate sst);
+
+	//회의실
+	List<PlaceVo> selectMeList(SqlSessionTemplate sst);
+
+	//회의실 예약
+	int insertRsvm(PlaceBookVo vo, SqlSessionTemplate sst);
+
+	//회의실 예약 목록
+	List<PlaceBookVo> selectListMeRsv(PageVo pv, SqlSessionTemplate sst);
+
+	//회의실 예약 총갯수
+	int mersvTotalCount(SqlSessionTemplate sst);
+
+	//예약 검증
+	int selectRevCount(GoodsBookVo vo, SqlSessionTemplate sst);
 
 }

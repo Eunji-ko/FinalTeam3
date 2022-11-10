@@ -13,5 +13,6 @@ public class PlaceBookVo {
 	private String rsvDate;
 	
 	private String name;
+	private String deptName;
 	
 }
