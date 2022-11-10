@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${vo.title}</title>
+<title>보고서 | ${vo.title}</title>
 <style>
 
     #report{

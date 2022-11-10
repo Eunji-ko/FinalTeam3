@@ -65,6 +65,9 @@ public class TaskOrderController {
 		
 		List<TaskOrderVo> voList = orderService.selectList(pv);
 
+		System.out.println("vo ::: " + voList);
+		System.out.println("loginMember" + loginMember);
+		
 		model.addAttribute("voList", voList);
 		model.addAttribute("pv", pv);
 		model.addAttribute("loginMember", loginMember);

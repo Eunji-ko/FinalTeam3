@@ -170,6 +170,19 @@
         <!-- alert 모달을 쓸 페이지에 추가 end-->
 
     <script>
+        var memberDept = '${loginMember.deptNo}';
+        var dept = "인사부";
+
+        const currentDate = new Date();
+        const options = {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric"
+        };
+
         //풀캘린더 라이브러리 적용
         document.addEventListener('DOMContentLoaded', function() {
             //data 받아오는 ajax
@@ -181,7 +194,7 @@
                     success:function(data){
                         console.log(data);
 
-                        //이부분부터 DB 연결 이전 기존에 있던 내용
+                        //이부분부터 fullcalenadar 라이브러리
                         var calendarEl = document.getElementById('calendar');
                         var calendar = new FullCalendar.Calendar(calendarEl, {
                             initialView: 'dayGridMonth',
@@ -205,8 +218,8 @@
                                 addEventButton: { // 추가한 버튼 설정
                                     text : "일정 추가",  // 버튼 내용
                                     click : function(){ // 버튼 클릭 시 이벤트 추가
-                                        var memberDept = '${loginMember.deptNo}';
-                                        var dept = "인사부";
+                                        // var memberDept = '${loginMember.deptNo}';
+                                        // var dept = "인사부";
                                         console.log("멤버 : " + memberDept);
                                         console.log("부서 : " + dept);
                                         if(dept == memberDept){//인사부만 등록
@@ -234,13 +247,18 @@
                                                 }
                                             })
                                         }else{
-                                            alert("해당 권한이 없습니다.");
+                                            Swal.fire({
+                                                icon:'error',
+                                                title: '해당 권한이 없습니다.',
+                                                confirmButtonColor: '#6c757d',
+                                                confirmButtonText: '확인'
+                                            })
                                         };
                                     }
                                 }
                             },
                             navLinks: true, //날짜 선택시 day 캘린더로 링크
-                            selectable: false, //달력 일자 드래그 설정
+                            selectable: true, //달력 일자 드래그 설정
                             dayMaxEvents: true, //이벤트 오버되면 높이 제한
                             eventLimit:true,
                             editable:true,//draggable 작동
@@ -261,6 +279,12 @@
                             events: data,
                             eventClick : function(data, element){
                                 var eventObj = data.event;
+                                var start = eventObj.start;
+                                var end = eventObj.end;
+
+                                start = start.toLocaleDateString("ko", options);
+                                end = end.toLocaleDateString("ko", options)
+
                                 if(eventObj.id > 0){
                                     Swal.fire({
                                         title : "<" + eventObj.title + ">",
@@ -273,22 +297,23 @@
                                         cancelButtonText: '아니오'
                                     }).then((result)=>{
                                         if(result.isConfirmed){
-                                            location.href = '${root}/task/order/detail/' + data.event.id;
+                                            window.open('${root}/task/order/detail/' + data.event.id);
                                         }
                                     })
                                 }else{
                                     Swal.fire({
                                         icon:'info',
                                         title: eventObj.title,
-                                        text: eventObj.extendedProps.content,
+                                        html: '시작일시 : ' + start + ' <br> ' + '종료일시 : ' + end + '<br><br>' + eventObj.extendedProps.content,
                                         confirmButtonColor: '#b0d9d1'
                                     })
                                 }
 
                             },
-                            eventDragStop:function(data, jsEvent, ui, view){
-                                var eventObj = data.event;
-                                if(eventObj.id.charAt(0) == 'S'){
+                            eventDragStop:
+                            function(data, jsEvent, ui, view){
+                                var eventObj = data.event.id;
+                                if(eventObj.charAt(0) == 'S'){
                                     Swal.fire({
                                         icon:'warning',
                                         title:"<" + eventObj.title + ">" + '\n' + "해당 일정을 삭제하겠습니까?",
@@ -297,26 +322,27 @@
                                         cancelButtonColor: '#6c757d',
                                         confirmButtonText: '네',
                                         cancelButtonText: '아니오',
-                                        preConfirm: (eventObj) => {
-                                            return fetch('${root}/schedule/del/' + eventObj.id.replace('S', ''))
-                                            .then(result => {
-                                                if (result == 1) {
+                                        preConfirm: () => {
+                                            return fetch(`${root}/schedule/del/` + eventObj)
+                                            .then((result) => {
+                                                if (result.ok) {
                                                     Swal.fire({
-                                                    title: '일정이 삭제되었습니다.'
-                                                    })
-                                                }else{
-                                                    Swal.fire({
-                                                    title: '일정을 삭제하지 못했습니다.'
+                                                    title: '삭제되었습니다.',
+                                                    confirmButtonColor: '#6c757d',
+                                                    confirmButtonText: '확인',
+                                                    preConfirm: ()=>{
+                                                        location.reload()
+                                                    }
                                                     })
                                                 }
                                             })
                                         }
                                     })
                                 }
-                            },
+                            }
+                            
                         });
                         calendar.render();
-
                     },
                     error : function(e){
                         alert("실패");

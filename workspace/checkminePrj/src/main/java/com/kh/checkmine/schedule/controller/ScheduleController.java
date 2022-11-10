@@ -127,15 +127,20 @@ public class ScheduleController {
 		}
 	}
 	
-	@GetMapping("del/{no}")
+	@GetMapping("del/{sno}")
 	@ResponseBody
-	public int delSchedule(@PathVariable String no, FullcalendarVo vo, HttpSession session, Model model) {
-		
-		//String no = vo.getId().replace("S", "");
+	public String delSchedule(@PathVariable String sno, FullcalendarVo vo, HttpSession session, Model model) {
+		String no = sno.substring(1); 
+		System.out.println(no);
+		System.out.println("삭제 불러옴");
 		
 		int result = service.updateSchedule(no);
 		
-		return result;
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 		
 	}
 	
