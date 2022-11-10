@@ -237,6 +237,10 @@ public class BoardController {
 	//게시물 수정
 	@PostMapping("edit/{no}")
 	public String edit(@PathVariable String no, BoardVo boardVo, BoardAttVo attVo, HttpSession session, HttpServletRequest req) {
+		
+		//기존 파일 있는지 확인
+		List<BoardAttVo> existFileList = service.selectAttList(no);
+		
 		//새로 첨부된 파일 처리
 		int result = 0;
 		
@@ -244,13 +248,12 @@ public class BoardController {
 		List<BoardAttVo> attVoList = new ArrayList<BoardAttVo>();
 		
 		if(!fArr[0].isEmpty()) { //전달받은 파일있음
-			List<BoardAttVo> attList = service.selectAttList(no);
 			String savePath = req.getServletContext().getRealPath("/resources/upload/board/");
 			
 			//기존 파일 삭제 후 업로드 (저장소 내 파일)
-			if(!attList.isEmpty()) {
-				for(int i = 0; i < attList.size(); i++) {
-					File file = new File(savePath + attList.get(i).getName());
+			if(!existFileList.isEmpty()) {
+				for(int i = 0; i < existFileList.size(); i++) {
+					File file = new File(savePath + existFileList.get(i).getName());
 					if(file.exists()) {
 						file.delete();
 					}
@@ -267,7 +270,7 @@ public class BoardController {
 				att.setBNo(no);
 				attVoList.add(att);
 			}
-			result = service.edit(boardVo, attVoList);
+			result = service.edit(boardVo, attVoList, existFileList);
 		}else {
 			//제목 또는 내용만 수정 시
 			result = service.edit(boardVo);
