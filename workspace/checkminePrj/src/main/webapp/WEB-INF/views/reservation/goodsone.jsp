@@ -179,12 +179,13 @@
                         <tbody>
                         <c:forEach items="${rsvList}" var="l">
                           <tr>
+                            <input class="goods-num" type="hidden" value="${l.goodsNo}">
                             <td>${l.ENo}</td>
                             <td>${l.deptName}</td>
-                            <td>${l.name}</td>
-                            <td>${l.borrow}</td>
-                            <td>${l.rsvEnd}</td>
-                            <td>${l.rsvDate}</td>
+                            <td class="r-name">${l.name}</td>
+                            <td class="r-start">${l.borrow}</td>
+                            <td class="r-end">${l.rsvEnd}</td>
+                            <td class="r-date">${l.rsvDate}</td>
                           </tr>
                          </c:forEach>
                         </tbody>
@@ -274,7 +275,6 @@
                             <div>날짜</div>
                             <div><input  type="date" id="dateSelect"></div>
                         </div>
-
                         <div>예약시간</div>
                         <div id="time">
                             <select id="rsv-begin" class="form-select form-select-sm" aria-label=".form-select-sm example">

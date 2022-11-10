@@ -55,15 +55,27 @@ public interface ReservationService {
 	int carrsvTotalCount();
 
 	//회의실
+	List<PlaceVo> selectMeList();
+	
+	//응접실
 	List<PlaceVo> selectLiList();
 
-	//회의실 예약
+	//응접실 예약
 	int insertRsvl(PlaceBookVo vo);
 
-	//회의실 예약 목록
+	//응접실 예약 목록
 	List<PlaceBookVo> selectListLiRsv(PageVo pv);
 
-	//회의실 예약 총갯수
+	//응접실 예약 총갯수
 	int lirsvTotalCount();
+
+	//회의실 예약
+	int insertRsvm(PlaceBookVo vo);
+
+	//회의실 예약 목록
+	List<PlaceBookVo> selectListMeRsv(PageVo pv);
+
+	//회의실 예약 총갯수
+	int mersvTotalCount();
 
 }

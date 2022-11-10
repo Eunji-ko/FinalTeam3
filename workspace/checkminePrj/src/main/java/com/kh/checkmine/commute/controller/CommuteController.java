@@ -98,9 +98,10 @@ public class CommuteController {
 		
 		List<ApprovalLeaveVo> voList = cs.selectLeaveList(map);
 		
+		//사용연차 //디비에 있음
 		double x = 0;
+		//총연차
 		double y = 5;
-		double z = y - x;
 		
 		if(voList != null) {
 			for(int i = 0; i < voList.size(); i++) {
@@ -108,6 +109,8 @@ public class CommuteController {
 				x = x + Double.parseDouble(apply);
 			}
 		}
+		//남은 연차
+		double z = y - x;
 		
 		model.addAttribute("voList", voList);
 		model.addAttribute("x", x);

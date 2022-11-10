@@ -35,12 +35,19 @@
 	
 	<insert id="insertRsvl">
 		INSERT INTO PLACE_RESERVATION(
-		NO, E_NO, PL_NO, RSV_BEGIN, RSV_END, RSV_DATE)
-		VALUES(SEQ_PLACE_RES_NO.NEXTVAL, #{empNo}, #{goodsNo}, TO_DATE(#{rsvBegin}, 'HH24:MI'),
+		NO, EMP_NO, PL_NO, RSV_BEGIN, RSV_END, RSV_DATE)
+		VALUES(SEQ_PLACE_RES_NO.NEXTVAL, #{empNo}, #{plNo}, TO_DATE(#{rsvBegin}, 'HH24:MI'),
 		 TO_DATE(#{rsvEnd}, 'HH24:MI'), TO_DATE(#{rsvDate}, 'YYYY-MM-DD'))
 	</insert>
 	
-	<select id="selectListLiRsv">
+	<insert id="insertRsvm">
+		INSERT INTO PLACE_RESERVATION(
+		NO, EMP_NO, PL_NO, RSV_BEGIN, RSV_END, RSV_DATE)
+		VALUES(SEQ_PLACE_RES_NO.NEXTVAL, #{empNo}, #{plNo}, TO_DATE(#{rsvBegin}, 'HH24:MI'),
+		 TO_DATE(#{rsvEnd}, 'HH24:MI'), TO_DATE(#{rsvDate}, 'YYYY-MM-DD'))
+	</insert>
+	
+	<select id="selectListLiRsv" resultType="PlaceBookVo">
 		SELECT 
 		    PR.NO
 		    , PP.NAME
@@ -60,12 +67,44 @@
 		ORDER BY RSV_DATE DESC
 	</select>
 	
+	<select id="selectListMeRsv" resultType="PlaceBookVo">
+		SELECT 
+		    PR.NO
+		    , PP.NAME
+		    , TO_CHAR(PR.RSV_BEGIN, 'HH24:MI') RSV_BEGIN
+		    , TO_CHAR(PR.RSV_END, 'HH24:MI') RSV_END
+		    , TO_CHAR(PR.RSV_DATE, 'YYYY-MM-DD') RSV_DATE
+		    , E.NAME EMP_NO
+		    , D.NAME DEPT_NAME
+		FROM PLACE_RESERVATION PR
+		JOIN EMPLOYEE E
+		ON PR.EMP_NO = E.NO
+		JOIN DEPARTMENT D
+		ON E.DEPT_NO = D.NO
+		JOIN PUBLIC_PLACE PP
+		ON PR.PL_NO = PP.NO
+		WHERE TYPE = 'M'
+		ORDER BY RSV_DATE DESC
+	</select>
+	
 	<select id="lirsvTotalCount" resultType="int">
 		SELECT COUNT(*)
 		FROM PLACE_RESERVATION PR
 		JOIN PUBLIC_PLACE PP
-		ON PR.PLACE_NO = PP.NO
+		ON PR.PL_NO = PP.NO
 		WHERE PP.TYPE = 'L'
+	</select>
+	
+	<select id="mersvTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PLACE_RESERVATION PR
+		JOIN PUBLIC_PLACE PP
+		ON PR.PL_NO = PP.NO
+		WHERE PP.TYPE = 'M'
+	</select>
+	
+	<select id="selectMeList" resultType="PlaceVo">
+		SELECT NO, NAME FROM PUBLIC_PLACE WHERE TYPE = 'M'
 	</select>
 	
 </mapper>

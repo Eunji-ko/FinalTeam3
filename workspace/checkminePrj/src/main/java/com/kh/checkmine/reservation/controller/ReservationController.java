@@ -154,7 +154,7 @@ public class ReservationController {
 			session.setAttribute("alertMsg", "예약 성공!");
 			return "redirect:/reservation/goodsone";
 		}else {
-			session.setAttribute("alertMsg", "예약 성공!");
+			session.setAttribute("alertMsg", "예약 실패!");
 			return "redirect:/reservation/goodsone";
 		}
 		
@@ -211,6 +211,50 @@ public class ReservationController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
+		int mersvTotalCount = rs.mersvTotalCount();
+		PageVo pv = Pagination.getPageVo(mersvTotalCount, pno, 5, 10);
+		
+		List<PlaceBookVo> rsvList = rs.selectListMeRsv(pv);
+		List<PlaceVo> voMeList = rs.selectMeList();
+		
+		model.addAttribute("rsvList", rsvList);
+		model.addAttribute("voMeList", voMeList);
+		model.addAttribute("loginMember", loginMember);
+		model.addAttribute("pv", pv);
+		
+		return "reservation/placeone";
+		
+	}
+	
+	//회의실 예약
+	@PostMapping("rsvbtnm")
+	@ResponseBody
+	public String rsvbtnm(@RequestBody PlaceBookVo vo, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getNo();
+		
+		vo.setEmpNo(empNo);
+		
+		int result = rs.insertRsvm(vo);
+		
+		if(result == 1) {
+			session.setAttribute("alertMsg", "예약 성공!");
+			return "redirect:/reservation/placeone";
+		}else {
+			session.setAttribute("alertMsg", "예약 성공!");
+			return "redirect:/reservation/placeone";
+		}
+		
+	}
+	
+	//응접실
+	@GetMapping("placetwo/{pno}")
+	public String placeTwo(@PathVariable int pno, Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
 		int lirsvTotalCount = rs.lirsvTotalCount();
 		PageVo pv = Pagination.getPageVo(lirsvTotalCount, pno, 5, 10);
 		
@@ -222,11 +266,11 @@ public class ReservationController {
 		model.addAttribute("loginMember", loginMember);
 		model.addAttribute("pv", pv);
 		
-		return "reservation/placeone";
+		return "reservation/placetwo";
 		
 	}
 	
-	//회의실 예약
+	//응접실 예약
 	@PostMapping("rsvbtnl")
 	@ResponseBody
 	public String rsvbtnl(@RequestBody PlaceBookVo vo, HttpSession session) {
@@ -240,18 +284,13 @@ public class ReservationController {
 		
 		if(result == 1) {
 			session.setAttribute("alertMsg", "예약 성공!");
-			return "redirect:/reservation/placeone";
+			return "redirect:/reservation/placetwo";
 		}else {
 			session.setAttribute("alertMsg", "예약 성공!");
-			return "redirect:/reservation/placeone";
+			return "redirect:/reservation/placetwo";
 		}
 		
 	}
 	
-	//응접실
-	@GetMapping("placetwo")
-	public String placeTwo() {
-		return "reservation/placetwo";
-	}
 	
 }

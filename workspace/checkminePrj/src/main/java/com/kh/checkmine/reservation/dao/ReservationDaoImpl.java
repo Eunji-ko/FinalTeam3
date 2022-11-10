@@ -111,19 +111,19 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sst.selectOne("reservationGoodsMapper.carrsvTotalCount");
 	}
 
-	//회의실
+	//응접실
 	@Override
 	public List<PlaceVo> selectLiList(SqlSessionTemplate sst) {
 		return sst.selectList("reservationPlaceMapper.selectLiList");
 	}
 
-	//회의실 예약
+	//응접실 예약
 	@Override
 	public int insertRsvl(PlaceBookVo vo, SqlSessionTemplate sst) {
 		return sst.insert("reservationPlaceMapper.insertRsvl", vo);
 	}
 
-	//회의실 예약 목록
+	//응접실 예약 목록
 	@Override
 	public List<PlaceBookVo> selectListLiRsv(PageVo pv, SqlSessionTemplate sst) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
@@ -132,10 +132,43 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sst.selectList("reservationPlaceMapper.selectListLiRsv", null, rb);
 	}
 
-	//회의실 예약 총갯수
+	//응접실 예약 총갯수
 	@Override
 	public int lirsvTotalCount(SqlSessionTemplate sst) {
 		return sst.selectOne("reservationPlaceMapper.lirsvTotalCount");
+	}
+
+	//회의실
+	@Override
+	public List<PlaceVo> selectMeList(SqlSessionTemplate sst) {
+		return sst.selectList("reservationPlaceMapper.selectMeList");
+	}
+
+	//회의실 예약
+	@Override
+	public int insertRsvm(PlaceBookVo vo, SqlSessionTemplate sst) {
+		return sst.insert("reservationPlaceMapper.insertRsvm", vo);
+	}
+
+	//회의실 예약 목록
+	@Override
+	public List<PlaceBookVo> selectListMeRsv(PageVo pv, SqlSessionTemplate sst) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+	    RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		
+		return sst.selectList("reservationPlaceMapper.selectListMeRsv", null, rb);
+	}
+
+	//회의실 예약 총갯수
+	@Override
+	public int mersvTotalCount(SqlSessionTemplate sst) {
+		return sst.selectOne("reservationPlaceMapper.mersvTotalCount");
+	}
+
+	//예약 검증
+	@Override
+	public int selectRevCount(GoodsBookVo vo, SqlSessionTemplate sst) {
+		return sst.selectOne("reservationGoodsMapper.selectRevCount", vo);
 	}
 
 }
