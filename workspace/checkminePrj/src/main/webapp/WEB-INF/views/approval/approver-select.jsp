@@ -116,6 +116,7 @@
   				dataType : 'json',
   				success : function(data){
                     var list = JSON.parse(data.list);
+                    $('.select-member').hide();
   					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
@@ -125,6 +126,7 @@
                         for(var i=0; i<list.length; i++){
                             $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
+                            $(oriInput).css('display','block');
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
@@ -152,6 +154,7 @@
   				dataType : 'json',
   				success : function(data){
                     var list = JSON.parse(data.list);
+                    $('.select-member').hide();
   					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
@@ -161,6 +164,7 @@
                         for(var i=0; i<list.length; i++){
                             $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
+                            $(oriInput).css('display','block');
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
@@ -188,6 +192,7 @@
   				dataType : 'json',
   				success : function(data){
                     var list = JSON.parse(data.list);
+                    $('.select-member').hide();
   					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
@@ -197,6 +202,7 @@
                         for(var i=0; i<list.length; i++){
                             $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
+                            $(oriInput).css('display','block');
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }
@@ -224,6 +230,7 @@
   				dataType : 'json',
   				success : function(data){
                     var list = JSON.parse(data.list);
+                    $('.select-member').hide();
   					if(list.length == 0 || list.length == data.allEmpCnt){
                         //사원 없음
                         alert('해당 사원이 존재하지 않습니다.');
@@ -233,6 +240,7 @@
                         for(var i=0; i<list.length; i++){
                             $($('.select-member')[i]).val(list[i].no + " " + list[i].name + " " + list[i].email);
                             var oriInput = document.getElementsByClassName('select-member')[i];
+                            $(oriInput).css('display','block');
                             var newInput = oriInput.cloneNode(true);
                             oriInput.after(newInput);
                         }

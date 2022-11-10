@@ -81,6 +81,7 @@
   				dataType : 'json',
   				success : function(data){
             var list = JSON.parse(data.list);
+            $('.select-account').hide();
             if(list.length == 0){
                 //거래처 없음
                 alert('해당 거래처가 존재하지 않습니다.');
