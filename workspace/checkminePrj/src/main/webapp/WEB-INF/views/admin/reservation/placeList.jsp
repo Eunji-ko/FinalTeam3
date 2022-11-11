@@ -185,7 +185,7 @@
                                 <tr data-bs-toggle="modal" data-bs-target="#myModal2" onclick="bookList('${g.no}', '${g.type}', '${g.name}', '${g.content}');">
                                 <td>${g.no}</td>
                                 <c:choose>
-                                    <c:when test="${g.type eq 'H'}">
+                                    <c:when test="${g.type eq 'M'}">
                                         <td>회의실</td>
                                     </c:when>
                                     <c:when test="${g.type eq 'L'}">
@@ -252,7 +252,7 @@
     <script>
         //예약 리스트 모달 ajax
         function bookList(no, type, name, note){
-            if(type == 'H'){
+            if(type == 'M'){
                 type = "회의실";
             }else if(type == 'L'){
                 type = "응접실";
