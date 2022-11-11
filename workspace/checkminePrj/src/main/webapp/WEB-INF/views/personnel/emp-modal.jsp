@@ -101,6 +101,8 @@
             $('#modalENo').val(no);
             if(data.photoName != null){
               $('#empModalImg').attr('src', '${rootPath}/resources/upload/profile/' + data.photoName);
+            }else{
+              $('#empModalImg').attr('src', '${imgPath}/none-profile.png');
             }
             $('#modalName').val(data.name);
             $('#floatingDept').val(data.deptNo).prop("selected", true);

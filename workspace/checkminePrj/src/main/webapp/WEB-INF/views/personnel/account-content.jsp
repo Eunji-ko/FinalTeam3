@@ -119,6 +119,81 @@
     </div>
 
     <script>
+        let sch = location.search;
+        let params = new URLSearchParams(sch);
+
+        function changeEPage(ePage){
+            params.set('ep', ePage);
+            url = params.toString();
+            if(params.has("category")){
+                params.set("category", "emp");
+                url = params.toString();
+            }
+            location.href="${rootPath}/personnel/main?"+ url;
+        }
+
+        function changeAPage(aPage){
+            params.set('ap', aPage);
+            url = params.toString();
+            if(params.has("category")){
+                params.set("category", "acc");
+                url = params.toString();
+                location.href="${rootPath}/personnel/main?"+ url;
+            }else{
+                location.href="${rootPath}/personnel/main?"+ url+"&category=acc";
+            }
+        }
+
+        function changeRsn(resign){
+            let ap = params.get("ap");
+            params.set('ep', 1);
+            params.set('ap', ap);
+            params.set("category", "emp");
+            if(params.has("empSearchType")){
+                params.delete("empSearchType");
+                params.delete("empSearchText");
+            }
+            if(resign == ""){
+                if(params.has("rsn")){
+                    params.delete("rsn");
+                    url = params.toString();
+                    location.href="${rootPath}/personnel/main?"+ url;
+                }
+            } else if(!params.has("rsn")){
+                url = params.toString();
+                location.href="${rootPath}/personnel/main?"+ url +"&rsn=" + resign;
+            } else{
+                params.set('rsn', resign);
+                url = params.toString();
+                location.href="${rootPath}/personnel/main?"+ url;
+            }
+        }
+
+        function changeEmpSearch(){
+            let ap = params.get("ap");
+            params.set("category", "emp");
+            $('#empSearchAp').val(ap);
+            if(params.has("accSearchText")){
+                let accSearchType = params.get("accSearchType");
+                let accSearchText = params.get("accSearchText");
+                let empFormArea = document.getElementById('empForm');
+
+                let newHd = document.createElement('input');
+                newHd.setAttribute("type", "hidden");
+                newHd.setAttribute("name", "accSearchType");
+                newHd.setAttribute("value", accSearchType);
+                let newHd2 = document.createElement('input');
+                newHd2.setAttribute("type", "hidden");
+                newHd2.setAttribute("name", "accSearchText");
+                newHd2.setAttribute("value", accSearchText);
+                empFormArea.appendChild(newHd);
+                empFormArea.appendChild(newHd2);
+            }
+        }
+    </script>
+
+
+    <script>
         $('.accModal input[type="checkbox"]').click(function(){
             let tmpp = $(this).prop('checked');
 

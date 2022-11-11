@@ -4,15 +4,11 @@
     #evalList-area {
         width: 1000px;
         padding-top: 20px;
-        height: 800px;
+        height: 700px;
         margin: 0 auto;
     }
     .eval-name-zone {
-        text-align: center;
-        vertical-align: middle;
-        top: 50%;
-        font-size: 20px;
-        color: #5D736F;
+        width: 180px;
     }
     .container::-webkit-scrollbar {
         width: 10px;
@@ -41,8 +37,8 @@
         <tbody>
             <c:forEach var="eval" items="${evalList}">
                 <tr>
-                    <th class="eval-name-zone">* * *</th>
-                    <td><textarea class="form-control" rows="3" style="background-color: #B0D9D1; color: #5D736F;" disabled>${eval.content}</textarea></td>
+                    <th class="eval-name-zone"><img src="${imgPath}/none-profile.png" style="border-radius: 30px; margin-left: 40px;"></th>
+                    <td><textarea class="form-control" rows="4" style="background-color: #B0D9D1; color: #5D736F;" disabled>${eval.content}</textarea></td>
                 </tr>
             </c:forEach>
         </tbody>
