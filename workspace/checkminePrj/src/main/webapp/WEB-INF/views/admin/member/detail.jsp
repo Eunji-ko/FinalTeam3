@@ -157,14 +157,14 @@
                         </div>
                         <div class="inputField" style="grid-column: 2;">
                             <label>부서</label>
-                            <select name="posNo">
-                                <c:forEach items="${pos}" var="p">
-                                    <c:choose>
-                                        <c:when test="${p.no eq m.posNo}">
-                                            <option value="${p.no}" selected>${p.name}</option>
+                            <select name="deptNo">
+                                <c:forEach items="${dept}" var="d">
+                                	<c:choose>
+                                        <c:when test="${d.no eq m.deptNo}">
+                                            <option value="${d.no}" selected>${d.name}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option value="${p.no}">${p.name}</option>                          	
+                                            <option value="${d.no}">${d.name}</option>                          	
                                         </c:otherwise>                          
                                     </c:choose>
                                 </c:forEach>
@@ -172,14 +172,14 @@
                         </div>
                         <div class="inputField" style="grid-column: 2;">
                             <label>직위</label>
-                            <select name="deptNo">
-                                <c:forEach items="${dept}" var="d">
+                            <select name="posNo">
+                            	<c:forEach items="${pos}" var="p">
                                     <c:choose>
-                                        <c:when test="${d.no eq m.deptNo}">
-                                            <option value="${d.no}" selected>${d.name}</option>
+                                        <c:when test="${p.no eq m.posNo}">
+                                            <option value="${p.no}" selected>${p.name}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option value="${d.no}">${d.name}</option>                          	
+                                            <option value="${p.no}">${p.name}</option>                          	
                                         </c:otherwise>                          
                                     </c:choose>
                                 </c:forEach>
