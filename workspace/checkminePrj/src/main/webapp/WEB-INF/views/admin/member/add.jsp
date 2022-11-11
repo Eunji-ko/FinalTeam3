@@ -129,7 +129,7 @@
             <form action="${root}/admin/member/add" method="post" name="form" enctype="multipart/form-data" onsubmit="return check();">
                 <div id="area">
                     <div>
-                        <button onclick="history.back()">←</button>
+                        <button type="button" onclick="history.back()">←</button>
                         <span id="header">&nbsp;&nbsp;사원 등록</span>
                     </div>
                     <button type="submit" class="btn">등록하기</button>

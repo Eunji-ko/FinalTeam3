@@ -110,7 +110,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;공유물 등록</span>
                 </div>
             </div>

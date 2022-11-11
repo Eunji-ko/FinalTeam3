@@ -125,7 +125,7 @@
         <main class="shadow">
             <div id="area">
                 <div>
-                    <button onclick="history.back()">←</button>
+                    <button type="button" onclick="history.back()">←</button>
                     <span id="header">&nbsp;&nbsp;공지사항 작성</span>
                 </div>
             </div>
