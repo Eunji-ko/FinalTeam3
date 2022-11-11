@@ -150,7 +150,13 @@
             <!-- 사용자 TODO: 프로필 이미지 처리, 사용자 이름 처리-->
             <div class="d-flex align-items-center justify-content-between" style="width: 110px; margin-left: 30px;">
                 <div style="width: 40px; height: 40px;">
-                    <img src="/checkmine/resources/img/header/profile.png">
+                    
+                    <c:if test="${not empty loginMember.photoName}">
+	                    <img src="${rootPath}/resources/upload/profile/${loginMember.photoName}" style="width: 40px; height: 40px; border-radius: 20px;">
+	                </c:if>
+	                <c:if test="${empty loginMember.photoName}">
+	                    <img src="/checkmine/resources/img/header/profile.png">
+	                </c:if>
                 </div>
                 <span class="fs-5 fw-bold">${loginMember.name}</span>
             </div>
