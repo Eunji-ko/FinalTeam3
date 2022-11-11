@@ -81,4 +81,7 @@ public interface ReservationDao {
 	//예약 검증
 	int selectRevCount(GoodsBookVo vo, SqlSessionTemplate sst);
 
+	//예약 검증
+	int selectRsvp(PlaceBookVo vo, SqlSessionTemplate sst);
+
 }

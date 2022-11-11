@@ -107,4 +107,13 @@
 		SELECT NO, NAME FROM PUBLIC_PLACE WHERE TYPE = 'M'
 	</select>
 	
+	<select id="selectRsvp" resultType="int">
+		SELECT COUNT(*) CNT
+		FROM GOODS_RESERVATION
+		WHERE GOODS_NO = #{plNo}
+		AND RSV_DATE = TO_DATE(#{rsvDate}, 'YYYY-MM-DD')
+		AND <![CDATA[BORROW <= TO_DATE(#{rsvBegin}, 'HH24:MI')]]>
+		AND <![CDATA[RSV_END >= TO_DATE(#{rsvEnd}, 'HH24:MI')]]>
+	</select>
+	
 </mapper>

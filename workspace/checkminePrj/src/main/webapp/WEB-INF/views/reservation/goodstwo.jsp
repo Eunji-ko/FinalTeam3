@@ -197,7 +197,7 @@
                         </c:if>
 
                         <c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-                            <a class="btn btn-sm" href="${rootPath}/reservation/goodstow/${i}">${i}</a>
+                            <a class="btn btn-sm" href="${rootPath}/reservation/goodstwo/${i}">${i}</a>
                         </c:forEach>
                         
                         <c:if test="${pv.endPage ne pv.maxPage}">

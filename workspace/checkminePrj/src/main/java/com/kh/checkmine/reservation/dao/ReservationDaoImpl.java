@@ -171,4 +171,10 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sst.selectOne("reservationGoodsMapper.selectRevCount", vo);
 	}
 
+	//예약 검증
+	@Override
+	public int selectRsvp(PlaceBookVo vo, SqlSessionTemplate sst) {
+		return sst.selectOne("reservationPlaceMapper.selectRsvp", vo);
+	}
+
 }
