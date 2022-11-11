@@ -48,12 +48,12 @@
 			<mapping path="/member/findPwd"/>
 			<mapping path="/sendPwd"/>
 			<mapping path="/member/changePwdById"/>
-			<mapping path="/admin/**"/>
 			<beans:bean class="com.kh.checkmine.common.LogoutCheckInterceptor"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/**"/>
 			<!-- 로그인 안되어있을 때 접근 가능한 경로 -->
+			<exclude-mapping path="/reply/**"/>
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/findIdPwd"/>

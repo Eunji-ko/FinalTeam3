@@ -200,7 +200,7 @@
                     	</c:if>
                     </div>
                     <div style="margin-bottom: 100px;">
-                        ${fn:substring(loginMember.enrollDate,0,10)} (0년 0개월차)
+                        ${fn:substring(loginMember.enrollDate,0,10)} (${howYear}년 ${howMonth}개월차)
                     </div>
                     <div>
                     	<button class="btn checkmine-btn" data-bs-toggle="modal" data-bs-target="#changeInfo">개인정보 수정</button>
