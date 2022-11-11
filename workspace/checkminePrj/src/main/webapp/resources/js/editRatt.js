@@ -1,13 +1,4 @@
-var rattList = [
-    { "value": 1, "name": 'Emma Smith', "deptNo": '인사부', "posNo" : '사원'},
-    { value: 2, name: 'Max Smith', email: 'max@kt.com'},
-    { value: 3, name: 'Sean Bean', email: 'sean@dellito.com'},
-    { value: 4, name: 'Brian Cox', email: 'brian@exchange.com'},
-    { value: 5, name: 'Francis Mitcham', email: 'f.mitcham@kpmg.com.au'},
-    { value: 6, name: 'Dan Wilson', email: 'dam@consilting.com'},
-    { value: 7, name: 'Ana Crown', email: 'ana.cf@limtel.com'},
-    { value: 8, name: 'John Miller', email: 'miller@mapple.com'},
-    ];
+var rattList = [];
     
     
     $(function(){ //데이터 가져온 코드

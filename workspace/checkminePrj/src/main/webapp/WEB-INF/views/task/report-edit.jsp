@@ -3,13 +3,14 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <!--tagify-->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <script defer src="${root}/resources/js/editAtt.js?v=<%=System.currentTimeMillis() %>"></script>
-<script defer src="${root}/resources/js/editRatt.js?ver=1.0?v=<%=System.currentTimeMillis() %>"></script>
+<script defer src="${root}/resources/js/editRatt.js?v=<%=System.currentTimeMillis() %>"></script>
 
 <!DOCTYPE html>
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
