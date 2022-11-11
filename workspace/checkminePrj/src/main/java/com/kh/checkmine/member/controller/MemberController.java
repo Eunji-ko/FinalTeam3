@@ -194,6 +194,12 @@ public class MemberController {
 		//로그인 정보 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
+		int howYear = 2022-Integer.parseInt(loginMember.getEnrollDate().substring(0,4));
+		int howMonth = 11-Integer.parseInt(loginMember.getEnrollDate().substring(5,7));
+		
+		model.addAttribute("howYear", howYear);
+		model.addAttribute("howMonth", howMonth);
+		
 		List<BoardVo> boardList = ms.selectBoardList(loginMember.getNo());
 		
 		if(boardList != null) {
