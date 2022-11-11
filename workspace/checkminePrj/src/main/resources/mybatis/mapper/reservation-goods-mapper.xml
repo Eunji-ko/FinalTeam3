@@ -111,10 +111,10 @@
 	<select id="selectRevCount" resultType="int">
 		SELECT COUNT(*) CNT
 		FROM GOODS_RESERVATION
-		WHERE GOODS_NO = 1
-		AND RSV_DATE = #{rsvDate}
-		AND <![CDATA[BORROW <= #{borrow}]]>
-		AND <![CDATA[RSV_END >= #{rsvEnd}]]>
+		WHERE GOODS_NO = #{goodsNo}
+		AND RSV_DATE = TO_DATE(#{rsvDate}, 'YYYY-MM-DD')
+		AND <![CDATA[BORROW <= TO_DATE(#{borrow}, 'HH24:MI')]]>
+		AND <![CDATA[RSV_END >= TO_DATE(#{rsvEnd}, 'HH24:MI')]]>
 	</select>
 	
 </mapper>

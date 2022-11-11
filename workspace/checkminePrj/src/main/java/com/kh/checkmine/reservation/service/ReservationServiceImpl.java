@@ -72,18 +72,17 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int insertRsvb(GoodsBookVo vo) {
 		
-		//ㄱㅓㅁㅈㅡㅇ
+		//검증
 		int revCount = dao.selectRevCount(vo, sst);
 
-		//ㅇㅖㅇㅑㄱ
-		
-		if(revCount < 1) {
+		//예약
+		if(revCount <= 1) {
 			int revResult = dao.insertRsvb(vo, sst);
-			
 			return revResult; 
 		} else {
 			return 0;
 		}
+		
 	}
 
 	//빔 예약 목록
@@ -107,7 +106,14 @@ public class ReservationServiceImpl implements ReservationService {
 	//차 예약
 	@Override
 	public int insertRsvc(GoodsBookVo vo) {
-		return dao.insertRsvc(vo, sst);
+		int revCount = dao.selectRevCount(vo, sst);
+		
+		if(revCount <= 1) {
+			int revResult = dao.insertRsvc(vo, sst);
+			return revResult; 
+		} else {
+			return 0;
+		}
 	}
 
 	//차 예약 목록
@@ -131,7 +137,14 @@ public class ReservationServiceImpl implements ReservationService {
 	//응접실 예약
 	@Override
 	public int insertRsvl(PlaceBookVo vo) {
-		return dao.insertRsvl(vo, sst);
+		int revCount = dao.selectRsvp(vo, sst);
+		
+		if(revCount <= 1) {
+			int revResult = dao.insertRsvl(vo, sst);
+			return revResult; 
+		} else {
+			return 0;
+		}
 	}
 
 	//응접실 예약 목록
@@ -155,7 +168,14 @@ public class ReservationServiceImpl implements ReservationService {
 	//회의실 예약
 	@Override
 	public int insertRsvm(PlaceBookVo vo) {
-		return dao.insertRsvm(vo, sst);
+		int revCount = dao.selectRsvp(vo, sst);
+		
+		if(revCount <= 1) {
+			int revResult = dao.insertRsvm(vo, sst);
+			return revResult; 
+		} else {
+			return 0;
+		}
 	}
 
 	//회의실 예약 목록
