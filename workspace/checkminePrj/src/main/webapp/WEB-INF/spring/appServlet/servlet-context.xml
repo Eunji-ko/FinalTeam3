@@ -53,6 +53,7 @@
 		<interceptor>
 			<mapping path="/**"/>
 			<!-- 로그인 안되어있을 때 접근 가능한 경로 -->
+			<exclude-mapping path="/resources/**"/>
 			<exclude-mapping path="/reply/**"/>
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/member/login"/>
