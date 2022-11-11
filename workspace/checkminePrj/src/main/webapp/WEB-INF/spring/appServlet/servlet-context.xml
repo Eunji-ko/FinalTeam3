@@ -59,7 +59,10 @@
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/findIdPwd"/>
 			<exclude-mapping path="/member/kakaoLogin"/>
+			<exclude-mapping path="/member/findId"/>
 			<exclude-mapping path="/member/findPwd"/>
+			<exclude-mapping path="/mailCheck"/>
+			<exclude-mapping path="/sendPwd"/>
 			<exclude-mapping path="/sendPwd"/>
 			<exclude-mapping path="/member/changePwdById"/>
 			<exclude-mapping path="/admin/**"/>
